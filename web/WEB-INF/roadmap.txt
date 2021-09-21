@@ -1,0 +1,12 @@
+=index.html
+loginPage=login.jsp
+contentPage=contentPage.jsp
+createCategoryPage=createCategory.jsp
+homePage=index.jsp
+createPostPage=createPostPage.jsp
+pendingPostListPage=pendingPostsList.jsp
+postWaitingApprovalPage=postWaitingApproval.jsp
+profilePage=profilePage.jsp
+registerPage=register.jsp
+searchResultPage=searchResult.jsp
+userListPage=userListPage.jsp

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/SWP_Project">
+    <Resource name="DS" type="javax.sql.DataSource" auth="Container" 
+                driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" 
+                url="jdbc:sqlserver://localhost:1433;databaseName=testSWP2"
+                username="sa" password="sa"/>
+</Context>
