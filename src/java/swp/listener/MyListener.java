@@ -52,6 +52,6 @@ Map<String, String> roadmap= new HashMap<>();
     }
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 }
