@@ -1,4 +1,4 @@
-=index.html
+=LoadAllPostsServlet
 loginPage=login.jsp
 contentPage=contentPage.jsp
 createCategoryPage=createCategory.jsp
@@ -10,3 +10,4 @@ profilePage=profilePage.jsp
 registerPage=register.jsp
 searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
+loadBlogs=LoadAllBlogsServlet
