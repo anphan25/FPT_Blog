@@ -1,23 +1,25 @@
 
 package swp.post;
 
-public class PostDTO {
+import java.io.Serializable;
 
-    public String ID;
-    public String emailPost;
-    public String emailApprover;
-    public String statusPost;
-    public String createdDate;
-    public String tag;
-    public String title;
-    public String approvedDate;
-    public String postContent;
-    public String categoryID;
-    public String namePost;
-    public String avatar;
-    public int awardID;
-    public int likes;
-    public int comments;
+public class PostDTO implements Serializable{
+
+    private String ID;
+    private String emailPost;
+    private String emailApprover;
+    private String statusPost;
+    private String createdDate;
+    private String tag;
+    private String title;
+    private String approvedDate;
+    private String postContent;
+    private String categoryID;
+    private String namePost;
+    private String avatar;
+    private int awardID;
+    private int likes;
+    private int comments;
 
     public PostDTO() {
         ID = "";
@@ -68,6 +70,128 @@ public class PostDTO {
         this.likes = likes;
         this.comments = comments;
     }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public String getEmailPost() {
+        return emailPost;
+    }
+
+    public void setEmailPost(String emailPost) {
+        this.emailPost = emailPost;
+    }
+
+    public String getEmailApprover() {
+        return emailApprover;
+    }
+
+    public void setEmailApprover(String emailApprover) {
+        this.emailApprover = emailApprover;
+    }
+
+    public String getStatusPost() {
+        return statusPost;
+    }
+
+    public void setStatusPost(String statusPost) {
+        this.statusPost = statusPost;
+    }
+
+    public String getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getApprovedDate() {
+        return approvedDate;
+    }
+
+    public void setApprovedDate(String approvedDate) {
+        this.approvedDate = approvedDate;
+    }
+
+    public String getPostContent() {
+        return postContent;
+    }
+
+    public void setPostContent(String postContent) {
+        this.postContent = postContent;
+    }
+
+    public String getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(String categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public String getNamePost() {
+        return namePost;
+    }
+
+    public void setNamePost(String namePost) {
+        this.namePost = namePost;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public int getAwardID() {
+        return awardID;
+    }
+
+    public void setAwardID(int awardID) {
+        this.awardID = awardID;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
+    }
+     
+    
 
     @Override
     public String toString() {
