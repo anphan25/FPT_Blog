@@ -61,7 +61,9 @@
                         </div>
                     </div>
                     <div class="container_searchBar">
-                        <input placeholder="Search..." />
+                        <form action="searchTitle">
+                            <input placeholder="Search..." name="titleValue" value="${param.titleValue}"/>
+                        </form>
                         <div class="container_icon">
                             <i class="fas fa-search"></i>
                         </div>
