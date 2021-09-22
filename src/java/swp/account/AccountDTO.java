@@ -5,13 +5,14 @@
  */
 package swp.account;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
  *
  * @author Admin
  */
-public class AccountDTO {
+public class AccountDTO implements Serializable{
     private String email;
     private String password;
     private String name;
