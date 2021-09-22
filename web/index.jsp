@@ -42,27 +42,27 @@
                         </div>
                         <div class="dropdown_category_content">
                             <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
-                              <div class="dropdown_category_item">
-                                  <c:url var="cateLink" value="searchByCategory">
-                                      <c:param name="categoryId" value="${cateDTO.ID}"/>
-                                  </c:url>
-                                <a href="${cateLink}">${cateDTO.name}</a>
+                                <div class="dropdown_category_item">
+                                    <c:url var="cateLink" value="searchByCategory">
+                                        <c:param name="categoryId" value="${cateDTO.ID}"/>
+                                    </c:url>
+                                    <a href="${cateLink}">${cateDTO.name}</a>
                                 </div>  
                             </c:forEach>
-<!--                            <div class="dropdown_category_item">
-                                <a href="">IT & Software</a>
-                            </div>
-                            <div class="dropdown_category_item"><a href="">Marketing</a></div>
-                            <div class="dropdown_category_item"><a href="">Business</a></div>
-                            <div class="dropdown_category_item"><a href="">Design</a></div>
-                            <div class="dropdown_category_item">
-                                <a href="">Finance & Accounting</a>
-                            </div>-->
+                            <!--                            <div class="dropdown_category_item">
+                                                            <a href="">IT & Software</a>
+                                                        </div>
+                                                        <div class="dropdown_category_item"><a href="">Marketing</a></div>
+                                                        <div class="dropdown_category_item"><a href="">Business</a></div>
+                                                        <div class="dropdown_category_item"><a href="">Design</a></div>
+                                                        <div class="dropdown_category_item">
+                                                            <a href="">Finance & Accounting</a>
+                                                        </div>-->
                         </div>
                     </div>
                     <div class="container_searchBar">
                         <form action="searchTitle">
-                            <input placeholder="Search..." name="titleValue" value="${param.titleValue}"/>
+                            <input placeholder="Search..." name="titleValue" autocomplete="off"/>
                         </form>
                         <div class="container_icon">
                             <i class="fas fa-search"></i>
@@ -410,109 +410,109 @@
                                 </a>
                             </div>
                         </c:forEach>    
-                      </div>
                     </div>
-                        <div class="main_container_right">
-                            <div class="news">
-                                <h2 class="title">#news</h2>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="news">
-                                <h2 class="title">#tháº£o luáº­n</h2>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <h2 class="title_post">
-                                        We're a place where coders share, stay up-to-date and grow their
-                                        careers.
-                                    </h2>
-                                    <div class="container_news_button">
-                                        <p class="news_button">Má»i</p>
-                                    </div>
-                                </div>
+                </div>
+                <div class="main_container_right">
+                    <div class="news">
+                        <h2 class="title">#news</h2>
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
                             </div>
                         </div>
-                    
-                    </section>
-
-                    <!-- Footer -->
-
-                    <footer>
-                        <div class="container_footer">
-                            <p>
-                                <span class="text_footer_strong">FPT Community</span> â A constructive
-                                and inclusive social network for software developers. With you every
-                                step of your journey.
-                            </p>
-                            <div style="margin: 0.25rem 0"></div>
-                            <p>
-                                Built on <span class="text_footer_strong">Forem</span> â the
-                                <span class="text_footer_strong">open source</span> software that
-                                powers FPT and other inclusive communities
-                            </p>
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
+                            </div>
                         </div>
-                        <div class="text_footer_container">
-                            <p class="text_footer">
-                                Made with
-                                <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                                <span class="text_footer_strong">Ãn, An, Äan, Nam, PhÆ°Æ¡ng</span> Â©
-                                2021
-                            </p>
-                            <img src="/images/forem_icon.svg" />
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
+                            </div>
                         </div>
-                    </footer>
+                    </div>
+                    <div class="news">
+                        <h2 class="title">#tháº£o luáº­n</h2>
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
+                            </div>
+                        </div>
+                        <div class="item">
+                            <h2 class="title_post">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </h2>
+                            <div class="container_news_button">
+                                <p class="news_button">Má»i</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                    <script>
-                        function toggleSidebarPhone() {
-                            const toggle_sidebar = document.getElementById('sidebar_phone');
-                            toggle_sidebar.style.display = 'block';
-                        }
-                        function handleClickOutside() {
-                            const toggle_sidebar = document.getElementById('sidebar_phone');
-                            toggle_sidebar.style.display = 'none';
-                        }
-                    </script>
-                    </body>
-                    </html>
+        </section>
+
+        <!-- Footer -->
+
+        <footer>
+            <div class="container_footer">
+                <p>
+                    <span class="text_footer_strong">DEV Community</span> - A constructive
+                    and inclusive social network for software developers. With you every
+                    step of your journey.
+                </p>
+                <div style="margin: 0.25rem 0"></div>
+                <p>
+                    Built on <span class="text_footer_strong">Forem</span> - the
+                    <span class="text_footer_strong">open source</span> software that
+                    powers DEV and other inclusive communities
+                </p>
+            </div>
+            <div class="text_footer_container">
+                <p class="text_footer">
+                    Made with
+                    <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
+                    <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
+                    2021
+                </p>
+                <img src="/images/forem_icon.svg" />
+            </div>
+        </footer>
+
+        <script>
+            function toggleSidebarPhone() {
+                const toggle_sidebar = document.getElementById('sidebar_phone');
+                toggle_sidebar.style.display = 'block';
+            }
+            function handleClickOutside() {
+                const toggle_sidebar = document.getElementById('sidebar_phone');
+                toggle_sidebar.style.display = 'none';
+            }
+        </script>
+    </body>
+</html>
