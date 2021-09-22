@@ -1,14 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package swp.post;
 
-/**
- *
- * @author Dell
- */
 public class PostDTO {
 
     public String ID;
@@ -80,8 +72,5 @@ public class PostDTO {
     @Override
     public String toString() {
         return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", awardID=" + awardID + ", likes=" + likes + ", comments=" + comments + '}';
-    }
-
-
- 
+    } 
 }

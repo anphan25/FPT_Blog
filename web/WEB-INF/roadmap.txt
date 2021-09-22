@@ -1,4 +1,4 @@
-=LoadAllPostsServlet
+=index.html
 loginPage=login.jsp
 contentPage=contentPage.jsp
 createCategoryPage=createCategory.jsp

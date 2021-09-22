@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package swp.post;
 
 import java.sql.Connection;
@@ -13,10 +9,7 @@ import java.util.ArrayList;
 import javax.naming.NamingException;
 import swp.utils.DBHelper;
 
-/**
- *
- * @author Dell
- */
+
 public class PostDAO {
 
     public static ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
@@ -31,7 +24,7 @@ public class PostDAO {
                 String sql = "select tag, title, postid, emailpost"
                         + ", DATEPART(minute, p.ApprovedDate) as ApprovedMinute, DATEPART(hour, p.ApprovedDate) as ApprovedHour,  Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
                         + ", a.name, a.image, p.AwardID"
-                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ?";
+                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate des";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
