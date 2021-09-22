@@ -57,7 +57,7 @@
 
         <div class="container_right">
           <!-- <div class="container_button_register">
-            <button><a href="firstLoginPage">Create Post</a></button>
+            <button><a href="/login.html">Create Post</a></button>
           </div>
           <div class="icon_notification_container">
             <img src="./images/notification_icon.svg" />
@@ -90,10 +90,10 @@
           </div> -->
 
           <div class="container_button_login">
-            <button><a href="firstLoginPage">Login</a></button>
+            <button><a href="loginPage">Login</a></button>
           </div>
           <div class="container_button_register">
-            <button><a href="firstLoginPage">Create account</a></button>
+            <button><a href="loginPage">Create account</a></button>
           </div>
         </div>
       </div>

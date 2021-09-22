@@ -1,4 +1,5 @@
 =index.html
+firstLoginPage=login.html
 loginPage=login.jsp
 contentPage=contentPage.jsp
 createCategoryPage=createCategory.jsp
@@ -11,3 +12,4 @@ registerPage=register.jsp
 searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
 loadBlogs=LoadAllBlogsServlet
+login=LoginServlet
