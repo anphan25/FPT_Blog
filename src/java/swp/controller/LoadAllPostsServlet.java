@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import swp.category.CategoryDAO;
+import swp.category.CategoryDTO;
 import swp.post.PostDAO;
 import swp.post.PostDTO;
 
@@ -27,11 +29,11 @@ public class LoadAllPostsServlet extends HttpServlet {
         String url = roadmap.get("homePage");
         try {
             HttpSession session = request.getSession();
-            session.setAttribute("LOGIN", "false");
+            CategoryDAO cateDAO = new CategoryDAO();
+            cateDAO.loadCategoryList();
+            ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
+            session.setAttribute("CATEGORY_LIST", categorylist);
             ArrayList<PostDTO> list = PostDAO.getAllPostList();
-            for (PostDTO p : list) {
-                log(p.toString());
-            }
             request.setAttribute("ALL_POST", list);
         } catch (Exception e) {
             log("Error at Load all post Servlet Controller: " + e.getMessage());

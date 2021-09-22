@@ -22,9 +22,9 @@ public class PostDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "select tag, title, postid, emailpost"
-                        + ", DATEPART(minute, p.ApprovedDate) as ApprovedMinute, DATEPART(hour, p.ApprovedDate) as ApprovedHour,  Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
+                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
                         + ", a.name, a.image, p.AwardID"
-                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate des";
+                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
@@ -32,7 +32,7 @@ public class PostDAO {
                 while (rs.next()) {
                     String postID = rs.getString("PostID");
                     String emailPost = rs.getString("EmailPost");
-                    String approvedDate = rs.getString("HourApprove") + "h" + rs.getString("MinuteApprove");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth")+"-"+rs.getString("ApprovedYear");
                     String tag = rs.getString("Tag");
                     String title = rs.getString("Title");
                     String namePoster = rs.getString("Name");
