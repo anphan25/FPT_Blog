@@ -71,6 +71,18 @@ public class PostDTO implements Serializable{
         this.comments = comments;
     }
 
+    //this contstructor for profileDAO
+    public PostDTO(String ID, String tag, String title, String approvedDate, int awardID, int likes, int comments)
+    {
+        this.ID = ID;
+        this.tag = tag;
+        this.title = title;
+        this.approvedDate = approvedDate;
+        this.awardID = awardID;
+        this.likes = likes;
+        this.comments = comments;
+    }
+    
     public String getID() {
         return ID;
     }
