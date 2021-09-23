@@ -89,7 +89,7 @@
                         <button><a href="loginPage">Login</a></button>
                     </div>
                     <div class="container_button_register">
-                        <button><a href="loginPage">Create account</a></button>
+                        <button><a href="registerPage">Create account</a></button>
                     </div>
                 </div>
             </div>

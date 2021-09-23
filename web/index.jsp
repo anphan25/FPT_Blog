@@ -124,7 +124,7 @@
                             <button><a href="firstLoginPage">Login</a></button>
                         </div>
                         <div class="container_button_register">
-                            <button><a href="firstLoginPage">Create account</a></button>
+                            <button><a href="registerPage">Create account</a></button>
                         </div>
                     </div>
                 </c:if>

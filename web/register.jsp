@@ -1,3 +1,6 @@
+<%@page import="swp.accountError.AccountError"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +16,7 @@
       src="https://kit.fontawesome.com/03ade0a214.js"
       crossorigin="anonymous"
     ></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
     <link rel="stylesheet" href="./styles/register.css" />
     <title>Đăng kí | FPT Blog</title>
   </head>
@@ -21,9 +24,6 @@
     <header>
       <div class="container_header">
         <div class="container_left">
-          <div class="toggle_sidebar" onclick="toggleSidebarPhone()">
-            <img src="/images/toggle_sidebar_icon.svg" />
-          </div>
           <div class="container_logo">
             <a href="loadBlogs">
               <img
@@ -90,10 +90,10 @@
           </div> -->
 
           <div class="container_button_login">
-            <button><a href="/login.html">Log in</a></button>
+            <button><a href="loginPage">Log in</a></button>
           </div>
           <div class="container_button_register">
-            <button><a href="/login.html">Create Account</a></button>
+            <button><a href="registerPage">Create Account</a></button>
           </div>
         </div>
       </div>
@@ -117,48 +117,105 @@
             </div>
           </div>
           <p class="or">Or</p>
-          <form>
+          <%
+              AccountError accountError = (AccountError)request.getAttribute("ACCOUNT_ERROR");
+              if (accountError == null) {
+                  accountError = new AccountError();
+              }
+          %>
+          <form action="register" method="POST">
             <div class="field_input_responsive">
               <div class="field_input">
                 <p>Name</p>
                 <input
+                  name="name"
                   type="name"
                   class="form-control"
-                  id="exampleInputName1"
+                  id="name"
+                  minlength="1"
+                  value="<%= accountError.getNameError()%>"
                   aria-describedby="nameHelp"
                 />
               </div>
               <div class="field_input">
                 <p>Gender</p>
-                <select name="cars" id="cars" class="form-control">
-                  <option value="1">Male</option>
-                  <option value="2">Female</option>
+                <select name="gender" id="gender" class="form-control">
+                  <option value="0">Male</option>
+                  <option value="1">Female</option>
+                </select>
+              </div>
+            </div>
+            <div class="field_input_responsive">
+              <div class="field_input_left">
+                <p>Avatar</p>
+                <div class="field_input_avatar_container">
+                  <div class="avatar_preview">
+                    <input
+                      id="avatarURL"
+                      type="hidden"
+                      name="avatarURL"
+                      value="https://firebasestorage.googleapis.com/v0/b/udemy-vue-firebase-si.appspot.com/o/avatar-user%2F9f18e161-72c6-462b-9d66-6746360b38fa%2Favatar-default-icon.png?alt=media&token=959eb459-e9a8-4733-b8fa-c86c95d3950d"
+                    />
+                    <img
+                      src="https://firebasestorage.googleapis.com/v0/b/udemy-vue-firebase-si.appspot.com/o/avatar-user%2F9f18e161-72c6-462b-9d66-6746360b38fa%2Favatar-default-icon.png?alt=media&token=959eb459-e9a8-4733-b8fa-c86c95d3950d"
+                      id="img-preview"
+                    />
+                  </div>
+                  <div class="button_cover_image_container">
+                    <div class="image-upload">
+                      <label for="file-input-avatar">
+                        Upload your avatar
+                      </label>
+                      <input
+                        id="file-input-avatar"
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        style="display: none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="field_input">
+                <p>Campus</p>
+                <select name="campus" id="campus" class="form-control" >
+                  <option value="HCM">FU-Hồ Chí Minh</option>
+                  <option value="Hà Nội">FU-Hoà Lạc</option>
+                  <option value="Đà Nẵng">FU-Đà Nẵng</option>
+                  <option value="Cần Thơ">FU-Cần Thơ</option>
+                  <option value="Quy Nhơn">FU-Quy Nhơn</option>
                 </select>
               </div>
             </div>
             <div class="field_input">
               <p>Email</p>
               <input
+                name="email"
                 type="email"
                 class="form-control"
-                id="exampleInputEmail1"
+                id="email"
                 aria-describedby="emailHelp"
               />
+              <p style="font-weight: 500; color: red"><%= accountError.getEmailError()%></p>
             </div>
             <div class="field_input">
               <p>Password</p>
               <input
+                name="password"
                 type="password"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="password"
+                minlength="6"
               />
             </div>
             <div class="field_input">
               <p>Confirm Password</p>
               <input
+                name="passwordRepeat"
                 type="password"
                 class="form-control"
-                id="exampleInputPassword1"
+                id="passwordRepeat"
+                minlength="6"
               />
             </div>
 
@@ -192,21 +249,14 @@
           <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
           2021
         </p>
-        <img src="./images/forem_icon.svg" />
+        <img src="/images/forem_icon.svg" />
       </div>
     </footer>
-
-    <script>
-      // history.pushState(null, document.title, location.href);
-      // history.back();
-      // history.forward();
-      // window.onpopstate = function () {
-      //   history.go(1);
-      // };
-      history.pushState(null, document.title, location.href);
-      window.addEventListener("popstate", function (event) {
-        history.pushState(null, document.title, location.href);
-      });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="./js/registerPage.js"></script>
   </body>
 </html>
+
