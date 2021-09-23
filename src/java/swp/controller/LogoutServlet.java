@@ -1,4 +1,3 @@
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -8,27 +7,22 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.Enumeration;
 
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import swp.account.AccountDAO;
-import swp.account.AccountDTO;
-
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-
-public class LoginServlet extends HttpServlet {
-    private final String HOME_PAGE = "homePage";
-    private final String LOGIN_INVALID_PAGE = "loginPage";
-
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
+    private final String LOGIN_PAGE = "loginPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -42,31 +36,21 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = LOGIN_INVALID_PAGE;
-
-
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            AccountDAO dao = new AccountDAO();
-            AccountDTO result = dao.getUser(email, password);
-            // boolean result = dao.test(email, password);
-            if(result!=null){
-                url = HOME_PAGE;
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN", "true");
-                session.setAttribute("CURRENT_USER", result);
+            HttpSession session = request.getSession(false);
+            if (session == null) {
+                return;
+            }// session is end
+            Enumeration<String> atttributeNames = session.getAttributeNames();
+            while (atttributeNames.hasMoreElements()) {
+                String nextElement = atttributeNames.nextElement();
+                session.removeAttribute(nextElement);
             }
-        } catch (SQLException sq) {
-            log("LoginServlet_SQLException "+sq.getMessage());
-        }catch(NamingException ne){
-            log("LoginServlet_NamingException "+ne.getMessage());
         }finally{
-            response.sendRedirect(url);;
+            response.sendRedirect(LOGIN_PAGE);
             out.close();
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
