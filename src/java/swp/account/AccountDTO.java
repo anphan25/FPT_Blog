@@ -1,4 +1,5 @@
-package swp.account;
+<<<
+<<<< thienan_metvclpackage swp.account;
 
 import java.io.Serializable;
 
