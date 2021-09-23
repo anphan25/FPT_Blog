@@ -12,3 +12,4 @@ searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
+loadPendingPosts=LoadPendingPostsServlet

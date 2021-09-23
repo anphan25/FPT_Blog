@@ -311,7 +311,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
           2021
         </p>
-        <img src="/images/forem_icon.svg" />
+        <img src="./images/forem_icon.svg" />
       </div>
     </footer>
 
