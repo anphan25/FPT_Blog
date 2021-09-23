@@ -43,6 +43,8 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String url = LOGIN_INVALID_PAGE;
+
+
         try {
             String email = request.getParameter("txtEmail");
             String password = request.getParameter("txtPassword");
@@ -53,13 +55,14 @@ public class LoginServlet extends HttpServlet {
                 url = HOME_PAGE;
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN", "true");
+                session.setAttribute("CURRENT_USER", result);
             }
         } catch (SQLException sq) {
             log("LoginServlet_SQLException "+sq.getMessage());
         }catch(NamingException ne){
             log("LoginServlet_NamingException "+ne.getMessage());
         }finally{
-            response.sendRedirect(url);
+            response.sendRedirect(url);;
             out.close();
         }
     }
