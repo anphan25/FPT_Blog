@@ -26,7 +26,7 @@ import swp.account.AccountDTO;
  */
 
 public class LoginServlet extends HttpServlet {
-    private final String HOME_PAGE = "homePage";
+    private final String HOME_PAGE = "LoadAllPostsServlet";
     private final String LOGIN_INVALID_PAGE = "loginPage";
 
     /**

@@ -74,8 +74,8 @@ public class AccountDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "Select email, password, name, gender, campus, roleID, statusAccountID, createdDate, image "
-                        + "from UserAccount "
+                String sql = "Select email, name, gender, campus, roleID, statusAccountID, createdDate, image "
+                        + "from tblAccounts "
                         + "where email = ? and password = ?";
                 pst = con.prepareCall(sql);
                 pst.setString(1, email);
@@ -83,15 +83,15 @@ public class AccountDAO {
                 rs = pst.executeQuery();
                 if (rs.next()) {
                     String userMail = rs.getString("email");
-                    String userPassword = rs.getString("password");
+//                    String userPassword = rs.getString("password");
                     String userName = rs.getString("name");
                     boolean userGender = rs.getBoolean("gender");
                     String userCampus = rs.getString("campus");
                     String userRole = rs.getString("roleID");
                     String userStatus = rs.getString("statusAccountID");
-                    Date accountCreatedDate = rs.getDate("createdDate");
+                    String accountCreatedDate = rs.getString("createdDate");
                     String userAvatar = rs.getString("image");
-                    AccountDTO obj = new AccountDTO(userMail, userPassword, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
+                    AccountDTO obj = new AccountDTO(email, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
                     return obj;
                 }
             }

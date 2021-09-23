@@ -20,7 +20,7 @@ public class AccountDTO implements Serializable{
     private String campus;
     private String role;
     private String status;
-    private Date joinDate;
+    private String joinDate;
     private String avatar;
 
     /**
@@ -42,7 +42,7 @@ public class AccountDTO implements Serializable{
      * @param avatar
      */
     public AccountDTO(String email, String password, String name, boolean gender, String campus, String role,
-            String status, Date joinDate, String avatar) {
+            String status, String joinDate, String avatar) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -54,6 +54,20 @@ public class AccountDTO implements Serializable{
         this.avatar = avatar;
     }
 
+
+    public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar) {
+        this.email = email;
+        this.name = name;
+        this.gender = gender;
+        this.campus = campus;
+        this.role = role;
+        this.status = status;
+        this.joinDate = joinDate;
+        this.avatar = avatar;
+    }
+    
+    
+    
     /**
      * @param email the email to set
      */
@@ -148,14 +162,14 @@ public class AccountDTO implements Serializable{
     /**
      * @return the joinDate
      */
-    public Date getJoinDate() {
+    public String getJoinDate() {
         return joinDate;
     }
 
     /**
      * @param joinDate the joinDate to set
      */
-    public void setJoinDate(Date joinDate) {
+    public void setJoinDate(String joinDate) {
         this.joinDate = joinDate;
     }
 
