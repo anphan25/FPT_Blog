@@ -1,75 +1,74 @@
+package swp.controller;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swp.controller;
-
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import swp.account.AccountDAO;
 import swp.account.AccountDTO;
+import swp.accountError.AccountError;
+import swp.utils.HashPassword;
 
 /**
  *
- * @author ASUS
+ * @author macbook
  */
+public class RegisterServlet extends HttpServlet {
 
-public class LoginServlet extends HttpServlet {
-    private final String HOME_PAGE = "LoadAllPostsServlet";
-    private final String LOGIN_INVALID_PAGE = "loginPage";
+    private static final String SUCCESS = "login.jsp";
+    private static final String FAIL = "register.jsp";
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        String url = LOGIN_INVALID_PAGE;
-
-
+        String url = FAIL;
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
+            String name = request.getParameter("name");
+            boolean gender = "1".equals(request.getParameter("gender"));
+            String avatarURL = request.getParameter("avatarURL");
+            String campus = request.getParameter("campus");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            byte[] bytesBane = name.getBytes(StandardCharsets.ISO_8859_1);     
+            byte[] bytesCampus = campus.getBytes(StandardCharsets.ISO_8859_1);
+            name = new String(bytesBane, StandardCharsets.UTF_8);
+            campus = new String(bytesCampus, StandardCharsets.UTF_8);
+
+            String hash = HashPassword.createHash(password);
+            AccountError accountError = new AccountError();
+            AccountDTO user = new AccountDTO(name, gender, avatarURL, campus, email, hash);
             AccountDAO dao = new AccountDAO();
-            dao.getUser(email, password);
-            AccountDTO result = dao.getCurrentUser();
-            // boolean result = dao.test(email, password);
-            if(result!=null){
-                url = HOME_PAGE;
-                System.out.println(result);
-                HttpSession session = request.getSession();
-                session.setAttribute("LOGIN", "logined");
-                session.setAttribute("CURRENT_USER", result);
+            boolean check = dao.registerUser(user);
+            if (check) {
+
+                url = SUCCESS;
+            } else {
+                boolean checkDuplicate = dao.checkDuplicate(email);
+                if (checkDuplicate) {
+                    accountError.setNameError(name);
+                    accountError.setGenderError(gender);
+                    accountError.setEmailError("Email already exists.");
+                    request.setAttribute("ACCOUNT_ERROR", accountError);
+                }
             }
-        } catch (SQLException sq) {
-            log("LoginServlet_SQLException "+sq.getMessage());
-        }catch(NamingException ne){
-            log("LoginServlet_NamingException "+ne.getMessage());
-        }finally{
-            response.sendRedirect(url);;
-            out.close();
+        } catch (Exception e) {
+
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
@@ -88,9 +87,9 @@ public class LoginServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -108,9 +107,9 @@ public class LoginServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InvalidKeySpecException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

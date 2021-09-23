@@ -16,3 +16,4 @@ loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
 loadPendingPosts=LoadPendingPostsServlet
 logout=LogoutServlet
+register=RegisterServlet

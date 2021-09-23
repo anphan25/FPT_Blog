@@ -28,6 +28,15 @@ public class AccountDTO implements Serializable{
         this.joinDate = joinDate;
         this.avatar = avatar;
     }
+    
+        public AccountDTO(String name, boolean gender, String avatarURL, String campus, String email, String password) {
+        this.name = name;
+        this.gender = gender;
+        this.avatar = avatarURL;
+        this.campus = campus;
+        this.email = email;
+        this.password = password;
+    }
 
     public AccountDTO() {
     }
