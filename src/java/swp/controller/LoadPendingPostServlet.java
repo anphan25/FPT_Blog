@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package namth.PendingPost;
+package swp.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -20,8 +21,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import namth.Authenticate.AccountDTO;
-import our.Controller.RoadMap;
+import swp.account.AccountDTO;
+import swp.pendingpost.PendingPostDAO;
+import swp.pendingpost.PendingPostDTO;
+
 
 /**
  *
@@ -49,8 +52,8 @@ public class LoadPendingPostServlet extends HttpServlet
     {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext context = request.getServletContext();
-        RoadMap rm = (RoadMap) context.getAttribute("ROAD_MAP");
-        String url = rm.getResource(HOME_PAGE);
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get(PENDING_PAGE);
         
         try
         {
@@ -61,7 +64,7 @@ public class LoadPendingPostServlet extends HttpServlet
                 if(session.getAttribute("ACCOUNT") != null)
                 {
                     AccountDTO accInfo = (AccountDTO) session.getAttribute("ACCOUNT");
-                    String role = accInfo.getRoleID();
+                    String role = accInfo.getRole();
                     if(role.equals("M"))
                     {
                         PendingPostDAO dao = new PendingPostDAO();
@@ -69,7 +72,6 @@ public class LoadPendingPostServlet extends HttpServlet
                         if(!dto.isEmpty())
                         {
                             request.setAttribute("PENDING_LIST", dto);
-                            url = rm.getResource(PENDING_PAGE);
                         }//kết thúc nếu dto có dữ liệu
                         //có thể thêm else để bổ sung popup thông báo ko có pending post.
                     }//kết thúc check mentor

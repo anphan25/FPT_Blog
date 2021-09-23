@@ -14,3 +14,5 @@ userListPage=userListPage.jsp
 login=LoginServlet
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
+loadPendingPosts=LoadPendingPostsServlet
+logout=LogoutServlet

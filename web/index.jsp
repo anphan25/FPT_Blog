@@ -24,6 +24,7 @@
         <!-- header  -->
         <!-- header  -->
         <header>
+            <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
             <div class="container_header">
                 <div class="container_left">
                     <div class="toggle_sidebar" onclick="toggleSidebarPhone()">
@@ -49,15 +50,6 @@
                                     <a href="${cateLink}">${cateDTO.name}</a>
                                 </div>  
                             </c:forEach>
-                            <!--                            <div class="dropdown_category_item">
-                                                            <a href="">IT & Software</a>
-                                                        </div>
-                                                        <div class="dropdown_category_item"><a href="">Marketing</a></div>
-                                                        <div class="dropdown_category_item"><a href="">Business</a></div>
-                                                        <div class="dropdown_category_item"><a href="">Design</a></div>
-                                                        <div class="dropdown_category_item">
-                                                            <a href="">Finance & Accounting</a>
-                                                        </div>-->
                         </div>
                     </div>
                     <div class="container_searchBar">
@@ -93,8 +85,8 @@
                         <div class="dropdown-content">
                             <div class="item-top">
                                 <a
-                                    ><h2>gian an 2k1</h2>
-                                    <p>@giaandeptrai123</p></a
+                                    ><h2>${currentUser.name}</h2>
+                                    <p>@${currentUser.name}</p></a
                                 >
                             </div>
                             <div style="padding: 0.5rem 0">
@@ -106,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="item-bottom">
-                                <a>Sign Out</a>
+                                <a href="logout">Sign Out</a>
                             </div>
                         </div>
                     </div>
@@ -136,12 +128,16 @@
                             careers.
                         </p>
                         <div class="container_button">
-                            <div class="container_button_register">
-                                <button><a href="/login.html">Create account</a></button>
-                            </div>
-                            <div class="container_button_login">
-                                <button><a href="/login.html">Log in</a></button>
-                            </div>
+                            <a href="/login.html">
+                                <div class="container_button_register">
+                                    <button>Create account</button>
+                                </div>
+                            </a>
+                            <a href="/login.html">
+                                <div class="container_button_login">
+                                    <button>Log in</button>
+                                </div>
+                            </a>
                         </div>
                     </div>
                     <div class="sidebar_navigation">
@@ -203,7 +199,7 @@
                                 <button><a href="/login.html">Create account</a></button>
                             </div>
                             <div class="container_button_login">
-                                <button><a href="/login.html">Log in</a></button>
+                                <button><a href="firstLoginPage">Log in</a></button>
                             </div>
                         </div>
                     </div>
@@ -500,7 +496,7 @@
                     <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
                     2021
                 </p>
-                <img src="/images/forem_icon.svg" />
+                <img src="./images/forem_icon.svg" />
             </div>
         </footer>
 

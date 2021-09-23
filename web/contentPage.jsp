@@ -42,15 +42,14 @@
                             <p>Categories</p>
                         </div>
                         <div class="dropdown_category_content">
-                            <div class="dropdown_category_item">
-                                <a href="">IT & Software</a>
-                            </div>
-                            <div class="dropdown_category_item"><a href="">Marketing</a></div>
-                            <div class="dropdown_category_item"><a href="">Business</a></div>
-                            <div class="dropdown_category_item"><a href="">Design</a></div>
-                            <div class="dropdown_category_item">
-                                <a href="">Finance & Accounting</a>
-                            </div>
+                            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
+                                <div class="dropdown_category_item">
+                                    <c:url var="cateLink" value="searchByCategory">
+                                        <c:param name="categoryId" value="${cateDTO.ID}"/>
+                                    </c:url>
+                                    <a href="${cateLink}">${cateDTO.name}</a>
+                                </div>  
+                            </c:forEach>
                         </div>
                     </div>
                     <div class="container_searchBar">
@@ -407,13 +406,13 @@
         <footer>
             <div class="container_footer">
                 <p>
-                    <span class="text_footer_strong">DEV Community</span> â A constructive
+                    <span class="text_footer_strong">DEV Community</span> - A constructive
                     and inclusive social network for software developers. With you every
                     step of your journey.
                 </p>
                 <div style="margin: 0.25rem 0"></div>
                 <p>
-                    Built on <span class="text_footer_strong">Forem</span> â the
+                    Built on <span class="text_footer_strong">Forem</span> - the
                     <span class="text_footer_strong">open source</span> software that
                     powers DEV and other inclusive communities
                 </p>
@@ -422,7 +421,7 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">Ãn, An, Äan, Nam, PhÆ°Æ¡ng</span> Â©
+                    <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />
