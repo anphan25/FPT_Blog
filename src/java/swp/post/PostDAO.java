@@ -1,4 +1,3 @@
-
 package swp.post;
 
 import java.sql.Connection;
@@ -9,11 +8,10 @@ import java.util.ArrayList;
 import javax.naming.NamingException;
 import swp.utils.DBHelper;
 
-
 public class PostDAO {
 
     public static ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
-        //tên, avt, email người đăng, title, id, số like, số cmt, approvedTime
+        // tên, avt, email người đăng, title, id, số like, số cmt, approvedTime
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -22,9 +20,9 @@ public class PostDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "select tag, title, postid, emailpost"
-                        + ", DATEPART(minute, p.ApprovedDate) as ApprovedMinute, DATEPART(hour, p.ApprovedDate) as ApprovedHour,  Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
+                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
                         + ", a.name, a.image, p.AwardID"
-                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate des";
+                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
@@ -32,7 +30,8 @@ public class PostDAO {
                 while (rs.next()) {
                     String postID = rs.getString("PostID");
                     String emailPost = rs.getString("EmailPost");
-                    String approvedDate = rs.getString("HourApprove") + "h" + rs.getString("MinuteApprove");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-"
+                            + rs.getString("ApprovedYear");
                     String tag = rs.getString("Tag");
                     String title = rs.getString("Title");
                     String namePoster = rs.getString("Name");
@@ -40,7 +39,8 @@ public class PostDAO {
                     int like = getLikeCounting(postID);
                     int awardID = rs.getInt("AwardID");// bug 30%
                     int comments = getCommentCounting(postID);
-                    PostDTO p = new PostDTO(postID, emailPost, tag, title, approvedDate, namePoster, avatar, awardID, like, comments);
+                    PostDTO p = new PostDTO(postID, emailPost, tag, title, approvedDate, namePoster, avatar, awardID,
+                            like, comments);
                     list.add(p);
                 }
             }
@@ -121,5 +121,58 @@ public class PostDAO {
 
         }
         return count;
+    }
+
+    public static ArrayList<PostDTO> getPostsByTitle(String title)
+            throws SQLException, ClassNotFoundException, NamingException {
+        ArrayList<PostDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+//                String sql = "select p.title, tag, postid, emailpost"
+//                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
+//                        + ", a.name, a.image, p.AwardID"
+//                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email"
+//                        + " and title like ? and p.StatusPost = ? order by p.ApprovedDate desc";
+                String sql = "select p.title, tag, postid, emailpost"
+                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
+                        + ", a.name, a.image, p.AwardID"
+                        + " from tblPosts p, tblAccounts a where p.emailpost = a.email"
+                        + " and title like ? and p.StatusPost = ? order by p.ApprovedDate desc";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, "%" + title + "%");
+                stm.setString(2, "A");
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String postID = rs.getString("PostID");
+                    String emailPost = rs.getString("EmailPost");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-" + rs.getString("ApprovedYear");
+                    String tag = rs.getString("Tag");
+                    String namePoster = rs.getString("Name");
+                    String avatar = rs.getString("Image");
+                    String titleColumn = rs.getString("Title");
+                    int like = getLikeCounting(postID);
+                    int awardID = rs.getInt("AwardID");
+                    int comments = getCommentCounting(postID);
+                    PostDTO p = new PostDTO(postID, emailPost, tag, titleColumn, approvedDate, namePoster, avatar, awardID,
+                            like, comments);
+                    list.add(p);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
     }
 }

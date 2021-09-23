@@ -2,15 +2,13 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 a {
   text-decoration: none;
   color: unset;
 }
-
-
 
 body {
   background-color: #efefef;
@@ -312,7 +310,7 @@ header .container_left .container_searchBar input::placeholder {
 }
 
 .dropdown_category:hover::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -3rem;
   left: 0;
@@ -461,7 +459,7 @@ header .container_right .container_button_register button:hover {
 }
 
 .dropdown:hover::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -3rem;
   left: -100px;
@@ -728,6 +726,15 @@ footer .text_footer_strong {
 .container_posts .container_info_post .post_info .time_and_save {
   display: flex;
   align-items: center;
+}
+
+.no-result {
+  height: 500px;
+  text-align: center;
+}
+
+.no-result h1 {
+  font-weight: 700;
 }
 
 /* toggle_sidebar */

@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package swp.controller;
 
 import java.io.IOException;
@@ -9,62 +14,53 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import swp.category.CategoryDAO;
-import swp.category.CategoryDTO;
 import swp.post.PostDAO;
 import swp.post.PostDTO;
 
+/**
+ *
+ * @author Dell
+ */
+@WebServlet(name = "SearchTitleServlet", urlPatterns = {"/SearchTitleServlet"})
+public class SearchTitleServlet extends HttpServlet {
 
-@WebServlet(name = "LoadAllPostsServlet", urlPatterns = {"/LoadAllPostsServlet"})
-public class LoadAllPostsServlet extends HttpServlet {
-
-    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
 
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("homePage");
+        String url = roadmap.get("searchResultPage");
+
         try {
-            HttpSession session = request.getSession();
-            CategoryDAO cateDAO = new CategoryDAO();
-            cateDAO.loadCategoryList();
-            ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
-            session.setAttribute("CATEGORY_LIST", categorylist);
-            ArrayList<PostDTO> list = PostDAO.getAllPostList();
-            request.setAttribute("ALL_POST", list);
+            String title = request.getParameter("titleValue");
+            title = title.trim();
+            ArrayList<PostDTO> list = PostDAO.getPostsByTitle(title);
+            request.setAttribute("SEARCHLIST_TITLE", list);
+            
         } catch (Exception e) {
-            log("Error at Load all post Servlet Controller: " + e.getMessage());
+            log("Errot at Search Title Servlet: " + e.toString());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
