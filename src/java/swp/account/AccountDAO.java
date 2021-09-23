@@ -1,5 +1,6 @@
 package swp.account;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -15,7 +16,7 @@ import swp.utils.DBHelper;
  *
  * @author Admin
  */
-public class AccountDAO {
+public class AccountDAO implements Serializable{
     private List<AccountDTO> listAccounts;
 
     public List<AccountDTO> getListAccounts() {
@@ -61,15 +62,19 @@ public class AccountDAO {
         }
         return null;
     }
-
-    public AccountDTO getUser(String email, String password) throws NamingException, SQLException {
+    
+    private AccountDTO currentUser;
+    public AccountDTO getCurrentUser(){
+        return currentUser;
+    }
+    public void getUser(String email, String password) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "Select email, name, gender, campus, roleID, statusAccountID, createdDate, image "
+                String sql = "Select Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image "
                         + "from tblAccounts "
                         + "where email = ? and password = ?";
                 pst = con.prepareCall(sql);
@@ -77,31 +82,30 @@ public class AccountDAO {
                 pst.setString(2, password);
                 rs = pst.executeQuery();
                 if (rs.next()) {
-                    String userMail = rs.getString("email");
-//                    String userPassword = rs.getString("password");
-                    String userName = rs.getString("name");
-                    boolean userGender = rs.getBoolean("gender");
-                    String userCampus = rs.getString("campus");
-                    String userRole = rs.getString("roleID");
-                    String userStatus = rs.getString("statusAccountID");
-                    String accountCreatedDate = rs.getString("createdDate");
-                    String userAvatar = rs.getString("image");
-                    AccountDTO obj = new AccountDTO(email, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
-                    return obj;
+                    String userMail = rs.getString("Email");
+                    String userName = rs.getString("Name");
+                    boolean userGender = rs.getBoolean("Gender");
+                    String userCampus = rs.getString("Campus");
+                    String userRole = rs.getString("RoleID");
+                    String userStatus = rs.getString("StatusAccountID");
+                    String accountCreatedDate = rs.getString("CreatedDate");
+                    String userAvatar = rs.getString("Image");
+                    AccountDTO obj = new AccountDTO(userMail, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
+                    this.currentUser = obj;
                 }
             }
         } finally {
+            if (con != null) {
+                con.close();
+            }
             if (pst != null) {
                 pst.close();
             }
             if (rs != null) {
                 rs.close();
             }
-            if (con != null) {
-                con.close();
-            }
+            
         }
-        return null;
     }
 }
 

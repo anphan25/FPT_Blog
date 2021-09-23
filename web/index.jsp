@@ -20,11 +20,12 @@
         <title>Home | FPT Blog</title>
     </head>
     <body>
+        <c:set var="loginStatus" value="${sessionScope.LOGIN}"/>
+        <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
         <header>
-            <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
             <div class="container_header">
                 <div class="container_left">
                     <div class="toggle_sidebar" onclick="toggleSidebarPhone()">
@@ -69,42 +70,67 @@
                       <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
                     </div>
                   </div> -->
-                <div class="container_right">
-                    <div class="container_button_register">
-                        <button><a href="/createPostPage.html">Create Category</a></button>
-                    </div>
-                    <div class="icon_notification_container">
-                        <img src="./images/notification_icon.svg" />
-                    </div>
-                    <div class="dropdown">
-                        <div class="dropbtn">
-                            <img
-                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
-                                />
+                <c:if test="${loginStatus == 'logined'}">
+                    <div class="container_right">
+                        <c:if test="${currentUser.role} == 'S'">
+                            <div class="container_button_register">
+                                <a href="/createPostPage.html"><button>Create Post</button></a>
+                            </div>
+                        </c:if>
+                        <c:if test="${currentUser.role} == 'M'">
+                            <div class="container_button_register">
+                                <a href="/createPostPage.html"><button>Pending Post</button></a>
+                            </div>
+                        </c:if>
+                        <c:if test="${currentUser.role} == 'A'">
+                            <div class="container_button_register">
+                                <a href="/createPostPage.html"><button>Create Category</button></a>
+                            </div>
+                        </c:if>
+                        <div class="icon_notification_container">
+                            <img src="./images/notification_icon.svg" />
                         </div>
-                        <div class="dropdown-content">
-                            <div class="item-top">
-                                <a
-                                    ><h2>${currentUser.name}</h2>
-                                    <p>@${currentUser.name}</p></a
-                                >
+                        <div class="dropdown">
+                            <div class="dropbtn">
+                                <img
+                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                    />
                             </div>
-                            <div style="padding: 0.5rem 0">
-                                <div class="item">
-                                    <a href="profilePage.html"><p>Profile</p></a>
+                            <div class="dropdown-content">
+                                <div class="item-top">
+                                    <a
+                                        ><h2>${currentUser.name}</h2>
+                                        <p>@${currentUser.name}</p></a
+                                    >
                                 </div>
-                                <div class="item">
-                                    <a><p>Create Post</p></a>
+                                <div style="padding: 0.5rem 0">
+                                    <div class="item">
+                                        <a href="profilePage.html"><p>Profile</p></a>
+                                    </div>
+                                    <div class="item">
+                                        <a><p>Create Post</p></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item-bottom">
-                                <a href="logout">Sign Out</a>
+                                <div class="item-bottom">
+                                    <a href="logout">Sign Out</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </c:if>
+                <c:if test="${loginStatus != 'logined'}">
+                    <div class="container_right">
+                        <div class="container_button_login">
+                            <button><a href="firstLoginPage">Login</a></button>
+                        </div>
+                        <div class="container_button_register">
+                            <button><a href="firstLoginPage">Create account</a></button>
+                        </div>
+                    </div>
+                </c:if>
             </div>
         </header>
+
 
         <!-- Main -->
 
@@ -185,45 +211,66 @@
         <section class="main">
             <div class="container_main">
                 <div class="main_container_left">
-                    <div class="introduce_community">
-                        <h2 class="introduce_title">
-                            <span class="brand_text">FPT Community</span> is a community of
-                            690,628 amazing developers
-                        </h2>
-                        <p class="introduce_content">
-                            We're a place where coders share, stay up-to-date and grow their
-                            careers.
-                        </p>
-                        <div class="container_button">
-                            <div class="container_button_register">
-                                <button><a href="/login.html">Create account</a></button>
-                            </div>
-                            <div class="container_button_login">
-                                <button><a href="firstLoginPage">Log in</a></button>
+                    <c:if test="${loginStatus != 'logined'}">
+                        <div class="introduce_community">
+                            <h2 class="introduce_title">
+                                <span class="brand_text">FPT Community</span> is a community of
+                                690,628 amazing developers
+                            </h2>
+                            <p class="introduce_content">
+                                We're a place where coders share, stay up-to-date and grow their
+                                careers.
+                            </p>
+                            <div class="container_button">
+                                <div class="container_button_register">
+                                    <button><a href="/login.html">Create account</a></button>
+                                </div>
+                                <div class="container_button_login">
+                                    <button><a href="firstLoginPage">Log in</a></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                     <div class="sidebar_navigation">
                         <h2 class="title_navigation">Menu</h2>
-                        <a href="/">
+                        <a href="loadBlogs">
                             <div class="container_item">
                                 <img src="./images/house_icon.svg" />
                                 <p>Home</p>
                             </div>
                         </a>
-                        <a href="/login.html">
-                            <div class="container_item">
-                                <img src="./images/hand_shake_icon.svg" />
-                                <p>Log in</p>
-                            </div>
-                        </a>
-
-                        <a href="/pendingPostsList.html">
-                            <div class="container_item">
-                                <img src="./images/list_icon.svg" />
-                                <p>Pending Posts</p>
-                            </div>
-                        </a>
+                        <c:if test="${loginStatus == 'logined'}">
+                            <c:if test="${currentUser == 'S'}">
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser == 'M'}">
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Pending Posts</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser == 'A'}">
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Create Category</p>
+                                    </div>
+                                </a>
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>User List</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                        </c:if>
                     </div>
                     <div class="sidebar_navigation">
                         <h2 class="title_navigation">Common Tags</h2>

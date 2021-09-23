@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                             <div class="item-bottom">
-                                <a>Sign Out</a>
+                                <a  href="logout">Sign Out</a>
                             </div>
                         </div>
                     </div>

@@ -47,7 +47,7 @@ public class LogoutServlet extends HttpServlet {
                 session.removeAttribute(nextElement);
             }
         }finally{
-            response.sendRedirect(LOGIN_PAGE);
+            response.sendRedirect("loadBlogs");
             out.close();
         }
     }
