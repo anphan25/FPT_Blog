@@ -1,5 +1,5 @@
 
-package namth.PendingPost;
+package swp.pendingpost;
 
 import java.io.Serializable;
 import java.sql.Connection;
@@ -7,8 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.naming.NamingException;
-import our.Database.DButils;
+
+import swp.utils.DBHelper;
 
 
 public class PendingPostDAO implements Serializable
@@ -21,7 +23,7 @@ public class PendingPostDAO implements Serializable
         ArrayList<PendingPostDTO> dto = new ArrayList<>();
         try 
         {
-            conn = DButils.getConnection();
+            conn = DBHelper.makeConnection();
             if (conn != null) 
             {
                 String sql = "SELECT tag, title, postid, emailpost "
