@@ -6,7 +6,6 @@
 package swp.account;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  *
@@ -20,7 +19,7 @@ public class AccountDTO implements Serializable{
     private String campus;
     private String role;
     private String status;
-    private Date joinDate;
+    private String joinDate;
     private String avatar;
 
     /**
@@ -42,7 +41,7 @@ public class AccountDTO implements Serializable{
      * @param avatar
      */
     public AccountDTO(String email, String password, String name, boolean gender, String campus, String role,
-            String status, Date joinDate, String avatar) {
+            String status, String joinDate, String avatar) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -59,6 +58,13 @@ public class AccountDTO implements Serializable{
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * @return the joinDate
+     */
+    public String getJoinDate() {
+        return joinDate;
     }
 
     /**
@@ -80,6 +86,13 @@ public class AccountDTO implements Serializable{
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @param joinDate the joinDate to set
+     */
+    public void setJoinDate(String joinDate) {
+        this.joinDate = joinDate;
     }
 
     /**
@@ -143,20 +156,6 @@ public class AccountDTO implements Serializable{
      */
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    /**
-     * @return the joinDate
-     */
-    public Date getJoinDate() {
-        return joinDate;
-    }
-
-    /**
-     * @param joinDate the joinDate to set
-     */
-    public void setJoinDate(Date joinDate) {
-        this.joinDate = joinDate;
     }
 
     /**

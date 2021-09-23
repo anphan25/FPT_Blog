@@ -6,7 +6,6 @@
 package swp.account;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,7 +74,7 @@ public class AccountDAO {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "Select email, password, name, gender, campus, roleID, statusAccountID, createdDate, image "
-                        + "from UserAccount "
+                        + "from tblAccounts "
                         + "where email = ? and password = ?";
                 pst = con.prepareCall(sql);
                 pst.setString(1, email);
@@ -89,7 +88,7 @@ public class AccountDAO {
                     String userCampus = rs.getString("campus");
                     String userRole = rs.getString("roleID");
                     String userStatus = rs.getString("statusAccountID");
-                    Date accountCreatedDate = rs.getDate("createdDate");
+                    String accountCreatedDate = rs.getString("createdDate");
                     String userAvatar = rs.getString("image");
                     AccountDTO obj = new AccountDTO(userMail, userPassword, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
                     return obj;
