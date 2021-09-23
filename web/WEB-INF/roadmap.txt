@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-=index.html
-firstLoginPage=login.html
-=======
 =LoadAllPostsServlet
->>>>>>> main
+firstLoginPage=login.html
 loginPage=login.jsp
 contentPage=contentPage.jsp
 createCategoryPage=createCategory.jsp
@@ -15,10 +11,6 @@ profilePage=profilePage.jsp
 registerPage=register.jsp
 searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
-<<<<<<< HEAD
-loadBlogs=LoadAllBlogsServlet
 login=LoginServlet
-=======
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
->>>>>>> main
