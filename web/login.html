@@ -57,7 +57,7 @@
 
         <div class="container_right">
           <!-- <div class="container_button_register">
-            <button><a href="/login.html">Create Post</a></button>
+            <button><a href="firstLoginPage">Create Post</a></button>
           </div>
           <div class="icon_notification_container">
             <img src="./images/notification_icon.svg" />
@@ -90,10 +90,10 @@
           </div> -->
 
           <div class="container_button_login">
-            <button><a href="/login.html">Login</a></button>
+            <button><a href="firstLoginPage">Login</a></button>
           </div>
           <div class="container_button_register">
-            <button><a href="/login.html">Create account</a></button>
+            <button><a href="firstLoginPage">Create account</a></button>
           </div>
         </div>
       </div>
@@ -117,13 +117,14 @@
             </div>
           </div>
           <p class="or">Or</p>
-          <form>
+          <form action="login" method="POST">
             <div class="field_input">
               <p>Email</p>
               <input
                 type="email"
                 class="form-control"
                 id="exampleInputEmail1"
+                name="txtEmail"
                 aria-describedby="emailHelp"
               />
             </div>
@@ -132,11 +133,11 @@
               <input
                 type="password"
                 class="form-control"
+                name="txtPassword"
                 id="exampleInputPassword1"
               />
             </div>
-
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary" name="btAction">Login</button>
           </form>
           <p class="text_forgot_password">Tui quên mật khẩu</p>
         </div>

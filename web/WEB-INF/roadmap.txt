@@ -1,4 +1,5 @@
 =LoadAllPostsServlet
+firstLoginPage=login.html
 loginPage=login.jsp
 contentPage=contentPage.jsp
 createCategoryPage=createCategory.jsp
@@ -10,6 +11,7 @@ profilePage=profilePage.jsp
 registerPage=register.jsp
 searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
+login=LoginServlet
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
 loadPendingPosts=LoadPendingPostsServlet
