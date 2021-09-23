@@ -49,12 +49,14 @@ public class LoginServlet extends HttpServlet {
             String email = request.getParameter("txtEmail");
             String password = request.getParameter("txtPassword");
             AccountDAO dao = new AccountDAO();
-            AccountDTO result = dao.getUser(email, password);
+            dao.getUser(email, password);
+            AccountDTO result = dao.getCurrentUser();
             // boolean result = dao.test(email, password);
             if(result!=null){
                 url = HOME_PAGE;
+                System.out.println(result);
                 HttpSession session = request.getSession();
-                session.setAttribute("LOGIN", "true");
+                session.setAttribute("LOGIN", "logined");
                 session.setAttribute("CURRENT_USER", result);
             }
         } catch (SQLException sq) {

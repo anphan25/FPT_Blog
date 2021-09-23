@@ -27,7 +27,7 @@
                             <img src="https://i.chungta.vn/2017/12/22/LogoFPT-2017-copy-3042-1513928399.jpg" />
                         </a>
                     </div>
-                    <div class="dropdown_category">
+<!--                    <div class="dropdown_category">
                         <div class="container_category">
                             <p>Categories</p>
                         </div>
@@ -48,7 +48,7 @@
                         <div class="container_icon">
                             <i class="fas fa-search"></i>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
 
                 <div class="container_right">

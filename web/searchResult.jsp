@@ -102,7 +102,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                 </div>
               </div>
               <div class="item-bottom">
-                <a>Sign Out</a>
+                <a  href="logout">Sign Out</a>
               </div>
             </div>
           </div>
