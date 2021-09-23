@@ -26,7 +26,7 @@ public class PendingPostDAO implements Serializable
             {
                 String sql = "SELECT tag, title, postid, emailpost "
                         + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear"
-                        + ", a.name, a.image "
+                        + ", a.name, a.image, p.PostID, p.EmailPost "
                         + "FROM tblPosts p, tblAccounts a "
                         + "WHERE p.emailpost = a.email and p.StatusPost = ? "
                         + "ORDER BY p.createdDate asc";
@@ -42,7 +42,9 @@ public class PendingPostDAO implements Serializable
                     String createDate = rs.getString("createdDay") + "/" + rs.getString("createdMonth") + "/" + rs.getString("createdYear");
                     String name = rs.getString("name");
                     String url = rs.getString("image");
-                    PendingPostDTO dummy = new PendingPostDTO(title, tag, url, createDate, name);
+                    String postID = rs.getString("PostID");
+                    String EmailPost = rs.getString("EmailPost");
+                    PendingPostDTO dummy = new PendingPostDTO(title, tag, url, createDate, name, postID, EmailPost);
                     boolean checker = dto.add(dummy);
                     if(!checker)
                     {

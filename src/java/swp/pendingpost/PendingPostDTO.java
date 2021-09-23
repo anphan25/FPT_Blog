@@ -11,17 +11,19 @@ package namth.PendingPost;
  */
 public class PendingPostDTO
 {
-    String title, tag, imageURL, dateCreated, name;
+    String title, tag, imageURL, dateCreated, name, postID, emailPost;
 
-    public PendingPostDTO(String title, String tag, String imageURL, String dateCreated, String name)
+    public PendingPostDTO(String title, String tag, String imageURL, String dateCreated, String name, String postID, String emailPost)
     {
         this.title = title;
         this.tag = tag;
         this.imageURL = imageURL;
         this.dateCreated = dateCreated;
         this.name = name;
+        this.postID = postID;
+        this.emailPost = emailPost;
     }
-    
+
     public String getTitle()
     {
         return title;
@@ -71,5 +73,27 @@ public class PendingPostDTO
     {
         this.name = name;
     }
+
+    public String getPostID()
+    {
+        return postID;
+    }
+
+    public void setPostID(String postID)
+    {
+        this.postID = postID;
+    }
+
+    public String getEmailPost()
+    {
+        return emailPost;
+    }
+
+    public void setEmailPost(String emailPost)
+    {
+        this.emailPost = emailPost;
+    }
+
     
+
 }
