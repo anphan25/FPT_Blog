@@ -28,7 +28,7 @@ import swp.utils.HashPassword;
  */
 public class RegisterServlet extends HttpServlet {
 
-    private static final String SUCCESS = "login.jsp";
+    private static final String SUCCESS = "login.html";
     private static final String FAIL = "register.jsp";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

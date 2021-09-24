@@ -105,7 +105,10 @@
                                 </div>
                                 <div style="padding: 0.5rem 0">
                                     <div class="item">
-                                        <a href="profilePage.html"><p>Profile</p></a>
+                                        <c:url var="loadCurrentProfileLink" value="loadProfile">
+                                            <c:param name="email" value="${currentUser.email}"/>
+                                        </c:url>
+                                        <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
                                     </div>
                                     <div class="item">
                                         <a><p>Create Post</p></a>
@@ -396,7 +399,12 @@
                                                     />
                                             </div>
                                             <div class="container_name_date_post">
+                                                <c:url var="loadProfileLink" value="loadProfile">
+                                                    <c:param name="email" value="${blogDTO.emailPost}"/>
+                                                </c:url>
+                                                <a href="${loadProfileLink}">
                                                 <p class="username">${blogDTO.namePost}</p>
+                                                </a>
                                                 <p class="date_posted">${blogDTO.approvedDate}</p>
                                             </div>
                                         </div>

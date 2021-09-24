@@ -1,5 +1,6 @@
 package swp.utils;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
@@ -12,7 +13,7 @@ import java.security.spec.InvalidKeySpecException;
  * Author: havoc AT defuse.ca
  * www: http://crackstation.net/hashing-security.htm
  */
-public class HashPassword {
+public class HashPassword implements Serializable{
 
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 

@@ -31,7 +31,7 @@
               />
             </a>
           </div>
-          <div class="dropdown_category">
+<!--          <div class="dropdown_category">
             <div class="container_category">
               <p>Categories</p>
             </div>
@@ -52,7 +52,7 @@
             <div class="container_icon">
               <i class="fas fa-search"></i>
             </div>
-          </div>
+          </div>-->
         </div>
 
         <div class="container_right">
@@ -90,7 +90,7 @@
           </div> -->
 
           <div class="container_button_login">
-            <button><a href="loginPage">Log in</a></button>
+            <button><a href="firstLoginPage">Log in</a></button>
           </div>
           <div class="container_button_register">
             <button><a href="registerPage">Create Account</a></button>
@@ -249,7 +249,7 @@
           <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
           2021
         </p>
-        <img src="/images/forem_icon.svg" />
+        <img src="./images/forem_icon.svg" />
       </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
