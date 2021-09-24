@@ -135,7 +135,7 @@ public class ProfileDAO implements Serializable
             if(con != null)
             {
                 String sql = "SELECT tag, title, postid, Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear, AwardID "
-                        +   "FROM tblPosts WHERE EmailPost = ? AND StatusPost = 'A' AND AwardID is not null "
+                        +   "FROM tblPosts WHERE EmailPost = ? AND StatusPost = 'A' "
                         +   "ORDER BY ApprovedDate desc";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
