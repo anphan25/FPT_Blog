@@ -15,11 +15,10 @@ import swp.category.CategoryDTO;
 import swp.post.PostDAO;
 import swp.post.PostDTO;
 
+@WebServlet(name = "LoadAllPostsServlet", urlPatterns = {"/LoadAllPostsServlet"})
 
-@WebServlet(name = "LoadAllPostsSerAvlet", urlPatterns = {"/LoadAllPostsServlet"})
 public class LoadAllPostsServlet extends HttpServlet {
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -34,6 +33,9 @@ public class LoadAllPostsServlet extends HttpServlet {
             ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
             session.setAttribute("CATEGORY_LIST", categorylist);
             ArrayList<PostDTO> list = PostDAO.getAllPostList();
+            for (PostDTO p : list) {
+                log(p.toString());
+            }
             request.setAttribute("ALL_POST", list);
         } catch (Exception e) {
             log("Error at Load all post Servlet Controller: " + e.getMessage());

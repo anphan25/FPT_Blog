@@ -3,7 +3,7 @@ package swp.post;
 
 import java.io.Serializable;
 
-public class PostDTO implements Serializable{
+public class PostDTO implements Serializable {
 
     private String ID;
     private String emailPost;
@@ -39,8 +39,9 @@ public class PostDTO implements Serializable{
         comments = 0;
 
     }
-    
-    public PostDTO(String ID, String emailPost, String tag, String title, String approvedDate, String namePost, String avatar, int awardID, int likes, int comments) {
+
+    public PostDTO(String ID, String emailPost, String tag, String title, String approvedDate, String namePost,
+            String avatar, int awardID, int likes, int comments) {
         this.ID = ID;
         this.emailPost = emailPost;
         this.tag = tag;
@@ -53,7 +54,9 @@ public class PostDTO implements Serializable{
         this.comments = comments;
     }
 
-    public PostDTO(String ID, String emailPost, String emailApprover, String statusPost, String createdDate, String tag, String title, String approvedDate, String postContent, String categoryID, String namePost, String avatar, int awardID, int likes, int comments) {
+    public PostDTO(String ID, String emailPost, String emailApprover, String statusPost, String createdDate, String tag,
+            String title, String approvedDate, String postContent, String categoryID, String namePost, String avatar,
+            int awardID, int likes, int comments) {
         this.ID = ID;
         this.emailPost = emailPost;
         this.emailApprover = emailApprover;
@@ -71,9 +74,8 @@ public class PostDTO implements Serializable{
         this.comments = comments;
     }
 
-    //this contstructor for profileDAO
-    public PostDTO(String ID, String tag, String title, String approvedDate, int awardID, int likes, int comments)
-    {
+    // this contstructor for profileDAO
+    public PostDTO(String ID, String tag, String title, String approvedDate, int awardID, int likes, int comments) {
         this.ID = ID;
         this.tag = tag;
         this.title = title;
@@ -82,7 +84,7 @@ public class PostDTO implements Serializable{
         this.likes = likes;
         this.comments = comments;
     }
-    
+
     public String getID() {
         return ID;
     }
@@ -202,11 +204,13 @@ public class PostDTO implements Serializable{
     public void setComments(int comments) {
         this.comments = comments;
     }
-     
-    
 
     @Override
     public String toString() {
-        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", awardID=" + awardID + ", likes=" + likes + ", comments=" + comments + '}';
-    } 
+        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover
+                + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title
+                + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", categoryID=" + categoryID
+                + ", namePost=" + namePost + ", avatar=" + avatar + ", awardID=" + awardID + ", likes=" + likes
+                + ", comments=" + comments + '}';
+    }
 }

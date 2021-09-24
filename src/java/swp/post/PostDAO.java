@@ -22,7 +22,7 @@ public class PostDAO {
                 String sql = "select tag, title, postid, emailpost"
                         + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
                         + ", a.name, a.image, p.AwardID"
-                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email and p.StatusPost = ? order by p.ApprovedDate desc";
+                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email where p.StatusPost = ? order by p.ApprovedDate desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
