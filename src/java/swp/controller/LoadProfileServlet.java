@@ -51,7 +51,8 @@ public class LoadProfileServlet extends HttpServlet
         String email = request.getParameter("email");
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = "goto404"; //cái này là vứt trang lỗi 500 hoặc 404 khi nào hoàn thành xong chức năng rồi tính tới việc này.
+//        String url = "goto404"; //cái này là vứt trang lỗi 500 hoặc 404 khi nào hoàn thành xong chức năng rồi tính tới việc này.
+        String url = roadmap.get("profilePage");
         
         try
         {
@@ -64,7 +65,6 @@ public class LoadProfileServlet extends HttpServlet
             //bắt đầu múa quạt
             if(!bloglist.isEmpty()) request.setAttribute("PROFILE_BLOG", bloglist); //chỉ set attribute khi tài khoản đó có post.
             request.setAttribute("PROFILE_INFORMATION", dto);
-            url = "profilePage.jsp"; //không dùng roadmap chỗ này assignment 0 điểm - Khánh quotes
             
         }
         catch(NamingException ex)
