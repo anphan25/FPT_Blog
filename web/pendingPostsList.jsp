@@ -52,13 +52,20 @@
                         </div>
                     </div>
                     <div class="container_searchBar">
-                        <form action="searchTitle">
-                            <input placeholder="Search..." name="titleValue" autocomplete="off"/>
-                        </form>
-                        <div class="container_icon">
+                        <form id="searchit" action="searchTitle">        
+                            <input placeholder="Search..." name="titleValue" />
+                        <div class="container_icon" onclick="submit_form()">
                             <i class="fas fa-search"></i>
                         </div>
+                        </form>
                     </div>
+                    <script>
+                    function submit_form()
+                    {
+                        var form = document.getElementById("searchit");
+                        form.submit();
+                    }
+                    </script>
                 </div>
                 <!-- <div class="container_right">
                   <div class="container_button_register">
