@@ -54,17 +54,17 @@
                         </div>
                     </div>
                     <div class="container_searchBar">
-                        <form action="searchTitle">
+                        <form id="searchit" action="searchTitle">
                             <input
                                 placeholder="Search..."
                                 name="titleValue"
                                 value="${param.titleValue}"
                                 autocomplete="off"
                                 />
+                            <div class="container_icon" onclick="submit_form()">
+                                <i class="fas fa-search"></i>
+                            </div>
                         </form>
-                        <div class="container_icon">
-                            <i class="fas fa-search"></i>
-                        </div>
                     </div>
                 </div>
                 <!-- <div class="container_right">
@@ -357,6 +357,11 @@
             function handleClickOutside() {
                 const toggle_sidebar = document.getElementById("sidebar_phone");
                 toggle_sidebar.style.display = "none";
+            }
+            function submit_form()
+            {
+                var form = document.getElementById("searchit");
+                form.submit();
             }
         </script>
     </body>
