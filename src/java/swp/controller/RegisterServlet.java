@@ -10,9 +10,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,13 +30,16 @@ import swp.utils.HashPassword;
  */
 public class RegisterServlet extends HttpServlet {
 
-    private static final String SUCCESS = "login.html";
-    private static final String FAIL = "register.jsp";
+    private static final String SUCCESS = "firstLoginPage";
+    private static final String FAIL = "registerPage";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
-        String url = FAIL;
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get(FAIL);
+        
         try {
             String name = request.getParameter("name");
             boolean gender = "1".equals(request.getParameter("gender"));
@@ -55,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
             boolean check = dao.registerUser(user);
             if (check) {
 
-                url = SUCCESS;
+                url = roadmap.get(SUCCESS);
             } else {
                 boolean checkDuplicate = dao.checkDuplicate(email);
                 if (checkDuplicate) {
