@@ -57,4 +57,30 @@ public class CategoryDAO implements Serializable{
             }
         }
     }
+    
+    public void createCategory(String categoryName) throws SQLException, NamingException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con!= null){
+                String sql = "insert into tblCategories(CategoryName) values(?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, categoryName);
+                int row = stm.executeUpdate();
+            }
+        }finally{
+           if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            } 
+        }
+    }
 }

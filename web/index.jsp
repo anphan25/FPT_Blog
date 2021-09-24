@@ -72,19 +72,19 @@
                   </div> -->
                 <c:if test="${loginStatus == 'logined'}">
                     <div class="container_right">
-                        <c:if test="${currentUser.role} == 'S'">
+                        <c:if test="${currentUser.role == 'S'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Create Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'M'">
+                        <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Pending Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'A'">
+                        <c:if test="${currentUser.role == 'A'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Create Category</button></a>
+                                <a href="createCategoryPage"><button>Create Category</button></a>
                             </div>
                         </c:if>
                         <div class="icon_notification_container">
@@ -109,9 +109,6 @@
                                             <c:param name="email" value="${currentUser.email}"/>
                                         </c:url>
                                         <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
-                                    </div>
-                                    <div class="item">
-                                        <a><p>Create Post</p></a>
                                     </div>
                                 </div>
                                 <div class="item-bottom">
@@ -243,7 +240,7 @@
                             </div>
                         </a>
                         <c:if test="${loginStatus == 'logined'}">
-                            <c:if test="${currentUser == 'S'}">
+                            <c:if test="${currentUser.role == 'S'}">
                                 <a href="/pendingPostsList.html">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
@@ -251,18 +248,24 @@
                                     </div>
                                 </a>
                             </c:if>
-                            <c:if test="${currentUser == 'M'}">
+                            <c:if test="${currentUser.role == 'M'}">
                                 <a href="/pendingPostsList.html">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
+                                    <a href="/pendingPostsList.html">
+                                        <div class="container_item">
+                                            <img src="./images/list_icon.svg" />
+                                            <p>Create Post</p>
+                                        </div>
+                                    </a>
                                 </a>
                             </c:if>
-                            <c:if test="${currentUser == 'A'}">
-                                <a href="/pendingPostsList.html">
+                            <c:if test="${currentUser.role == 'A'}">
+                                <a href="createCategoryPage">
                                     <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                        <img src="./images/category_icon.svg" />
                                         <p>Create Category</p>
                                     </div>
                                 </a>
@@ -403,7 +406,7 @@
                                                     <c:param name="email" value="${blogDTO.emailPost}"/>
                                                 </c:url>
                                                 <a href="${loadProfileLink}">
-                                                <p class="username">${blogDTO.namePost}</p>
+                                                    <p class="username">${blogDTO.namePost}</p>
                                                 </a>
                                                 <p class="date_posted">${blogDTO.approvedDate}</p>
                                             </div>

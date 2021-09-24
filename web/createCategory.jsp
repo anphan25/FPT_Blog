@@ -188,7 +188,7 @@
                                 <p>Home</p>
                             </div>
                         </a>
-                        <a href="">
+                        <a href="createCategoryPage">
                             <div class="container_item">
                                 <img src="./images/category_icon.svg" />
                                 <p>Create Category</p>
@@ -205,11 +205,12 @@
             </div>
             <div class="main-container">
                 <h1>Category List</h1>
-                <form action="">
+                <form action="createCategory">
                     <input
                         class="add-input"
                         type="text"
                         placeholder="Input a category ..."
+                        name="txtCategory"
                         />
                     <button class="create-btn" type="submit" value="Create">
                         Create
@@ -225,11 +226,13 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" varStatus="counter">
                             <tr>
-                                <td>1</td>
-                                <td>IT & Software</td>
+                                <td>${counter.count}</td>
+                                <td>${cateDTO.name}</td>
                             </tr>
-                            <tr>
+                            </c:forEach>
+<!--                            <tr>
                                 <td>2</td>
                                 <td>Marketing</td>
                             </tr>
@@ -244,7 +247,7 @@
                             <tr>
                                 <td>5</td>
                                 <td>Finance & Accounting</td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
                 </div>
