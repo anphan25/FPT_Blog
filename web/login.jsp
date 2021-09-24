@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -121,12 +122,12 @@
                         </h3>
                         <div class="field_input">
                             <p>Email</p>
-                            <input type="email" class="form-control" id="exampleInputEmail1" name="txtEmail"
+                            <input type="email" class="form-control" id="exampleInputEmail1" name="txtEmail" value="${param.txtEmail}"
                                    aria-describedby="emailHelp" />
                         </div>
                         <div class="field_input">
                             <p>Password</p>
-                            <input type="password" class="form-control" name="txtPassword" id="exampleInputPassword1" />
+                            <input type="password" class="form-control" name="txtPassword" id="exampleInputPassword1" value="${param.txtPassword}"/>
                         </div>
                         <button type="submit" class="btn btn-primary" name="btAction">Login</button>
                     </form>

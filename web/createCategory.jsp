@@ -20,6 +20,7 @@
         <title>Create Category</title>
     </head>
     <body>
+        <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
@@ -70,7 +71,7 @@
                     </div> -->
                 <div class="container_right">
                     <div class="container_button_register">
-                        <button><a href="/login.html">Create Category</a></button>
+                        <button><a href="createCategoryPage">Create Category</a></button>
                     </div>
                     <div class="icon_notification_container">
                         <img src="./images/notification_icon.svg" />
@@ -84,20 +85,20 @@
                         <div class="dropdown-content">
                             <div class="item-top">
                                 <a
-                                    ><h2>BÃ¡nh bÃ¨o 2k1</h2>
-                                    <p>@giaandeptrai123</p></a
+                                    ><h2>${currentUser.name}</h2>
+                                    <p>@${currentUser.name}</p></a
                                 >
                             </div>
                             <div style="padding: 0.5rem 0">
                                 <div class="item">
-                                    <a href="profilePage.html"><p>Profile</p></a>
-                                </div>
-                                <div class="item">
-                                    <a><p>Create Category</p></a>
+                                    <c:url var="loadCurrentProfileLink" value="loadProfile">
+                                        <c:param name="email" value="${currentUser.email}"/>
+                                    </c:url>
+                                    <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
                                 </div>
                             </div>
                             <div class="item-bottom">
-                                <a  href="logout">Sign Out</a>
+                                <a href="logout">Sign Out</a>
                             </div>
                         </div>
                     </div>
@@ -227,27 +228,27 @@
                         </thead>
                         <tbody>
                             <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" varStatus="counter">
-                            <tr>
-                                <td>${counter.count}</td>
-                                <td>${cateDTO.name}</td>
-                            </tr>
+                                <tr>
+                                    <td>${counter.count}</td>
+                                    <td>${cateDTO.name}</td>
+                                </tr>
                             </c:forEach>
-<!--                            <tr>
-                                <td>2</td>
-                                <td>Marketing</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Business</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Design</td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Finance & Accounting</td>
-                            </tr>-->
+                            <!--                            <tr>
+                                                            <td>2</td>
+                                                            <td>Marketing</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Business</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>Design</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>Finance & Accounting</td>
+                                                        </tr>-->
                         </tbody>
                     </table>
                 </div>

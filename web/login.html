@@ -31,7 +31,7 @@
               />
             </a>
           </div>
-<!--          <div class="dropdown_category">
+          <!--          <div class="dropdown_category">
             <div class="container_category">
               <p>Categories</p>
             </div>
@@ -47,7 +47,7 @@
               </div>
             </div>
           </div>-->
-<!--          <div class="container_searchBar">
+          <!--          <div class="container_searchBar">
             <input placeholder="Search..." />
             <div class="container_icon">
               <i class="fas fa-search"></i>
@@ -136,8 +136,11 @@
                 name="txtPassword"
                 id="exampleInputPassword1"
               />
+              <i class="fas fa-eye"></i>
             </div>
-            <button type="submit" class="btn btn-primary" name="btAction">Login</button>
+            <button type="submit" class="btn btn-primary" name="btAction">
+              Login
+            </button>
           </form>
           <p class="text_forgot_password">Tui quên mật khẩu</p>
         </div>
@@ -171,6 +174,21 @@
     </footer>
 
     <script>
+      const passwordInput = document.querySelector("#exampleInputPassword1");
+      const eye = document.querySelector(".fa-eye");
+
+      let x = true;
+
+      eye.addEventListener("click", () => {
+        if (x) {
+          passwordInput.type = "text";
+          x = false;
+        } else {
+          passwordInput.type = "password";
+          x = true;
+        }
+      });
+
       // history.pushState(null, document.title, location.href);
       // history.back();
       // history.forward();

@@ -11,10 +11,13 @@ import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +33,7 @@ import swp.account.AccountDTO;
  */
 
 public class LoginServlet extends HttpServlet {
-    private final String HOME_PAGE = "LoadAllPostsServlet";
+    private final String HOME_PAGE = "loadBlogs";
     private final String LOGIN_INVALID_PAGE = "loginPage";
 
     /**
@@ -46,8 +49,10 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String url = LOGIN_INVALID_PAGE;
-
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get(LOGIN_INVALID_PAGE);
+        
 
         try {
             String email = request.getParameter("txtEmail");
@@ -57,7 +62,7 @@ public class LoginServlet extends HttpServlet {
             AccountDTO result = dao.getCurrentUser();
             // boolean result = dao.test(email, password);
             if(result!=null){
-                url = HOME_PAGE;
+                url = roadmap.get(HOME_PAGE);
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN", "logined");
                 session.setAttribute("CURRENT_USER", result);
@@ -67,8 +72,8 @@ public class LoginServlet extends HttpServlet {
         }catch(NamingException ne){
             log("LoginServlet_NamingException "+ne.getMessage());
         }finally{
-            response.sendRedirect(url);;
-            out.close();
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 

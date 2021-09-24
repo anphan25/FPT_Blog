@@ -470,6 +470,7 @@ footer .text_footer_strong {
 }
 
 .container_card .field_input {
+  position: relative;
   padding: 0.25rem 0;
 }
 
@@ -515,6 +516,14 @@ footer .text_footer_strong {
   text-align: center;
   font-size: 14px;
   color: #3b49df;
+}
+
+.fa-eye {
+  position: absolute;
+  right: 10;
+  top: 55;
+  color: #676a6c;
+  cursor: pointer;
 }
 
 /* RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE */
