@@ -519,6 +519,16 @@ a {
   font-weight: 400;
 }
 
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.create-post img {
+  width: 24px;
+  height: 24px;
+}
+
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */

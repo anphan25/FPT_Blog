@@ -242,21 +242,21 @@
                         <c:if test="${loginStatus == 'logined'}">
                             <c:if test="${currentUser.role == 'S'}">
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
                                         <p>Create Post</p>
                                     </div>
                                 </a>
                             </c:if>
                             <c:if test="${currentUser.role == 'M'}">
-                                <a href="/pendingPostsList.html">
+                                <a href="loadPendingPosts">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
                                     <a href="/pendingPostsList.html">
-                                        <div class="container_item">
-                                            <img src="./images/list_icon.svg" />
+                                        <div class="container_item create-post">
+                                            <img src="./images/create-blog.svg" />
                                             <p>Create Post</p>
                                         </div>
                                     </a>
@@ -270,8 +270,8 @@
                                     </div>
                                 </a>
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/user-list.svg" />
                                         <p>User List</p>
                                     </div>
                                 </a>
