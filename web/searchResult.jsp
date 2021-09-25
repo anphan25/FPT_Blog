@@ -98,7 +98,7 @@
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img
-                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                    src="${currentUser.avatar}"
                                     />
                             </div>
                             <div class="dropdown-content">
@@ -272,7 +272,7 @@
                                                 <h1 class="title_post">${searchTitleDTO.title}</h1>
                                             </a>
                                             <div class="hashtag">
-                                                <p><span class="hash">#</span>${searchTitleDTO.tag}</p>
+                                                <p><span class="hash"></span>${searchTitleDTO.tag}</p>
                                             </div>
                                             <div class="statistic">
                                                 <div class="reaction_and_comments">
@@ -310,11 +310,85 @@
                             </div>
                         </c:forEach>
                     </c:if>
-                    <c:if test="${empty searchTitleList}">
+
+
+                    <c:set var="searchCategoryList" value="${requestScope.SEARCHLIST_CATEGORY}"/>
+                    <c:if test="${not empty searchCategoryList}">
+                        <c:forEach var="searchCategoryDTO" items="${searchCategoryList}">
+                            <div class="post">
+                                <a href="/contentPage.html">
+                                    <div class="container_info_post">
+                                        <div class="user_info">
+                                            <div class="container_avatar">
+                                                <img
+                                                    src="${searchCategoryDTO.avatar}"
+                                                    />
+                                            </div>
+                                            <div class="container_name_date_post">
+                                                <c:url var="loadProfileLink" value="loadProfile">
+                                                    <c:param name="email" value="${searchCategoryDTO.emailPost}"/>
+                                                </c:url>
+                                                <a href="${loadProfileLink}">
+                                                    <p class="username">${searchCategoryDTO.namePost}</p>
+                                                </a>
+                                                <p class="date_posted">
+                                                    ${searchCategoryDTO.approvedDate}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="post_info">
+                                            <c:url var="loadContentLink" value="loadPostContent">
+                                                <c:param name="postId" value="${searchCategoryDTO.ID}" />
+                                            </c:url>
+                                            <a href="${loadContentLink}">
+                                                <h1 class="title_post">${searchCategoryDTO.title}</h1>
+                                            </a>
+                                            <div class="hashtag">
+                                                <p><span class="hash"></span>${searchCategoryDTO.tag}</p>
+                                            </div>
+                                            <div class="statistic">
+                                                <div class="reaction_and_comments">
+                                                    <div>
+                                                        <img src="./images/vote_icon.svg" />
+                                                        <p>
+                                                            ${searchCategoryDTO.likes}
+                                                            <span class="text_comments_votes">Likes</span>
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <img src="./images/comment_icon.svg" />
+                                                        <p>
+                                                            ${searchCategoryDTO.comments}
+                                                            <span class="text_comments_votes">Comments</span>
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <img src="./images/award2.svg" />
+                                                        <p>
+                                                            ${searchCategoryDTO.awardID}
+                                                            <span class="text_comments_votes">Awards</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="time_and_save">
+                                                    <div>
+                                                        <button>Save</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+
+                    <c:if test="${empty searchTitleList && empty searchCategoryList}">
                         <div class="no-result">
                             <h1>No result matches</h1>
                         </div>
                     </c:if>
+
                 </div>
             </div>
         </div>
