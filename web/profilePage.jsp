@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="profile" value="${requestScope.PROFILE_INFORMATION}" />
 <c:set var="bloglist" value="${requestScope.PROFILE_BLOG}" />
 <c:set var="login" value="${sessionScope.ACCOUNT}" />
@@ -158,10 +158,10 @@
                         </p>
                         <div class="container_button">
                             <div class="container_button_register">
-                                <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
+                                <button><a href="/login.html">TÃ¡ÂºÂ¡o tÃÂ i khoÃ¡ÂºÂ£n</a></button>
                             </div>
                             <div class="container_button_login">
-                                <button><a href="/login.html">ÄÄƒng nháº­p</a></button>
+                                <button><a href="/login.html">ÃÂÃÆng nhÃ¡ÂºÂ­p</a></button>
                             </div>
                         </div>
                     </div>
@@ -169,15 +169,15 @@
                         <h2 class="title_navigation">Menu</h2>
                         <div class="container_item">
                             <img src="./images/house_icon.svg" />
-                            <p>Trang chá»§</p>
+                            <p>Trang chÃ¡Â»Â§</p>
                         </div>
                         <div class="container_item">
                             <img src="./images/hand_shake_icon.svg" />
-                            <p>ÄÄƒng nháº­p</p>
+                            <p>ÃÂÃÆng nhÃ¡ÂºÂ­p</p>
                         </div>
                     </div>
                     <div class="sidebar_navigation">
-                        <h2 class="title_navigation">Tags phá»• biáº¿n</h2>
+                        <h2 class="title_navigation">Tags phÃ¡Â»â¢ biÃ¡ÂºÂ¿n</h2>
                         <div class="container_item">
                             <p>#nodejs</p>
                         </div>
@@ -319,7 +319,7 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">Ân, An, ?an, Nam, Ph??ng</span> ©
+                    <span class="text_footer_strong">Ãn, An, ?an, Nam, Ph??ng</span> Â©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />

@@ -55,7 +55,7 @@
                     </div>
                     <div class="container_searchBar">
                         <form id="searchit" action="searchTitle">        
-                            <input placeholder="Search..." name="titleValue" />
+                            <input placeholder="Search..." name="titleValue" autocomplete="off"/>
                         <div class="container_icon" onclick="submit_form()">
                             <i class="fas fa-search"></i>
                         </div>

@@ -21,6 +21,7 @@
     </head>
     <body>
         <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
+        <c:set var="loginStatus" value="${sessionScope.LOGIN}"/>
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
@@ -183,7 +184,7 @@
                 <div class="navigation_left">
                     <div class="sidebar_navigation">
                         <h2 class="title_navigation">Menu</h2>
-                        <a href="/">
+                        <a href="loadBlogs">
                             <div class="container_item">
                                 <img src="./images/house_icon.svg" />
                                 <p>Home</p>

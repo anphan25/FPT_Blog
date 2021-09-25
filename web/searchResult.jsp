@@ -219,7 +219,45 @@
                                 <p>Home</p>
                             </div>
                         </a>
-                        <a href="createCategoryPage">
+                        <c:if test="${loginStatus == 'logined'}">
+                            <c:if test="${currentUser.role == 'S'}">
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'M'}">
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Pending Posts</p>
+                                    </div>
+                                    <a href="/pendingPostsList.html">
+                                        <div class="container_item">
+                                            <img src="./images/list_icon.svg" />
+                                            <p>Create Post</p>
+                                        </div>
+                                    </a>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'A'}">
+                                <a href="createCategoryPage">
+                                    <div class="container_item">
+                                        <img src="./images/category_icon.svg" />
+                                        <p>Create Category</p>
+                                    </div>
+                                </a>
+                                <a href="/pendingPostsList.html">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>User List</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                        </c:if>
+<!--                        <a href="createCategoryPage">
                             <div class="container_item">
                                 <img src="./images/category_icon.svg" />
                                 <p>Create Category</p>
@@ -230,7 +268,7 @@
                                 <img src="./images/list_icon.svg" />
                                 <p>User List</p>
                             </div>
-                        </a>
+                        </a>-->
                     </div>
                 </div>
             </div>
