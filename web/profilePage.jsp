@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="profile" value="${requestScope.PROFILE_INFORMATION}" />
-<c:set var="bloglist" value ="${requestScope.PROFILE_BLOG}" />
+<c:set var="bloglist" value="${requestScope.PROFILE_BLOG}" />
 <c:set var="login" value="${sessionScope.ACCOUNT}" />
-
-
+<c:set var="loginStatus" value="${sessionScope.LOGIN}" />
+<c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,19 +44,23 @@
                             <p>Categories</p>
                         </div>
                         <div class="dropdown_category_content">
-                            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
+                            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}">
                                 <div class="dropdown_category_item">
                                     <c:url var="cateLink" value="searchByCategory">
-                                        <c:param name="categoryId" value="${cateDTO.ID}"/>
+                                        <c:param name="categoryId" value="${cateDTO.ID}" />
                                     </c:url>
                                     <a href="${cateLink}">${cateDTO.name}</a>
-                                </div>  
+                                </div>
                             </c:forEach>
                         </div>
                     </div>
                     <div class="container_searchBar">
                         <form action="searchTitle">
-                            <input placeholder="Search..." name="titleValue" autocomplete="off"/>
+                            <input
+                                placeholder="Search..."
+                                name="titleValue"
+                                autocomplete="off"
+                                />
                         </form>
                         <div class="container_icon">
                             <i class="fas fa-search"></i>
@@ -66,19 +70,21 @@
 
                 <c:if test="${loginStatus == 'logined'}">
                     <div class="container_right">
-                        <c:if test="${currentUser.role} == 'S'">
+                        <c:if test="${currentUser.role == 'S'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Create Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'M'">
+                        <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Pending Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'A'">
+                        <c:if test="${currentUser.role == 'A'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Create Category</button></a>
+                                <a href="/createPostPage.html"
+                                   ><button>Create Category</button></a
+                                >
                             </div>
                         </c:if>
                         <div class="icon_notification_container">
@@ -87,7 +93,7 @@
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img
-                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                    src="${currentUser.avatar}"
                                     />
                             </div>
                             <div class="dropdown-content">
@@ -99,7 +105,10 @@
                                 </div>
                                 <div style="padding: 0.5rem 0">
                                     <div class="item">
-                                        <a href="profilePage.html"><p>Profile</p></a>
+                                        <c:url var="loadCurrentProfileLink" value="loadProfile">
+                                            <c:param name="email" value="${currentUser.email}" />
+                                        </c:url>
+                                        <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
                                     </div>
                                     <div class="item">
                                         <a><p>Create Post</p></a>
@@ -149,10 +158,10 @@
                         </p>
                         <div class="container_button">
                             <div class="container_button_register">
-                                <button><a href="/login.html">Tạo tài khoản</a></button>
+                                <button><a href="/login.html">TÃ¡ÂºÂ¡o tÃÂ i khoÃ¡ÂºÂ£n</a></button>
                             </div>
                             <div class="container_button_login">
-                                <button><a href="/login.html">Đăng nhập</a></button>
+                                <button><a href="/login.html">ÃÂÃÆng nhÃ¡ÂºÂ­p</a></button>
                             </div>
                         </div>
                     </div>
@@ -160,15 +169,15 @@
                         <h2 class="title_navigation">Menu</h2>
                         <div class="container_item">
                             <img src="./images/house_icon.svg" />
-                            <p>Trang chủ</p>
+                            <p>Trang chÃ¡Â»Â§</p>
                         </div>
                         <div class="container_item">
                             <img src="./images/hand_shake_icon.svg" />
-                            <p>Đăng nhập</p>
+                            <p>ÃÂÃÆng nhÃ¡ÂºÂ­p</p>
                         </div>
                     </div>
                     <div class="sidebar_navigation">
-                        <h2 class="title_navigation">Tags phổ biến</h2>
+                        <h2 class="title_navigation">Tags phÃ¡Â»â¢ biÃ¡ÂºÂ¿n</h2>
                         <div class="container_item">
                             <p>#nodejs</p>
                         </div>
@@ -203,10 +212,7 @@
         <div class="container">
             <div class="info">
                 <div class="profile-avt">
-                    <img
-                        src="${profile.imageURL}"
-                        alt=""
-                        />
+                    <img src="${profile.imageURL}" alt="" />
                 </div>
                 <div class="info-content">
                     <p class="info-name">${profile.name}</p>
@@ -237,18 +243,20 @@
                         </div>
                     </div>
                     <div class="posted-posts">
-                        <c:if test = "${not empty bloglist}">
-                            <c:forEach var = "blog" items = "${bloglist}" >
+                        <c:if test="${not empty bloglist}">
+                            <c:forEach var="blog" items="${bloglist}">
                                 <div class="posted-post">
                                     <div class="time">${blog.approvedDate}</div>
                                     <div class="post-items">
                                         <p class="post-title">${blog.title}</p>
                                         <div class="post-tags">
-                                            <p class="post-tag"><span class="hash">#</span>${blog.tag}</p>
+                                            <p class="post-tag">
+                                                <span class="hash"></span>${blog.tag}
+                                            </p>
                                             <!--
-                                            <p class="post-tag"><span class="hash">#</span>vue</p>
-                                            <p class="post-tag"><span class="hash">#</span>angular</p>
-                                            <p class="post-tag"><span class="hash">#</span>javascript</p>
+                                                                  <p class="post-tag"><span class="hash">#</span>vue</p>
+                                                                  <p class="post-tag"><span class="hash">#</span>angular</p>
+                                                                  <p class="post-tag"><span class="hash">#</span>javascript</p>
                                             -->
                                         </div>
                                         <div class="statistic">
@@ -280,6 +288,11 @@
                                 </div>
                             </c:forEach>
                         </c:if>
+                        <c:if test="${empty bloglist}">
+                            <div class="user-nopost">
+                                <h1>No blog was posted</h1>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -291,13 +304,13 @@
         <footer>
             <div class="container_footer">
                 <p>
-                    <span class="text_footer_strong">DEV Community</span> ? A constructive
+                    <span class="text_footer_strong">DEV Community</span> - A constructive
                     and inclusive social network for software developers. With you every
                     step of your journey.
                 </p>
                 <div style="margin: 0.25rem 0"></div>
                 <p>
-                    Built on <span class="text_footer_strong">Forem</span> ? the
+                    Built on <span class="text_footer_strong">Forem</span> - the
                     <span class="text_footer_strong">open source</span> software that
                     powers DEV and other inclusive communities
                 </p>
@@ -306,12 +319,13 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">�n, An, ?an, Nam, Ph??ng</span> �
+                    <span class="text_footer_strong">Ãn, An, ?an, Nam, Ph??ng</span> Â©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />
             </div>
         </footer>
+
 
         <!-- script   -->
         <!-- script   -->
@@ -327,4 +341,5 @@
             }
         </script>
     </body>
+
 </html>

@@ -54,12 +54,12 @@
                         </div>
                     </div>
                     <div class="container_searchBar">
-                        <form action="searchTitle">
+                        <form id="searchit" action="searchTitle">        
                             <input placeholder="Search..." name="titleValue" autocomplete="off"/>
-                        </form>
-                        <div class="container_icon">
+                        <div class="container_icon" onclick="submit_form()">
                             <i class="fas fa-search"></i>
                         </div>
+                        </form>
                     </div>
                 </div>
                 <!-- <div class="container_right">
@@ -72,19 +72,19 @@
                   </div> -->
                 <c:if test="${loginStatus == 'logined'}">
                     <div class="container_right">
-                        <c:if test="${currentUser.role} == 'S'">
+                        <c:if test="${currentUser.role == 'S'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Create Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'M'">
+                        <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
                                 <a href="/createPostPage.html"><button>Pending Post</button></a>
                             </div>
                         </c:if>
-                        <c:if test="${currentUser.role} == 'A'">
+                        <c:if test="${currentUser.role == 'A'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Create Category</button></a>
+                                <a href="createCategoryPage"><button>Create Category</button></a>
                             </div>
                         </c:if>
                         <div class="icon_notification_container">
@@ -93,7 +93,7 @@
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img
-                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                    src="${currentUser.avatar}"
                                     />
                             </div>
                             <div class="dropdown-content">
@@ -109,9 +109,6 @@
                                             <c:param name="email" value="${currentUser.email}"/>
                                         </c:url>
                                         <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
-                                    </div>
-                                    <div class="item">
-                                        <a><p>Create Post</p></a>
                                     </div>
                                 </div>
                                 <div class="item-bottom">
@@ -243,32 +240,38 @@
                             </div>
                         </a>
                         <c:if test="${loginStatus == 'logined'}">
-                            <c:if test="${currentUser == 'S'}">
+                            <c:if test="${currentUser.role == 'S'}">
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
                                         <p>Create Post</p>
                                     </div>
                                 </a>
                             </c:if>
-                            <c:if test="${currentUser == 'M'}">
-                                <a href="/pendingPostsList.html">
+                            <c:if test="${currentUser.role == 'M'}">
+                                <a href="loadPendingPosts">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
+                                    <a href="/pendingPostsList.html">
+                                        <div class="container_item create-post">
+                                            <img src="./images/create-blog.svg" />
+                                            <p>Create Post</p>
+                                        </div>
+                                    </a>
                                 </a>
                             </c:if>
-                            <c:if test="${currentUser == 'A'}">
-                                <a href="/pendingPostsList.html">
+                            <c:if test="${currentUser.role == 'A'}">
+                                <a href="createCategoryPage">
                                     <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                        <img src="./images/category_icon.svg" />
                                         <p>Create Category</p>
                                     </div>
                                 </a>
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/user-list.svg" />
                                         <p>User List</p>
                                     </div>
                                 </a>
@@ -395,7 +398,7 @@
                                         <div class="user_info">
                                             <div class="container_avatar">
                                                 <img
-                                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
+                                                    src="${blogDTO.avatar}"
                                                     />
                                             </div>
                                             <div class="container_name_date_post">
@@ -403,7 +406,7 @@
                                                     <c:param name="email" value="${blogDTO.emailPost}"/>
                                                 </c:url>
                                                 <a href="${loadProfileLink}">
-                                                <p class="username">${blogDTO.namePost}</p>
+                                                    <p class="username">${blogDTO.namePost}</p>
                                                 </a>
                                                 <p class="date_posted">${blogDTO.approvedDate}</p>
                                             </div>
@@ -418,7 +421,7 @@
                                                 </h1>
                                             </a>
                                             <div class="hashtag">
-                                                <p><span class="hash">#</span>${blogDTO.tag}</p>
+                                                <p><span class="hash"></span>${blogDTO.tag}</p>
                                                 <!--                      <p><span class="hash">#</span>vue</p>
                                                                       <p><span class="hash">#</span>angular</p>
                                                                       <p><span class="hash">#</span>javascript</p>-->
@@ -563,6 +566,11 @@
             function handleClickOutside() {
                 const toggle_sidebar = document.getElementById('sidebar_phone');
                 toggle_sidebar.style.display = 'none';
+            }
+            function submit_form()
+            {
+                var form = document.getElementById("searchit");
+                form.submit();
             }
         </script>
     </body>

@@ -20,6 +20,8 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     <title>Search Result</title>
   </head>
   <body>
+    <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
+    <c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
     <!-- header  -->
     <!-- header  -->
     <!-- header  -->
@@ -52,61 +54,85 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </div>
           </div>
           <div class="container_searchBar">
-            <form action="searchTitle">
+            <form id="searchit" action="searchTitle">
               <input
                 placeholder="Search..."
                 name="titleValue"
                 value="${param.titleValue}"
                 autocomplete="off"
               />
+              <div class="container_icon" onclick="submit_form()">
+                <i class="fas fa-search"></i>
+              </div>
             </form>
-            <div class="container_icon">
-              <i class="fas fa-search"></i>
-            </div>
           </div>
         </div>
         <!-- <div class="container_right">
-                    <div class="container_button_login">
-                      <button><a href="/login.html">ÄÄng nháº­p</a></button>
-                    </div>
-                    <div class="container_button_register">
-                      <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
-                    </div>
-                  </div> -->
-        <div class="container_right">
-          <div class="container_button_register">
-            <button><a href="/login.html">Create Category</a></button>
-          </div>
-          <div class="icon_notification_container">
-            <img src="./images/notification_icon.svg" />
-          </div>
-          <div class="dropdown">
-            <div class="dropbtn">
-              <img
-                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
-              />
-            </div>
-            <div class="dropdown-content">
-              <div class="item-top">
-                <a
-                  ><h2>BÃ¡nh bÃ¨o 2k1</h2>
-                  <p>@giaandeptrai123</p></a
+                            <div class="container_button_login">
+                              <button><a href="/login.html">ÄÄng nháº­p</a></button>
+                            </div>
+                            <div class="container_button_register">
+                              <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
+                            </div>
+                          </div> -->
+        <c:if test="${loginStatus == 'logined'}">
+          <div class="container_right">
+            <c:if test="${currentUser.role == 'S'}">
+              <div class="container_button_register">
+                <a href="/createPostPage.html"><button>Create Post</button></a>
+              </div>
+            </c:if>
+            <c:if test="${currentUser.role == 'M'}">
+              <div class="container_button_register">
+                <a href="/createPostPage.html"><button>Pending Post</button></a>
+              </div>
+            </c:if>
+            <c:if test="${currentUser.role == 'A'}">
+              <div class="container_button_register">
+                <a href="createCategoryPage"
+                  ><button>Create Category</button></a
                 >
               </div>
-              <div style="padding: 0.5rem 0">
-                <div class="item">
-                  <a href="profilePage.html"><p>Profile</p></a>
-                </div>
-                <div class="item">
-                  <a><p>Create Post</p></a>
-                </div>
+            </c:if>
+            <div class="icon_notification_container">
+              <img src="./images/notification_icon.svg" />
+            </div>
+            <div class="dropdown">
+              <div class="dropbtn">
+                <img src="${currentUser.avatar}" />
               </div>
-              <div class="item-bottom">
-                <a  href="logout">Sign Out</a>
+              <div class="dropdown-content">
+                <div class="item-top">
+                  <a
+                    ><h2>${currentUser.name}</h2>
+                    <p>@${currentUser.name}</p></a
+                  >
+                </div>
+                <div style="padding: 0.5rem 0">
+                  <div class="item">
+                    <c:url var="loadCurrentProfileLink" value="loadProfile">
+                      <c:param name="email" value="${currentUser.email}" />
+                    </c:url>
+                    <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
+                  </div>
+                </div>
+                <div class="item-bottom">
+                  <a href="logout">Sign Out</a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </c:if>
+        <c:if test="${loginStatus != 'logined'}">
+          <div class="container_right">
+            <div class="container_button_login">
+              <button><a href="firstLoginPage">Login</a></button>
+            </div>
+            <div class="container_button_register">
+              <button><a href="registerPage">Create account</a></button>
+            </div>
+          </div>
+        </c:if>
       </div>
     </header>
 
@@ -187,24 +213,62 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
         <div class="navigation_left">
           <div class="sidebar_navigation">
             <h2 class="title_navigation">Menu</h2>
-            <a href="/">
+            <a href="loadBlogs">
               <div class="container_item">
                 <img src="./images/house_icon.svg" />
                 <p>Home</p>
               </div>
             </a>
-            <a href="">
-              <div class="container_item">
-                <img src="./images/category_icon.svg" />
-                <p>Create Category</p>
-              </div>
-            </a>
-            <a href="">
-              <div class="container_item">
-                <img src="./images/list_icon.svg" />
-                <p>User List</p>
-              </div>
-            </a>
+            <c:if test="${loginStatus == 'logined'}">
+              <c:if test="${currentUser.role == 'S'}">
+                <a href="/pendingPostsList.html">
+                  <div class="container_item">
+                    <img src="./images/create-blog.svg" />
+                    <p>Create Post</p>
+                  </div>
+                </a>
+              </c:if>
+              <c:if test="${currentUser.role == 'M'}">
+                <a href="loadPendingPosts">
+                  <div class="container_item">
+                    <img src="./images/list_icon.svg" />
+                    <p>Pending Posts</p>
+                  </div>
+                  <a href="/pendingPostsList.html">
+                    <div class="container_item create-post">
+                      <img src="./images/create-blog.svg" />
+                      <p>Create Post</p>
+                    </div>
+                  </a>
+                </a>
+              </c:if>
+              <c:if test="${currentUser.role == 'A'}">
+                <a href="createCategoryPage">
+                  <div class="container_item">
+                    <img src="./images/category_icon.svg" />
+                    <p>Create Category</p>
+                  </div>
+                </a>
+                <a href="/pendingPostsList.html">
+                  <div class="container_item user-list-icon">
+                    <img src="./images/user-list.svg" />
+                    <p>User List</p>
+                  </div>
+                </a>
+              </c:if>
+            </c:if>
+            <!--                        <a href="createCategoryPage">
+                            <div class="container_item">
+                                <img src="./images/category_icon.svg" />
+                                <p>Create Category</p>
+                            </div>
+                        </a>
+                        <a href="">
+                            <div class="container_item">
+                                <img src="./images/list_icon.svg" />
+                                <p>User List</p>
+                            </div>
+                        </a>-->
           </div>
         </div>
       </div>
@@ -227,7 +291,15 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                         />
                       </div>
                       <div class="container_name_date_post">
-                        <p class="username">${searchTitleDTO.namePost}</p>
+                        <c:url var="loadProfileLink" value="loadProfile">
+                          <c:param
+                            name="email"
+                            value="${searchTitleDTO.emailPost}"
+                          />
+                        </c:url>
+                        <a href="${loadProfileLink}">
+                          <p class="username">${searchTitleDTO.namePost}</p>
+                        </a>
                         <p class="date_posted">
                           ${searchTitleDTO.approvedDate}
                         </p>
@@ -235,13 +307,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
                     </div>
                     <div class="post_info">
                       <c:url var="loadContentLink" value="loadPostContent">
-                        <c:param name="postId" value="${blogDTO.ID}" />
+                        <c:param name="postId" value="${searchTitleDTO.ID}" />
                       </c:url>
                       <a href="${loadContentLink}">
                         <h1 class="title_post">${searchTitleDTO.title}</h1>
                       </a>
                       <div class="hashtag">
-                        <p><span class="hash">#</span>${searchTitleDTO.tag}</p>
+                        <p><span class="hash"></span>${searchTitleDTO.tag}</p>
                       </div>
                       <div class="statistic">
                         <div class="reaction_and_comments">
@@ -279,7 +351,88 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
               </div>
             </c:forEach>
           </c:if>
-          <c:if test="${empty searchTitleList}">
+
+          <c:set
+            var="searchCategoryList"
+            value="${requestScope.SEARCHLIST_CATEGORY}"
+          />
+          <c:if test="${not empty searchCategoryList}">
+            <c:forEach var="searchCategoryDTO" items="${searchCategoryList}">
+              <div class="post">
+                <a href="/contentPage.html">
+                  <div class="container_info_post">
+                    <div class="user_info">
+                      <div class="container_avatar">
+                        <img src="${searchCategoryDTO.avatar}" />
+                      </div>
+                      <div class="container_name_date_post">
+                        <c:url var="loadProfileLink" value="loadProfile">
+                          <c:param
+                            name="email"
+                            value="${searchCategoryDTO.emailPost}"
+                          />
+                        </c:url>
+                        <a href="${loadProfileLink}">
+                          <p class="username">${searchCategoryDTO.namePost}</p>
+                        </a>
+                        <p class="date_posted">
+                          ${searchCategoryDTO.approvedDate}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="post_info">
+                      <c:url var="loadContentLink" value="loadPostContent">
+                        <c:param
+                          name="postId"
+                          value="${searchCategoryDTO.ID}"
+                        />
+                      </c:url>
+                      <a href="${loadContentLink}">
+                        <h1 class="title_post">${searchCategoryDTO.title}</h1>
+                      </a>
+                      <div class="hashtag">
+                        <p>
+                          <span class="hash"></span>${searchCategoryDTO.tag}
+                        </p>
+                      </div>
+                      <div class="statistic">
+                        <div class="reaction_and_comments">
+                          <div>
+                            <img src="./images/vote_icon.svg" />
+                            <p>
+                              ${searchCategoryDTO.likes}
+                              <span class="text_comments_votes">Likes</span>
+                            </p>
+                          </div>
+                          <div>
+                            <img src="./images/comment_icon.svg" />
+                            <p>
+                              ${searchCategoryDTO.comments}
+                              <span class="text_comments_votes">Comments</span>
+                            </p>
+                          </div>
+                          <div>
+                            <img src="./images/award2.svg" />
+                            <p>
+                              ${searchCategoryDTO.awardID}
+                              <span class="text_comments_votes">Awards</span>
+                            </p>
+                          </div>
+                        </div>
+                        <div class="time_and_save">
+                          <div>
+                            <button>Save</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </c:forEach>
+          </c:if>
+
+          <c:if test="${empty searchTitleList && empty searchCategoryList}">
             <div class="no-result">
               <h1>No result matches</h1>
             </div>
@@ -326,6 +479,10 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       function handleClickOutside() {
         const toggle_sidebar = document.getElementById("sidebar_phone");
         toggle_sidebar.style.display = "none";
+      }
+      function submit_form() {
+        var form = document.getElementById("searchit");
+        form.submit();
       }
     </script>
   </body>

@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 a {
@@ -310,7 +310,7 @@ header .container_left .container_searchBar input::placeholder {
 }
 
 .dropdown_category:hover::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -3rem;
   left: 0;
@@ -459,7 +459,7 @@ header .container_right .container_button_register button:hover {
 }
 
 .dropdown:hover::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -3rem;
   left: -100px;
@@ -576,6 +576,11 @@ header .container_right .container_button_register button:hover {
 
 .category-list table tbody td {
   padding: 10px 0px;
+}
+
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
 }
 
 /* Footer */
