@@ -79,8 +79,8 @@
                     <div class="dropdown">
                         <div class="dropbtn">
                             <img
-                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
-                                />
+                                src="${currentUser.avatar}"
+                                /> 
                         </div>
                         <div class="dropdown-content">
                             <div class="item-top">
