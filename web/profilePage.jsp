@@ -158,10 +158,10 @@
                         </p>
                         <div class="container_button">
                             <div class="container_button_register">
-                                <button><a href="/login.html">Tạo tài khoản</a></button>
+                                <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
                             </div>
                             <div class="container_button_login">
-                                <button><a href="/login.html">Đăng nhập</a></button>
+                                <button><a href="/login.html">ÄÄƒng nháº­p</a></button>
                             </div>
                         </div>
                     </div>
@@ -169,15 +169,15 @@
                         <h2 class="title_navigation">Menu</h2>
                         <div class="container_item">
                             <img src="./images/house_icon.svg" />
-                            <p>Trang chủ</p>
+                            <p>Trang chá»§</p>
                         </div>
                         <div class="container_item">
                             <img src="./images/hand_shake_icon.svg" />
-                            <p>Đăng nhập</p>
+                            <p>ÄÄƒng nháº­p</p>
                         </div>
                     </div>
                     <div class="sidebar_navigation">
-                        <h2 class="title_navigation">Tags phổ biến</h2>
+                        <h2 class="title_navigation">Tags phá»• biáº¿n</h2>
                         <div class="container_item">
                             <p>#nodejs</p>
                         </div>
@@ -319,12 +319,13 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">�n, An, ?an, Nam, Ph??ng</span> �
+                    <span class="text_footer_strong">Ân, An, ?an, Nam, Ph??ng</span> ©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />
             </div>
         </footer>
+
 
         <!-- script   -->
         <!-- script   -->
@@ -340,4 +341,5 @@
             }
         </script>
     </body>
+
 </html>
