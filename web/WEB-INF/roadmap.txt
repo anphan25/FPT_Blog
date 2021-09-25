@@ -19,3 +19,4 @@ logout=LogoutServlet
 register=RegisterServlet
 loadProfile=LoadProfileServlet
 createCategory=CreateCategoryServlet
+searchByCategory=SearchCategoryServlet
