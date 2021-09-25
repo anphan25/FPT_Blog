@@ -6,11 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
+import swp.library.Style;
 import swp.utils.DBHelper;
 
 public class PostDAO {
 
-    public static ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
+    public ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
         // tên, avt, email người đăng, title, id, số like, số cmt, approvedTime
         Connection conn = null;
         PreparedStatement stm = null;
@@ -39,7 +40,7 @@ public class PostDAO {
                     int like = getLikeCounting(postID);
                     int awardID = rs.getInt("AwardID");// bug 30%
                     int comments = getCommentCounting(postID);
-                    PostDTO p = new PostDTO(postID, emailPost, tag, title, approvedDate, namePoster, avatar, awardID,
+                    PostDTO p = new PostDTO(postID, emailPost, Style.convertTagToArrayList(tag), title, approvedDate, namePoster, avatar, awardID,
                             like, comments);
                     list.add(p);
                 }
@@ -59,7 +60,7 @@ public class PostDAO {
         return list;
     }
 
-    public static int getCommentCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
+    public int getCommentCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
         int count = 0;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -91,7 +92,7 @@ public class PostDAO {
         return count;
     }
 
-    public static int getLikeCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
+    public int getLikeCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
         int count = 0;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -123,7 +124,7 @@ public class PostDAO {
         return count;
     }
 
-    public static ArrayList<PostDTO> getPostsByTitle(String title)
+    public ArrayList<PostDTO> getPostsByTitle(String title)
             throws SQLException, ClassNotFoundException, NamingException {
         ArrayList<PostDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -157,7 +158,7 @@ public class PostDAO {
                     int like = getLikeCounting(postID);
                     int awardID = rs.getInt("AwardID");
                     int comments = getCommentCounting(postID);
-                    PostDTO p = new PostDTO(postID, emailPost, tag, titleColumn, approvedDate, namePoster, avatar, awardID,
+                    PostDTO p = new PostDTO(postID, emailPost, Style.convertTagToArrayList(tag), titleColumn, approvedDate, namePoster, avatar, awardID,
                             like, comments);
                     list.add(p);
                 }

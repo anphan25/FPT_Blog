@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
+import swp.library.Style;
 import swp.utils.DBHelper;
 import swp.post.PostDTO;
 import swp.post.PostDAO;
@@ -152,7 +153,7 @@ public class ProfileDAO implements Serializable
                     int likes = dao.getLikeCounting(postid);
                     int comments = dao.getCommentCounting(postid);
                     int awards = rs.getInt("AwardID");
-                    PostDTO dto = new PostDTO(postid, tag, title, ApproveDate, awards, likes, comments);
+                    PostDTO dto = new PostDTO(postid, Style.convertTagToArrayList(tag), title, ApproveDate, awards, likes, comments);
                     boolean check = list.add(dto);
                     if(!check)
                     {
