@@ -17,6 +17,7 @@ searchTitle=SearchTitleServlet
 loadPendingPosts=LoadPendingPostsServlet
 logout=LogoutServlet
 register=RegisterServlet
+createPost=CreatePostServlet
 loadProfile=LoadProfileServlet
 createCategory=CreateCategoryServlet
 searchByCategory=SearchCategoryServlet
