@@ -629,7 +629,7 @@ footer .text_footer_strong {
 .container_posts .container_info_post .date_posted {
   font-size: 12px;
   color: #717171;
-  margin-top: 0.6rem;
+  margin-top: 0.3rem;
 }
 
 .container_posts .container_info_post .post_info {
@@ -735,6 +735,15 @@ footer .text_footer_strong {
 
 .no-result h1 {
   font-weight: 700;
+}
+
+.create-post img {
+  width: 24px;
+  height: 24px;
+}
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
 }
 
 /* toggle_sidebar */

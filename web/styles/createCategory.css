@@ -578,6 +578,11 @@ header .container_right .container_button_register button:hover {
   padding: 10px 0px;
 }
 
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
+}
+
 /* Footer */
 /* Footer */
 /* Footer */

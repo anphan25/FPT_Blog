@@ -645,6 +645,11 @@ footer .text_footer_strong {
   opacity: 0.4;
 }
 
+.create-post img {
+  width: 24px;
+  height: 24px;
+}
+
 @media screen and (max-width: 992px) {
   .main .container .row .navigation_right .column {
     -ms-flex: 100%;

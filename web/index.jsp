@@ -55,7 +55,7 @@
                     </div>
                     <div class="container_searchBar">
                         <form id="searchit" action="searchTitle">        
-                            <input placeholder="Search..." name="titleValue" />
+                            <input placeholder="Search..." name="titleValue" autocomplete="off"/>
                         <div class="container_icon" onclick="submit_form()">
                             <i class="fas fa-search"></i>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img
-                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                    src="${currentUser.avatar}"
                                     />
                             </div>
                             <div class="dropdown-content">
@@ -242,21 +242,21 @@
                         <c:if test="${loginStatus == 'logined'}">
                             <c:if test="${currentUser.role == 'S'}">
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
                                         <p>Create Post</p>
                                     </div>
                                 </a>
                             </c:if>
                             <c:if test="${currentUser.role == 'M'}">
-                                <a href="/pendingPostsList.html">
+                                <a href="loadPendingPosts">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
                                     <a href="/pendingPostsList.html">
-                                        <div class="container_item">
-                                            <img src="./images/list_icon.svg" />
+                                        <div class="container_item create-post">
+                                            <img src="./images/create-blog.svg" />
                                             <p>Create Post</p>
                                         </div>
                                     </a>
@@ -270,8 +270,8 @@
                                     </div>
                                 </a>
                                 <a href="/pendingPostsList.html">
-                                    <div class="container_item">
-                                        <img src="./images/list_icon.svg" />
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/user-list.svg" />
                                         <p>User List</p>
                                     </div>
                                 </a>
@@ -398,7 +398,7 @@
                                         <div class="user_info">
                                             <div class="container_avatar">
                                                 <img
-                                                    src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
+                                                    src="${blogDTO.avatar}"
                                                     />
                                             </div>
                                             <div class="container_name_date_post">
@@ -421,7 +421,7 @@
                                                 </h1>
                                             </a>
                                             <div class="hashtag">
-                                                <p><span class="hash">#</span>${blogDTO.tag}</p>
+                                                <p><span class="hash"></span>${blogDTO.tag}</p>
                                                 <!--                      <p><span class="hash">#</span>vue</p>
                                                                       <p><span class="hash">#</span>angular</p>
                                                                       <p><span class="hash">#</span>javascript</p>-->

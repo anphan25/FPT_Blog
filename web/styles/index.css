@@ -320,7 +320,7 @@ a {
   .date_posted {
   font-size: 12px;
   color: #717171;
-  margin-top: 0.6rem;
+  margin-top: 0.3rem;
 }
 
 .main .main_container_middle .container_posts .container_info_post .post_info {
@@ -517,6 +517,16 @@ a {
   font-size: 1rem;
   line-height: 1.5;
   font-weight: 400;
+}
+
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.create-post img {
+  width: 24px;
+  height: 24px;
 }
 
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
