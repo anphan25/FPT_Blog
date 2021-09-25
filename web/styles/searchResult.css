@@ -737,6 +737,15 @@ footer .text_footer_strong {
   font-weight: 700;
 }
 
+.create-post img {
+  width: 24px;
+  height: 24px;
+}
+.user-list-icon img {
+  width: 24px;
+  height: 24px;
+}
+
 /* toggle_sidebar */
 /* toggle_sidebar */
 /* toggle_sidebar */
