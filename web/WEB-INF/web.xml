@@ -12,6 +12,10 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>swp.controller.RegisterServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CreatePostServlet</servlet-name>
+        <servlet-class>swp.controller.CreatePostServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -19,6 +23,10 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CreatePostServlet</servlet-name>
+        <url-pattern>/CreatePostServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

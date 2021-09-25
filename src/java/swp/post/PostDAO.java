@@ -122,6 +122,40 @@ public class PostDAO {
         }
         return count;
     }
+    
+    public boolean insertANewPost(String email, String tag, String title, String content, int categoryID) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = false;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, AwardID) "
+                        + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setString(2, "WFA");
+                stm.setString(3, tag);
+                stm.setString(4, title);
+                stm.setString(5, content);
+                stm.setInt(6, categoryID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 
     public static ArrayList<PostDTO> getPostsByTitle(String title)
             throws SQLException, ClassNotFoundException, NamingException {
