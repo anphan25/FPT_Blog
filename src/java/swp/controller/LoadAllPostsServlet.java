@@ -16,6 +16,7 @@ import swp.post.PostDAO;
 import swp.post.PostDTO;
 
 @WebServlet(name = "LoadAllPostsServlet", urlPatterns = {"/LoadAllPostsServlet"})
+
 public class LoadAllPostsServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
