@@ -175,4 +175,62 @@ public class PostDAO {
         }
         return list;
     }
+    
+    public ArrayList<PostDTO> getPostByCategory(String category) // đây ko phải static
+            throws SQLException, ClassNotFoundException, NamingException 
+    {
+        ArrayList<PostDTO> list = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) 
+            {
+                int cateID = Integer.parseInt(category); // database chỉ nhận int
+                String sql = "SELECT p.title, tag, postid, emailpost, Day(p.ApprovedDate) AS ApprovedDay, "
+                        +    "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
+                        +    "a.name, a.image, p.AwardID "
+                        +    "FROM tblPosts p, tblAccounts a "
+                        +    "WHERE p.emailpost = a.email AND p.CategoryID = ? AND p.StatusPost = 'A'"
+                        +    "ORDER BY p.ApprovedDate asc"; //sắp xếp ngày gần đây nhất
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, cateID);
+                rs = stm.executeQuery();
+                while (rs.next()) 
+                {
+                    String postID = rs.getString("PostID");
+                    String emailPost = rs.getString("EmailPost");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-" + rs.getString("ApprovedYear");
+                    String tag = rs.getString("Tag");
+                    String namePoster = rs.getString("Name");
+                    String avatar = rs.getString("Image");
+                    String titleColumn = rs.getString("Title");
+                    int like = getLikeCounting(postID);
+                    int awardID = rs.getInt("AwardID");
+                    int comments = getCommentCounting(postID);
+                    PostDTO p = new PostDTO(postID, emailPost, tag, titleColumn, approvedDate, namePoster, avatar, awardID,
+                            like, comments);
+                    boolean check = list.add(p);
+                    if(!check)
+                    {
+                        throw new SQLException("getPostCategory bi ngu lz");
+                    }
+                } //sau khi add vô hết rồi thì return
+                return list;
+            }
+        } finally 
+        {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null; //nếu bị lỗi dòng nào đó thì nó sẽ xuống đâys
+    }
 }
