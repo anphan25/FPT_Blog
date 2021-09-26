@@ -29,13 +29,12 @@ public class LoadAllPostsServlet extends HttpServlet {
         try {
             HttpSession session = request.getSession();
             CategoryDAO cateDAO = new CategoryDAO();
+            PostDAO postDAO = new PostDAO();
+            
             cateDAO.loadCategoryList();
             ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
+            ArrayList<PostDTO> list = postDAO.getAllPostList();
             session.setAttribute("CATEGORY_LIST", categorylist);
-            ArrayList<PostDTO> list = PostDAO.getAllPostList();
-            for (PostDTO p : list) {
-                log(p.toString());
-            }
             request.setAttribute("ALL_POST", list);
         } catch (Exception e) {
             log("Error at Load all post Servlet Controller: " + e.getMessage());
