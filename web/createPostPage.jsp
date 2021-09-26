@@ -1,5 +1,6 @@
 <%@page import="swp.account.AccountDTO"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -36,7 +37,7 @@
             <div class="container_header">
                 <div class="container_left">
                     <div class="container_logo">
-                        <a href="/">
+                        <a href="loadBlogs">
                             <img
                                 src="https://i.chungta.vn/2017/12/22/LogoFPT-2017-copy-3042-1513928399.jpg"
                                 />
@@ -80,12 +81,11 @@
                             <div class="textarea_categories_container">
                                 <label for="cars">What's your post talking about:</label>
                                 <select name="category" id="category">
-                                    <option value="1">Monolithic application</option>
-                                    <option value="2">Microservices</option>
-                                    <option value="3">Kubernetes</option>
-                                    <option value="4">Docker</option>
-                                    <option value="5">Other</option>
+                                    <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
+                                    <option value="${cateDTO.ID}">${cateDTO.name}</option>
+                                    </c:forEach>
                                 </select>
+                                
                             </div>
                             <div>
                                 <input type="hidden" name="tags" id="tags" />
