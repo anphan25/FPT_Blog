@@ -79,7 +79,7 @@
                         <div class="container_right">
                             <c:if test="${currentUser.role == 'S'}">
                                 <div class="container_button_register">
-                                    <a href="/createPostPage.html"><button>Create Post</button></a>
+                                    <a href="createPostPage"><button>Create Post</button></a>
                                 </div>
                             </c:if>
                             <c:if test="${currentUser.role == 'M'}">
@@ -221,8 +221,8 @@
                             </a>
                             <c:if test="${loginStatus == 'logined'}">
                                 <c:if test="${currentUser.role == 'S'}">
-                                    <a href="/pendingPostsList.html">
-                                        <div class="container_item">
+                                    <a href="createPostPage">
+                                        <div class="container_item create-post">
                                             <img src="./images/create-blog.svg" />
                                             <p>Create Post</p>
                                         </div>
@@ -234,7 +234,7 @@
                                             <img src="./images/list_icon.svg" />
                                             <p>Pending Posts</p>
                                         </div>
-                                        <a href="/pendingPostsList.html">
+                                        <a href="createPostPage">
                                             <div class="container_item create-post">
                                                 <img src="./images/create-blog.svg" />
                                                 <p>Create Post</p>
@@ -314,8 +314,13 @@
                                                 </a>
                                                 <div class="hashtag">
                                                     <c:forEach var="tag" items="${searchTitleDTO.tag}">
+                                                        <c:url var="searchByTagLink" value="searchByTag">
+                                                            <c:param name="tag" value="${tag}"/>
+                                                        </c:url>
+                                                        <a href="${searchByTagLink}">
                                                         <p><span class="hash"></span>#${tag}</p>
-                                                        </c:forEach>
+                                                        </a>
+                                                    </c:forEach>
                                                 </div>
                                                 <div class="statistic">
                                                     <div class="reaction_and_comments">
@@ -526,7 +531,7 @@
                         </c:if>
                         
                         
-                        <c:if test="${empty searchTitleList && empty searchCategoryList && searchTagList}">
+                        <c:if test="${empty searchTitleList && empty searchCategoryList && empty searchTagList}">
                             <div class="no-result">
                                 <h1>No result matches</h1>
                             </div>

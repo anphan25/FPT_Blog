@@ -223,7 +223,7 @@
                             </p>
                             <div class="container_button">
                                 <div class="container_button_register">
-                                    <button><a href="firstloginpage">Create account</a></button>
+                                    <button><a href="registerPage">Create account</a></button>
                                 </div>
                                 <div class="container_button_login">
                                     <button><a href="firstLoginPage">Log in</a></button>
@@ -241,7 +241,7 @@
                         </a>
                         <c:if test="${loginStatus == 'logined'}">
                             <c:if test="${currentUser.role == 'S'}">
-                                <a href="/pendingPostsList.html">
+                                <a href="createPostPage">
                                     <div class="container_item create-post">
                                         <img src="./images/create-blog.svg" />
                                         <p>Create Post</p>
@@ -254,7 +254,7 @@
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
-                                    <a href="/pendingPostsList.html">
+                                    <a href="createPostPage">
                                         <div class="container_item create-post">
                                             <img src="./images/create-blog.svg" />
                                             <p>Create Post</p>
