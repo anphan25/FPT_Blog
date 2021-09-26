@@ -322,8 +322,8 @@
                         </div>
                     </div>
                     <div class="container_posts">
-                        <div class="first_post post">
-                            <a href="/contentPage.html">
+                        <!-- <div class="first_post post">
+                             <a href="/contentPage.html">
                                 <div class="container_cover">
                                     <img
                                         src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
@@ -387,8 +387,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
-                        </div>
+                            </a> -->
+                            <!-- <h1>Welcome to FPT Blog</h1>
+                        </div> --> 
 
                         <c:set var="blogs" value="${requestScope.ALL_POST}"/>
                         <c:forEach var="blogDTO" items="${blogs}">
@@ -421,7 +422,15 @@
                                                 </h1>
                                             </a>
                                             <div class="hashtag">
-                                                <p><span class="hash"></span>${blogDTO.tag}</p>
+                                                <c:forEach var="tag" items="${blogDTO.tag}">
+                                                    <c:url var="searchByTagLink" value="searchByTag">
+                                                        <c:param name="tag" value="${tag}"/>
+                                                    </c:url>
+                                                    <a href="${searchByTagLink}">
+                                                    <p><span class="hash"></span>#${tag}</p>
+                                                    </a>
+                                                </c:forEach>
+                                                
                                                 <!--                      <p><span class="hash">#</span>vue</p>
                                                                       <p><span class="hash">#</span>angular</p>
                                                                       <p><span class="hash">#</span>javascript</p>-->

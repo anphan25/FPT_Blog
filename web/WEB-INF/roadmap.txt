@@ -21,3 +21,4 @@ createPost=CreatePostServlet
 loadProfile=LoadProfileServlet
 createCategory=CreateCategoryServlet
 searchByCategory=SearchCategoryServlet
+searchByTag=SearchByTagServlet
