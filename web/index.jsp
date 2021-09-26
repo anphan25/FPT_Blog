@@ -64,10 +64,10 @@
                 </div>
                 <!-- <div class="container_right">
                     <div class="container_button_login">
-                      <button><a href="/login.html">ÄÄng nháº­p</a></button>
+                      <button><a href="firstloginpage">ÄÄng nháº­p</a></button>
                     </div>
                     <div class="container_button_register">
-                      <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
+                      <button><a href="firstloginpage">Táº¡o tÃ i khoáº£n</a></button>
                     </div>
                   </div> -->
                 <c:if test="${loginStatus == 'logined'}">
@@ -154,12 +154,12 @@
                             careers.
                         </p>
                         <div class="container_button">
-                            <a href="/login.html">
+                            <a href="firstloginpage">
                                 <div class="container_button_register">
                                     <button>Create account</button>
                                 </div>
                             </a>
-                            <a href="/login.html">
+                            <a href="firstloginpage">
                                 <div class="container_button_login">
                                     <button>Log in</button>
                                 </div>
@@ -223,7 +223,7 @@
                             </p>
                             <div class="container_button">
                                 <div class="container_button_register">
-                                    <button><a href="/login.html">Create account</a></button>
+                                    <button><a href="firstloginpage">Create account</a></button>
                                 </div>
                                 <div class="container_button_login">
                                     <button><a href="firstLoginPage">Log in</a></button>
