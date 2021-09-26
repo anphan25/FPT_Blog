@@ -30,12 +30,28 @@ public class LoadAllPostsServlet extends HttpServlet {
             HttpSession session = request.getSession();
             CategoryDAO cateDAO = new CategoryDAO();
             PostDAO postDAO = new PostDAO();
+            int count = postDAO.getTotalPost();
+            int endPage = count/10;
+            String indexPage = request.getParameter("index"); //lấy trang user muốn
+            if(indexPage == null){
+                indexPage= "1";
+            }
+            int index = Integer.parseInt(indexPage);
+            
+            if(count % 10 != 0){
+                endPage++;
+            }
+            
+            ArrayList<PostDTO> listPaging = postDAO.pagingPosts(index);
+            request.setAttribute("LIST_PAGING", listPaging);
+            request.setAttribute("ENDPAGE", endPage);
+            request.setAttribute("CHECK_INDEX", index);
             
             cateDAO.loadCategoryList();
             ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
-            ArrayList<PostDTO> list = postDAO.getAllPostList();
+//            ArrayList<PostDTO> list = postDAO.getAllPostList();
             session.setAttribute("CATEGORY_LIST", categorylist);
-            request.setAttribute("ALL_POST", list);
+//            request.setAttribute("ALL_POST", list);
         } catch (Exception e) {
             log("Error at Load all post Servlet Controller: " + e.getMessage());
         } finally {

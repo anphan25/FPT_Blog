@@ -538,6 +538,29 @@ a {
   height: 24px;
 }
 
+.indexPage {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  color: #3b49df;
+  font-weight: bold;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.indexPage.active {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #3b49df;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+}
+
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
@@ -835,6 +858,7 @@ header .container_right .container_button_register button:hover {
 .icon_notification_container:hover {
   background-color: rgb(231, 231, 231);
 }
+
 /* END OF HEADER END OF HEADER END OF HEADER END OF HEADER END OF HEADER  */
 /* END OF HEADER END OF HEADER END OF HEADER END OF HEADER END OF HEADER  */
 /* END OF HEADER END OF HEADER END OF HEADER END OF HEADER END OF HEADER  */
