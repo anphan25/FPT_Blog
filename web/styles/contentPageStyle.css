@@ -682,9 +682,10 @@ footer .text_footer_strong {
   margin-top: 16px;
   background-color: #fff;
   border-radius: 5px;
-  padding: 52px;
+  padding: 40px 52px 52px;
   width: 75%;
   border: 1px solid #e3e3e3;
+  position: relative;
 }
 
 .main-content-up {
@@ -1025,6 +1026,12 @@ footer .text_footer_strong {
 
 .close-modal-btn:hover {
   background-color: #efefef;
+}
+
+.dot-icon {
+  position: absolute;
+  top: 15px;
+  right: 20px;
 }
 
 /* toggle_sidebar */

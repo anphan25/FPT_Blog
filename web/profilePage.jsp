@@ -250,14 +250,16 @@
                                     <div class="post-items">
                                         <p class="post-title">${blog.title}</p>
                                         <div class="post-tags">
-                                            <p class="post-tag">
-                                                <span class="hash"></span>${blog.tag}
-                                            </p>
-                                            <!--
-                                                                  <p class="post-tag"><span class="hash">#</span>vue</p>
-                                                                  <p class="post-tag"><span class="hash">#</span>angular</p>
-                                                                  <p class="post-tag"><span class="hash">#</span>javascript</p>
-                                            -->
+                                            <c:forEach var="tag" items="${blog.tag}">
+                                                <c:url var="searchByTagLink" value="searchByTag">
+                                                    <c:param name="tag" value="${tag}"/>
+                                                </c:url>
+                                                <a href="${searchByTagLink}">
+                                                    <p class="post-tag">
+                                                        #${tag}
+                                                    </p>
+                                                </a>
+                                            </c:forEach>
                                         </div>
                                         <div class="statistic">
                                             <div class="reaction_and_comments">

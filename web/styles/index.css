@@ -278,6 +278,15 @@ a {
   object-fit: cover;
 }
 
+.main .main_container_middle .container_posts .first_post {
+  background-color: #3b49df;
+  height: 400px;
+}
+
+.main .main_container_middle .container_posts .first_post h1 {
+  font-weight: 700;
+}
+
 .main .main_container_middle .container_posts .container_info_post {
   padding: 1rem;
 }
