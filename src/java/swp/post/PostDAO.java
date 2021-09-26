@@ -210,7 +210,7 @@ public class PostDAO {
                     int like = getLikeCounting(postID);
                     int awardID = rs.getInt("AwardID");
                     int comments = getCommentCounting(postID);
-                    PostDTO p = new PostDTO(postID, emailPost, tag, titleColumn, approvedDate, namePoster, avatar, awardID,
+                    PostDTO p = new PostDTO(postID, emailPost, Style.convertTagToArrayList(tag), titleColumn, approvedDate, namePoster, avatar, awardID,
                             like, comments);
                     boolean check = list.add(p);
                     if(!check)

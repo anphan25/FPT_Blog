@@ -32,7 +32,6 @@ public class Style {
         for (int i = 0; i < length; i++) {
             list.add(arrStr[i]);
         }
-        System.out.println("Length = " + length);
         return list;
     }
 
