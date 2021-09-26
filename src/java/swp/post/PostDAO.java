@@ -227,7 +227,7 @@ public class PostDAO {
                         + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
                         + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
                         + "WHERE p.emailpost = a.email AND p.CategoryID = ? AND p.StatusPost = 'A'"
-                        + "ORDER BY p.ApprovedDate asc"; // sắp xếp ngày gần đây nhất
+                        + "ORDER BY p.ApprovedDate desc"; // sắp xếp ngày gần đây nhất
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, cateID);
                 rs = stm.executeQuery();
@@ -279,7 +279,7 @@ public class PostDAO {
                         + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
                         + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
                         + "WHERE p.emailpost = a.email AND p.Tag like ? AND p.StatusPost = 'A'"
-                        + "ORDER BY p.ApprovedDate asc"; // sắp xếp ngày gần đây nhất
+                        + "ORDER BY p.ApprovedDate desc"; // sắp xếp ngày gần đây nhất
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + tag + "%");
                 rs = stm.executeQuery();
@@ -313,5 +313,82 @@ public class PostDAO {
             }
         }
         return null;
+    }
+
+    //Đây là phần paging của Ân đang cố làm
+    public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<PostDTO> list = new ArrayList<>();
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT p.title, tag, postid, emailpost, Day(p.ApprovedDate) AS ApprovedDay, "
+                        + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
+                        + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
+                        + "WHERE p.emailpost = a.email AND p.StatusPost = 'A'"
+                        + "ORDER BY p.ApprovedDate desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, (index-1)*10);
+                rs = stm.executeQuery();
+                while(rs.next()){
+                    String postID = rs.getString("PostID");
+                    String emailPost = rs.getString("EmailPost");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-"
+                            + rs.getString("ApprovedYear");
+                    String tag = rs.getString("Tag");
+                    String title = rs.getString("Title");
+                    String namePoster = rs.getString("Name");
+                    String avatar = rs.getString("Image");
+                    int like = getLikeCounting(postID);
+                    int awardID = rs.getInt("AwardID");// bug 30%
+                    int comments = getCommentCounting(postID);
+                    PostDTO post = new PostDTO(postID, emailPost, Style.convertTagToArrayList(tag), title, approvedDate,
+                            namePoster, avatar, awardID, like, comments);
+                    list.add(post);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return list;
+    }
+
+    public int getTotalPost() throws SQLException, ClassNotFoundException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select count (PostID) as Total from tblPosts where StatusPost = 'A'";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("Total");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return 0;
     }
 }

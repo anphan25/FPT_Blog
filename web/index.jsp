@@ -56,9 +56,9 @@
                     <div class="container_searchBar">
                         <form id="searchit" action="searchTitle">        
                             <input placeholder="Search..." name="titleValue" autocomplete="off"/>
-                        <div class="container_icon" onclick="submit_form()">
-                            <i class="fas fa-search"></i>
-                        </div>
+                            <div class="container_icon" onclick="submit_form()">
+                                <i class="fas fa-search"></i>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -388,10 +388,10 @@
                                     </div>
                                 </div>
                             </a> -->
-                            <!-- <h1>Welcome to FPT Blog</h1>
-                        </div> --> 
+                        <!-- <h1>Welcome to FPT Blog</h1>
+                    </div> --> 
 
-                        <c:set var="blogs" value="${requestScope.ALL_POST}"/>
+                        <c:set var="blogs" value="${requestScope.LIST_PAGING}"/>
                         <c:forEach var="blogDTO" items="${blogs}">
                             <div class="post">
                                 <a href="/contentPage.html">
@@ -427,10 +427,10 @@
                                                         <c:param name="tag" value="${tag}"/>
                                                     </c:url>
                                                     <a href="${searchByTagLink}">
-                                                    <p><span class="hash"></span>#${tag}</p>
+                                                        <p><span class="hash"></span>#${tag}</p>
                                                     </a>
                                                 </c:forEach>
-                                                
+
                                                 <!--                      <p><span class="hash">#</span>vue</p>
                                                                       <p><span class="hash">#</span>angular</p>
                                                                       <p><span class="hash">#</span>javascript</p>-->
@@ -473,6 +473,13 @@
                                 </a>
                             </div>
                         </c:forEach>    
+                    </div>
+
+                    <div class="pagingIndex">
+                        <c:set var="activeIndex" value="${requestScope.CHECK_INDEX}"/>
+                        <c:forEach begin="1" end="${requestScope.ENDPAGE}" var="i">
+                            <a class="${activeIndex == i ? "active": ""} indexPage" href="loadBlogs?index=${i}">${i}</a>
+                        </c:forEach>
                     </div>
                 </div>
                 <div class="main_container_right">
@@ -537,6 +544,7 @@
                         </div>
                     </div>
                 </div>
+
 
         </section>
 

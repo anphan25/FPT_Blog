@@ -55,10 +55,6 @@ public class SearchByTagServlet extends HttpServlet {
                 request.setAttribute("SEARCHLIST_TAG", list);
                 url = roadmap.get(SEARCH_RESULT_PAGE);
             }
-            else{
-                //@anphan25 them attribute message thong bao ko co result?
-                url = roadmap.get(SEARCH_RESULT_PAGE);
-            }
 
         } catch (Exception e) {
             log("Errot at Search Tag Servlet: " + e.toString());
