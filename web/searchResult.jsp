@@ -314,8 +314,13 @@
                                                 </a>
                                                 <div class="hashtag">
                                                     <c:forEach var="tag" items="${searchTitleDTO.tag}">
+                                                        <c:url var="searchByTagLink" value="searchByTag">
+                                                            <c:param name="tag" value="${tag}"/>
+                                                        </c:url>
+                                                        <a href="${searchByTagLink}">
                                                         <p><span class="hash"></span>#${tag}</p>
-                                                        </c:forEach>
+                                                        </a>
+                                                    </c:forEach>
                                                 </div>
                                                 <div class="statistic">
                                                     <div class="reaction_and_comments">
