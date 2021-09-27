@@ -699,7 +699,7 @@ footer .text_footer_strong {
 
 .tag {
   display: flex;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
 }
 
 .main-content .tag p {
@@ -708,6 +708,11 @@ footer .text_footer_strong {
   border-radius: 5px;
   margin-right: 8px;
   padding: 2px 5px;
+}
+
+.content-img-text {
+  margin-top: 20px;
+  line-height: 30px;
 }
 
 .main-content-up .content-img-text img {

@@ -165,18 +165,19 @@
                                 <div class="pending_posts">
                                     <c:if test="${not empty pendingList}">
                                         <c:forEach var="pendingDTO" items="${pendingList}">
-                                            <div class="post">
-                                                <a href="#">
+                                            <a href="#">
+                                                <div class="post">
+
                                                     <div class="container_info_post">
                                                         <div class="post-status">
                                                             <c:if test="${pendingDTO.statusPost == 'WFA'}">
-                                                            <h1>Public Request</h1>
+                                                                <h1>Public Request</h1>
                                                             </c:if>
                                                             <c:if test="${pendingDTO.statusPost == 'WFD'}">
-                                                            <h1>Delete Request</h1>
+                                                                <h1>Delete Request</h1>
                                                             </c:if>
                                                             <c:if test="${pendingDTO.statusPost == 'WFU'}">
-                                                            <h1>Update Request</h1>
+                                                                <h1>Update Request</h1>
                                                             </c:if>
                                                         </div>
                                                         <div class="user_info">
@@ -207,8 +208,9 @@
                                                             </div>
                                                         </div> 
                                                     </div>
-                                                </a>
-                                            </div>
+
+                                                </div>
+                                            </a>
                                         </c:forEach>
                                     </c:if>
                                     <c:if test="${empty pendingList}">

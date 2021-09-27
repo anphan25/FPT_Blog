@@ -72,17 +72,17 @@
                     <div class="container_right">
                         <c:if test="${currentUser.role == 'S'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Create Post</button></a>
+                                <a href="createPostPage"><button>Create Post</button></a>
                             </div>
                         </c:if>
                         <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Pending Post</button></a>
+                                <a href="loadPendingPosts"><button>Pending Post</button></a>
                             </div>
                         </c:if>
                         <c:if test="${currentUser.role == 'A'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"
+                                <a href="createCategoryPage"
                                    ><button>Create Category</button></a
                                 >
                             </div>
@@ -109,9 +109,6 @@
                                             <c:param name="email" value="${currentUser.email}" />
                                         </c:url>
                                         <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
-                                    </div>
-                                    <div class="item">
-                                        <a><p>Create Post</p></a>
                                     </div>
                                 </div>
                                 <div class="item-bottom">
@@ -248,7 +245,12 @@
                                 <div class="posted-post">
                                     <div class="time">${blog.approvedDate}</div>
                                     <div class="post-items">
+                                        <c:url var="loadContentLink" value="loadPostContent">
+                                                <c:param name="postId" value="${blog.ID}" />
+                                         </c:url>
+                                        <a href="${loadContentLink}">
                                         <p class="post-title">${blog.title}</p>
+                                        </a>
                                         <div class="post-tags">
                                             <c:forEach var="tag" items="${blog.tag}">
                                                 <c:url var="searchByTagLink" value="searchByTag">
@@ -321,7 +323,7 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">Ãn, An, ?an, Nam, Ph??ng</span> Â©
+                    <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />
