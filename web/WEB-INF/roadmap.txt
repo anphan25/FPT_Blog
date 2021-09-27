@@ -15,6 +15,7 @@ login=LoginServlet
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
 loadPendingPosts=LoadPendingPostsServlet
+loadPostContent=LoadPostContentServlet
 logout=LogoutServlet
 register=RegisterServlet
 createPost=CreatePostServlet
