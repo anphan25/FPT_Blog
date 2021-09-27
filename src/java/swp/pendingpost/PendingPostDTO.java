@@ -5,25 +5,48 @@
  */
 package swp.pendingpost;
 
+import java.util.List;
+
 /**
  *
  * @author ADMIN
  */
 public class PendingPostDTO
 {
-    String title, tag, imageURL, dateCreated, name, postID, emailPost;
+    String title, imageURL, dateCreated, name, postID, emailPost, statusPost;
+        private List<String> tag;
 
-    public PendingPostDTO(String title, String tag, String imageURL, String dateCreated, String name, String postID, String emailPost)
-    {
-        this.title = title;
+    public List<String> getTag() {
+        return tag;
+    }
+
+    public void setTag(List<String> tag) {
         this.tag = tag;
+    }
+
+    public PendingPostDTO(String title, String imageURL, String dateCreated, String name, String postID, String emailPost, String statusPost, List<String> tag) {
+        this.title = title;
         this.imageURL = imageURL;
         this.dateCreated = dateCreated;
         this.name = name;
         this.postID = postID;
         this.emailPost = emailPost;
+        this.statusPost = statusPost;
+        this.tag = tag;
     }
 
+
+
+    public String getStatusPost() {
+        return statusPost;
+    }
+
+    public void setStatusPost(String statusPost) {
+        this.statusPost = statusPost;
+    }
+
+    
+    
     public String getTitle()
     {
         return title;
@@ -34,15 +57,6 @@ public class PendingPostDTO
         this.title = title;
     }
 
-    public String getTag()
-    {
-        return tag;
-    }
-
-    public void setTag(String tag)
-    {
-        this.tag = tag;
-    }
 
     public String getImageURL()
     {

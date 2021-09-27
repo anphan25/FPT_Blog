@@ -215,6 +215,16 @@
         </div>
         <div class="main-content">
           <i class="fas fa-ellipsis-h dot-icon"></i>
+          <div class="delete-update-div hidden">
+            <div class="delete-div option-div">
+              <i class="fas fa-trash"></i>
+              <p>Delete</p>
+            </div>
+            <div class="update-div option-div">
+              <i class="fas fa-edit"></i>
+              <p>Update</p>
+            </div>
+          </div>
           <div class="main-content-up">
             <div class="title">
               <p class="title-text">Welcome to Blog</p>
@@ -233,7 +243,7 @@
                 </div>
                 <form action="">
                   <div class="name">
-                    <a href="/profilePage.html">ThiÃªn Ãn</a>
+                    <a href="/profilePage.html">Thien An</a>
                   </div>
                 </form>
                 <div class="time">11/09/2021</div>
@@ -324,7 +334,7 @@
                   <div class="comment-time">16:27 11/9/2021</div>
                 </div>
                 <div class="comment-content">
-                  <p>Tháº­t thuyá»t vá»i</p>
+                  <p>Thats awsome</p>
                 </div>
               </div>
               <form action="">
@@ -344,11 +354,11 @@
               </div>
               <div class="comment-item">
                 <div class="comment-info">
-                  <div class="name">Háº£i Nam</div>
+                  <div class="name">Hai Nam</div>
                   <div class="comment-time">16:27 11/9/2021</div>
                 </div>
                 <div class="comment-content">
-                  <p>Äá»nh cá»§a chÃ³p</p>
+                  <p>Cool</p>
                 </div>
               </div>
             </div>
@@ -356,7 +366,7 @@
         </div>
         <div class="left-container">
           <div class="left-container-title">
-            <h3>Nhá»¯ng bÃ i viáº¿t ná»i báº­t</h3>
+            <h3>Common Postst</h3>
           </div>
           <div class="left-container-content">
             <div class="left-container-item">
@@ -456,6 +466,11 @@
         var form = document.getElementById("searchit");
         form.submit();
       }
+      const dotIcon = document.querySelector(".dot-icon");
+      const optionDiv = document.querySelector(".delete-update-div");
+      dotIcon.addEventListener("click", () => {
+        optionDiv.classList.toggle("hidden");
+      });
     </script>
     <script src="./js/contentPage.js"></script>
   </body>
