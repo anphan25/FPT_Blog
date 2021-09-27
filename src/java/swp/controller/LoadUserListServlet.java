@@ -8,8 +8,6 @@ package swp.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -20,24 +18,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import swp.account.AccountDTO;
-import swp.pendingpost.PendingPostDAO;
-import swp.pendingpost.PendingPostDTO;
-
+import swp.profile.ProfileDAO;
+import swp.profile.ProfileDTO;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "LoadPendingPostServlet", urlPatterns =
+@WebServlet(name = "LoadUserListServlet", urlPatterns =
 {
-    "/LoadPendingPostServlet"
+    "/LoadUserListServlet"
 })
-public class LoadPendingPostServlet extends HttpServlet
+public class LoadUserListServlet extends HttpServlet
 {
-    private final String HOME_PAGE = "homePage";
-    private final String PENDING_PAGE = "pendingPostListPage";
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,46 +45,26 @@ public class LoadPendingPostServlet extends HttpServlet
             throws ServletException, IOException, NamingException, SQLException
     {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get(PENDING_PAGE);
+        String url = "goto404";
         
         try
         {
-            HttpSession session = request.getSession(false);
-            if(session != null)
+            ProfileDAO dao = new ProfileDAO();
+            ArrayList<ProfileDTO> dto = dao.getUserList();
+            //chưa check account đã đăng nhập và chưa check role
+            if(dto != null) //wow có list và ko có lỗi
             {
-                //chỗ này sẽ cần phải thay đổi cách thức hđ DAO
-                if(session.getAttribute("CURRENT_USER") != null)
-                {
-                    AccountDTO accInfo = (AccountDTO) session.getAttribute("CURRENT_USER");
-                    String role = accInfo.getRole();
-                    if(role.equals("M"))
-                    {
-                        PendingPostDAO dao = new PendingPostDAO();
-                        ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost();
-                        for(PendingPostDTO o : dto){
-                            System.out.println(o);
-                        }
-                        if(!dto.isEmpty())
-                        {
-                            request.setAttribute("PENDING_LIST", dto);
-                        }//kết thúc nếu dto có dữ liệu
-                        //có thể thêm else để bổ sung popup thông báo ko có pending post.
-                     }//kết thúc check mentor
-                }//kết thúc việc check đăng nhập
-            }//kết thúc check session
-        }
-        catch(NamingException ex)
-        {
-            log(" Naming: " + ex.getMessage());
-        }
-        catch(SQLException ex)
-        {
-            log(" SQL: " + ex.getMessage());
+                request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                url = "userlistPage.html"; //ai edit servlet này mà để url như thế này thì assignment 0 điểm
+            }
+            else
+            {
+                //do nothing. Who care if the executive of FPTU is screaming for error.
+            }
         }
         finally
         {
+            
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
@@ -114,10 +88,10 @@ public class LoadPendingPostServlet extends HttpServlet
             processRequest(request, response);
         } catch (NamingException ex)
         {
-            Logger.getLogger(LoadPendingPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex)
         {
-            Logger.getLogger(LoadPendingPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -138,10 +112,10 @@ public class LoadPendingPostServlet extends HttpServlet
             processRequest(request, response);
         } catch (NamingException ex)
         {
-            Logger.getLogger(LoadPendingPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex)
         {
-            Logger.getLogger(LoadPendingPostServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

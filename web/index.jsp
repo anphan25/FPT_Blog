@@ -79,7 +79,7 @@
                         </c:if>
                         <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
-                                <a href="/createPostPage.html"><button>Pending Post</button></a>
+                                <a href="loadPendingPosts"><button>Pending Post</button></a>
                             </div>
                         </c:if>
                         <c:if test="${currentUser.role == 'A'}">

@@ -2,6 +2,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="loginStatus" value="${sessionScope.LOGIN}"/>
 <c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
+<c:set var="pendingList" value="${requestScope.PENDING_LIST}"/>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -22,6 +23,7 @@
         <title>Pending Posts | FPT Blog</title>
     </head>
     <body>
+
         <c:if test="${loginStatus == 'logined'}">
             <c:if test="${currentUser.role == 'M'}">
                 <!-- header  -->
@@ -161,139 +163,59 @@
                                     <h1>Pending posts</h1>
                                 </div>
                                 <div class="pending_posts">
-                                    <div class="column">
-                                        <div class="post">
-                                            <a href="/postWaitingApproval.html">
-                                                <div class="container_info_post">
-                                                    <div class="post_info">
-                                                        <h1 class="title_post">
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Optio, numquam.
-                                                        </h1>
-                                                        <p class="content">
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸
-                                                            â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃªðâ­ï¸ â­ï¸ðSao kÃª
-                                                        </p>
-                                                        <div class="hashtag">
-                                                            <p><span class="hash">#</span>react</p>
-                                                            <p><span class="hash">#</span>vue</p>
-                                                            <p><span class="hash">#</span>angular</p>
-                                                            <p><span class="hash">#</span>javascript</p>
+                                    <c:if test="${not empty pendingList}">
+                                        <c:forEach var="pendingDTO" items="${pendingList}">
+                                            <div class="post">
+                                                <a href="#">
+                                                    <div class="container_info_post">
+                                                        <div class="post-status">
+                                                            <c:if test="${pendingDTO.statusPost == 'WFA'}">
+                                                            <h1>Public Request</h1>
+                                                            </c:if>
+                                                            <c:if test="${pendingDTO.statusPost == 'WFD'}">
+                                                            <h1>Delete Request</h1>
+                                                            </c:if>
+                                                            <c:if test="${pendingDTO.statusPost == 'WFU'}">
+                                                            <h1>Update Request</h1>
+                                                            </c:if>
                                                         </div>
+                                                        <div class="user_info">
+                                                            <div class="container_avatar">
+                                                                <img
+                                                                    src="${pendingDTO.imageURL}"
+                                                                    />
+                                                            </div>
+                                                            <div class="container_name_date_post">
+                                                                <p class="username">${pendingDTO.name}</p>
+                                                                <p class="date_posted">${pendingDTO.dateCreated}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="post_info">
+                                                            <h1 class="title_post">
+                                                                ${pendingDTO.title}
+                                                            </h1>
+                                                            <p class="content"></p>
+                                                            <div class="hashtag">
+                                                                <c:forEach var="tag" items="${pendingDTO.tag}">
+                                                                    <c:url var="searchByTagLink" value="searchByTag">
+                                                                        <c:param name="tag" value="${tag}"/>
+                                                                    </c:url>
+                                                                    <a href="${searchByTagLink}">
+                                                                        <p><span class="hash"></span>#${tag}</p>
+                                                                    </a>
+                                                                </c:forEach>
+                                                            </div>
+                                                        </div> 
                                                     </div>
-                                                    <div class="user_info">
-                                                        <div class="container_avatar">
-                                                            <img
-                                                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                                                />
-                                                        </div>
-                                                        <div class="container_name_date_post">
-                                                            <p class="username">BÃ¡nh bÃ¨o</p>
-                                                            <p class="date_posted">Sep 11 '21</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
+                                        </c:forEach>
+                                    </c:if>
+                                    <c:if test="${empty pendingList}">
+                                        <div class="no-pending">
+                                            <h1>No pending post</h1>
                                         </div>
-                                        <div class="post">
-                                            <a href="/postWaitingApproval.html">
-                                                <div class="container_info_post">
-                                                    <div class="post_info">
-                                                        <h1 class="title_post">
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Optio, numquam.
-                                                        </h1>
-                                                        <p class="content"></p>
-                                                        <div class="hashtag">
-                                                            <p><span class="hash">#</span>react</p>
-                                                            <p><span class="hash">#</span>vue</p>
-                                                            <p><span class="hash">#</span>angular</p>
-                                                            <p><span class="hash">#</span>javascript</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="user_info">
-                                                        <div class="container_avatar">
-                                                            <img
-                                                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                                                />
-                                                        </div>
-                                                        <div class="container_name_date_post">
-                                                            <p class="username">BÃ¡nh bÃ¨o</p>
-                                                            <p class="date_posted">Sep 11 '21</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="column">
-                                        <div class="post">
-                                            <a href="/postWaitingApproval.html">
-                                                <div class="container_info_post">
-                                                    <div class="post_info">
-                                                        <h1 class="title_post">
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Optio, numquam.
-                                                        </h1>
-                                                        <p class="content"></p>
-                                                        <div class="hashtag">
-                                                            <p><span class="hash">#</span>react</p>
-                                                            <p><span class="hash">#</span>vue</p>
-                                                            <p><span class="hash">#</span>angular</p>
-                                                            <p><span class="hash">#</span>javascript</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="user_info">
-                                                        <div class="container_avatar">
-                                                            <img
-                                                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                                                />
-                                                        </div>
-                                                        <div class="container_name_date_post">
-                                                            <p class="username">BÃ¡nh bÃ¨o</p>
-                                                            <p class="date_posted">Sep 11 '21</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="post">
-                                            <a href="/postWaitingApproval.html">
-                                                <div class="container_info_post">
-                                                    <div class="post_info">
-                                                        <h1 class="title_post">
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                            Optio, numquam.
-                                                        </h1>
-                                                        <p class="content">
-                                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi laboriosam itaque, unde hic illum ipsa veniam, similique nesciunt, doloribus ab adipisci. Sunt animi officia, magni, laborum vitae velit quae minima debitis asperiores doloribus, laudantium quibusdam laboriosam ad neque dolorum quia.
-                                                        </p>
-                                                        <div class="hashtag">
-                                                            <p><span class="hash">#</span>react</p>
-                                                            <p><span class="hash">#</span>vue</p>
-                                                            <p><span class="hash">#</span>angular</p>
-                                                            <p><span class="hash">#</span>javascript</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="user_info">
-                                                        <div class="container_avatar">
-                                                            <img
-                                                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                                                />
-                                                        </div>
-                                                        <div class="container_name_date_post">
-                                                            <p class="username">BÃ¡nh bÃ¨o</p>
-                                                            <p class="date_posted">Sep 11 '21</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
 
