@@ -138,7 +138,7 @@ public class PostDAO {
                         + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
-                stm.setString(2, "WFA");
+                stm.setString(2, "A");
                 stm.setString(3, tag);
                 stm.setNString(4, title);
                 stm.setNString(5, content);
@@ -224,7 +224,7 @@ public class PostDAO {
                 String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, "
                         + "a.name, a.image "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.postID = ? AND a.Email = p.EmailPost";
+                        + "WHERE p.postID LIKE ? AND a.Email = p.EmailPost";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
