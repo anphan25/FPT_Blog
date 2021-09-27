@@ -34,6 +34,7 @@ import swp.profile.ProfileDTO;
 public class LoadProfileServlet extends HttpServlet
 {
     private final String PROFILE_PAGE = "profilePage";
+    private final String FAIL = "notFoundPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -64,6 +65,9 @@ public class LoadProfileServlet extends HttpServlet
             ArrayList<PostDTO> bloglist = dao.getAllPost();
             //bắt đầu múa quạt
             if(!bloglist.isEmpty()) request.setAttribute("PROFILE_BLOG", bloglist); //chỉ set attribute khi tài khoản đó có post.
+            else {
+                url = roadmap.get(FAIL);
+            }
             request.setAttribute("PROFILE_INFORMATION", dto);
             
         }

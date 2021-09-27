@@ -29,7 +29,7 @@ import swp.post.PostDTO;
 public class LoadPostContentServlet extends HttpServlet {
 
     private static final String SUCCESS = "contentPage";
-    private static final String FAIL = "loadBlogs";
+    private static final String FAIL = "notFoundPage";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
