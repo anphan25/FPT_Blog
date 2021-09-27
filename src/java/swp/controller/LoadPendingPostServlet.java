@@ -61,20 +61,23 @@ public class LoadPendingPostServlet extends HttpServlet
             if(session != null)
             {
                 //chỗ này sẽ cần phải thay đổi cách thức hđ DAO
-                if(session.getAttribute("ACCOUNT") != null)
+                if(session.getAttribute("CURRENT_USER") != null)
                 {
-                    AccountDTO accInfo = (AccountDTO) session.getAttribute("ACCOUNT");
+                    AccountDTO accInfo = (AccountDTO) session.getAttribute("CURRENT_USER");
                     String role = accInfo.getRole();
                     if(role.equals("M"))
                     {
                         PendingPostDAO dao = new PendingPostDAO();
                         ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost();
+                        for(PendingPostDTO o : dto){
+                            System.out.println(o);
+                        }
                         if(!dto.isEmpty())
                         {
                             request.setAttribute("PENDING_LIST", dto);
                         }//kết thúc nếu dto có dữ liệu
                         //có thể thêm else để bổ sung popup thông báo ko có pending post.
-                    }//kết thúc check mentor
+                     }//kết thúc check mentor
                 }//kết thúc việc check đăng nhập
             }//kết thúc check session
         }

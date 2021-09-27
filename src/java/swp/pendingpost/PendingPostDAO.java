@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.naming.NamingException;
+import swp.library.Style;
 import swp.utils.DBHelper;
 
 
@@ -25,27 +26,27 @@ public class PendingPostDAO implements Serializable
             conn = DBHelper.makeConnection();
             if (conn != null) 
             {
-                String sql = "SELECT tag, title, postid, emailpost "
+                String sql = "SELECT StatusPost, tag, title, postid, emailpost "
                         + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear"
                         + ", a.name, a.image, p.PostID, p.EmailPost "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email and p.StatusPost = ? "
-                        + "ORDER BY p.createdDate asc";
+                        + "WHERE p.emailpost = a.email and p.StatusPost in ('WFA','WFD','WFU') "
+                        + "ORDER BY p.createdDate desc";
                 //sau lày nếu hệ thống chạy chậm hơn con rùa trước nhà t thì hãy chuyển sàng dùng join và on
                 //vòng lặp while ở dưới sẽ có chữ continue
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, "WFA");
                 rs = stm.executeQuery();
                 while (rs.next()) 
                 {
                     String tag = rs.getString("tag");
                     String title = rs.getString("title");
-                    String createDate = rs.getString("createdDay") + "/" + rs.getString("createdMonth") + "/" + rs.getString("createdYear");
+                    String createDate = rs.getString("createdDay") + "-" + rs.getString("createdMonth") + "-" + rs.getString("createdYear");
                     String name = rs.getString("name");
                     String url = rs.getString("image");
                     String postID = rs.getString("PostID");
                     String EmailPost = rs.getString("EmailPost");
-                    PendingPostDTO dummy = new PendingPostDTO(title, tag, url, createDate, name, postID, EmailPost);
+                    String statusPost = rs.getString("StatusPost");
+                    PendingPostDTO dummy = new PendingPostDTO(title, url, createDate, name, postID, EmailPost, statusPost, Style.convertTagToArrayList(tag));
                     boolean checker = dto.add(dummy);
                     if(!checker)
                     {
