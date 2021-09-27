@@ -104,8 +104,7 @@
 
                             <div class="textarea_content_container">
                                 <textarea id="content_area" name="content">
-                    <h3>Chào mừng bạn đến với Blog nơi rất hay...</h3>
-                    <img src="https://scontent.fsgn13-1.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=VLe8T2O0WbIAX_PRAHU&_nc_ht=scontent.fsgn13-1.fna&oh=b0649225f911905d9729ece1a012b821&oe=616C11B0" height="50%"/>
+                    <h3>Hi, bạn có thể copy/paste ảnh upload thoải mái nha</h3>
                                 </textarea>
                             </div>
                         </div>

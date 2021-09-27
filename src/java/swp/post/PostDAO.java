@@ -140,8 +140,8 @@ public class PostDAO {
                 stm.setString(1, email);
                 stm.setString(2, "WFA");
                 stm.setString(3, tag);
-                stm.setString(4, title);
-                stm.setString(5, content);
+                stm.setNString(4, title);
+                stm.setNString(5, content);
                 stm.setInt(6, categoryID);
                 check = stm.executeUpdate() > 0;
             }
@@ -211,6 +211,47 @@ public class PostDAO {
             }
         }
         return list;
+    }
+
+    public PostDTO getPostById(String id)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, "
+                        + "a.name, a.image "
+                        + "FROM tblPosts p, tblAccounts a "
+                        + "WHERE p.postID = ? AND a.Email = p.EmailPost";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, id);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String postID = rs.getString("PostID");
+                    String title = rs.getString("title");
+                    String createdAt = rs.getString("createdAt");
+                    String tags = rs.getString("tag");
+                    String avatar = rs.getString("image");
+                    String name = rs.getString("name");
+                    String content = rs.getString("PostContent");
+                    PostDTO post = new PostDTO(postID, createdAt, Style.convertTagToArrayList(tags), title, content, name, avatar);
+                    return post;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
     }
 
     public ArrayList<PostDTO> getPostByCategory(String category) // đây ko phải static
@@ -315,7 +356,7 @@ public class PostDAO {
         return null;
     }
 
-    //Đây là phần paging của Ân đang cố làm
+    //Đây là phần paging của Ân đang cố làm (kememay)
     public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -330,9 +371,9 @@ public class PostDAO {
                         + "WHERE p.emailpost = a.email AND p.StatusPost = 'A'"
                         + "ORDER BY p.ApprovedDate desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
                 stm = conn.prepareStatement(sql);
-                stm.setInt(1, (index-1)*10);
+                stm.setInt(1, (index - 1) * 10);
                 rs = stm.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     String postID = rs.getString("PostID");
                     String emailPost = rs.getString("EmailPost");
                     String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-"

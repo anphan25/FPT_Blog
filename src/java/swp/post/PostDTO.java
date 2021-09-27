@@ -86,6 +86,18 @@ public class PostDTO implements Serializable {
         this.comments = comments;
     }
 
+    public PostDTO(String ID, String createdDate, List<String> tag, String title, String postContent, String namePost, String avatar) {
+        this.ID = ID;
+        this.createdDate = createdDate;
+        this.tag = tag;
+        this.title = title;
+        this.postContent = postContent;
+        this.namePost = namePost;
+        this.avatar = avatar;
+    }
+    
+    
+
     public String getID() {
         return ID;
     }

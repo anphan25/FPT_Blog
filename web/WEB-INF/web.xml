@@ -16,6 +16,10 @@
         <servlet-name>CreatePostServlet</servlet-name>
         <servlet-class>swp.controller.CreatePostServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoadPostDetail</servlet-name>
+        <servlet-class>swp.controller.LoadPostContentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
@@ -27,6 +31,10 @@
     <servlet-mapping>
         <servlet-name>CreatePostServlet</servlet-name>
         <url-pattern>/CreatePostServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadPostDetail</servlet-name>
+        <url-pattern>/LoadPostDetail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
