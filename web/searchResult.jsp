@@ -84,7 +84,7 @@
                             </c:if>
                             <c:if test="${currentUser.role == 'M'}">
                                 <div class="container_button_register">
-                                    <a href="/createPostPage.html"><button>Pending Post</button></a>
+                                    <a href="loadPendingPosts"><button>Pending Post</button></a>
                                 </div>
                             </c:if>
                             <c:if test="${currentUser.role == 'A'}">
@@ -287,7 +287,7 @@
                                             <div class="user_info">
                                                 <div class="container_avatar">
                                                     <img
-                                                        src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
+                                                        src="${searchTitleDTO.avatar}"
                                                         />
                                                 </div>
                                                 <div class="container_name_date_post">

@@ -41,7 +41,7 @@ public class LoadPostContentServlet extends HttpServlet {
         try {
             String postId = request.getParameter("postId");
             PostDAO getPost = new PostDAO();
-            PostDTO post = getPost.getPostById("ecdf36c7-0659-4759-97f3-a5975be8b417");
+            PostDTO post = getPost.getPostById(postId);
             if (post != null) {
                 url = roadmap.get(SUCCESS);
                 request.setAttribute("POST_DETAIL", post);

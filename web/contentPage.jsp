@@ -250,6 +250,16 @@ prefix="c"%>
         </div>
         <div class="main-content">
           <i class="fas fa-ellipsis-h dot-icon"></i>
+          <div class="delete-update-div hidden">
+            <div class="delete-div option-div">
+              <i class="fas fa-trash"></i>
+              <p>Delete</p>
+            </div>
+            <div class="update-div option-div">
+              <i class="fas fa-edit"></i>
+              <p>Update</p>
+            </div>
+          </div>
           <div class="main-content-up">
             <div class="title">
               <p class="title-text">${postDetail.title}</p>
@@ -442,15 +452,15 @@ prefix="c"%>
     <!-- script   -->
     <script>
       function toggleSidebarPhone() {
-        const toggle_sidebar = document.getElementById('sidebar_phone');
-        toggle_sidebar.style.display = 'block';
+        const toggle_sidebar = document.getElementById("sidebar_phone");
+        toggle_sidebar.style.display = "block";
       }
       function handleClickOutside() {
-        const toggle_sidebar = document.getElementById('sidebar_phone');
-        toggle_sidebar.style.display = 'none';
+        const toggle_sidebar = document.getElementById("sidebar_phone");
+        toggle_sidebar.style.display = "none";
       }
       function submit_form() {
-        var form = document.getElementById('searchit');
+        var form = document.getElementById("searchit");
         form.submit();
       }
     </script>

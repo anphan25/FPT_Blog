@@ -394,7 +394,7 @@
                         <c:set var="blogs" value="${requestScope.LIST_PAGING}"/>
                         <c:forEach var="blogDTO" items="${blogs}">
                             <div class="post">
-                                <a href="loadPostContent">
+                                
                                     <div class="container_info_post">
                                         <div class="user_info">
                                             <div class="container_avatar">
@@ -470,7 +470,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                
                             </div>
                         </c:forEach>    
                     </div>

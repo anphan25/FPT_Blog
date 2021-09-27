@@ -41,14 +41,12 @@ public class LoadAllPostsServlet extends HttpServlet {
             if(count % 10 != 0){
                 endPage++;
             }
-            
+            cateDAO.loadCategoryList();
+            ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
             ArrayList<PostDTO> listPaging = postDAO.pagingPosts(index);
             request.setAttribute("LIST_PAGING", listPaging);
             request.setAttribute("ENDPAGE", endPage);
             request.setAttribute("CHECK_INDEX", index);
-            
-            cateDAO.loadCategoryList();
-            ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
 //            ArrayList<PostDTO> list = postDAO.getAllPostList();
             session.setAttribute("CATEGORY_LIST", categorylist);
 //            request.setAttribute("ALL_POST", list);
