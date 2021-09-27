@@ -178,4 +178,64 @@ public class ProfileDAO implements Serializable
             }
         }
     }
+
+    public ArrayList<ProfileDTO> getUserList() throws NamingException, SQLException
+    {
+        //this is a stupid line for a lazy man
+        ArrayList<ProfileDTO> lazylist = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try
+        {
+            //cố gắng thông ass DB
+            con = DBHelper.makeConnection();
+            if(con != null)
+            {
+                String sql = "SELECT a.Email, a.Name, a.Gender, a.Campus, r.RoleName, sa.StatusName "
+                            + "FROM tblAccounts a LEFT JOIN tblRoles r ON a.RoleID = r.RoleID "
+                            + "LEFT JOIN tblStatusAccount sa ON a.StatusAccountID = sa.StatusAccountID"; 
+                        //cân nhắc vứt mẹ bảng tblroles và tblstatusAccount đi nếu hệ thống bị chậm trong tương lai
+                        //chẳng ai dùng 1 bảng với 1 mối quan hệ duy nhất chỉ để show ra selection. (việc show selection có thể thông qua việc múa javascript
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                //trỏ tới dòng sql đầu tiên
+                while(rs.next())
+                {
+                    String email = rs.getString(1);
+                    String name = rs.getString(2);
+                    boolean gioitinh = rs.getBoolean(3);
+                    String gender;
+                    if(gioitinh) gender = "Male";
+                    else gender = "Female";
+                    String campus = rs.getString(4);
+                    String RoleID = rs.getString(5);
+                    String statusacc = rs.getString(6);
+                    ProfileDTO dummy = new ProfileDTO(name, campus, email, RoleID, gender, statusacc);
+                    boolean check = lazylist.add(dummy);
+                    if(!check)
+                    {
+                        throw new SQLException("Monday left me broken.");
+                    }
+                }
+                return lazylist;
+            }
+        }
+        finally
+        {
+            if(rs != null)
+            {
+                rs.close();
+            }     
+            if(con != null)
+            {
+                con.close();
+            }
+            if(stm != null)
+            {
+                stm.close();
+            }
+        }
+        return null;
+    }
 }
