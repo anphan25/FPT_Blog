@@ -45,10 +45,7 @@
                         <div class="dropdown_category_content">
                             <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
                                 <div class="dropdown_category_item">
-                                    <c:url var="cateLink" value="searchByCategory">
-                                        <c:param name="categoryId" value="${cateDTO.ID}"/>
-                                    </c:url>
-                                    <a href="${cateLink}">${cateDTO.name}</a>
+                                    <a href="searchByCategory?categoryId=${cateDTO.ID}">${cateDTO.name}</a>
                                 </div>  
                             </c:forEach>
                         </div>
@@ -413,10 +410,7 @@
                                             </div>
                                         </div>
                                         <div class="post_info">
-                                            <c:url var="loadContentLink" value="loadPostContent">
-                                                <c:param name="postId" value="${blogDTO.ID}" />
-                                            </c:url>
-                                            <a href="${loadContentLink}">
+                                            <a href="loadPostContent?postId=${blogDTO.ID}">
                                                 <h1 class="title_post">
                                                     ${blogDTO.title}
                                                 </h1>
