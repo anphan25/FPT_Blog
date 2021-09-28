@@ -365,17 +365,19 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, p.StatusPost, p.CategoryID, p.AwardID, "
-                        + "a.name, a.image, a.email"
+                String sql = "SELECT p.title, tag, postid, Day(p.createdDate) AS createdDay, month(p.createdDate) AS createdMonth,  year(p.createdDate) AS createdYear, p.PostContent, p.StatusPost, p.CategoryID, p.AwardID, "
+                        + "a.name, a.image, a.email "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.postID like ? AND a.Email = p.EmailPost";
+                        + "WHERE p.postID = ? AND a.Email = p.EmailPost";
+                
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
                     String postID = rs.getString("postid");
                     String title = rs.getString("title");
-                    String createdAt = rs.getString("createdAt");
+                    String createdAt = rs.getString("createdDay") + "-" + rs.getString("createdMonth") + "-"
+                            + rs.getString("createdYear");
                     String tags = rs.getString("tag");
                     String avatar = rs.getString("image");
                     String name = rs.getString("name");
