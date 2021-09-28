@@ -660,8 +660,15 @@ footer .text_footer_strong {
 
 .owner .avt img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
   border: solid 0.2px #e3e3e3;
+}
+
+.create-post img {
+  width: 24px;
+  height: 24px;
 }
 
 .owner .name {

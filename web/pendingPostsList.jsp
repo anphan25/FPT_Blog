@@ -100,7 +100,7 @@
                                     <div class="item-top">
                                         <a
                                             ><h2>${currentUser.name}</h2>
-                                            <p>${currentUser.name}</p></a
+                                            <p>@${currentUser.name}</p></a
                                         >
                                     </div>
                                     <div style="padding: 0.5rem 0">
@@ -141,7 +141,7 @@
                                             <p>Pending Posts</p>
                                         </div>
                                     </a>
-                                    <a href="/pendingPostsList.html">
+                                    <a href="createPostPage">
                                         <div class="container_item create-post">
                                             <img src="./images/create-blog.svg" />
                                             <p>Create Post</p>
