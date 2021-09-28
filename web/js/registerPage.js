@@ -37,8 +37,9 @@ $(document).ready(function () {
         const imgBlob = document.getElementById('file-input-avatar');
         if (imgBlob.files && imgBlob.files[0]) {
             let reader = new FileReader();
-            reader.onload = function (e) {
-                uploadImage(e.target.result, imgBlob.files[0].name, uuidv4());
+            reader.onload = async function (e) {
+                $('#img-preview').attr('src', "https://i.stack.imgur.com/MEBIB.gif");
+                await uploadImage(e.target.result, imgBlob.files[0].name, uuidv4());
                 $('#img-preview').attr('src', e.target.result);
             };
             reader.readAsDataURL(imgBlob.files[0]);
