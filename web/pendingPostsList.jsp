@@ -84,7 +84,7 @@
                         </div> -->
                         <div class="container_right">
                             <div class="container_button_register">
-                                <button><a href="/login.html">Pending Post</a>
+                                <button><a href="loadPendingPosts">Pending Post</a>
                                 </button>
                             </div>
                             <div class="icon_notification_container">
@@ -93,22 +93,19 @@
                             <div class="dropdown">
                                 <div class="dropbtn">
                                     <img
-                                        src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=JLhcw5FJgPIAX8kuBD0&_nc_ht=scontent.fvca1-3.fna&oh=28779448f7468d3c01d8f2febd7e2c06&oe=61681D30"
+                                        src="${currentUser.avatar}"
                                         />
                                 </div>
                                 <div class="dropdown-content">
                                     <div class="item-top">
                                         <a
-                                            ><h2>BÃ¡nh bÃ¨o 2k1</h2>
-                                            <p>@giaandeptrai123</p></a
+                                            ><h2>${currentUser.name}</h2>
+                                            <p>${currentUser.name}</p></a
                                         >
                                     </div>
                                     <div style="padding: 0.5rem 0">
                                         <div class="item">
-                                            <a href="profilePage.html"><p>Profile</p></a>
-                                        </div>
-                                        <div class="item">
-                                            <a><p>Create Post</p></a>
+                                            <a href="loadProfile?email=${currentUser.email}"><p>Profile</p></a>
                                         </div>
                                     </div>
                                     <div class="item-bottom">
@@ -165,7 +162,7 @@
                                 <div class="pending_posts">
                                     <c:if test="${not empty pendingList}">
                                         <c:forEach var="pendingDTO" items="${pendingList}">
-                                            <a href="#">
+                                            
                                                 <div class="post">
 
                                                     <div class="container_info_post">
@@ -187,30 +184,31 @@
                                                                     />
                                                             </div>
                                                             <div class="container_name_date_post">
+                                                                <a href="loadProfile?email=${pendingDTO.emailPost}">
                                                                 <p class="username">${pendingDTO.name}</p>
+                                                                </a>
                                                                 <p class="date_posted">${pendingDTO.dateCreated}</p>
                                                             </div>
                                                         </div>
                                                         <div class="post_info">
+                                                            <a href="loadContentPendingPost?postID=${pendingDTO.postID}">
                                                             <h1 class="title_post">
                                                                 ${pendingDTO.title}
                                                             </h1>
+                                                            </a>
                                                             <p class="content"></p>
                                                             <div class="hashtag">
                                                                 <c:forEach var="tag" items="${pendingDTO.tag}">
-                                                                    <c:url var="searchByTagLink" value="searchByTag">
-                                                                        <c:param name="tag" value="${tag}"/>
-                                                                    </c:url>
-                                                                    <a href="${searchByTagLink}">
+                                           
                                                                         <p><span class="hash"></span>#${tag}</p>
-                                                                    </a>
+
                                                                 </c:forEach>
                                                             </div>
                                                         </div> 
                                                     </div>
 
                                                 </div>
-                                            </a>
+                                            
                                         </c:forEach>
                                     </c:if>
                                     <c:if test="${empty pendingList}">

@@ -1,3 +1,8 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<c:set var="pendingPostContent" value="${requestScope.CONTENT_PENDING_POST}"/>
+<c:set var="loginStatus" value="${sessionScope.LOGIN}"/>
+<c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,6 +23,7 @@
         <link rel="stylesheet" href="./styles/postWaitingApprovalStyle.css" />
     </head>
     <body>
+
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
@@ -84,7 +90,7 @@
                         <div class="dropdown-content">
                             <div class="item-top">
                                 <a
-                                    ><h2>Bánh bèo 2k1</h2>
+                                    ><h2>BÃ¡nh bÃ¨o 2k1</h2>
                                     <p>@giaandeptrai123</p></a
                                 >
                             </div>
@@ -208,66 +214,34 @@
             </div>
             <div class="container-item">
                 <div class="title">
-                    <p class="title-text">Welcome to Blog</p>
+                    <p class="title-text">${pendingPostContent.title}</p>
                     <div class="tag">
-                        <p>#Javascript</p>
-                        <p>HTML</p>
-                        <p>CSS</p>
+                        <c:forEach var="tag" items="${pendingPostContent.tag}">
+                            <c:url var="searchByTagLink" value="searchByTag">
+                                <c:param name="tag" value="${tag}" />
+                            </c:url>
+                            <a href="${searchByTagLink}">
+                                <p><span class="hash"></span>#${tag}</p>
+                            </a>
+                        </c:forEach>
                     </div>
                     <div class="owner">
                         <div class="avt">
                             <img
                                 class="avt-img"
-                                src="https://img.hoidap247.com/picture/question/20200508/large_1588936738888.jpg"
+                                src="${pendingPostContent.avatar}"
                                 alt=""
                                 />
                         </div>
                         <form action="">
-                            <div class="name">Thiên Ân</div>
+                            <div class="name">${pendingPostContent.namePost}</div>
                         </form>
                         <div class="time">11/09/2021</div>
                     </div>
                 </div>
-                <img
-                    class="content-image"
-                    src="https://nordiccoder.com/app/uploads/2019/12/50-javascript.jpg"
-                    alt=""
-                    />
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut
-                    consectetur repudiandae numquam illo tempora enim error? Saepe
-                    odit aut accusantium pariatur tempore quod, impedit eius, labore
-                    accusamus porro nisi aspernatur?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Aut consectetur repudiandae numquam
-                    illo tempora enim error? Saepe odit aut accusantium pariatur
-                    tempore quod, impedit eius, labore accusamus porro nisi
-                    aspernatur?Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Aut consectetur repudiandae numquam illo tempora enim error?
-                    Saepe odit aut accusantium pariatur tempore quod, impedit eius,
-                    labore accusamus porro nisi aspernatur?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Aut consectetur repudiandae numquam
-                    illo tempora enim error? Saepe odit aut accusantium pariatur
-                    tempore quod, impedit eius, labore accusamus porro nisi
-                    aspernatur?Lorem ipsum dolor sit amet consectetur adipisicing
-                    elit. Aut consectetur repudiandae numquam illo tempora enim error?
-                    Saepe odit aut accusantium pariatur tempore quod, impedit eius,
-                    labore accusamus porro nisi aspernatur?Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Aut consectetur repudiandae numquam
-                    illo tempora enim error? Saepe odit aut accusantium pariatur
-                    tempore quod, impedit eius, labore accusamus porro nisi
-                    aspernatur? Lorem ipsum dolor, sit amet consectetur adipisicing
-                    elit. Nulla blanditiis odio quasi et fugiat, quaerat impedit qui
-                    sequi voluptates rerum distinctio in modi explicabo. Eveniet odio
-                    labore debitis repellat officia. Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Animi minus in totam debitis
-                    dignissimos porro nesciunt voluptas dolorem architecto, pariatur
-                    voluptatem beatae autem suscipit nostrum temporibus amet quasi
-                    recusandae veniam? Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Quos fugit, molestias tempore, aut doloremque,
-                    voluptatem sit dicta eligendi beatae quibusdam dolorem atque
-                    perferendis similique magni assumenda deserunt necessitatibus
-                    cupiditate libero.
-                </p>
+                <div class="content-img-text">
+                    <c:out value="${pendingPostContent.postContent}" escapeXml="false" />
+                </div>
                 <div class="decision_btn">
                     <form action="">
                         <button type="submit"  class="approve-btn"
@@ -285,13 +259,13 @@
     <footer>
         <div class="container_footer">
             <p>
-                <span class="text_footer_strong">DEV Community</span> – A constructive
+                <span class="text_footer_strong">DEV Community</span> â A constructive
                 and inclusive social network for software developers. With you every
                 step of your journey.
             </p>
             <div style="margin: 0.25rem 0"></div>
             <p>
-                Built on <span class="text_footer_strong">Forem</span> — the
+                Built on <span class="text_footer_strong">Forem</span> â the
                 <span class="text_footer_strong">open source</span> software that
                 powers DEV and other inclusive communities
             </p>
@@ -300,7 +274,7 @@
             <p class="text_footer">
                 Made with
                 <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
+                <span class="text_footer_strong">Ãn, An, Äan, Nam, PhÆ°Æ¡ng</span> Â©
                 2021
             </p>
             <img src="./images/forem_icon.svg" />
