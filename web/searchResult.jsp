@@ -531,7 +531,7 @@
                         </c:if>
                         
                         
-                        <c:if test="${empty searchTitleList && empty searchCategoryList && empty searchTagList}">
+                        <c:if test="${empty searchTitleList && empty searchCategoryList}">
                             <div class="no-result">
                                 <h1>No result matches</h1>
                             </div>
