@@ -11,6 +11,7 @@ profilePage=profilePage.jsp
 registerPage=register.jsp
 searchResultPage=searchResult.jsp
 userListPage=userListPage.jsp
+notFoundPage=notFoundPage.jsp
 login=LoginServlet
 loadBlogs=LoadAllPostsServlet
 searchTitle=SearchTitleServlet
