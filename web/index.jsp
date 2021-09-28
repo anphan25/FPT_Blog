@@ -102,10 +102,7 @@
                                 </div>
                                 <div style="padding: 0.5rem 0">
                                     <div class="item">
-                                        <c:url var="loadCurrentProfileLink" value="loadProfile">
-                                            <c:param name="email" value="${currentUser.email}"/>
-                                        </c:url>
-                                        <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
+                                        <a href="loadProfile?email=${currentUser.email}"><p>Profile</p></a>
                                     </div>
                                 </div>
                                 <div class="item-bottom">
@@ -400,10 +397,8 @@
                                                     />
                                             </div>
                                             <div class="container_name_date_post">
-                                                <c:url var="loadProfileLink" value="loadProfile">
-                                                    <c:param name="email" value="${blogDTO.emailPost}"/>
-                                                </c:url>
-                                                <a href="${loadProfileLink}">
+
+                                                <a href="loadProfile?email=${blogDTO.emailPost}">
                                                     <p class="username">${blogDTO.namePost}</p>
                                                 </a>
                                                 <p class="date_posted">${blogDTO.approvedDate}</p>
@@ -417,10 +412,8 @@
                                             </a>
                                             <div class="hashtag">
                                                 <c:forEach var="tag" items="${blogDTO.tag}">
-                                                    <c:url var="searchByTagLink" value="searchByTag">
-                                                        <c:param name="tag" value="${tag}"/>
-                                                    </c:url>
-                                                    <a href="${searchByTagLink}">
+
+                                                    <a href="searchByTag?tag=${tag}">
                                                         <p><span class="hash"></span>#${tag}</p>
                                                     </a>
                                                 </c:forEach>
