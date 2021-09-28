@@ -491,7 +491,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                         <div class="item">
@@ -500,7 +500,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                         <div class="item">
@@ -509,7 +509,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                     </div>
@@ -521,7 +521,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                         <div class="item">
@@ -530,7 +530,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                         <div class="item">
@@ -539,7 +539,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Má»i</p>
+                                <p class="news_button">Mới</p>
                             </div>
                         </div>
                     </div>

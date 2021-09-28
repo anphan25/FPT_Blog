@@ -364,7 +364,7 @@ prefix="c"%>
         </div>
         <div class="left-container">
           <div class="left-container-title">
-            <h3>Nhá»¯ng bÃ i viáº¿t ná»i báº­t</h3>
+            <h3>Những bài viết nổi bật</h3>
           </div>
           <div class="left-container-content">
             <div class="left-container-item">
