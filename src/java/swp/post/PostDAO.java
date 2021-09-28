@@ -224,7 +224,7 @@ public class PostDAO {
                 String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, "
                         + "a.name, a.image "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.postID LIKE ? AND a.Email = p.EmailPost";
+                        + "WHERE p.postID like ? AND a.Email = p.EmailPost";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
@@ -355,7 +355,53 @@ public class PostDAO {
         }
         return null;
     }
-
+    
+        
+    public PostDTO getPendingPostById(String id)
+            throws SQLException, ClassNotFoundException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, p.StatusPost, p.CategoryID, p.AwardID, "
+                        + "a.name, a.image, a.email"
+                        + "FROM tblPosts p, tblAccounts a "
+                        + "WHERE p.postID like ? AND a.Email = p.EmailPost";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, id);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String postID = rs.getString("postid");
+                    String title = rs.getString("title");
+                    String createdAt = rs.getString("createdAt");
+                    String tags = rs.getString("tag");
+                    String avatar = rs.getString("image");
+                    String name = rs.getString("name");
+                    String content = rs.getString("PostContent");
+                    String statusPost = rs.getString("StatusPost");
+                    String email = rs.getString("email");
+                    String categoryID = rs.getString("CategoryID");
+                    int awardID = rs.getInt("AwardID");
+                    PostDTO post = new PostDTO(postID, email, statusPost, createdAt,  Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, awardID);
+                    return post;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
+    
     //Đây là phần paging của Ân đang cố làm (kememay)
     public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;

@@ -463,6 +463,11 @@ prefix="c"%>
         var form = document.getElementById("searchit");
         form.submit();
       }
+      const dotIcon = document.querySelector(".dot-icon");
+      const optionDiv = document.querySelector(".delete-update-div");
+      dotIcon.addEventListener("click", () => {
+        optionDiv.classList.toggle("hidden");
+      });
     </script>
     <script src="./js/contentPage.js"></script>
   </body>

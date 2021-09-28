@@ -69,9 +69,6 @@ public class LoadPendingPostServlet extends HttpServlet
                     {
                         PendingPostDAO dao = new PendingPostDAO();
                         ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost();
-                        for(PendingPostDTO o : dto){
-                            System.out.println(o);
-                        }
                         if(!dto.isEmpty())
                         {
                             request.setAttribute("PENDING_LIST", dto);
