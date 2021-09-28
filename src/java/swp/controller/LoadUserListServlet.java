@@ -8,6 +8,7 @@ package swp.controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -18,6 +19,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.account.AccountDTO;
 import swp.profile.ProfileDAO;
 import swp.profile.ProfileDTO;
 
@@ -31,7 +34,8 @@ import swp.profile.ProfileDTO;
 })
 public class LoadUserListServlet extends HttpServlet
 {
-
+    private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
+    private final String USER_CONTROL_PANEL = "userListPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,26 +49,34 @@ public class LoadUserListServlet extends HttpServlet
             throws ServletException, IOException, NamingException, SQLException
     {
         response.setContentType("text/html;charset=UTF-8");
-        String url = "goto404";
+        HttpSession session = request.getSession(false);
+        
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        
+        String url = roadmap.get(ERROR_PAGE);
         
         try
         {
-            ProfileDAO dao = new ProfileDAO();
-            ArrayList<ProfileDTO> dto = dao.getUserList();
-            //chưa check account đã đăng nhập và chưa check role
-            if(dto != null) //wow có list và ko có lỗi
+            if(session != null)
             {
-                request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
-                url = "userlistPage.html"; //ai edit servlet này mà để url như thế này thì assignment 0 điểm
-            }
-            else
-            {
-                //do nothing. Who care if the executive of FPTU is screaming for error.
+                AccountDTO currentlogin = (AccountDTO) session.getAttribute("CURRENT_USER"); //FIX THIS
+                String role = currentlogin.getRole();
+                if(currentlogin != null && role.equals("A"))
+                {
+                    ProfileDAO dao = new ProfileDAO();
+                    ArrayList<ProfileDTO> dto = dao.getUserList();
+                    url = roadmap.get(USER_CONTROL_PANEL); // check role thành công thì cho qua luôn dù có dto hay ko
+                    //chưa check account đã đăng nhập và chưa check role
+                    if(dto != null) //wow có list và ko có lỗi
+                    {
+                            request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                    }
+                }//kết thúc check login và admin
             }
         }
         finally
         {
-            
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
