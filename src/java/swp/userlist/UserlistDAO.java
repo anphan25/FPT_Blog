@@ -155,4 +155,65 @@ public class UserlistDAO implements Serializable
         }
         return false;
     }
+    
+    public ArrayList<UserlistDTO> searchAll(String searchtext) throws NamingException, SQLException
+    {
+        //this is a stupid line for a lazy man
+        ArrayList<UserlistDTO> lazylist = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try
+        {
+            //cố gắng thông ass DB
+            con = DBHelper.makeConnection();
+            if(con != null)
+            {
+                String sql = "SELECT a.Email, a.Name, a.Gender, a.Campus, r.RoleName, sa.StatusName "
+                            + "FROM tblAccounts a LEFT JOIN tblRoles r ON a.RoleID = r.RoleID "
+                            + "LEFT JOIN tblStatusAccount sa ON a.StatusAccountID = sa.StatusAccountID "
+                            + "WHERE a.Email like ? OR a.Name like ?";  //chỉ cần giống tên hoặc email vứt mẹ vô lazylist
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + searchtext + "%");
+                stm.setString(2, "%" + searchtext + "%");
+                rs = stm.executeQuery();
+                //trỏ tới dòng sql đầu tiên
+                while(rs.next())
+                {
+                    String email = rs.getString(1);
+                    String name = rs.getString(2);
+                    boolean gioitinh = rs.getBoolean(3);
+                    String gender;
+                    if(gioitinh) gender = "Male";
+                    else gender = "Female";
+                    String campus = rs.getString(4);
+                    String RoleID = rs.getString(5);
+                    String statusacc = rs.getString(6);
+                    UserlistDTO dummy = new UserlistDTO(email, name, campus, RoleID, gender, statusacc);
+                    boolean check = lazylist.add(dummy);
+                    if(!check)
+                    {
+                        throw new SQLException("Monday left me broken.");
+                    }
+                }
+                return lazylist;
+            }
+        }
+        finally
+        {
+            if(rs != null)
+            {
+                rs.close();
+            }     
+            if(con != null)
+            {
+                con.close();
+            }
+            if(stm != null)
+            {
+                stm.close();
+            }
+        }
+        return null;
+    }
 }
