@@ -370,7 +370,7 @@ public class PostDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "SELECT title, tag, p.createdDate AS createdAt, PostContent, StatusPost, CategoryID, AwardID, "
+                String sql = "SELECT title, tag, Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear, PostContent, StatusPost, CategoryID, AwardID, "
                         + "name, image, email "
                         + "FROM tblPosts p left join tblAccounts a "
                         + "on Email = EmailPost Where postID = ?";
@@ -381,11 +381,12 @@ public class PostDAO {
                 if (rs.next()) {
 
                     String title = rs.getString("Title");
-                    String createdAt = rs.getString("createdAt");
+                    String createdAt = rs.getString("createdDay") + "-" + rs.getString("createdMonth") + "-"
+                            + rs.getString("createdYear");
                     String tags = rs.getString("Tag");
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
-
+                    
                     String content = rs.getString("PostContent");
                     String statusPost = rs.getString("StatusPost");
                     String email = rs.getString("Email");
