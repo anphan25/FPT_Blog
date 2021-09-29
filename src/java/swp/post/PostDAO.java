@@ -21,9 +21,9 @@ public class PostDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "select tag, title, postid, emailpost"
-                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
+                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
                         + ", a.name, a.image, p.AwardID"
-                        + " from tblPosts p left join tblAccounts a on p.emailpost = a.email where p.StatusPost = ? order by p.ApprovedDate desc";
+                        + " from tblPosts p left join tblAccounts a on emailpost = email where StatusPost = ? order by ApprovedDate desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
@@ -174,10 +174,10 @@ public class PostDAO {
                 // + ", a.name, a.image, p.AwardID"
                 // + " from tblPosts p left join tblAccounts a on p.emailpost = a.email"
                 // + " and title like ? and p.StatusPost = ? order by p.ApprovedDate desc";
-                String sql = "select p.title, tag, postid, emailpost"
-                        + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
-                        + ", a.name, a.image, p.AwardID" + " from tblPosts p, tblAccounts a where p.emailpost = a.email"
-                        + " and title like ? and p.StatusPost = ? order by p.ApprovedDate desc";
+                String sql = "select title, tag, postid, emailpost"
+                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
+                        + ", name, image, AwardID from tblPosts p, tblAccounts a where emailpost = email"
+                        + " and title like ? and StatusPost = ? order by ApprovedDate desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + title + "%");
                 stm.setString(2, "A");
@@ -218,26 +218,25 @@ public class PostDAO {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
+        PostDTO post = null;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, "
+                String sql = "SELECT title, tag, p.createdDate AS createdAt, PostContent, "
                         + "a.name, a.image "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.postID like ? AND a.Email = p.EmailPost";
+                        + "WHERE postID = ? AND Email = EmailPost";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
-                while (rs.next()) {
-                    String postID = rs.getString("PostID");
+                if (rs.next()) {
                     String title = rs.getString("title");
                     String createdAt = rs.getString("createdAt");
                     String tags = rs.getString("tag");
                     String avatar = rs.getString("image");
                     String name = rs.getString("name");
                     String content = rs.getString("PostContent");
-                    PostDTO post = new PostDTO(postID, createdAt, Style.convertTagToArrayList(tags), title, content, name, avatar);
-                    return post;
+                    post = new PostDTO(id, createdAt, Style.convertTagToArrayList(tags), title, content, name, avatar);
                 }
             }
         } finally {
@@ -251,10 +250,10 @@ public class PostDAO {
                 conn.close();
             }
         }
-        return null;
+        return post;
     }
 
-    public ArrayList<PostDTO> getPostByCategory(String category) // đây ko phải static
+    public ArrayList<PostDTO> getPostByCategory(String category)
             throws SQLException, ClassNotFoundException, NamingException {
         ArrayList<PostDTO> list = new ArrayList<>();
         Connection conn = null;
@@ -264,11 +263,11 @@ public class PostDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 int cateID = Integer.parseInt(category); // database chỉ nhận int
-                String sql = "SELECT p.title, tag, postid, emailpost, Day(p.ApprovedDate) AS ApprovedDay, "
-                        + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
-                        + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email AND p.CategoryID = ? AND p.StatusPost = 'A'"
-                        + "ORDER BY p.ApprovedDate desc"; // sắp xếp ngày gần đây nhất
+                String sql = "SELECT title, tag, postid, emailpost, Day(ApprovedDate) AS ApprovedDay, "
+                        + "month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear, "
+                        + "name, image, AwardID FROM tblPosts p, tblAccounts a "
+                        + "WHERE emailpost = email AND CategoryID = ? AND StatusPost = 'A'"
+                        + "ORDER BY ApprovedDate desc"; // sắp xếp ngày gần đây nhất
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, cateID);
                 rs = stm.executeQuery();
@@ -316,11 +315,11 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT p.title, tag, postid, emailpost, Day(p.ApprovedDate) AS ApprovedDay, "
-                        + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
-                        + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email AND p.Tag like ? AND p.StatusPost = 'A'"
-                        + "ORDER BY p.ApprovedDate desc"; // sắp xếp ngày gần đây nhất
+                String sql = "SELECT title, tag, postid, emailpost, Day(ApprovedDate) AS ApprovedDay, "
+                        + "month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear, "
+                        + "a.name, image, AwardID " + "FROM tblPosts p, tblAccounts a "
+                        + "WHERE emailpost = email AND Tag like ? AND StatusPost = 'A'"
+                        + "ORDER BY ApprovedDate desc"; // sắp xếp ngày gần đây nhất
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + tag + "%");
                 rs = stm.executeQuery();
@@ -355,8 +354,7 @@ public class PostDAO {
         }
         return null;
     }
-    
-        
+
     public PostDTO getPendingPostById(String id)
             throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
@@ -365,26 +363,25 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT p.title, tag, postid, p.createdDate AS createdAt, p.PostContent, p.StatusPost, p.CategoryID, p.AwardID, "
-                        + "a.name, a.image, a.email"
-                        + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.postID like ? AND a.Email = p.EmailPost";
+                String sql = "SELECT title, tag, p.createdDate AS createdAt, PostContent, StatusPost, CategoryID, AwardID, "
+                        + "name, image, email "
+                        + "FROM tblPosts p left join tblAccounts a "
+                        + "on Email = EmailPost Where postID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    String postID = rs.getString("postid");
-                    String title = rs.getString("title");
+                    String title = rs.getString("Title");
                     String createdAt = rs.getString("createdAt");
-                    String tags = rs.getString("tag");
-                    String avatar = rs.getString("image");
-                    String name = rs.getString("name");
+                    String tags = rs.getString("Tag");
+                    String avatar = rs.getString("Image");
+                    String name = rs.getString("Name");
                     String content = rs.getString("PostContent");
                     String statusPost = rs.getString("StatusPost");
-                    String email = rs.getString("email");
+                    String email = rs.getString("Email");
                     String categoryID = rs.getString("CategoryID");
                     int awardID = rs.getInt("AwardID");
-                    PostDTO post = new PostDTO(postID, email, statusPost, createdAt,  Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, awardID);
+                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, awardID);
                     return post;
                 }
             }
@@ -401,7 +398,7 @@ public class PostDAO {
         }
         return null;
     }
-    
+
     //Đây là phần paging của Ân đang cố làm (kememay)
     public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
@@ -411,11 +408,11 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT p.title, tag, postid, emailpost, Day(p.ApprovedDate) AS ApprovedDay, "
-                        + "month(p.ApprovedDate) AS ApprovedMonth, year(p.ApprovedDate) AS ApprovedYear, "
-                        + "a.name, a.image, p.AwardID " + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email AND p.StatusPost = 'A'"
-                        + "ORDER BY p.ApprovedDate desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                String sql = "SELECT title, tag, postid, emailpost, Day(ApprovedDate) AS ApprovedDay, "
+                        + "month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear, "
+                        + "name, image, AwardID FROM tblPosts p, tblAccounts a "
+                        + "WHERE emailpost = email AND StatusPost = 'A'"
+                        + "ORDER BY ApprovedDate desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, (index - 1) * 10);
                 rs = stm.executeQuery();
@@ -458,7 +455,7 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count (PostID) as Total from tblPosts where StatusPost = 'A'";
+                String sql = "select count(PostID) as Total from tblPosts where StatusPost = 'A'";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 if (rs.next()) {

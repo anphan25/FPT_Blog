@@ -6,7 +6,6 @@ package swp.controller;
  * and open the template in the editor.
  */
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import swp.post.PostDAO;
 import swp.post.PostDTO;
 
@@ -47,7 +45,7 @@ public class LoadPostContentServlet extends HttpServlet {
                 request.setAttribute("POST_DETAIL", post);
             }
         } catch (Exception e) {
-
+            log(e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
