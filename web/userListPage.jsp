@@ -102,9 +102,6 @@
                                 <div class="item">
                                     <a href="loadProfile?gmail=${currentadmin.email}"><p>Profile</p></a>
                                 </div>
-                                <div class="item">
-                                    <a><p>Create Post</p></a>
-                                </div>
                             </div>
                             <div class="item-bottom">
                                 <a href="logout">Sign Out</a>
@@ -527,13 +524,13 @@
         <footer>
             <div class="container_footer">
                 <p>
-                    <span class="text_footer_strong">DEV Community</span> â A constructive
+                    <span class="text_footer_strong">DEV Community</span> - A constructive
                     and inclusive social network for software developers. With you every
                     step of your journey.
                 </p>
                 <div style="margin: 0.25rem 0"></div>
                 <p>
-                    Built on <span class="text_footer_strong">Forem</span> â the
+                    Built on <span class="text_footer_strong">Forem</span> - the
                     <span class="text_footer_strong">open source</span> software that
                     powers DEV and other inclusive communities
                 </p>
@@ -542,7 +539,7 @@
                 <p class="text_footer">
                     Made with
                     <i class="fa fa-heart" style="color: rgb(255, 70, 50)"></i> by
-                    <span class="text_footer_strong">Ãn, An, Äan, Nam, PhÆ°Æ¡ng</span> Â©
+                    <span class="text_footer_strong">Ân, An, Đan, Nam, Phương</span> ©
                     2021
                 </p>
                 <img src="./images/forem_icon.svg" />

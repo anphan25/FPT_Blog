@@ -197,7 +197,7 @@
                                             <p>Create Category</p>
                                         </div>
                                     </a>
-                                    <a href="">
+                                    <a href="loadUserList">
                                         <div class="container_item user-list-icon">
                                             <img src="./images/user-list.svg" />
                                             <p>User List</p>
