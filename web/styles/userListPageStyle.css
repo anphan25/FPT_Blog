@@ -681,6 +681,21 @@ footer .text_footer_strong {
   border-radius: 5px;
 }
 
+.stupid-buttons {
+  padding: 10px 0;
+}
+
+.stupid-buttons button {
+  padding: 8px;
+  border-radius: 20px;
+  margin-right: 10px;
+  border: 2px solid #3b49df;
+  background-color: white;
+  color: #3b49df;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* toggle_sidebar */
 /* toggle_sidebar */
 /* toggle_sidebar */

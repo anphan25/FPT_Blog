@@ -249,7 +249,7 @@
                                             <p>Create Category</p>
                                         </div>
                                     </a>
-                                    <a href="/pendingPostsList.html">
+                                    <a href="loadUserList">
                                         <div class="container_item user-list-icon">
                                             <img src="./images/user-list.svg" />
                                             <p>User List</p>
@@ -531,7 +531,7 @@
                         </c:if>
                         
                         
-                        <c:if test="${empty searchTitleList && empty searchCategoryList}">
+                        <c:if test="${empty searchTitleList && empty searchCategoryList && empty searchTagList}">
                             <div class="no-result">
                                 <h1>No result matches</h1>
                             </div>

@@ -138,7 +138,7 @@ public class PostDAO {
                         + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
-                stm.setString(2, "A");
+                stm.setString(2, "WFA");
                 stm.setString(3, tag);
                 stm.setNString(4, title);
                 stm.setNString(5, content);
@@ -222,21 +222,27 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT title, tag, p.createdDate AS createdAt, PostContent, "
-                        + "a.name, a.image "
+                String sql = "SELECT postID, title, tag, awardID, Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear, PostContent, "
+                        + "a.name, a.image, a.email "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE postID = ? AND Email = EmailPost";
+                        + "WHERE postID like ? AND a.email = EmailPost";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
-                if (rs.next()) {
+                if (rs.next()){
+                    String postID = rs.getString("postID");
                     String title = rs.getString("title");
-                    String createdAt = rs.getString("createdAt");
+                    String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-"
+                            + rs.getString("ApprovedYear");
                     String tags = rs.getString("tag");
                     String avatar = rs.getString("image");
                     String name = rs.getString("name");
                     String content = rs.getString("PostContent");
-                    post = new PostDTO(id, createdAt, Style.convertTagToArrayList(tags), title, content, name, avatar);
+                    String email = rs.getString("email");
+                    int like = getLikeCounting(id);
+                    int awardID = rs.getInt("awardID");
+                    int comments = getCommentCounting(id);
+                    post = new PostDTO(postID, email, Style.convertTagToArrayList(tags), title, approvedDate, content, name, avatar, awardID, like, comments);
                 }
             }
         } finally {

@@ -110,6 +110,22 @@ public class PostDTO implements Serializable {
         this.awardID = awardID;
     }
     
+    //DTo for content of a post
+
+    public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String postContent, String namePost, String avatar, int awardID, int likes, int comments) {
+        this.ID = ID;
+        this.emailPost = emailPost;
+        this.tag = tag;
+        this.title = title;
+        this.approvedDate = approvedDate;
+        this.postContent = postContent;
+        this.namePost = namePost;
+        this.avatar = avatar;
+        this.awardID = awardID;
+        this.likes = likes;
+        this.comments = comments;
+    }
+    
     
 
     public String getID() {

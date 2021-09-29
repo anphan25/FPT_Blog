@@ -162,53 +162,62 @@
                                 <div class="pending_posts">
                                     <c:if test="${not empty pendingList}">
                                         <c:forEach var="pendingDTO" items="${pendingList}">
-                                            
-                                                <div class="post">
 
-                                                    <div class="container_info_post">
-                                                        <div class="post-status">
-                                                            <c:if test="${pendingDTO.statusPost == 'WFA'}">
-                                                                <h1>Public Request</h1>
-                                                            </c:if>
-                                                            <c:if test="${pendingDTO.statusPost == 'WFD'}">
-                                                                <h1>Delete Request</h1>
-                                                            </c:if>
-                                                            <c:if test="${pendingDTO.statusPost == 'WFU'}">
-                                                                <h1>Update Request</h1>
-                                                            </c:if>
+                                            <div class="post">
+
+                                                <div class="container_info_post">
+                                                    <div class="post-status <c:if test="${pendingDTO.statusPost == 'WFA'}">
+                                                         public-request
+                                                        </c:if>
+                                                        <c:if test="${pendingDTO.statusPost == 'WFD'}">
+                                                            delete-request
+                                                        </c:if>
+                                                        <c:if test="${pendingDTO.statusPost == 'WFU'}">
+                                                            update-request
+                                                        </c:if>">
+
+                                                        <c:if test="${pendingDTO.statusPost == 'WFA'}">
+                                                            <h1>Public Request</h1>
+                                                        </c:if>
+                                                        <c:if test="${pendingDTO.statusPost == 'WFD'}">
+                                                            <h1>Delete Request</h1>
+                                                        </c:if>
+                                                        <c:if test="${pendingDTO.statusPost == 'WFU'}">
+                                                            <h1>Update Request</h1>
+                                                        </c:if>
+                                                    </div>
+                                                    <div class="user_info">
+                                                        <div class="container_avatar">
+                                                            <img
+                                                                src="${pendingDTO.imageURL}"
+                                                                />
                                                         </div>
-                                                        <div class="user_info">
-                                                            <div class="container_avatar">
-                                                                <img
-                                                                    src="${pendingDTO.imageURL}"
-                                                                    />
-                                                            </div>
-                                                            <div class="container_name_date_post">
-                                                                <a href="loadProfile?email=${pendingDTO.emailPost}">
+                                                        <div class="container_name_date_post">
+                                                            <a href="loadProfile?email=${pendingDTO.emailPost}">
                                                                 <p class="username">${pendingDTO.name}</p>
-                                                                </a>
-                                                                <p class="date_posted">${pendingDTO.dateCreated}</p>
-                                                            </div>
+                                                            </a>
+                                                            <p class="date_posted">${pendingDTO.dateCreated}</p>
                                                         </div>
-                                                        <div class="post_info">
-                                                            <a href="loadContentPendingPost?postID=${pendingDTO.postID}">
+                                                    </div>
+                                                    <div class="post_info">
+                                                        <a href="loadContentPendingPost?postID=${pendingDTO.postID}">
                                                             <h1 class="title_post">
                                                                 ${pendingDTO.title}
                                                             </h1>
-                                                            </a>
-                                                            <p class="content"></p>
-                                                            <div class="hashtag">
-                                                                <c:forEach var="tag" items="${pendingDTO.tag}">
-                                           
-                                                                        <p><span class="hash"></span>#${tag}</p>
+                                                        </a>
+                                                        <p class="content"></p>
+                                                        <div class="hashtag">
+                                                            <c:forEach var="tag" items="${pendingDTO.tag}">
 
-                                                                </c:forEach>
-                                                            </div>
-                                                        </div> 
-                                                    </div>
+                                                                <p><span class="hash"></span>#${tag}</p>
 
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div> 
                                                 </div>
-                                            
+
+                                            </div>
+
                                         </c:forEach>
                                     </c:if>
                                     <c:if test="${empty pendingList}">

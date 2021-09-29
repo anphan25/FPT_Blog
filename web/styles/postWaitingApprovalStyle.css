@@ -691,7 +691,7 @@ footer .text_footer_strong {
 .container .decision_btn {
   display: flex;
   justify-content: center;
-  padding-top: 50px;
+  padding-top: 10px;
 }
 
 .container .decision_btn button {
@@ -718,6 +718,15 @@ footer .text_footer_strong {
 
 .container .decision_btn .reject-btn:hover {
   background-color: #efefef;
+}
+
+.label-request {
+  text-align: center;
+  padding-top: 30px;
+}
+.content-img-text p img {
+  width: 100%;
+  margin: 25px 0;
 }
 
 /* toggle_sidebar */
