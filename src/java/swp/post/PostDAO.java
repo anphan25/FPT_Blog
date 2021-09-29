@@ -229,7 +229,7 @@ public class PostDAO {
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
-                if (rs.next()){
+                if (rs.next()) {
                     String postID = rs.getString("postID");
                     String title = rs.getString("title");
                     String approvedDate = rs.getString("ApprovedDay") + "-" + rs.getString("ApprovedMonth") + "-"
@@ -484,5 +484,36 @@ public class PostDAO {
             }
         }
         return 0;
+    }
+
+    public boolean setNewStatusPost(String postID, String emailMentor, String newStatus) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblposts set statuspost = ?, emailapprover = ?, ApprovedDate = getdate()"
+                        + " where postid = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, newStatus);
+                stm.setString(2, emailMentor);
+                stm.setString(3, postID);
+
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
     }
 }
