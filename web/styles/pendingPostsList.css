@@ -650,8 +650,6 @@ footer .text_footer_strong {
 
 .post-status {
   padding: 0.6rem;
-  color: White;
-  background-color: #3b49df;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
@@ -664,6 +662,21 @@ footer .text_footer_strong {
 
 .container_name_date_post {
   margin-top: 8px;
+}
+
+.public-request {
+  color: white;
+  background-color: #3b49df;
+}
+
+.delete-request {
+  color: white;
+  background-color: #dc1818;
+}
+
+.update-request {
+  color: white;
+  background-color: #008335;
 }
 @media screen and (max-width: 992px) {
   .main .container .row .navigation_right .column {
