@@ -286,7 +286,6 @@
                 return function () {
                     if (!ref) {
                         ref = true;
-                        componentRunOnDepend = true;
                         getDocumentOnMount();
                     }
                 };
@@ -310,21 +309,23 @@
                         .catch((error) => {
                             console.log('Error getting documents: ', error);
                         });
-                messagesRealtime.forEach((doc) => {
+                messagesRealtime.forEach((doc, index) => {
                     if (doc.createdAt) {
+                        if (index === messagesRealtime.length - 1) {
+                            lastestMessageCreatedAt = doc.createdAt.seconds;
+                        }
                         if ('${currentUser.email}' === doc.email) {
                             domMessage += rightMessage(doc.message);
                         } else {
-                            domMessage += leftMessage(doc.avatar, doc.message);
+                            domMessage += leftMessage(doc.avatar, doc.message, doc.name);
                         }
                     }
                 })
-                ;
+                        ;
                 body.innerHTML = domMessage;
                 dest.scrollIntoView({behavior: 'smooth'});
             }
-
-            componentRunOnDepend && db.collection('chat-global')
+            db.collection('chat-global')
                     .orderBy('createdAt', 'desc')
                     .limit(1)
                     .onSnapshot((querySnapshot) => {
@@ -337,18 +338,22 @@
                                 messagesRealtime.push(data);
                             }
                         });
-                        messagesRealtime.forEach((doc, index) => {
+                        messagesRealtime.forEach((doc) => {
                             if (doc.createdAt) {
-                                if ('${currentUser.email}' === doc.email) {
-                                    domMessage += rightMessage(doc.message);
-                                } else {
-                                    domMessage += leftMessage(doc.avatar, doc.message);
+                                if (lastestMessageCreatedAt !== doc.createdAt.seconds) {
+                                    if ('${currentUser.email}' === doc.email) {
+                                        domMessage += rightMessage(doc.message);
+                                    } else {
+                                        domMessage += leftMessage(doc.avatar, doc.message, doc.name);
+                                    }
                                 }
                             }
                         });
-                        body.insertAdjacentHTML('beforeend', domMessage);
-                        dest.scrollIntoView({behavior: 'smooth'});
-                    });
+                        if (domMessage !== '') {
+                            body.insertAdjacentHTML('beforeend', domMessage);
+                            dest.scrollIntoView({behavior: 'smooth'});
+                        }
+                    })
 
         </script>
     </body>

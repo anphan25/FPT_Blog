@@ -406,6 +406,7 @@ header .container_right .container_button_register button:hover {
 .main {
   padding-top: 56px;
   display: flex;
+    overflow-x: hidden;
 }
 
 .main .left_main {
@@ -529,7 +530,7 @@ header .container_right .container_button_register button:hover {
   top: -15px;
   left: 0.6rem;
   font-weight: 400;
-  width: 120%;
+  width: max-content;
   font-size: 12px;
   color: rgb(112, 112, 112);
 }
@@ -575,6 +576,38 @@ header .container_right .container_button_register button:hover {
 .not_login_container a {
   color: #3b49df;
   text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  header .toggle_sidebar {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  header .container_header {
+    padding: 0;
+  }
+  header .container_left .container_searchBar {
+    position: relative;
+    width: 360px;
+    margin: 0 1rem;
+  }
+  header .container_left .container_searchBar {
+    position: relative;
+    /* width: 100px; */
+    display: none;
+    margin: 0 1rem;
+    /* height: 40px; */
+  }
+
+  header .container_right .container_button_login {
+    display: none;
+  }
+
 }
 
 /* Login form */
