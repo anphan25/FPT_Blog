@@ -2,7 +2,7 @@ let textarea = eval(DomID('textarea'));
 let body = eval(DomID('body'));
 let dest = eval(DomID('destination'));
 let likeButton = eval(DomID('like'));
-let componentRunOnDepend = false;
+let lastestMessageCreatedAt = "";
 
 $('textarea')
         .each(function () {
@@ -50,13 +50,13 @@ function DomID(element) {
     return document.getElementById(element);
 }
 
-const leftMessage = (avatar, message) => {
+const leftMessage = (avatar, message, name) => {
     return `<div class="left">
   <div class="avatarInChatContainer">
     <img src=${avatar} alt="avatar" />
   </div>
   <div class=${message ? 'message_container' : 'like_container'}>
-  <span class="nameUser">Gia An</span>
+  <span class="nameUser">${name}</span>
     <p>
      ${message ? message : likeIconInBody}
     </p>
