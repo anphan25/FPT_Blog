@@ -59,7 +59,6 @@ public class SearchFilteringServlet extends HttpServlet
         //server side decleration
         HttpSession session = request.getSession(false);
         AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
-        log(search);
         if(search.trim().isEmpty()) return; //performance tăng 0.0000000000000000000000000000000000000000000000000001x
         try
         {

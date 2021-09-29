@@ -310,9 +310,8 @@
                         $("#reloading").empty();
                         var parser = new DOMParser();
                         var xmlDoc = parser.parseFromString(text,"text/html");
-                        $("#reloading").append(xmlDoc.getElementById("freshair"));
-                        console.log();
-                        
+                        $("#reloading").append(xmlDoc.getElementById("freshair")); //cyberpunk 2077
+                        //console.log(text);
                     },
                     error: function()
                     {
