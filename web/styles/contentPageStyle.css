@@ -715,7 +715,7 @@ footer .text_footer_strong {
   line-height: 30px;
 }
 
-.main-content-up .content-img-text img {
+.content-img-text p img {
   width: 100%;
   margin: 25px 0;
 }
@@ -898,6 +898,8 @@ footer .text_footer_strong {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: 700;
+  margin-top: 10px;
 }
 
 .edit-delete {

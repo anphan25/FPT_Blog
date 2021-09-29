@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package swp.controller;
+package swp.controller.UserManagement;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,18 +21,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.account.AccountDTO;
-import swp.profile.ProfileDAO;
-import swp.profile.ProfileDTO;
+import swp.userlist.UserlistDAO;
+import swp.userlist.UserlistDTO;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "LoadUserListServlet", urlPatterns =
+@WebServlet(name = "UserListActionServlet", urlPatterns =
 {
-    "/LoadUserListServlet"
+    "/UserListActionServlet"
 })
-public class LoadUserListServlet extends HttpServlet
+public class UserListActionServlet extends HttpServlet
 {
     private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
     private final String USER_CONTROL_PANEL = "userListPage";
@@ -49,30 +49,53 @@ public class LoadUserListServlet extends HttpServlet
             throws ServletException, IOException, NamingException, SQLException
     {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(false);
         
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        
         String url = roadmap.get(ERROR_PAGE);
+        //receiving parameter list (if we not using in try catch it wont throw null)
+        String email = request.getParameter("victimEmail");
+        String button = request.getParameter("btAction");
+        String roleID = request.getParameter("txtList");
+        //server side declaration
+        HttpSession session = request.getSession(false);
         
         try
         {
-            if(session != null)
+            //ko cần check session null khi cái attribute login đã null
+            AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
+            if(currentadmin != null) //check đăng nhập và thành công
             {
-                AccountDTO currentlogin = (AccountDTO) session.getAttribute("CURRENT_USER"); //FIX THIS
-                String role = currentlogin.getRole();
-                if(currentlogin != null && role.equals("A"))
+                String checkRole = currentadmin.getRole();
+                if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {
-                    ProfileDAO dao = new ProfileDAO();
-                    ArrayList<ProfileDTO> dto = dao.getUserList();
-                    url = roadmap.get(USER_CONTROL_PANEL); // check role thành công thì cho qua luôn dù có dto hay ko
-                    //chưa check account đã đăng nhập và chưa check role
-                    if(dto != null) //wow có list và ko có lỗi
+                    if(button.equals("updating")) //nếu họ muốn update
                     {
-                            request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                        UserlistDAO dao = new UserlistDAO();
+                        boolean IsItUpdate = dao.updateRoleAccount(email, roleID);
+                        if(IsItUpdate)
+                        {
+                            ArrayList<UserlistDTO> newlist = dao.getUserList();
+                            request.setAttribute("USER_LIST", newlist);
+                            url = roadmap.get(USER_CONTROL_PANEL);
+                        }
                     }
-                }//kết thúc check login và admin
+                    else if(button.equals("baning")) //nếu họ muốn ban
+                    {
+                        UserlistDAO dao = new UserlistDAO();
+                        boolean IsItUpdate = dao.banAccount(email);
+                        if(IsItUpdate)
+                        {
+                            ArrayList<UserlistDTO> newlist = dao.getUserList();
+                            request.setAttribute("USER_LIST", newlist);
+                            url = roadmap.get(USER_CONTROL_PANEL);
+                        }
+                    }
+                    else //hacker kìa làm gì đi Ân
+                    {
+                        
+                    }
+                }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case
             }
         }
         finally
@@ -100,10 +123,10 @@ public class LoadUserListServlet extends HttpServlet
             processRequest(request, response);
         } catch (NamingException ex)
         {
-            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserListActionServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex)
         {
-            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserListActionServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -124,10 +147,10 @@ public class LoadUserListServlet extends HttpServlet
             processRequest(request, response);
         } catch (NamingException ex)
         {
-            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserListActionServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex)
         {
-            Logger.getLogger(LoadUserListServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserListActionServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

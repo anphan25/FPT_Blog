@@ -13,7 +13,7 @@ public class ProfileDTO
     String name, campus, email, role, imageURL;
     int awards;
     String gender;
-    String statusaccount;
+    //String statusaccount; fuck this profile package am going to another package
 
     public ProfileDTO(String name, String campus, String email, String role, String imageURL, int awards, String gender)
     {
@@ -24,16 +24,6 @@ public class ProfileDTO
         this.imageURL = imageURL;
         this.awards = awards;
         this.gender = gender;
-    }
-
-    public ProfileDTO(String name, String campus, String email, String role, String gender, String statusaccount)
-    {
-        this.name = name;
-        this.campus = campus;
-        this.email = email;
-        this.role = role;
-        this.gender = gender;
-        this.statusaccount = statusaccount;
     }
     
     public String getName()
@@ -106,22 +96,10 @@ public class ProfileDTO
         this.gender = gender;
     }
 
-    public String getStatusaccount()
-    {
-        return statusaccount;
-    }
-
-    public void setStatusaccount(String statusaccount)
-    {
-        this.statusaccount = statusaccount;
-    }
-
     @Override
     public String toString()
     {
-        return "ProfileDTO{" + "name=" + name + ", campus=" + campus + ", email=" + email + ", role=" + role + ", imageURL=" + imageURL + ", awards=" + awards + ", gender=" + gender + ", statusaccount=" + statusaccount + '}';
+        return "ProfileDTO{" + "name=" + name + ", campus=" + campus + ", email=" + email + ", role=" + role + ", imageURL=" + imageURL + ", awards=" + awards + ", gender=" + gender + '}';
     }
-
-    
     
 }

@@ -27,3 +27,4 @@ searchByCategory=SearchCategoryServlet
 searchByTag=SearchByTagServlet
 loadContentPendingPost=LoadContentPendingPostServlet
 approvePost=ApprovePostServlet
+loadUserList=LoadUserListServlet
