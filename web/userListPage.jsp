@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="container_searchBar">
-                        <input placeholder="Search..." />
+                        <input placeholder="Search..." name="titleValue" />
                         <div class="container_icon" onclick="submit_form()">
                             <i class="fas fa-search"></i>
                         </div>
@@ -183,7 +183,7 @@
             <div class="container-item">
                 <h1>List of users</h1>
                 <div class="user-list-searchbar">
-                    <input class="search-user" type="text" placeholder="Search..." />
+                    <input class="search-user" type="text" placeholder="Search email" />
                     <div class="user-list-icon">
                         <i class="fas fa-search"></i>
                     </div>
@@ -206,311 +206,38 @@
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
                                 <tr>
+                                <form action="UserListActionServlet">
                                     <td>${counter.count}</td>
                                     <td>${loto.email}</td>
+                                    <input type="hidden" name="victimEmail" value="${loto.email}" />
                                     <td>${loto.name}</td>
                                     <td>${loto.gender}</td>
                                     <td>${loto.campus}</td>
                                     <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
+                                        <select name="txtList" >
+                                            <c:if test = "${loto.role == 'Admin'}" >
+                                            <option selected="selected" value="A">Admin</option>
+                                            <option value="S">Student</option>
+                                            <option value="M">Mentor</option>
+                                            </c:if>
+                                            <c:if test = "${loto.role == 'Mentor'}" >
+                                            <option value="A">Admin</option>
+                                            <option value="S">Student</option>
+                                            <option selected="selected" value="M">Mentor</option>
+                                            </c:if>
+                                            <c:if test = "${loto.role == 'Student'}" >
+                                            <option value="A">Admin</option>
+                                            <option selected="selected" value="S">Student</option>
+                                            <option value="M">Mentor</option>
+                                            </c:if>
                                         </select>
                                     </td>
                                     <td>${loto.statusaccount}</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
+                                    <td><button class="update-btn" name="btAction" value="updating" >Update</button></td>
+                                    <td><button class="ban-btn" name="btAction" value="banning" >Ban</button></td>
+                                </form>
                                 </tr>
                                 </c:forEach>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr><tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
-                                <tr>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>in sao ke</td>
-                                    <td>
-                                        <select name="txtList" id="">
-                                            <option value="Admin">Admin</option>
-                                            <option value="Student">Student</option>
-                                            <option value="Mentor">Mentor</option>
-                                        </select>
-                                    </td>
-                                    <td>in sao ke</td>
-                                    <td><button class="update-btn">Update</button></td>
-                                    <td><button class="ban-btn">Ban</button></td>
-                                </tr>
                                 
                             </tbody>
                         </table>
@@ -563,6 +290,14 @@
                 var form = document.getElementById("searchit");
                 form.submit();
             }
+            function SendData()
+            {
+                var xhr = new XMLHttpRequest(); dit me XML http request anh em tôi dùng AJAX (jquerry)
+                xhr.open('GET', 'http://localhost:8084/Login');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onload = function() {};
+                xhr.send('idtoken=' + id_token);
+                }
         </script>
     </body>
 </html>
