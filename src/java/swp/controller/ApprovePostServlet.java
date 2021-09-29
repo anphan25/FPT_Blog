@@ -37,7 +37,7 @@ public class ApprovePostServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("pendingPostListPage ");
+        String url = roadmap.get("loadPendingPosts");
 
         try {
             //CHỈ DUYỆT DELETE - APPROVE POST

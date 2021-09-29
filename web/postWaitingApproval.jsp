@@ -235,10 +235,10 @@
                                         alt=""
                                         />
                                 </div>
-                                <form action="">
+                                        <a href="loadProfile?email=${pendingPostContent.emailPost}">
                                     <div class="name">${pendingPostContent.namePost}</div>
-                                </form>
-                                <div class="time">11/09/2021</div>
+                                </a>
+                                <div class="time">${pendingPostContent.createdDate}</div>
                             </div>
                         </div>
                         <div class="content-img-text">
