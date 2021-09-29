@@ -249,6 +249,7 @@
                     </div>
                 </div>
                 <div class="main-content">
+                    <c:if test="${currentUser.email == postDetail.emailPost}">
                     <i class="fas fa-ellipsis-h dot-icon"></i>
                     <div class="delete-update-div hidden">
                         <div class="delete-div option-div">
@@ -260,6 +261,7 @@
                             <p>Update</p>
                         </div>
                     </div>
+                    </c:if>
                     <div class="main-content-up">
                         <div class="title">
                             <p class="title-text">${postDetail.title}</p>
@@ -292,15 +294,6 @@
                     <div class="comment">
                         <p class="comment-title">Discussion (69)</p>
                         <div class="current-user-comment">
-                            <c:if test="${loginStatus == 'logined'}">
-                                <div class="user-avt">
-                                    <img
-                                        class="avt-img"
-                                        src="${currentUser.avatar}"
-                                        alt=""
-                                        />
-                                </div>
-                            </c:if>
                             <div class="user-comment-item">
                                 <form action="">
                                     <textarea
@@ -334,7 +327,7 @@
                                     <div class="comment-time">16:27 11/9/2021</div>
                                 </div>
                                 <div class="comment-content">
-                                    <p>Tháº­t thuyá»t vá»i</p>
+                                    <p>thật tuyệt vời</p>
                                 </div>
                             </div>
                             <form action="">
@@ -354,11 +347,11 @@
                             </div>
                             <div class="comment-item">
                                 <div class="comment-info">
-                                    <div class="name">Háº£i Nam</div>
+                                    <div class="name">Hải Nam</div>
                                     <div class="comment-time">16:27 11/9/2021</div>
                                 </div>
                                 <div class="comment-content">
-                                    <p>Äá»nh cá»§a chÃ³p</p>
+                                    <p>Bài viết hay quá</p>
                                 </div>
                             </div>
                         </div>
@@ -413,8 +406,8 @@
                         />
                 </div>
                 <div class="login-modal-button">
-                    <a class="login-link" href="/login.html">Log in</a>
-                    <a class="register-link" href="/login.html">Create new account</a>
+                    <a class="login-link" href="firstLoginPage">Log in</a>
+                    <a class="register-link" href="registerPage">Create new account</a>
                 </div>
             </div>
             <div class="login-modal-footer">
