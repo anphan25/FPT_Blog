@@ -363,19 +363,23 @@ public class PostDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
+
                 String sql = "SELECT title, tag, p.createdDate AS createdAt, PostContent, StatusPost, CategoryID, AwardID, "
                         + "name, image, email "
                         + "FROM tblPosts p left join tblAccounts a "
                         + "on Email = EmailPost Where postID = ?";
+
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
                 if (rs.next()) {
+
                     String title = rs.getString("Title");
                     String createdAt = rs.getString("createdAt");
                     String tags = rs.getString("Tag");
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
+
                     String content = rs.getString("PostContent");
                     String statusPost = rs.getString("StatusPost");
                     String email = rs.getString("Email");
