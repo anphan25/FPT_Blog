@@ -242,7 +242,7 @@
                             </div>
                         </div>
                         <div class="content-img-text">
-                            <c:out value="${pendingPostContent.postContent}" escapeXml="false" />
+                            <c:out value="${pendingPostContent.postContent}" escapeXml="false"/>
                         </div>
                         <div class="label-request">
                             <c:if test="${pendingPostContent.statusPost == 'WFA'}">
@@ -260,17 +260,17 @@
                                 <button type="submit"  class="approve-btn"
                                         >Approve</button>
                                 <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                                <input type="hidden" name="emailMenror" value="${currentUser.email}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
                                 <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                                <input type="hidden" name="mentorDecision" value="approve" />
+                                <input type="hidden" name="mentorDecision" value="approve"/>
                             </form>
 
                             <form action="approvePost">
                                 <button type="submit" class="reject-btn">Reject</button>
                                 <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                                <input type="hidden" name="emailMenror" value="${currentUser.email}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
                                 <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                                <input type="hidden" name="mentorDecision" value="reject" />
+                                <input type="hidden" name="mentorDecision" value="reject"/>
                             </form>
                         </div>
                     </div>
