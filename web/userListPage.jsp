@@ -30,6 +30,7 @@
             src="https://kit.fontawesome.com/1b1fb57155.js"
             crossorigin="anonymous"
         ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="./styles/userListPageStyle.css" />
         <title>User List</title>
     </head>
@@ -101,6 +102,9 @@
                             <div style="padding: 0.5rem 0">
                                 <div class="item">
                                     <a href="loadProfile?gmail=${currentadmin.email}"><p>Profile</p></a>
+                                </div>
+                                <div class="item">
+                                    <a><p>Create Post</p></a>
                                 </div>
                             </div>
                             <div class="item-bottom">
@@ -183,13 +187,14 @@
             <div class="container-item">
                 <h1>List of users</h1>
                 <div class="user-list-searchbar">
-                    <input class="search-user" type="text" placeholder="Search email" />
-                    <div class="user-list-icon">
+                    <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
+                    <div class="user-list-icon" onclick="SendData()">
                         <i class="fas fa-search"></i>
                     </div>
                 </div>
 
-                <div class="user-list-container" style = "height: 590px;">
+                <div id="reloading" class="user-list-container" style = "height: 590px;">
+                    <div id="freshair">
                         <table>
                             <thead>
                                 <tr>
@@ -241,6 +246,7 @@
                                 
                             </tbody>
                         </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -292,12 +298,30 @@
             }
             function SendData()
             {
-                var xhr = new XMLHttpRequest(); dit me XML http request anh em tôi dùng AJAX (jquerry)
-                xhr.open('GET', 'http://localhost:8084/Login');
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onload = function() {};
-                xhr.send('idtoken=' + id_token);
-                }
+                $.ajax({
+                    url: "SearchFilteringServlet",
+                    type: "get", //send it through get method
+                    data: 
+                    { 
+                    txtSearch: document.getElementById("searchtext").value
+                    },
+                    success: function(text) 
+                    {
+                        $("#reloading").empty();
+                        var parser = new DOMParser();
+                        var xmlDoc = parser.parseFromString(text,"text/html");
+                        $("#reloading").append(xmlDoc.getElementById("freshair"));
+                        console.log();
+                        
+                    },
+                    error: function()
+                    {
+                        //Do Something to handle error
+                        // i don't know what to do
+                        console.log("oi dit me cuoc doi");
+                    }
+                });
+            }
         </script>
     </body>
 </html>
