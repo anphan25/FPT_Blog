@@ -6,7 +6,6 @@
 package swp.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import swp.pendingpost.PendingPostDAO;
 import swp.post.PostDAO;
 import swp.post.PostDTO;
 
@@ -40,19 +38,19 @@ public class LoadContentPendingPostServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("notFoundPage");
-        try  {
+        try {
             String postId = request.getParameter("postID");
             PostDAO dao = new PostDAO();
             PostDTO dto = dao.getPendingPostById(postId);
-            
+
             if (dto != null) {
                 url = roadmap.get("postWaitingApprovalPage");
                 request.setAttribute("CONTENT_PENDING_POST", dto);
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             log(e.getMessage());
-        }finally{
+        } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
