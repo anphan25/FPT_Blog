@@ -140,8 +140,8 @@
               <div class="field_input">
                 <p>Gender</p>
                 <select name="gender" id="gender" class="form-control">
-                  <option value="0">Male</option>
-                  <option value="1">Female</option>
+                  <option value="0">Female</option>
+                  <option value="1">Male</option>
                 </select>
               </div>
             </div>
