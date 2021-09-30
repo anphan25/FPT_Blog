@@ -44,11 +44,10 @@ public class SearchTitleServlet extends HttpServlet {
         try {
             String title = request.getParameter("titleValue");
             title = title.trim();
+            if(!title.isEmpty()){
             PostDAO postDAO = new PostDAO();
             ArrayList<PostDTO> list = postDAO.getPostsByTitle(title);
             request.setAttribute("SEARCHLIST_TITLE", list);
-            for (PostDTO p : list) {
-                log(p.toString());
             }
         } catch (Exception e) {
             log("Errot at Search Title Servlet: " + e.toString());

@@ -313,30 +313,7 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="others-comments">
-                            <div class="user-avt">
-                                <img
-                                    class="avt-img"
-                                    src="https://images.wattpad.com/5d48fc0aa923db78e84ce866b506a5380b816699/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f776174747061642d6d656469612d736572766963652f53746f7279496d6167652f4f7a744367615f4a6c4759546d673d3d2d3231342e3134643764326263626130633136663737323038363831333430302e6a7067"
-                                    alt=""
-                                    />
-                            </div>
-                            <div class="comment-item">
-                                <div class="comment-info">
-                                    <div class="name">Gia An</div>
-                                    <div class="comment-time">16:27 11/9/2021</div>
-                                </div>
-                                <div class="comment-content">
-                                    <p>thật tuyệt vời</p>
-                                </div>
-                            </div>
-                            <form action="">
-                                <div class="edit-delete">
-                                    <button><i class="fas fa-pen"></i> Edit</button>
-                                    <button><i class="fas fa-trash-alt"></i> Delete</button>
-                                </div>
-                            </form>
-                        </div>
+
                         <div class="others-comments">
                             <div class="user-avt">
                                 <img
@@ -354,6 +331,12 @@
                                     <p>Bài viết hay quá</p>
                                 </div>
                             </div>
+                            <form action="">
+                                <div class="edit-delete">
+                                    <button><i class="fas fa-pen"></i> Edit</button>
+                                    <button><i class="fas fa-trash-alt"></i> Delete</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
