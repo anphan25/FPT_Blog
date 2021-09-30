@@ -298,6 +298,8 @@
             }
             function SendData()
             {
+                $("#reloading").empty();
+                $("#reloading").append("<div class='loader'></div>");
                 $.ajax({
                     url: "SearchFilteringServlet",
                     type: "get", //send it through get method
@@ -311,12 +313,14 @@
                         var parser = new DOMParser();
                         var xmlDoc = parser.parseFromString(text,"text/html");
                         $("#reloading").append(xmlDoc.getElementById("freshair")); //cyberpunk 2077
-                        //console.log(text);
+                        //console.log(test.getElementById("freshair"));
                     },
                     error: function()
                     {
                         //Do Something to handle error
-                        // i don't know what to do
+                        // now i know what to do
+                        $("#reloading").empty();
+                        $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
                         console.log("oi dit me cuoc doi");
                     }
                 });
