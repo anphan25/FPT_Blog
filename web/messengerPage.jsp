@@ -298,6 +298,7 @@ prefix="c"%>
           addDocument(
             '${currentUser.name}',
             '${currentUser.email}',
+            null,
             '${currentUser.avatar}'
           );
         });
