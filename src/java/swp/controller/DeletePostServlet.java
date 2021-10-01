@@ -6,21 +6,23 @@
 package swp.controller;
 
 import java.io.IOException;
-import java.util.Map;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import swp.post.PostDAO;
 
 /**
  *
- * @author Dell
+ * @author ASUS
  */
-@WebServlet(name = "ApprovePostServlet", urlPatterns = {"/ApprovePostServlet"})
-public class ApprovePostServlet extends HttpServlet {
+@WebServlet(name = "DeletePostServlet", urlPatterns = {"/DeletePostServlet"})
+public class DeletePostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,51 +36,27 @@ public class ApprovePostServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("loadPendingPosts");
-
+        String url = "notFoundPage";
+        
+        String postId = request.getParameter("postId");
+        HttpSession session = request.getSession(false);
         try {
-            //CHỈ DUYỆT DELETE - APPROVE POST
-            String postID = request.getParameter("postID");
-            String emailMentor = request.getParameter("emailMentor");
-            String statusPost = request.getParameter("statusPost");
-            String mentorDecision = request.getParameter("mentorDecision");
-            String newStatus = null;
-            switch (mentorDecision) {
-                case "approve": {
-                    if (statusPost.equalsIgnoreCase("WFA")) {
-                        newStatus = "A";
-                    } else if (statusPost.equalsIgnoreCase("WFD")) {
-                        newStatus = "D";
-                    }
-                    break;
-                }
-                case "reject": {
-                    if (statusPost.equalsIgnoreCase("WFA")) {
-                        newStatus = "D";
-                    } else if(statusPost.equalsIgnoreCase("WFD")){
-                        newStatus = "A";
-                    }
-                    //Nếu Reject WTF thì không làm gì cả!
-                    break;
-                }
-            }
-            if (newStatus != null) {
+            if(session.getAttribute("LOGIN").equals("logined")){
                 PostDAO dao = new PostDAO();
-                if (dao.setNewStatusPost(postID, emailMentor, newStatus)) {
-                    log("Updating successfuly! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
-                } else {
-                    log("Updating failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+                boolean result = dao.deletePost(postId);
+                if(result){
+                   url = "loadBlogs";
                 }
-            } else {
-                log("Nothing to do here, Reject - WFD");
+                
             }
-        } catch (Exception e) {
-            log("Error at Approve Post ServletContext: " + e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        }catch(SQLException e){
+            log("DeletePostServlet _ SQL"+ e.getMessage());
+        }
+        catch(NamingException e){
+            log("DeletePostServlet _ Naming"+ e.getMessage());
+        }
+        finally{
+            response.sendRedirect(url);
         }
     }
 
