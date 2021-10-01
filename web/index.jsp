@@ -76,7 +76,7 @@
                         </c:if>
                         <c:if test="${currentUser.role == 'M'}">
                             <div class="container_button_register">
-                                <a href="loadPendingPosts"><button>Pending Post</button></a>
+                                <a href="loadPendingPosts?postStatus=WFA"><button>Pending Post</button></a>
                             </div>
                         </c:if>
                         <c:if test="${currentUser.role == 'A'}">
@@ -243,7 +243,7 @@
                                 </a>
                             </c:if>
                             <c:if test="${currentUser.role == 'M'}">
-                                <a href="loadPendingPosts">
+                                <a href="loadPendingPosts?postStatus=WFA">
                                     <div class="container_item">
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
@@ -438,13 +438,13 @@
                                                             <span class="text_comments_votes">Comments</span>
                                                         </p>
                                                     </div>
-                                                    <div>
+<!--                                                    <div>
                                                         <img src="./images/award2.svg" />
                                                         <p>
-                                                            ${blogDTO.awardID}
+                                                            
                                                             <span class="text_comments_votes">Awards</span>
                                                         </p>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                                 <div class="time_and_save">
                                                     <!--                        <div>

@@ -32,113 +32,113 @@
         <!-- header  -->
         <!-- header  -->
         <header <c:if test="${loginStatus == 'logined'}">login-kind="logined"</c:if><c:if test="${loginStatus != 'logined'}">login-kind="no-login"</c:if>>
-                    <div class="container_header">
-                        <div class="container_left">
-                            <div class="toggle_sidebar" onclick="toggleSidebarPhone()">
-                                <img src="./images/toggle_sidebar_icon.svg" />
-                            </div>
-                            <div class="container_logo">
-                                <a href="loadBlogs">
-                                    <img
-                                        src="https://i.chungta.vn/2017/12/22/LogoFPT-2017-copy-3042-1513928399.jpg"
-                                        />
-                                </a>
-                            </div>
-                            <div class="dropdown_category">
-                                <div class="container_category">
-                                    <p>Categories</p>
-                                </div>
-                                <div class="dropdown_category_content">
-                                <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}">
-                                    <div class="dropdown_category_item">
-                                        <c:url var="cateLink" value="searchByCategory">
-                                            <c:param name="categoryId" value="${cateDTO.ID}" />
-                                        </c:url>
-                                        <a href="${cateLink}">${cateDTO.name}</a>
-                                    </div>
-                                </c:forEach>
-                            </div>
+                <div class="container_header">
+                    <div class="container_left">
+                        <div class="toggle_sidebar" onclick="toggleSidebarPhone()">
+                            <img src="./images/toggle_sidebar_icon.svg" />
                         </div>
-                        <div class="container_searchBar">
-                            <form id="searchit" action="searchTitle">
-                                <input
-                                    placeholder="Search..."
-                                    name="titleValue"
-                                    autocomplete="off"
+                        <div class="container_logo">
+                            <a href="loadBlogs">
+                                <img
+                                    src="https://i.chungta.vn/2017/12/22/LogoFPT-2017-copy-3042-1513928399.jpg"
                                     />
-                                <div class="container_icon" onclick="submit_form()">
-                                    <i class="fas fa-search"></i>
+                            </a>
+                        </div>
+                        <div class="dropdown_category">
+                            <div class="container_category">
+                                <p>Categories</p>
+                            </div>
+                            <div class="dropdown_category_content">
+                            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}">
+                                <div class="dropdown_category_item">
+                                    <c:url var="cateLink" value="searchByCategory">
+                                        <c:param name="categoryId" value="${cateDTO.ID}" />
+                                    </c:url>
+                                    <a href="${cateLink}">${cateDTO.name}</a>
                                 </div>
-                            </form>
+                            </c:forEach>
                         </div>
                     </div>
-                    <!-- <div class="container_right">
-                                <div class="container_button_login">
-                                  <button><a href="firstloginpage">ÄÄng nháº­p</a></button>
-                                </div>
-                                <div class="container_button_register">
-                                  <button><a href="firstloginpage">Táº¡o tÃ i khoáº£n</a></button>
-                                </div>
-                              </div> -->
-                    <c:if test="${loginStatus == 'logined'}">
-                        <div class="container_right">
-                            <c:if test="${currentUser.role == 'S'}">
-                                <div class="container_button_register">
-                                    <a href="createPostPage"><button>Create Post</button></a>
-                                </div>
-                            </c:if>
-                            <c:if test="${currentUser.role == 'M'}">
-                                <div class="container_button_register">
-                                    <a href="/createPostPage.html"><button>Pending Post</button></a>
-                                </div>
-                            </c:if>
-                            <c:if test="${currentUser.role == 'A'}">
-                                <div class="container_button_register">
-                                    <a href="createCategoryPage"
-                                       ><button>Create Category</button></a
-                                    >
-                                </div>
-                            </c:if>
-                            <div class="icon_notification_container">
-                                <img src="./images/notification_icon.svg" />
+                    <div class="container_searchBar">
+                        <form id="searchit" action="searchTitle">
+                            <input
+                                placeholder="Search..."
+                                name="titleValue"
+                                autocomplete="off"
+                                />
+                            <div class="container_icon" onclick="submit_form()">
+                                <i class="fas fa-search"></i>
                             </div>
-                            <div class="dropdown">
-                                <div class="dropbtn">
-                                    <img src="${currentUser.avatar}" />
-                                </div>
-                                <div class="dropdown-content">
-                                    <div class="item-top">
-                                        <a
-                                            ><h2>${currentUser.name}</h2>
-                                            <p>@${currentUser.name}</p></a
-                                        >
-                                    </div>
-                                    <div style="padding: 0.5rem 0">
-                                        <div class="item">
-                                            <c:url var="loadCurrentProfileLink" value="loadProfile">
-                                                <c:param name="email" value="${currentUser.email}" />
-                                            </c:url>
-                                            <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
-                                        </div>
-                                    </div>
-                                    <div class="item-bottom">
-                                        <a href="logout">Sign Out</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </c:if>
-                    <c:if test="${loginStatus != 'logined'}">
-                        <div class="container_right">
+                        </form>
+                    </div>
+                </div>
+                <!-- <div class="container_right">
                             <div class="container_button_login">
-                                <button><a href="firstLoginPage">Login</a></button>
+                              <button><a href="firstloginpage">ÄÄng nháº­p</a></button>
                             </div>
                             <div class="container_button_register">
-                                <button><a href="registerPage">Create account</a></button>
+                              <button><a href="firstloginpage">Táº¡o tÃ i khoáº£n</a></button>
+                            </div>
+                          </div> -->
+                <c:if test="${loginStatus == 'logined'}">
+                    <div class="container_right">
+                        <c:if test="${currentUser.role == 'S'}">
+                            <div class="container_button_register">
+                                <a href="createPostPage"><button>Create Post</button></a>
+                            </div>
+                        </c:if>
+                        <c:if test="${currentUser.role == 'M'}">
+                            <div class="container_button_register">
+                                <a href="loadPendingPosts?postStatus=WFA"><button>Pending Post</button></a>
+                            </div>
+                        </c:if>
+                        <c:if test="${currentUser.role == 'A'}">
+                            <div class="container_button_register">
+                                <a href="createCategoryPage"
+                                   ><button>Create Category</button></a
+                                >
+                            </div>
+                        </c:if>
+                        <div class="icon_notification_container">
+                            <img src="./images/notification_icon.svg" />
+                        </div>
+                        <div class="dropdown">
+                            <div class="dropbtn">
+                                <img src="${currentUser.avatar}" />
+                            </div>
+                            <div class="dropdown-content">
+                                <div class="item-top">
+                                    <a
+                                        ><h2>${currentUser.name}</h2>
+                                        <p>@${currentUser.name}</p></a
+                                    >
+                                </div>
+                                <div style="padding: 0.5rem 0">
+                                    <div class="item">
+                                        <c:url var="loadCurrentProfileLink" value="loadProfile">
+                                            <c:param name="email" value="${currentUser.email}" />
+                                        </c:url>
+                                        <a href="${loadCurrentProfileLink}"><p>Profile</p></a>
+                                    </div>
+                                </div>
+                                <div class="item-bottom">
+                                    <a href="logout">Sign Out</a>
+                                </div>
                             </div>
                         </div>
-                    </c:if>
-                </div>
+                    </div>
+                </c:if>
+                <c:if test="${loginStatus != 'logined'}">
+                    <div class="container_right">
+                        <div class="container_button_login">
+                            <button><a href="firstLoginPage">Login</a></button>
+                        </div>
+                        <div class="container_button_register">
+                            <button><a href="registerPage">Create account</a></button>
+                        </div>
+                    </div>
+                </c:if>
+            </div>
         </header>
 
         <!-- sidebar_phone -->
@@ -250,17 +250,21 @@
                 </div>
                 <div class="main-content">
                     <c:if test="${currentUser.email == postDetail.emailPost}">
-                    <i class="fas fa-ellipsis-h dot-icon"></i>
-                    <div class="delete-update-div hidden">
-                        <div class="delete-div option-div">
-                            <i class="fas fa-trash"></i>
-                            <p>Delete</p>
+                        <i class="fas fa-ellipsis-h dot-icon"></i>
+                        <div class="delete-update-div hidden">
+                            <a href="deletePost?postId=${postDetail.ID}">
+                                <div class="delete-div option-div">
+                                    <i class="fas fa-trash"></i>
+                                    <p>Delete</p>
+                                </div>
+                            </a>
+                            <a>
+                                <div class="update-div option-div">
+                                    <i class="fas fa-edit"></i>
+                                    <p>Update</p>
+                                </div>
+                            </a>
                         </div>
-                        <div class="update-div option-div">
-                            <i class="fas fa-edit"></i>
-                            <p>Update</p>
-                        </div>
-                    </div>
                     </c:if>
                     <div class="main-content-up">
                         <div class="title">

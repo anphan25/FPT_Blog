@@ -652,6 +652,8 @@ footer .text_footer_strong {
   padding: 0.6rem;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  color: white;
+  background-color: #3b49df;
 }
 
 .no-pending {
@@ -664,7 +666,23 @@ footer .text_footer_strong {
   margin-top: 8px;
 }
 
-.public-request {
+.pending_tab {
+  margin: 15px 0;
+  display: flex;
+}
+.pending_tab .tab_item {
+  padding: 10px 20px;
+  font-weight: 300;
+  color: #575757;
+  cursor: pointer;
+}
+
+.tab_active {
+  border-bottom: 3px solid #3b49df;
+  font-weight: 700;
+}
+
+/* .public-request {
   color: white;
   background-color: #3b49df;
 }
@@ -677,7 +695,7 @@ footer .text_footer_strong {
 .update-request {
   color: white;
   background-color: #008335;
-}
+} */
 @media screen and (max-width: 992px) {
   .main .container .row .navigation_right .column {
     -ms-flex: 100%;

@@ -517,4 +517,32 @@ public class PostDAO {
         }
         return check;
     }
+    
+    public boolean deletePost(String postId) throws NamingException, SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try{
+            conn =DBHelper.makeConnection();
+            if(conn != null){
+                String sql = "update tblPosts set statuspost = 'WFD' where postid = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1,postId);
+                
+                check = stm.executeUpdate() > 0;
+            }
+        }finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }

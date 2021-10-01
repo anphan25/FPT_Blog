@@ -84,7 +84,7 @@
                         </div> -->
                         <div class="container_right">
                             <div class="container_button_register">
-                                <button><a href="loadPendingPosts">Pending Post</a>
+                                <button><a href="loadPendingPosts?postStatus=WFA">Pending Post</a>
                                 </button>
                             </div>
                             <div class="icon_notification_container">
@@ -135,7 +135,7 @@
                                             <p>Home</p>
                                         </div>
                                     </a>
-                                    <a href="loadPendingPosts">
+                                    <a href="loadPendingPosts?postStatus=WFA">
                                         <div class="container_item">
                                             <img src="./images/list_icon.svg" />
                                             <p>Pending Posts</p>
@@ -159,6 +159,23 @@
                                 <div class="title">
                                     <h1>Pending posts</h1>
                                 </div>
+                                <div class="pending_tab">
+                                    
+                                    <a href="loadPendingPosts?postStatus=WFA">
+                                        <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFA'}">tab_active</c:if>">Public Request</p>
+                                    </a>
+                                    
+                                    
+                                    <a href="loadPendingPosts?postStatus=WFU">
+                                        <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFU'}">tab_active</c:if>">Update Request</p>
+                                    </a>
+                                    
+                                    
+                                    <a href="loadPendingPosts?postStatus=WFD">
+                                        <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFD'}">tab_active</c:if>">Delete Request</p>
+                                    </a>
+                                    
+                                </div>
                                 <div class="pending_posts">
                                     <c:if test="${not empty pendingList}">
                                         <c:forEach var="pendingDTO" items="${pendingList}">
@@ -166,15 +183,7 @@
                                             <div class="post">
 
                                                 <div class="container_info_post">
-                                                    <div class="post-status <c:if test="${pendingDTO.statusPost == 'WFA'}">
-                                                         public-request
-                                                        </c:if>
-                                                        <c:if test="${pendingDTO.statusPost == 'WFD'}">
-                                                            delete-request
-                                                        </c:if>
-                                                        <c:if test="${pendingDTO.statusPost == 'WFU'}">
-                                                            update-request
-                                                        </c:if>">
+                                                    <div class="post-status">
 
                                                         <c:if test="${pendingDTO.statusPost == 'WFA'}">
                                                             <h1>Public Request</h1>

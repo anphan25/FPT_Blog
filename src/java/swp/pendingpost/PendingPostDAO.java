@@ -15,7 +15,7 @@ import swp.utils.DBHelper;
 
 public class PendingPostDAO implements Serializable
 {
-    public ArrayList<PendingPostDTO> getAllWaitingPost() throws NamingException, SQLException
+    public ArrayList<PendingPostDTO> getAllWaitingPost(String postStatus) throws NamingException, SQLException
     {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -30,11 +30,12 @@ public class PendingPostDAO implements Serializable
                         + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear"
                         + ", a.name, a.image, p.PostID, p.EmailPost "
                         + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email and p.StatusPost in ('WFA','WFD','WFU') "
+                        + "WHERE p.emailpost = a.email and p.StatusPost = ? "
                         + "ORDER BY p.createdDate desc";
                 //sau lày nếu hệ thống chạy chậm hơn con rùa trước nhà t thì hãy chuyển sàng dùng join và on
                 //vòng lặp while ở dưới sẽ có chữ continue
                 stm = conn.prepareStatement(sql);
+                stm.setString(1, postStatus);
                 rs = stm.executeQuery();
                 while (rs.next()) 
                 {

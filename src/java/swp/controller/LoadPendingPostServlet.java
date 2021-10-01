@@ -62,13 +62,18 @@ public class LoadPendingPostServlet extends HttpServlet
             {
                 //chỗ này sẽ cần phải thay đổi cách thức hđ DAO
                 if(session.getAttribute("CURRENT_USER") != null)
-                {
+                {   
+                    String postStatus = request.getParameter("postStatus");
+                    if(postStatus == null){
+                        postStatus = "WFA";
+                    }
                     AccountDTO accInfo = (AccountDTO) session.getAttribute("CURRENT_USER");
                     String role = accInfo.getRole();
                     if(role.equals("M"))
                     {
                         PendingPostDAO dao = new PendingPostDAO();
-                        ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost();
+                        ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost(postStatus);
+                        request.setAttribute("TAB_STATUS", postStatus);
                         if(!dto.isEmpty())
                         {
                             request.setAttribute("PENDING_LIST", dto);

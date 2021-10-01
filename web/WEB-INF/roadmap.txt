@@ -28,3 +28,4 @@ searchByTag=SearchByTagServlet
 loadContentPendingPost=LoadContentPendingPostServlet
 approvePost=ApprovePostServlet
 loadUserList=LoadUserListServlet
+deletePost=DeletePostServlet
