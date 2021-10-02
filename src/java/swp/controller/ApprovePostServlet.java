@@ -46,6 +46,8 @@ public class ApprovePostServlet extends HttpServlet {
             String statusPost = request.getParameter("statusPost");
             String mentorDecision = request.getParameter("mentorDecision");
             String newStatus = null;
+            boolean isSetDate = true;
+            PostDAO dao = new PostDAO();
             switch (mentorDecision) {
                 case "approve": {
                     if (statusPost.equalsIgnoreCase("WFA")) {
@@ -58,22 +60,29 @@ public class ApprovePostServlet extends HttpServlet {
                 case "reject": {
                     if (statusPost.equalsIgnoreCase("WFA")) {
                         newStatus = "D";
-                    } else if(statusPost.equalsIgnoreCase("WFD")){
+                    } else if (statusPost.equalsIgnoreCase("WFD")) {
                         newStatus = "A";
+                        isSetDate = false;//t push được chưa nhỉ?
                     }
-                    //Nếu Reject WTF thì không làm gì cả!
+                    break;
+                }
+                default: {
+                    log("Value or status is invalid");
                     break;
                 }
             }
-            if (newStatus != null) {
-                PostDAO dao = new PostDAO();
+            if (isSetDate) {
                 if (dao.setNewStatusPost(postID, emailMentor, newStatus)) {
                     log("Updating successfuly! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
                 } else {
                     log("Updating failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
                 }
-            } else {
-                log("Nothing to do here, Reject - WFD");
+            } else {//KHÔNG GETDATE() VÌ NÓ REJECT-DELETE > STATUS "A" NHƯ CŨ 
+                if (dao.rejectDeletedPost(postID, newStatus)) {
+                    log("Reject deleted post successfully! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
+                } else {
+                    log("Reject deleted post failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+                }
             }
         } catch (Exception e) {
             log("Error at Approve Post ServletContext: " + e.getMessage());
