@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import swp.account.AccountDTO;
 import swp.post.PostDAO;
 
 /**
@@ -37,25 +38,26 @@ public class DeletePostServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String url = "notFoundPage";
-        
+
         String postId = request.getParameter("postId");
         HttpSession session = request.getSession(false);
         try {
-            if(session.getAttribute("LOGIN").equals("logined")){
+            if (session.getAttribute("LOGIN").equals("logined")) {
+                AccountDTO dto = (AccountDTO) session.getAttribute("CURRENT_USER");
+                String email = dto.getEmail();
                 PostDAO dao = new PostDAO();
-                boolean result = dao.deletePost(postId);
-                if(result){
-                   url = "loadBlogs";
+                if (dao.checkOwnerPost(email, postId)) {
+                    boolean result = dao.deletePost(postId);
+                    if (result) {
+                        url = "loadBlogs";
+                    }
                 }
-                
             }
-        }catch(SQLException e){
-            log("DeletePostServlet _ SQL"+ e.getMessage());
-        }
-        catch(NamingException e){
-            log("DeletePostServlet _ Naming"+ e.getMessage());
-        }
-        finally{
+        } catch (SQLException e) {
+            log("DeletePostServlet _ SQL" + e.getMessage());
+        } catch (NamingException e) {
+            log("DeletePostServlet _ Naming" + e.getMessage());
+        } finally {
             response.sendRedirect(url);
         }
     }

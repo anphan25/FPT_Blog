@@ -545,4 +545,35 @@ public class PostDAO {
         }
         return check;
     }
+    
+    public boolean checkOwnerPost(String email, String postId) throws NamingException, SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try{
+            conn =DBHelper.makeConnection();
+            if(conn != null){
+                String sql = "select PostId from tblPosts where PostID = ? and EmailPost = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    check = true;
+                }
+            }
+        }finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 }
