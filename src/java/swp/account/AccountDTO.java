@@ -37,6 +37,14 @@ public class AccountDTO implements Serializable{
         this.email = email;
         this.password = password;
     }
+    
+    //constructor này dùng để cache dữ liệu gmail login
+    public AccountDTO(String email, String name, String avatar)
+    {
+        this.email = email;
+        this.name = name;
+        this.avatar = avatar;
+    }
 
     public AccountDTO() {
     }
