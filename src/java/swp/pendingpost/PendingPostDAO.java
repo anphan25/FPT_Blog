@@ -1,4 +1,3 @@
-
 package swp.pendingpost;
 
 import java.io.Serializable;
@@ -12,45 +11,41 @@ import javax.naming.NamingException;
 import swp.library.Style;
 import swp.utils.DBHelper;
 
+public class PendingPostDAO implements Serializable {
 
-public class PendingPostDAO implements Serializable
-{
-    public ArrayList<PendingPostDTO> getAllWaitingPost(String postStatus) throws NamingException, SQLException
-    {
+    public ArrayList<PendingPostDTO> getAllWaitingPost(String postStatus) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         ArrayList<PendingPostDTO> dto = new ArrayList<>();
-        try 
-        {
+        try {
             conn = DBHelper.makeConnection();
-            if (conn != null) 
-            {
-                String sql = "SELECT StatusPost, tag, title, postid, emailpost "
-                        + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear"
-                        + ", a.name, a.image, p.PostID, p.EmailPost "
-                        + "FROM tblPosts p, tblAccounts a "
-                        + "WHERE p.emailpost = a.email and p.StatusPost = ? "
+            if (conn != null) {
+                String sql = "SELECT StatusPost, tag, title, postid, emailpost, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
+                        + ", DATEPART(day, p.createdDate) as CreatedDay, DATEPART(month, p.createdDate) as CreatedMonth, DATEPART(year, p.createdDate) as CreatedYear"
+                        + ", name, image, p.PostID, p.EmailPost "
+                        + "FROM tblPosts p LEFT JOIN tblAccounts a "
+                        + "ON emailpost = email "
+                        + "WHERE p.StatusPost = ? "
                         + "ORDER BY p.createdDate desc";
                 //sau lày nếu hệ thống chạy chậm hơn con rùa trước nhà t thì hãy chuyển sàng dùng join và on
                 //vòng lặp while ở dưới sẽ có chữ continue
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postStatus);
                 rs = stm.executeQuery();
-                while (rs.next()) 
-                {
+                while (rs.next()) {
                     String tag = rs.getString("tag");
                     String title = rs.getString("title");
-                    String createDate = rs.getString("createdDay") + "-" + rs.getString("createdMonth") + "-" + rs.getString("createdYear");
+                    String createdAt = Style.convertToDateFormat(rs.getInt("CreatedDay"), rs.getInt("CreatedMonth"),
+                            rs.getInt("CreatedYear"), rs.getInt("CreatedHour"), rs.getInt("CreatedMinute"));
                     String name = rs.getString("name");
                     String url = rs.getString("image");
                     String postID = rs.getString("PostID");
                     String EmailPost = rs.getString("EmailPost");
                     String statusPost = rs.getString("StatusPost");
-                    PendingPostDTO dummy = new PendingPostDTO(title, url, createDate, name, postID, EmailPost, statusPost, Style.convertTagToArrayList(tag));
+                    PendingPostDTO dummy = new PendingPostDTO(title, url, createdAt, name, postID, EmailPost, statusPost, Style.convertTagToArrayList(tag));
                     boolean checker = dto.add(dummy);
-                    if(!checker)
-                    {
+                    if (!checker) {
                         throw new SQLException("oi dit me cuoc doi");
                     }
                 }
@@ -70,6 +65,6 @@ public class PendingPostDAO implements Serializable
         }
         return null;
     }
-    
+
     //private boolean checkResult
 }

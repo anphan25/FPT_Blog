@@ -42,10 +42,9 @@ public class CreatePostServlet extends HttpServlet {
                 url = roadmap.get(SUCCESS);
             }
         } catch (Exception e) {
-            
-
+            log("Error at Create new Post servlet: " + e.getMessage());
         } finally {
-             request.getRequestDispatcher(url).forward(request, response);
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

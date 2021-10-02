@@ -34,5 +34,31 @@ public class Style {
         }
         return list;
     }
+    
+    public static String convertToDateFormat(int d, int m, int y, int h, int mi) {//day:monnth:year  hour:minute
+        String result = new String();
+        if (d < 10) {
+            result += "0" + d + "/";
+        } else {
+            result += d + "/";
+        }
+        if (m < 10) {
+            result += "0" + m + "/";
+        } else {
+            result += m + "/";
+        }
+        result += y + "  ";
+        if (h < 10) {
+            result += "0" + h + ":";
+        } else {
+            result += h + ":";
+        }
+        if (mi < 10) {
+            result += "0" + mi;
+        } else {
+            result += mi;
+        }
+        return result;
+    }
 
 }
