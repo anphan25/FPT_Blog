@@ -201,7 +201,6 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Email</th>
-                                    <th>huhu</th>
                                     <th>Fullname</th>
                                     <th>Gender</th>
                                     <th>Campus</th>
@@ -241,7 +240,14 @@
                                     </td>
                                     <td>${loto.statusaccount}</td>
                                     <td><button id="submitanlz" class="update-btn" name="btAction" value="updating" onclick="test()" >Update</button></td>
-                                    <td><button class="ban-btn" name="btAction" value="banning" >Ban</button></td>    
+                                    <td>
+                                        <c:if test="${loto.statusaccount == 'Actived'}">
+                                        <button class="ban-btn" name="btAction" value="banning" >Ban</button>
+                                        </c:if>
+                                        <c:if test="${loto.statusaccount == 'Banned'}">
+                                        <button class="ban-btn" name="btAction" value="unbaning" >Unban</button>
+                                        </c:if>
+                                    </td>    
                                 </tr>
                                 </form>
                                 </c:forEach>

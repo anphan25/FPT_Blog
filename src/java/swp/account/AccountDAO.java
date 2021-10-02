@@ -182,5 +182,33 @@ public class AccountDAO implements Serializable {
         return check;
 
     }
+    
+    public boolean checkBan(String email) throws SQLException, NamingException{
+        PreparedStatement stm = null;
+         Connection conn = null;
+         ResultSet rs = null;
+         boolean check = false;
+         try{
+             conn = DBHelper.makeConnection();
+             String sql = "select * from tblAccounts where email = ? AND StatusAccountID = 'B' ";
+             stm = conn.prepareStatement(sql);
+             stm.setString(1, email);
+             rs = stm.executeQuery();
+             if(rs.next()){
+                 check = true;
+             }
+         }finally{
+             if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+         }
+         return check;
+    }
 
 }
