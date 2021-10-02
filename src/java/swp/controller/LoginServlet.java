@@ -60,12 +60,18 @@ public class LoginServlet extends HttpServlet {
             AccountDAO dao = new AccountDAO();
             dao.getUser(email, password);
             AccountDTO result = dao.getCurrentUser();
+            boolean checkBan = dao.checkBan(email);
+                if(checkBan){
+                    url = roadmap.get(LOGIN_INVALID_PAGE);
+                    request.setAttribute("BAN", "banned");
+                    return;
+                }
             // boolean result = dao.test(email, password);
             if(result!=null){
-                url = roadmap.get(HOME_PAGE);
+                   url = roadmap.get(HOME_PAGE);
                 HttpSession session = request.getSession();
                 session.setAttribute("LOGIN", "logined");
-                session.setAttribute("CURRENT_USER", result);
+                session.setAttribute("CURRENT_USER", result); 
             }
         } catch (SQLException sq) {
             log("LoginServlet_SQLException "+sq.getMessage());
