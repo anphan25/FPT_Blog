@@ -56,21 +56,54 @@ public class UserListActionServlet extends HttpServlet
         //receiving parameter list (if we not using in try catch it wont throw null)
         String email = request.getParameter("victimEmail");
         String button = request.getParameter("btAction");
-        String roleID = request.getParameter("txtList");
+        String actionline = request.getParameter("searchAction"); //ditme DOM
         //server side declaration
         HttpSession session = request.getSession(false);
+        AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
         
         try
         {
             //ko cần check session null khi cái attribute login đã null
-            AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
             if(currentadmin != null) //check đăng nhập và thành công
             {
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {
+                    if(actionline != null) //tôi tính làm thêm hàm tránh lặp lại mà dcm thậm chí C# còn dùng delegate để khai báo bừa bãi việc gì phải làm thế (:
+                    {
+                        String[] araara = actionline.split("%");
+                        String action = araara[0];
+                        String gmail = araara[1];
+                        String search = araara[2];
+                        if(action.equals("updating"))
+                        {
+                            String list = araara[3];
+                            UserlistDAO dao = new UserlistDAO();
+                            boolean IsItUpdate = dao.updateRoleAccount(gmail, list);
+                            if(IsItUpdate)
+                            {
+                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                request.setAttribute("USER_LIST", newlist);
+                                url = roadmap.get(USER_CONTROL_PANEL);
+                            }
+                        }
+                        if(action.equals("banning")) //nếu họ muốn ban
+                        {
+                            UserlistDAO dao = new UserlistDAO();
+                            boolean IsItUpdate = dao.banAccount(gmail);
+                            if(IsItUpdate)
+                            {
+                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                request.setAttribute("USER_LIST", newlist);
+                                url = roadmap.get(USER_CONTROL_PANEL);
+                            }
+                        }
+                        return;
+                         //jump to the finally mother fucker
+                    }
                     if(button.equals("updating")) //nếu họ muốn update
                     {
+                        String roleID = request.getParameter("txtList");
                         UserlistDAO dao = new UserlistDAO();
                         boolean IsItUpdate = dao.updateRoleAccount(email, roleID);
                         if(IsItUpdate)
@@ -80,7 +113,7 @@ public class UserListActionServlet extends HttpServlet
                             url = roadmap.get(USER_CONTROL_PANEL);
                         }
                     }
-                    else if(button.equals("baning")) //nếu họ muốn ban
+                    if(button.equals("banning")) //nếu họ muốn ban
                     {
                         UserlistDAO dao = new UserlistDAO();
                         boolean IsItUpdate = dao.banAccount(email);
@@ -91,12 +124,16 @@ public class UserListActionServlet extends HttpServlet
                             url = roadmap.get(USER_CONTROL_PANEL);
                         }
                     }
-                    else //hacker kìa làm gì đi Ân
-                    {
-                        
-                    }
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case
             }
+        }
+        catch(SQLException ex)
+        {
+            log("SQL _ " + ex.getMessage());
+        }
+        catch(NamingException ex)
+        {
+            log("Naming _ " + ex.getMessage());
         }
         finally
         {

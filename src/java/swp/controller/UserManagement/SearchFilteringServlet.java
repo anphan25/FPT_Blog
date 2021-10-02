@@ -70,10 +70,19 @@ public class SearchFilteringServlet extends HttpServlet
                 {
                     UserlistDAO dao = new UserlistDAO();
                     ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                    url = roadmap.get(USER_CONTROL_PANEL);
+                    //url = roadmap.get(USER_CONTROL_PANEL);
+                    url = "resultpage.jsp";
                     request.setAttribute("USER_LIST", newlist);
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
             }
+        }
+        catch(SQLException ex)
+        {
+            log("SQL _ " + ex.getMessage());
+        }
+        catch(NamingException ex)
+        {
+            log("Naming _ " + ex.getMessage());
         }
         finally
         {

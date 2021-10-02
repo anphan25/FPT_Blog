@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
-import swp.userlist.UserlistDTO;
 import swp.utils.DBHelper;
 
 /**
@@ -106,7 +105,7 @@ public class UserlistDAO implements Serializable
             }
         }
         finally
-        {  
+        {
             if(con != null)
             {
                 con.close();
@@ -130,7 +129,7 @@ public class UserlistDAO implements Serializable
             if(con != null)
             {
                 String sql = "UPDATE tblAccounts "
-                            + "StatusAccountID = 'B' "
+                            + "SET StatusAccountID = 'B' "
                             + "WHERE Email = ?";
                         
                 stm = con.prepareStatement(sql);
