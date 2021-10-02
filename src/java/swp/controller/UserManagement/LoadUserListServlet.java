@@ -69,6 +69,7 @@ public class LoadUserListServlet extends HttpServlet
                         UserlistDAO dao = new UserlistDAO();
                         ArrayList<UserlistDTO> dto = dao.getUserList();
                         url = roadmap.get(USER_CONTROL_PANEL); // check role thành công thì cho qua luôn dù có dto hay ko
+                        //url = "resultpage.jsp";
                         //chưa check account đã đăng nhập và chưa check role
                         if(dto != null) //wow có list và ko có lỗi
                         {
