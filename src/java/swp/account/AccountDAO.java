@@ -132,7 +132,7 @@ public class AccountDAO implements Serializable {
                }
            }
 
-            check = stm.executeUpdate() > 0;
+            check = stm.executeUpdate() > 0; //wtf ? nó đã false từ đầu rồi mà???
         } catch (Exception e) {
         } finally {
             if (rs != null) {
@@ -209,6 +209,54 @@ public class AccountDAO implements Serializable {
             }
          }
          return check;
+    }
+    
+    public AccountDTO getInformationUserFromEmail(String email) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException 
+    {
+        Connection con = null;
+        PreparedStatement pst = null;
+        ResultSet rs = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image "
+                        + "FROM tblAccounts "
+                        + "where email = ?";
+                pst = con.prepareCall(sql);
+                pst.setString(1, email);
+                rs = pst.executeQuery();
+                if (rs.next()) 
+                {
+                    String userName = rs.getString("Name");
+                    boolean userGender = rs.getBoolean("Gender");
+                    String userCampus = rs.getString("Campus");
+                    String userRole = rs.getString("RoleID");
+                    String userStatus = rs.getString("StatusAccountID");
+                    String accountCreatedDate = rs.getString("CreatedDate");
+                    String userAvatar = rs.getString("Image");
+                    AccountDTO info = new AccountDTO(email, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
+                    return info;
+                }
+            }
+        } 
+        finally 
+        {
+            if (con != null) 
+            {
+                con.close();
+            }
+            if (pst != null) 
+            {
+                pst.close();
+            }
+            if (rs != null) 
+            {
+                rs.close();
+            }
+
+        }
+        return null;
     }
 
 }
