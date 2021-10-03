@@ -68,11 +68,11 @@ const checkLoginKind = () => {
       checkWordCount();
     });
 
-    submitBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      disableSubmitBtn();
-      textareaComment.value = "";
-    });
+    // submitBtn.addEventListener("click", (e) => {
+    //   // e.preventDefault();
+    //   disableSubmitBtn();
+    //   textareaComment.value = "";
+    // });
 
     textareaComment.addEventListener("focus", () => {
       textareaComment.style.backgroundColor = "#FFFFFF";

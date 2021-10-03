@@ -29,3 +29,4 @@ loadContentPendingPost=LoadContentPendingPostServlet
 approvePost=ApprovePostServlet
 loadUserList=LoadUserListServlet
 deletePost=DeletePostServlet
+comment=CommentServlet

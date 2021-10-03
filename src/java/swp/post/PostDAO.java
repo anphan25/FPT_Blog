@@ -1,5 +1,6 @@
 package swp.post;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import javax.naming.NamingException;
 import swp.library.Style;
 import swp.utils.DBHelper;
 
-public class PostDAO {
+public class PostDAO implements Serializable{
 
     public ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
         // tên, avt, email người đăng, title, id, số like, số cmt, approvedTime
@@ -406,7 +407,7 @@ public class PostDAO {
         return null;
     }
 
-    //Đây là phần paging của Ân đang cố làm (kememay)
+
     public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;

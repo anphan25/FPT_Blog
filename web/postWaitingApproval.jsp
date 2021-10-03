@@ -256,7 +256,7 @@
                             </c:if>
                         </div>
                         <div class="decision_btn">
-                            <form action="approvePost">
+                            <form action="approvePost" method="POST">
                                 <button type="submit"  class="approve-btn"
                                         >Approve</button>
                                 <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
@@ -265,7 +265,7 @@
                                 <input type="hidden" name="mentorDecision" value="approve"/>
                             </form>
 
-                            <form action="approvePost">
+                            <form action="approvePost" method="POST">
                                 <button type="submit" class="reject-btn">Reject</button>
                                 <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
                                 <input type="hidden" name="emailMentor" value="${currentUser.email}" />
