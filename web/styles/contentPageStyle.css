@@ -716,7 +716,7 @@ footer .text_footer_strong {
 }
 
 .content-img-text p img {
-  width: 100%;
+  /* width: 100%; */
   margin: 25px 0;
 }
 
@@ -838,7 +838,8 @@ footer .text_footer_strong {
 
 .user-avt img {
   width: 100%;
-
+  height: 100%;
+  object-fit: cover;
   border-radius: 50%;
 }
 
@@ -867,6 +868,7 @@ footer .text_footer_strong {
   border: 0.5px solid #e3e3e3;
   border-radius: 5px;
   padding: 12px;
+  padding-top: 5px;
 }
 
 .comment-info {

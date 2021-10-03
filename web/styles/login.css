@@ -525,7 +525,16 @@ footer .text_footer_strong {
   color: #676a6c;
   cursor: pointer;
 }
+.g-signin2 {
+  display: none;
+}
 
+.login_with_third_party {
+  cursor: pointer;
+}
+.login-gmail-btn {
+  cursor: pointer;
+}
 /* RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE */
 /* RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE */
 /* RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE RESPONSIVE */

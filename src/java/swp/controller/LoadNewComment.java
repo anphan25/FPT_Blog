@@ -1,60 +1,41 @@
-package swp.controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.sun.org.apache.bcel.internal.classfile.Code;
+package swp.controller;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import swp.comment.CommentDAO;
-import swp.comment.CommentDTO;
-import swp.post.PostDAO;
-import swp.post.PostDTO;
 
 /**
  *
- * @author macbook
+ * @author ASUS
  */
-@WebServlet(name = "LoadPostContentServlet", urlPatterns
-        = {
-            "/LoadPostContentServlet"
-        })
-public class LoadPostContentServlet extends HttpServlet {
+@WebServlet(name = "LoadNewComment", urlPatterns = {"/LoadNewComment"})
+public class LoadNewComment extends HttpServlet {
 
-    private static final String SUCCESS = "contentPage";
-    private static final String FAIL = "notFoundPage";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get(FAIL);
         try {
-            String postId = request.getParameter("postId");
-            PostDAO getPost = new PostDAO();
-            PostDTO post = getPost.getPostById(postId);
-            CommentDAO cmt = new CommentDAO();
-            ArrayList<CommentDTO> cmtList = cmt.getAllCommentOfPost(postId);
-            if (post != null) {
-                url = roadmap.get(SUCCESS);
-                request.setAttribute("POST_DETAIL", post);
-                request.setAttribute("POST_CMT",cmtList);
-            }
-        } catch (Exception e) {
-            log(e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+
+        }finally{
+            
         }
     }
 

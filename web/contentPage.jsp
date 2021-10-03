@@ -27,7 +27,7 @@
         <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
         <c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
         <c:set var="postDetail" value="${requestScope.POST_DETAIL}" />
-
+        <c:set var="cmtList" value="${requestScope.POST_CMT}"/>
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
@@ -296,17 +296,19 @@
                         </div>
                     </div>
                     <div class="comment">
-                        <p class="comment-title">Discussion (69)</p>
+                        <p class="comment-title">Discussion (${postDetail.comments})</p>
                         <div class="current-user-comment">
                             <div class="user-comment-item">
-                                <form action="">
+                                <form action="comment" method="POST">
                                     <textarea
-                                        name="cmt"
+                                        name="cmtContent"
                                         id="textarea-cmt"
                                         cols="30"
                                         rows="10"
                                         placeholder="Add to the discussion"
                                         ></textarea>
+                                    <input type="hidden" name="postId" value="${postDetail.ID}" />
+                                    <input type="hidden" name="ownerCmtEmail" value="${currentUser.email}" />
                                     <button
                                         class="submit-btn hidden"
                                         disabled="true"
@@ -318,29 +320,39 @@
                             </div>
                         </div>
 
-                        <div class="others-comments">
-                            <div class="user-avt">
-                                <img
-                                    class="avt-img"
-                                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTA2JwfW8wriS7T_mm4tr78QyH3cmOOe57IPmy3ZKjjyubcIu4QL6l8N5wHhCKYGXJPwPI&usqp=CAU"
-                                    alt=""
-                                    />
-                            </div>
-                            <div class="comment-item">
-                                <div class="comment-info">
-                                    <div class="name">Hải Nam</div>
-                                    <div class="comment-time">16:27 11/9/2021</div>
-                                </div>
-                                <div class="comment-content">
-                                    <p>Bài viết hay quá</p>
-                                </div>
-                            </div>
-                            <form action="">
-                                <div class="edit-delete">
-                                    <button><i class="fas fa-pen"></i> Edit</button>
-                                    <button><i class="fas fa-trash-alt"></i> Delete</button>
-                                </div>
-                            </form>
+                        <div>
+                            <c:if test="${not empty cmtList}">
+                                <c:forEach var="listDTO" items="${cmtList}">
+                                    <div class="others-comments">
+                                        <div class="user-avt">
+                                            <img
+                                                class="avt-img"
+                                                src="${listDTO.avatar}"
+                                                alt=""
+                                                />
+                                        </div>
+                                        <div class="comment-item">
+                                            <div class="comment-info">
+                                                <a href="loadProfile?email=${listDTO.emailComment}">
+                                                    <div class="name">${listDTO.name}</div>
+                                                </a>
+                                                <div class="comment-time">${listDTO.date}</div>
+                                            </div>
+                                            <div class="comment-content">
+                                                <p>${listDTO.content}</p>
+                                            </div>
+                                        </div>
+                                        <c:if test="${currentUser.email == listDTO.emailComment}">
+                                            <form action="">
+                                                <div class="edit-delete">
+                                                    <button><i class="fas fa-pen"></i> Edit</button>
+                                                    <button><i class="fas fa-trash-alt"></i> Delete</button>
+                                                </div>
+                                            </form>
+                                        </c:if>
+                                    </div>
+                                </c:forEach>
+                            </c:if>
                         </div>
                     </div>
                 </div>
