@@ -17,7 +17,10 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     ></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- meta name scope profile email for google api -->
-    <meta name="google-signin-client_id" content="229851668671-rehm8b9h7e190bhmtvdmf24p19g39p3d.apps.googleusercontent.com">
+    <meta
+      name="google-signin-client_id"
+      content="229851668671-rehm8b9h7e190bhmtvdmf24p19g39p3d.apps.googleusercontent.com"
+    />
     <meta name="google-signin-scope" content="profile email" />
     <link rel="stylesheet" href="./styles/login.css" />
     <title>Login | FPT Blog</title>
@@ -116,14 +119,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </p>
           <div class="login_with_third_party">
             <div class="item">
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
-              <button>
+              <button class="login-gmail-btn">
                 <img src="./images/gmail_icon.png" />
                 <p>Log in With Gmail</p>
               </button>
             </div>
           </div>
-          
+          <div class="g-signin2" data-onsuccess="onSignIn"></div>
           <p class="or">Or</p>
           <form action="login" method="POST">
             <c:if test="${requestScope.BAN == 'banned'}">
@@ -133,7 +135,9 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             </c:if>
             <c:if test="${requestScope.FPT == 'NOTFPT'}">
               <h3>
-                <font color="red"> We only accept FPT gmail (ask Ân for 1) !!! </font>
+                <font color="red">
+                  We only accept FPT gmail (ask Ân for 1) !!!
+                </font>
               </h3>
             </c:if>
 
@@ -217,6 +221,13 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           x = true;
         }
       });
+
+      const ggLogin = document.querySelector(".g-signin2");
+      document
+        .querySelector(".login_with_third_party")
+        .addEventListener("click", () => {
+          ggLogin.firstChild.click();
+        });
       // history.pushState(null, document.title, location.href);
       // history.back();
       // history.forward();
@@ -227,25 +238,22 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
       window.addEventListener("popstate", function (event) {
         history.pushState(null, document.title, location.href);
       });
-        function onSignIn(googleUser) 
-        {
-            var id_token = googleUser.getAuthResponse().id_token; //gimme ur ass
-            if(id_token !== null)
-            {
-                //well đây là th đăng nhập thành công và bên hờ tờ mờ lờ lấy được idtoken
-                SignOut();
-                window.location.href = "LoginGoogleServlet?token=" + id_token;
-                //dùng cách này cho những dự án đòi hỏi bảo mật thì bán nhà đấy nha mọi người.
-            }
-            //console.log(id_token);
-            //this code below here is for the situation google dead.
+      function onSignIn(googleUser) {
+        var id_token = googleUser.getAuthResponse().id_token; //gimme ur ass
+        if (id_token !== null) {
+          //well đây là th đăng nhập thành công và bên hờ tờ mờ lờ lấy được idtoken
+          SignOut();
+          window.location.href = "LoginGoogleServlet?token=" + id_token;
+          //dùng cách này cho những dự án đòi hỏi bảo mật thì bán nhà đấy nha mọi người.
         }
-        function SignOut()
-        {
-            //well if you have to copied just exactly fap.fpt.edu then go write some shit down here
-            var gaObject = gapi.auth2.getAuthInstance();
-            gaObject.signOut().then(function () {});
-        }
+        //console.log(id_token);
+        //this code below here is for the situation google dead.
+      }
+      function SignOut() {
+        //well if you have to copied just exactly fap.fpt.edu then go write some shit down here
+        var gaObject = gapi.auth2.getAuthInstance();
+        gaObject.signOut().then(function () {});
+      }
     </script>
   </body>
 </html>
