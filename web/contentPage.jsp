@@ -1,6 +1,8 @@
-<%@page import="swp.post.PostDTO"%> <%@page contentType="text/html"
-                                            pageEncoding="UTF-8"%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
-                                            prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="swp.post.PostDTO"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%> 
+
+
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -299,28 +301,26 @@
                         <p class="comment-title">Discussion (${postDetail.comments})</p>
                         <div class="current-user-comment">
                             <div class="user-comment-item">
-                                <form action="comment" method="POST">
                                     <textarea
-                                        name="cmtContent"
                                         id="textarea-cmt"
                                         cols="30"
                                         rows="10"
                                         placeholder="Add to the discussion"
                                         ></textarea>
-                                    <input type="hidden" name="postId" value="${postDetail.ID}" />
-                                    <input type="hidden" name="ownerCmtEmail" value="${currentUser.email}" />
+                                    <input id="postId-input" type="hidden" value="${postDetail.ID}" />
+                                    <input id="ownerEmail-input" type="hidden" value="${currentUser.email}" />
                                     <button
+                                        onclick="loadNewComment()"
                                         class="submit-btn hidden"
                                         disabled="true"
-                                        type="submit"
                                         >
                                         Submit
                                     </button>
-                                </form>
+                                
                             </div>
                         </div>
 
-                        <div>
+                        <div id="comments-container">
                             <c:if test="${not empty cmtList}">
                                 <c:forEach var="listDTO" items="${cmtList}">
                                     <div class="others-comments">
@@ -444,24 +444,50 @@
         <!-- script   -->
         <!-- script   -->
         <!-- script   -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <script>
-            function toggleSidebarPhone() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "block";
-            }
-            function handleClickOutside() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "none";
-            }
-            function submit_form() {
-                var form = document.getElementById("searchit");
-                form.submit();
-            }
-            const dotIcon = document.querySelector(".dot-icon");
-            const optionDiv = document.querySelector(".delete-update-div");
-            dotIcon.addEventListener("click", () => {
-                optionDiv.classList.toggle("hidden");
-            });
+                                            const cmtContent = document.querySelector("#textarea-cmt");
+                                            const postId = document.querySelector("#postId-input");
+                                            const ownerCmtEmail = document.querySelector("#ownerEmail-input");
+                                            
+                                            function loadNewComment() {
+                                                $.ajax({
+                                                    url: "CommentServlet",
+                                                    data: {
+                                                        postId: postId.value,
+                                                        ownerCmtEmail: ownerCmtEmail.value,
+                                                        cmtContent: cmtContent.value
+                                                    },
+                                                    type: "POST",
+                                                    success: function (response) {
+                                                        const newCmt = document.querySelector("#comments-container");
+                                                        newCmt.insertAdjacentHTML('afterbegin',response) ;
+                                                    },
+                                                    error: function (xhr) {
+                                                        console.log("loi me roi");
+                                                    }
+                                                });
+                                                cmtContent.value="";
+                                            }
+                                            ;
+                                            function toggleSidebarPhone() {
+                                                const toggle_sidebar = document.getElementById("sidebar_phone");
+                                                toggle_sidebar.style.display = "block";
+                                            }
+                                            function handleClickOutside() {
+                                                const toggle_sidebar = document.getElementById("sidebar_phone");
+                                                toggle_sidebar.style.display = "none";
+                                            }
+                                            function submit_form() {
+                                                var form = document.getElementById("searchit");
+                                                form.submit();
+                                            }
+                                            const dotIcon = document.querySelector(".dot-icon");
+                                            const optionDiv = document.querySelector(".delete-update-div");
+                                            dotIcon.addEventListener("click", () => {
+                                                optionDiv.classList.toggle("hidden");
+                                            });
         </script>
         <script src="./js/contentPage.js"></script>
     </body>

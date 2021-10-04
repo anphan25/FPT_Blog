@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.comment.CommentDAO;
+import swp.comment.CommentDTO;
 
 /**
  *
@@ -41,27 +42,56 @@ public class CommentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String postId = request.getParameter("postId");
         String ownerCmtEmail = request.getParameter("ownerCmtEmail");
-        String cmtContent = new String(request.getParameter("cmtContent").getBytes("iso-8859-1"), "utf-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("loadPostContent");
-        
+//        String cmtContent = new String(request.getParameter("cmtContent").getBytes("iso-8859-1"), "utf-8");
+        String cmtContent = request.getParameter("cmtContent");
+//        ServletContext context = request.getServletContext();
+//        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+////        String url = roadmap.get("loadPostContent");
+        PrintWriter out = response.getWriter();
         try {
             HttpSession session = request.getSession(false);
-            if(session != null){
+            if (session != null) {
                 CommentDAO dao = new CommentDAO();
                 boolean result = dao.insertComment(postId, ownerCmtEmail, cmtContent);
-               
+                if (result) {
+                    CommentDTO newComment = dao.loadNewComment(postId, ownerCmtEmail);
+                    out.println("<div class=\"others-comments\">\n"
+                            + "                                        <div class=\"user-avt\">\n"
+                            + "                                            <img\n"
+                            + "                                                class=\"avt-img\"\n"
+                            + "                                                src=\""+newComment.getAvatar()+"\"\n"
+                            + "                                                alt=\"\"\n"
+                            + "                                                />\n"
+                            + "                                        </div>\n"
+                            + "                                        <div class=\"comment-item\">\n"
+                            + "                                            <div class=\"comment-info\">\n"
+                            + "                                                <a href=\"loadProfile?email="+newComment.getEmailComment()+"\">\n"
+                            + "                                                    <div class=\"name\">"+newComment.getName()+"</div>\n"
+                            + "                                                </a>\n"
+                            + "                                                <div class=\"comment-time\">"+newComment.getDate()+"</div>\n"
+                            + "                                            </div>\n"
+                            + "                                            <div class=\"comment-content\">\n"
+                            + "                                                <p>"+newComment.getContent()+"</p>\n"
+                            + "                                            </div>\n"
+                            + "                                        </div>\n"
+                            + "                                        <c:if test=\"${currentUser.email == listDTO.emailComment}\">\n"
+                            + "                                            <form action=\"\">\n"
+                            + "                                                <div class=\"edit-delete\">\n"
+                            + "                                                    <button><i class=\"fas fa-pen\"></i> Edit</button>\n"
+                            + "                                                    <button><i class=\"fas fa-trash-alt\"></i> Delete</button>\n"
+                            + "                                                </div>\n"
+                            + "                                            </form>\n"
+                            + "                                        </c:if>\n"
+                            + "                                    </div>");
+                }
             }
-        }catch(SQLException ex){
-            log("CommenrServlet _ SQL "+ex.getMessage());
-        }
-        catch(NamingException ex){
-            log("CommenrServlet _ Naming "+ex.getMessage());
-        }
-        finally{
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        } catch (SQLException ex) {
+            log("CommenrServlet _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("CommenrServlet _ Naming " + ex.getMessage());
+        } finally {
+//            RequestDispatcher rd = request.getRequestDispatcher(url);
+//            rd.forward(request, response);
         }
     }
 
