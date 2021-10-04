@@ -81,7 +81,7 @@
                 </div> -->
                 <div class="container_right">
                     <div class="container_button_register">
-                        <button><a href="/login.html">Create Category</a></button>
+                        <button><a href="https://youtu.be/rvrZJ5C_Nwg?t=127">Create Category</a></button>
                     </div>
                     <div class="icon_notification_container" onclick="kingcrimson()">
                         <img src="./images/notification_icon.svg" />
@@ -187,13 +187,14 @@
             </div>
             <div class="container-item">
                 <h1>List of users</h1>
+                <form onsubmit="SendData();return false">
                 <div class="user-list-searchbar">
                     <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
                     <div class="user-list-icon" onclick="SendData()">
                         <i class="fas fa-search"></i>
                     </div>
                 </div>
-
+                </form>
                 <div id="reloading" class="user-list-container" style = "height: 590px;">
                     <div id="freshair">
                         <table>
@@ -356,6 +357,13 @@
                     var email = document.getElementById("e" + so).value; //lấy i meo
                     $('<form action="' + 'UserListActionServlet">' + 
                             '<input type="text" name="searchAction" value="banning' + '%' + email + '%' + search + '"' + '/>' + //mày có thể bớt vô duyên đóng tag tự động dc ko
+                                                                '</form>').appendTo('body').submit();
+                }
+                if(action === "a")
+                {
+                    var email = document.getElementById("e" + so).value; //lấy i meo
+                    $('<form action="' + 'UserListActionServlet">' + 
+                            '<input type="text" name="searchAction" value="unbaning' + '%' + email + '%' + search + '"' + '/>' + //mày có thể bớt vô duyên đóng tag tự động dc ko
                                                                 '</form>').appendTo('body').submit();
                 }
             }
