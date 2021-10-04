@@ -340,3 +340,8 @@ header .container_right {
   color: pink;
   margin-left: 8px;
 }
+
+.update-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
