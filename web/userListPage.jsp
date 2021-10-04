@@ -102,7 +102,7 @@
                             </div>
                             <div style="padding: 0.5rem 0">
                                 <div class="item">
-                                    <a href="loadProfile?gmail=${currentadmin.email}"><p>Profile</p></a>
+                                    <a href="loadProfile?email=${currentadmin.email}"><p>Profile</p></a>
                                 </div>
                                 <div class="item">
                                     <a><p>Create Post</p></a>
@@ -214,7 +214,7 @@
                                 <form action='UserListActionServlet'>
                                 <tr>
                                     <td>${counter.count}</td>
-                                    <td>${loto.email}</td>
+                                    <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
                                     <input type="hidden" name="victimEmail" value="${loto.email}" />
                                     <td>${loto.name}</td>
                                     <td>${loto.gender}</td>
