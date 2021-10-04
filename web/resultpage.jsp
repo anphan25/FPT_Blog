@@ -54,11 +54,23 @@
                                         </select> 
                                     </td> 
                                     <td>${loto.statusaccount}</td> 
-                                    <td><button class="update-btn" name="btAction" value="updating" onclick="kingcrimson('u${counter.count}')" >Update</button></td> 
-                                    <td><button class="ban-btn" name="btAction" value="banning" onclick="kingcrimson('b${counter.count}')" >Ban</button></td> 
+                                    <td><button class="update-btn" name="btAction" value="updating" onclick="kingcrimson('u${counter.count}')">Update</button></td> 
+                                    <td>
+                                        <c:if test="${loto.statusaccount == 'Actived'}">
+                                        <button class="ban-btn" name="btAction" value="banning" onclick="kingcrimson('b${counter.count}')">Ban</button>
+                                        </c:if>
+                                        <c:if test="${loto.statusaccount == 'Banned'}">
+                                        <button class="ban-btn" name="btAction" value="unbaning" onclick="kingcrimson('a${counter.count}')">Unban</button>
+                                        </c:if>
+                                    </td> 
                                 </tr>
                                 </c:forEach>
                             </tbody>   
                         </table>
+    </div>
+</c:if>
+<c:if test="${empty userlist}">
+    <div id="freshair">
+        <h1>Search Result Not Found</h1>
     </div>
 </c:if>
