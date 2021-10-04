@@ -260,7 +260,7 @@
                                     <p>Delete</p>
                                 </div>
                             </a>
-                            <a>
+                                <a href="loadOldContent?postId=${postDetail.ID}">
                                 <div class="update-div option-div">
                                     <i class="fas fa-edit"></i>
                                     <p>Update</p>
