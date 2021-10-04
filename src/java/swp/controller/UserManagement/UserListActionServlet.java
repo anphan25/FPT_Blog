@@ -87,10 +87,21 @@ public class UserListActionServlet extends HttpServlet
                                 url = roadmap.get(USER_CONTROL_PANEL);
                             }
                         }
-                        if(action.equals("banning")) //nếu họ muốn ban
+                        else if(action.equals("banning")) //nếu họ muốn ban
                         {
                             UserlistDAO dao = new UserlistDAO();
                             boolean IsItUpdate = dao.banAccount(gmail);
+                            if(IsItUpdate)
+                            {
+                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                request.setAttribute("USER_LIST", newlist);
+                                url = roadmap.get(USER_CONTROL_PANEL);
+                            }
+                        }
+                        else if(action.equals("unbaning")) //nếu họ muốn ban
+                        {
+                            UserlistDAO dao = new UserlistDAO();
+                            boolean IsItUpdate = dao.unbanAccount(gmail);
                             if(IsItUpdate)
                             {
                                 ArrayList<UserlistDTO> newlist = dao.searchAll(search);
@@ -113,10 +124,21 @@ public class UserListActionServlet extends HttpServlet
                             url = roadmap.get(USER_CONTROL_PANEL);
                         }
                     }
-                    if(button.equals("banning")) //nếu họ muốn ban
+                    else if(button.equals("banning")) //nếu họ muốn ban
                     {
                         UserlistDAO dao = new UserlistDAO();
                         boolean IsItUpdate = dao.banAccount(email);
+                        if(IsItUpdate)
+                        {
+                            ArrayList<UserlistDTO> newlist = dao.getUserList();
+                            request.setAttribute("USER_LIST", newlist);
+                            url = roadmap.get(USER_CONTROL_PANEL);
+                        }
+                    }
+                    else if(button.equals("unbaning"))
+                    {
+                        UserlistDAO dao = new UserlistDAO();
+                        boolean IsItUpdate = dao.unbanAccount(email);
                         if(IsItUpdate)
                         {
                             ArrayList<UserlistDTO> newlist = dao.getUserList();

@@ -116,13 +116,14 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
           </p>
           <div class="login_with_third_party">
             <div class="item">
-              <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
               <button>
                 <img src="./images/gmail_icon.png" />
                 <p>Log in With Gmail</p>
               </button>
             </div>
           </div>
+          
           <p class="or">Or</p>
           <form action="login" method="POST">
             <c:if test="${requestScope.BAN == 'banned'}">

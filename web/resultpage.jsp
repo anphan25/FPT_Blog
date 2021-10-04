@@ -12,13 +12,14 @@
     <script>window.history.back();</script>
     <%-- sau lày có lỗi thì đổi lại page 404. --%>
 </c:if>
-<div id="freshair">
+    
+<c:if test="${not empty userlist}">
+    <div id="freshair">
                         <table>
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Email</th>
-                                    <th>huhu</th>
                                     <th>Fullname</th>
                                     <th>Gender</th>
                                     <th>Campus</th>
@@ -30,8 +31,8 @@
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter"> 
                                 <tr> 
-                                    <td>${counter.count}</td> 
-                                    <td>${loto.email}</td> 
+                                    <td>${counter.count}</td>
+                                    <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td> 
                                     <input type="hidden" id="e${counter.count}" value="${loto.email}"/>
                                     <td>${loto.name}</td> 
                                     <td>${loto.gender}</td> 
@@ -53,10 +54,23 @@
                                         </select> 
                                     </td> 
                                     <td>${loto.statusaccount}</td> 
-                                    <td><button class="update-btn" name="btAction" value="updating" onclick="kingcrimson('u${counter.count}')" >Update</button></td> 
-                                    <td><button class="ban-btn" name="btAction" value="banning" onclick="kingcrimson('b${counter.count}')" >Ban</button></td> 
+                                    <td><button class="update-btn" name="btAction" value="updating" onclick="kingcrimson('u${counter.count}')">Update</button></td> 
+                                    <td>
+                                        <c:if test="${loto.statusaccount == 'Actived'}">
+                                        <button class="ban-btn" name="btAction" value="banning" onclick="kingcrimson('b${counter.count}')">Ban</button>
+                                        </c:if>
+                                        <c:if test="${loto.statusaccount == 'Banned'}">
+                                        <button class="ban-btn" name="btAction" value="unbaning" onclick="kingcrimson('a${counter.count}')">Unban</button>
+                                        </c:if>
+                                    </td> 
                                 </tr>
                                 </c:forEach>
                             </tbody>   
                         </table>
-</div>
+    </div>
+</c:if>
+<c:if test="${empty userlist}">
+    <div id="freshair">
+        <h1>Search Result Not Found</h1>
+    </div>
+</c:if>
