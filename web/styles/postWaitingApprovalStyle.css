@@ -727,6 +727,7 @@ footer .text_footer_strong {
 .content-img-text p img {
   width: 100%;
   margin: 25px 0;
+  height: auto;
 }
 
 /* toggle_sidebar */

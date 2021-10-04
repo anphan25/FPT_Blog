@@ -468,7 +468,7 @@
                                                         console.log("loi me roi");
                                                     }
                                                 });
-                                                cmtContent.value="";
+
                                             }
                                             ;
                                             function toggleSidebarPhone() {

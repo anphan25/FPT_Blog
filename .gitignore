@@ -16,3 +16,5 @@ nbdist/
 .vscode/settings.json
 nbproject/project.properties
 META-INF/context.xml
+nbproject/genfiles.properties
+nbproject/build-impl.xml
