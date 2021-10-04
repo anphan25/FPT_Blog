@@ -12,13 +12,14 @@
     <script>window.history.back();</script>
     <%-- sau lày có lỗi thì đổi lại page 404. --%>
 </c:if>
-<div id="freshair">
+    
+<c:if test="${not empty userlist}">
+    <div id="freshair">
                         <table>
                             <thead>
                                 <tr>
                                     <th>No.</th>
                                     <th>Email</th>
-                                    <th>huhu</th>
                                     <th>Fullname</th>
                                     <th>Gender</th>
                                     <th>Campus</th>
@@ -30,8 +31,8 @@
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter"> 
                                 <tr> 
-                                    <td>${counter.count}</td> 
-                                    <td>${loto.email}</td> 
+                                    <td>${counter.count}</td>
+                                    <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td> 
                                     <input type="hidden" id="e${counter.count}" value="${loto.email}"/>
                                     <td>${loto.name}</td> 
                                     <td>${loto.gender}</td> 
@@ -59,4 +60,5 @@
                                 </c:forEach>
                             </tbody>   
                         </table>
-</div>
+    </div>
+</c:if>

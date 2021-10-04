@@ -47,7 +47,6 @@ public class RegisterServlet extends HttpServlet {
             String campus = request.getParameter("campus");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-            log(name + " _ " + email + " _ " + avatarURL);
             byte[] bytesBane = name.getBytes(StandardCharsets.ISO_8859_1);     
             byte[] bytesCampus = campus.getBytes(StandardCharsets.ISO_8859_1);
             name = new String(bytesBane, StandardCharsets.UTF_8);
