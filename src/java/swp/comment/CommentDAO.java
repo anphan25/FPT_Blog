@@ -19,36 +19,37 @@ import swp.utils.DBHelper;
  * @author ASUS
  */
 public class CommentDAO {
-    public ArrayList<CommentDTO> getAllCommentOfPost(String postId) throws SQLException, ClassNotFoundException, NamingException{
+
+    public ArrayList<CommentDTO> getAllCommentOfPost(String postId) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         ArrayList<CommentDTO> list = new ArrayList<>();
-        try{
+        try {
             conn = DBHelper.makeConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "select c.ID, c.EmailComment, c.PostID, DATEPART(hour, c.Date) as commentHour, DATEPART(minute, c.Date) as commentMinute, "
-                        +"Day(c.Date) as commentDay, month(c.Date) as commentMonth, year(c.Date) as commentYear, "
-                        +"c.Comment, a.Image, a.Name from tblComments c left join tblAccounts a on EmailComment = Email "
-                        +"where postId = ? AND c.StatusComment = 1 order by c.Date desc";
+                        + "Day(c.Date) as commentDay, month(c.Date) as commentMonth, year(c.Date) as commentYear, "
+                        + "c.Comment, a.Image, a.Name from tblComments c left join tblAccounts a on EmailComment = Email "
+                        + "where postId = ? AND c.StatusComment = 1 order by c.Date desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 rs = stm.executeQuery();
-                while(rs.next()){
+                while (rs.next()) {
                     String commentID = rs.getString("ID");
                     String emailComment = rs.getString("EmailComment");
                     String idPost = rs.getString("PostID");
                     String commentDate = Style.convertToDateFormat(rs.getInt("commentDay"), rs.getInt("commentMonth"),
                             rs.getInt("commentYear"), rs.getInt("commentHour"), rs.getInt("commentMinute"));
-                    String content = rs.getString("Comment");
+                    String content = rs.getNString("Comment");
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
                     CommentDTO cmt = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
                     list.add(cmt);
-                    
+
                 }
             }
-        }finally{
+        } finally {
             if (rs != null) {
                 rs.close();
             }
@@ -61,24 +62,24 @@ public class CommentDAO {
         }
         return list;
     }
-    
-    public boolean insertComment(String postId, String email, String content) throws SQLException, NamingException{
+
+    public boolean insertComment(String postId, String email, String content) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
         boolean check = false;
-        
-        try{
+
+        try {
             conn = DBHelper.makeConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "insert into tblComments(ID,EmailComment,PostID,Date,Comment,StatusComment) "
-                        +"values(NEWID(), ?, ?, getdate(), ?, 1)";
+                        + "values(NEWID(), ?, ?, getdate(), ?, 1)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, postId);
                 stm.setNString(3, content);
-                check = stm.executeUpdate()>0;
+                check = stm.executeUpdate() > 0;
             }
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -88,19 +89,49 @@ public class CommentDAO {
         }
         return check;
     }
-    
-//    public CommentDTO loadNewComment(String postId, String email) throws SQLException, NamingException{
-//        Connection conn = null;
-//        PreparedStatement stm = null;
-//        ResultSet rs = null;
-//        
-//        try{
-//           conn = DBHelper.makeConnection();
-//           if(conn != null){
-//               String sql = "select * from tblComments where ";
-//           }
-//        }finally{
-//            
-//        }
-//    }
+
+    public CommentDTO loadNewComment(String postId, String email) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select c.ID, c.EmailComment, c.PostID, DATEPART(hour, c.Date) as commentHour, DATEPART(minute, c.Date) as commentMinute, "
+                        + "Day(c.Date) as commentDay, month(c.Date) as commentMonth, year(c.Date) as commentYear, "
+                        + "c.Comment, a.Image, a.Email, a.Name "
+                        + "from tblComments c left join tblAccounts a on EmailComment = Email where Date = (select max(date) from tblComments) and PostID = ? and EmailComment = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    String commentID = rs.getString("ID");
+                    String emailComment = rs.getString("EmailComment");
+                    String idPost = rs.getString("PostID");
+                    String commentDate = Style.convertToDateFormat(rs.getInt("commentDay"), rs.getInt("commentMonth"),
+                            rs.getInt("commentYear"), rs.getInt("commentHour"), rs.getInt("commentMinute"));
+                    String content = rs.getNString("Comment");
+                    String avatar = rs.getString("Image");
+                    String name = rs.getString("Name");
+
+                    CommentDTO dto = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
+                    return dto;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
 }
