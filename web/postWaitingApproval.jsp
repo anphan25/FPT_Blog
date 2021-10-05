@@ -242,7 +242,13 @@
                             </div>
                         </div>
                         <div class="content-img-text">
-                            <c:out value="${pendingPostContent.postContent}" escapeXml="false"/>
+                            <c:if test="${pendingPostContent.statusPost == 'WFU'}">
+                                <c:set var="contentPending" value="${pendingPostContent.newContent}"/>
+                            </c:if>
+                            <c:if test="${pendingPostContent.statusPost != 'WFU'}">
+                                <c:set var="contentPending" value="${pendingPostContent.postContent}"/>
+                            </c:if>
+                            <c:out value="${contentPending}" escapeXml="false"/>
                         </div>
                         <div class="label-request">
                             <c:if test="${pendingPostContent.statusPost == 'WFA'}">

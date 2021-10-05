@@ -366,7 +366,7 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "SELECT title, tag, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
+                String sql = "SELECT NewContent , title, tag, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
                         + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear, PostContent"
                         + ", StatusPost, CategoryID, name, image, email"
                         + " FROM tblPosts p left join tblAccounts a"
@@ -389,7 +389,8 @@ public class PostDAO implements Serializable {
                     String statusPost = rs.getString("StatusPost");
                     String email = rs.getString("Email");
                     String categoryID = rs.getString("CategoryID");
-                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar);
+                    String newContent = rs.getString("NewContent");
+                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, newContent);
                     return post;
                 }
             }

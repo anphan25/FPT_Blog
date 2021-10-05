@@ -112,7 +112,7 @@
             <span class="brand_text">FPT Community</span> is a community of
             698,309 amazing developers
           </p>
-          <div class="login_with_third_party">
+          <!-- <div class="login_with_third_party">
             <div class="item">
               <button>
                 <img src="./images/gmail_icon.png" />
@@ -120,7 +120,7 @@
               </button>
             </div>
           </div>
-          <p class="or">Or</p>
+          <p class="or">Or</p> -->
           <%
               AccountError accountError = (AccountError)request.getAttribute("ACCOUNT_ERROR");
               if (accountError == null) {

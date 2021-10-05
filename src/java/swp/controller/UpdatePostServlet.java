@@ -7,27 +7,18 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.Map;
-import javax.naming.NamingException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import swp.account.AccountDTO;
-import swp.post.PostDAO;
-import swp.post.PostDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "LoadOldContentServlet", urlPatterns = {"/LoadOldContentServlet"})
-public class LoadOldContentServlet extends HttpServlet {
+@WebServlet(name = "UpdatePostServlet", urlPatterns = {"/UpdatePostServlet"})
+public class UpdatePostServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,34 +32,17 @@ public class LoadOldContentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("updatePostPage");
-        String postId = request.getParameter("postId");
-        HttpSession session = request.getSession(false);
-        try {
-            if (session.getAttribute("LOGIN").equals("logined")) {
-                AccountDTO dto = (AccountDTO) session.getAttribute("CURRENT_USER");
-                String email = dto.getEmail();
-                PostDAO dao = new PostDAO();
-                if (dao.checkOwnerPost(email, postId)) {
-                    PostDTO post = dao.loadOldContent(postId, email);// title, content, postid, email
-                    if (post == null) {
-                        log("Loading Old post return null");
-                    } else {
-                        log("Loading Old post successfully! Return POST: " + post.toString());
-                        request.setAttribute("OLD_CONTENT", post);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            log("Error at UpdatePostServlet _ SQL" + e.getMessage());
-        } catch (NamingException e) {
-            log("Error at UpdatePostServlet _ Naming" + e.getMessage());
-        } finally {
-            RequestDispatcher rd = request.getRequestDispatcher(url);
-            rd.forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet UpdatePostServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet UpdatePostServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 
