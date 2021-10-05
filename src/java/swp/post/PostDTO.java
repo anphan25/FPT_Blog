@@ -117,6 +117,7 @@ public class PostDTO implements Serializable {
         this.likes = likes;
         this.comments = comments;
     }
+    //DTO for content of pending post
 
     public String getID() {
         return ID;
