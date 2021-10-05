@@ -113,7 +113,7 @@ public class PostDTO implements Serializable {
         this.avatar = avatar;
     }
 
-    public PostDTO(String ID, String emailPost, String statusPost, String createdDate, List<String> tag, String title, String postContent, String categoryID, String namePost, String avatar) {
+    public PostDTO(String ID, String emailPost, String statusPost, String createdDate, List<String> tag, String title, String postContent, String categoryID, String namePost, String avatar, String newContent) {
         this.ID = ID;
         this.emailPost = emailPost;
         this.statusPost = statusPost;
@@ -124,6 +124,7 @@ public class PostDTO implements Serializable {
         this.categoryID = categoryID;
         this.namePost = namePost;
         this.avatar = avatar;
+        this.newContent = newContent;
     }
 
     //DTo for content of a post
@@ -140,6 +141,7 @@ public class PostDTO implements Serializable {
         this.comments = comments;
     }
     //DTO for content of pending post
+    
 
     public String getID() {
         return ID;

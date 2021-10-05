@@ -32,3 +32,4 @@ loadUserList=LoadUserListServlet
 deletePost=DeletePostServlet
 comment=CommentServlet
 loadOldContent=LoadOldContentServlet
+updatePost=UpdatePostServlet
