@@ -39,6 +39,7 @@ public class CreatePostServlet extends HttpServlet {
             PostDAO createPost = new PostDAO();
             boolean check = createPost.insertANewPost(email, tags, title, content, category);
             if (check) {
+                log("Creating a new post successfully!");
                 url = roadmap.get(SUCCESS);
             }
         } catch (Exception e) {

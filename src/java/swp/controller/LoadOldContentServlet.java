@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.account.AccountDTO;
 import swp.post.PostDAO;
+import swp.post.PostDTO;
 
 /**
  *
@@ -40,27 +41,30 @@ public class LoadOldContentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("updatePostPage");
         String postId = request.getParameter("postId");
         HttpSession session = request.getSession(false);
-        try  {
-            if(session.getAttribute("LOGIN").equals("logined")){
-              AccountDTO dto = (AccountDTO) session.getAttribute("CURRENT_USER"); 
-              String email = dto.getEmail();
-              PostDAO dao = new PostDAO();
-              if(dao.checkOwnerPost(email, postId)){
-                  //viết hàm dao để load nội dung cũ ở đây
-              }
+        try {
+            if (session.getAttribute("LOGIN").equals("logined")) {
+                AccountDTO dto = (AccountDTO) session.getAttribute("CURRENT_USER");
+                String email = dto.getEmail();
+                PostDAO dao = new PostDAO();
+                PostDTO post = dao.loadOldContent(postId, email);// title, content, postid, email
+                if (post == null) {
+                    log("Loading Old post return null");
+                } else {
+                    log("Loading Old post successfully! Return POST: " + post.toString());
+                    request.setAttribute("OLD_CONTENT", post);
+                }
             }
-        }catch (SQLException e) {
-            log("UpdatePostServlet _ SQL" + e.getMessage());
+        } catch (SQLException e) {
+            log("Error at UpdatePostServlet _ SQL" + e.getMessage());
         } catch (NamingException e) {
-            log("UpdatePostServlet _ Naming" + e.getMessage());
-        }
-        finally{
+            log("Error at UpdatePostServlet _ Naming" + e.getMessage());
+        } finally {
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }

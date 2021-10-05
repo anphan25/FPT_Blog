@@ -10,7 +10,7 @@ import javax.naming.NamingException;
 import swp.library.Style;
 import swp.utils.DBHelper;
 
-public class PostDAO implements Serializable{
+public class PostDAO implements Serializable {
 
     public ArrayList<PostDTO> getAllPostList() throws SQLException, ClassNotFoundException, NamingException {
         // tên, avt, email người đăng, title, id, số like, số cmt, approvedTime
@@ -132,8 +132,8 @@ public class PostDAO implements Serializable{
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID) "
-                        + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?)";
+                String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
+                        + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, "WFA");
@@ -407,7 +407,6 @@ public class PostDAO implements Serializable{
         return null;
     }
 
-
     public ArrayList<PostDTO> pagingPosts(int index) throws SQLException, ClassNotFoundException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -592,5 +591,39 @@ public class PostDAO implements Serializable{
             }
         }
         return check;
+    }
+
+    public PostDTO loadOldContent(String postId, String email) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PostDTO post = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select Title, PostContent from tblPosts where PostID = ? and EmailPost = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    String title = rs.getNString("Title");
+                    String postContent = rs.getNString("PostContent");
+                    post = new PostDTO(postId, email, title, postContent);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return post;
     }
 }

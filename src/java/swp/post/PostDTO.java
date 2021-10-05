@@ -15,6 +15,7 @@ public class PostDTO implements Serializable {
     private String title;
     private String approvedDate;
     private String postContent;
+    private String newContent;
     private String categoryID;
     private String namePost;
     private String avatar;
@@ -32,6 +33,7 @@ public class PostDTO implements Serializable {
         tag = new ArrayList<String>();
         title = "";
         approvedDate = "";
+        postContent = "";
         postContent = "";
         categoryID = "";
         likes = 0;
@@ -87,6 +89,26 @@ public class PostDTO implements Serializable {
         this.tag = tag;
         this.title = title;
         this.postContent = postContent;
+        this.namePost = namePost;
+        this.avatar = avatar;
+    }
+
+    //dao.getOldPost > update post
+    public PostDTO(String id, String email, String title, String postContent) {
+        this.ID = id;
+        this.emailPost = email;
+        this.title = title;
+        this.postContent = postContent;
+    }
+
+    //update post with new content
+    public PostDTO(String newContent, String ID, String createdDate, List<String> tag, String title, String postContent, String namePost, String avatar) {
+        this.ID = ID;
+        this.createdDate = createdDate;
+        this.tag = tag;
+        this.title = title;
+        this.postContent = postContent;
+        this.newContent = newContent;
         this.namePost = namePost;
         this.avatar = avatar;
     }
@@ -203,6 +225,14 @@ public class PostDTO implements Serializable {
         return namePost;
     }
 
+    public String getNewContent() {
+        return newContent;
+    }
+
+    public void setNewContent(String newContent) {
+        this.newContent = newContent;
+    }
+
     public void setNamePost(String namePost) {
         this.namePost = namePost;
     }
@@ -233,7 +263,7 @@ public class PostDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + '}';
+        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + '}';
     }
 
 }
