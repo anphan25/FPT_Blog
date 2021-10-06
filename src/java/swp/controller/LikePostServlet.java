@@ -1,68 +1,65 @@
-package swp.controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//import com.sun.org.apache.bcel.internal.classfile.Code;
+package swp.controller;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-import javax.servlet.ServletContext;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import swp.account.AccountDTO;
-import swp.comment.CommentDAO;
-import swp.comment.CommentDTO;
 import swp.post.PostDAO;
-import swp.post.PostDTO;
 
 /**
  *
- * @author macbook
+ * @author ASUS
  */
-@WebServlet(name = "LoadPostContentServlet", urlPatterns
-        = {
-            "/LoadPostContentServlet"
-        })
-public class LoadPostContentServlet extends HttpServlet {
+@WebServlet(name = "LikePostServlet", urlPatterns = {"/LikePostServlet"})
+public class LikePostServlet extends HttpServlet {
 
-    private static final String SUCCESS = "contentPage";
-    private static final String FAIL = "notFoundPage";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+            throws ServletException, IOException{
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get(FAIL);
-        HttpSession session = request.getSession(false);
-        try {
-            String postId = request.getParameter("postId");
-            PostDAO getPost = new PostDAO();
-            PostDTO post = getPost.getPostById(postId);
-            CommentDAO cmt = new CommentDAO();
-            ArrayList<CommentDTO> cmtList = cmt.getAllCommentOfPost(postId);
-            if (post != null) {
-                url = roadmap.get(SUCCESS);
-                AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
-                String email = acc.getEmail();
-                if(getPost.checkLike(postId,email)){
-                    request.setAttribute("LIKE_STATUS", "yes");
-                }
-                request.setAttribute("POST_DETAIL", post);
-                request.setAttribute("POST_CMT",cmtList);
+        PrintWriter out = response.getWriter();
+        String postId = request.getParameter("postId");
+        String email = request.getParameter("emailLike");
+        HttpSession session = request.getSession();
+        try{
+            if(session != null){
+            PostDAO dao = new PostDAO();
+            if(dao.checkLike(postId, email)){//unlike
+                dao.deleteLike(postId, email);
+                out.println(dao.getLikeCounting(postId));
+
+            }else{//like
+               dao.insertLike(postId, email);
+               out.println(dao.getLikeCounting(postId));
+
             }
-        } catch (Exception e) {
-            log(e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            }
+        }catch (SQLException ex) {
+            log("LikeServlet _ SQL " + ex.getMessage());
+        }catch (NamingException ex) {
+            log("LikeServlet _ Naming " + ex.getMessage());
+        }
+        finally{
+            
         }
     }
 

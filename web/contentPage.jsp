@@ -218,14 +218,15 @@
         <div class="container">
             <div class="row">
                 <div class="interact">
-                    <a href="/">
-                        <div class="interact-item">
-                            <div class="icon like-icon">
-                                <img src="./images/vote_icon.svg" alt="" />
-                            </div>
-                            <p>${postDetail.likes}</p>
+
+                    <div class="interact-item">
+                    <c:set var="likeStatus" value="${requestScope.LIKE_STATUS}"/>
+                        <div class="${likeStatus == 'yes' ? "clicked-like-icon" : ""} icon like-icon" onclick="likePost()">
+                            <img src="./images/vote_icon.svg" alt="" />
                         </div>
-                    </a>
+                        <p class="totalLike">${postDetail.likes}</p>
+                    </div>
+
                     <div class="interact-item">
                         <div class="icon cmt-icon">
                             <img src="./images/comment_icon.svg" alt="" />
@@ -260,7 +261,7 @@
                                     <p>Delete</p>
                                 </div>
                             </a>
-                                <a href="loadOldContent?postId=${postDetail.ID}">
+                            <a href="loadOldContent?postId=${postDetail.ID}">
                                 <div class="update-div option-div">
                                     <i class="fas fa-edit"></i>
                                     <p>Update</p>
@@ -301,22 +302,22 @@
                         <p class="comment-title">Discussion (${postDetail.comments})</p>
                         <div class="current-user-comment">
                             <div class="user-comment-item">
-                                    <textarea
-                                        id="textarea-cmt"
-                                        cols="30"
-                                        rows="10"
-                                        placeholder="Add to the discussion"
-                                        ></textarea>
-                                    <input id="postId-input" type="hidden" value="${postDetail.ID}" />
-                                    <input id="ownerEmail-input" type="hidden" value="${currentUser.email}" />
-                                    <button
-                                        onclick="loadNewComment()"
-                                        class="submit-btn hidden"
-                                        disabled="true"
-                                        >
-                                        Submit
-                                    </button>
-                                
+                                <textarea
+                                    id="textarea-cmt"
+                                    cols="30"
+                                    rows="10"
+                                    placeholder="Add to the discussion"
+                                    ></textarea>
+                                <input id="postId-input" type="hidden" value="${postDetail.ID}" />
+                                <input id="ownerEmail-input" type="hidden" value="${currentUser.email}" />
+                                <button
+                                    onclick="loadNewComment()"
+                                    class="submit-btn hidden"
+                                    disabled="true"
+                                    >
+                                    Submit
+                                </button>
+
                             </div>
                         </div>
 
@@ -447,47 +448,66 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
-                                            const cmtContent = document.querySelector("#textarea-cmt");
-                                            const postId = document.querySelector("#postId-input");
-                                            const ownerCmtEmail = document.querySelector("#ownerEmail-input");
-                                            
-                                            function loadNewComment() {
-                                                $.ajax({
-                                                    url: "CommentServlet",
-                                                    data: {
-                                                        postId: postId.value,
-                                                        ownerCmtEmail: ownerCmtEmail.value,
-                                                        cmtContent: cmtContent.value
-                                                    },
-                                                    type: "POST",
-                                                    success: function (response) {
-                                                        const newCmt = document.querySelector("#comments-container");
-                                                        newCmt.insertAdjacentHTML('afterbegin',response) ;
-                                                    },
-                                                    error: function (xhr) {
-                                                        console.log("loi me roi");
-                                                    }
-                                                });
+                                        const cmtContent = document.querySelector("#textarea-cmt");
+                                        const postId = document.querySelector("#postId-input");
+                                        const ownerCmtEmail = document.querySelector("#ownerEmail-input");
+                                        const totalLike = document.querySelector(".totalLike");
 
-                                            }
-                                            ;
-                                            function toggleSidebarPhone() {
-                                                const toggle_sidebar = document.getElementById("sidebar_phone");
-                                                toggle_sidebar.style.display = "block";
-                                            }
-                                            function handleClickOutside() {
-                                                const toggle_sidebar = document.getElementById("sidebar_phone");
-                                                toggle_sidebar.style.display = "none";
-                                            }
-                                            function submit_form() {
-                                                var form = document.getElementById("searchit");
-                                                form.submit();
-                                            }
-                                            const dotIcon = document.querySelector(".dot-icon");
-                                            const optionDiv = document.querySelector(".delete-update-div");
-                                            dotIcon.addEventListener("click", () => {
-                                                optionDiv.classList.toggle("hidden");
+                                        function loadNewComment() {
+                                            $.ajax({
+                                                url: "CommentServlet",
+                                                data: {
+                                                    postId: postId.value,
+                                                    ownerCmtEmail: ownerCmtEmail.value,
+                                                    cmtContent: cmtContent.value
+                                                },
+                                                type: "POST",
+                                                success: function (response) {
+                                                    const newCmt = document.querySelector("#comments-container");
+                                                    newCmt.insertAdjacentHTML('afterbegin', response);
+                                                },
+                                                error: function (xhr) {
+                                                    console.log("loi me roi");
+                                                }
                                             });
+
+                                        }
+                                        ;
+                                        function likePost() {
+                                            $.ajax({
+                                                url: "LikePostServlet",
+                                                data: {
+                                                    postId: postId.value,
+                                                    emailLike: ownerCmtEmail.value,
+                                                },
+                                                type: "POST",
+                                                success: function (response) {
+                                                    totalLike.textContent = response;
+                                                },
+                                                error: function (xhr) {
+                                                    console.log("loi me roi");
+                                                }
+                                            });
+                                        }
+                                        ;
+
+                                        function toggleSidebarPhone() {
+                                            const toggle_sidebar = document.getElementById("sidebar_phone");
+                                            toggle_sidebar.style.display = "block";
+                                        }
+                                        function handleClickOutside() {
+                                            const toggle_sidebar = document.getElementById("sidebar_phone");
+                                            toggle_sidebar.style.display = "none";
+                                        }
+                                        function submit_form() {
+                                            var form = document.getElementById("searchit");
+                                            form.submit();
+                                        }
+                                        const dotIcon = document.querySelector(".dot-icon");
+                                        const optionDiv = document.querySelector(".delete-update-div");
+                                        dotIcon.addEventListener("click", () => {
+                                            optionDiv.classList.toggle("hidden");
+                                        });
         </script>
         <script src="./js/contentPage.js"></script>
     </body>
