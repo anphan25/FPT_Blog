@@ -51,13 +51,15 @@ public class LoadPostContentServlet extends HttpServlet {
             ArrayList<CommentDTO> cmtList = cmt.getAllCommentOfPost(postId);
             if (post != null) {
                 url = roadmap.get(SUCCESS);
-                AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
-                String email = acc.getEmail();
-                if(getPost.checkLike(postId,email)){
-                    request.setAttribute("LIKE_STATUS", "yes");
-                }
                 request.setAttribute("POST_DETAIL", post);
-                request.setAttribute("POST_CMT",cmtList);
+                request.setAttribute("POST_CMT", cmtList);
+                if (session != null) {
+                    AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
+                    String email = acc.getEmail();
+                    if (getPost.checkLike(postId, email)) {
+                        request.setAttribute("LIKE_STATUS", "yes");
+                    }
+                }
             }
         } catch (Exception e) {
             log(e.getMessage());

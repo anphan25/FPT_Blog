@@ -88,7 +88,7 @@ const checkLoginKind = () => {
 
     likeIcon.addEventListener("click", (e) => {
       likeIcon.classList.toggle("clicked-like-icon");
-      // likeIcon.nextElementSibling.classList.toggle("clicked-like-text");
+      likeIcon.nextElementSibling.classList.toggle("clicked-like-text");
     });
   }
 };
