@@ -74,14 +74,6 @@
                         </form>
                     </div>
                 </div>
-                <!-- <div class="container_right">
-                            <div class="container_button_login">
-                              <button><a href="firstloginpage">ÄÄng nháº­p</a></button>
-                            </div>
-                            <div class="container_button_register">
-                              <button><a href="firstloginpage">Táº¡o tÃ i khoáº£n</a></button>
-                            </div>
-                          </div> -->
                 <c:if test="${loginStatus == 'logined'}">
                     <div class="container_right">
                         <c:if test="${currentUser.role == 'S'}">
@@ -167,7 +159,7 @@
                         </p>
                         <div class="container_button">
                             <div class="container_button_register">
-                                <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
+                                <button><a href="/login.html">Táº¡o tÃ i khoáº£n</a></button>
                             </div>
                             <div class="container_button_login">
                                 <button><a href="/login.html">ÄÄng nháº­p</a></button>
@@ -218,38 +210,38 @@
         <div class="container">
             <div class="row">
                 <div class="interact">
+                    <c:if test="${loginStatus == 'logined'}">
+                        <div class="interact-item">
+                            <c:set var="likeStatus" value="${requestScope.LIKE_STATUS}"/>
+                            <div class="${likeStatus == 'yes' ? "clicked-like-icon" : ""} icon like-icon" onclick="likePost()">
+                                <img src="./images/vote_icon.svg" alt="" />
+                            </div>
+                            <p class="${likeStatus == 'yes' ? "clicked-like-text" : ""} totalLike">${postDetail.likes}</p>
+                        </div>
 
-                    <div class="interact-item">
-                    <c:set var="likeStatus" value="${requestScope.LIKE_STATUS}"/>
-                        <div class="${likeStatus == 'yes' ? "clicked-like-icon" : ""} icon like-icon" onclick="likePost()">
-                            <img src="./images/vote_icon.svg" alt="" />
+                        <div class="interact-item">
+                            <div class="icon cmt-icon">
+                                <img src="./images/comment_icon.svg" alt="" />
+                            </div>
+                            <p>${postDetail.comments}<p>
                         </div>
-                        <p class="totalLike">${postDetail.likes}</p>
-                    </div>
+                    </c:if>
+                    <c:if test="${loginStatus != 'logined'}">
+                        <div class="interact-item">
+                            <div class="icon like-icon">
+                                <img src="./images/vote_icon.svg" alt="" />
+                            </div>
+                            <p class="totalLike">${postDetail.likes}</p>
+                        </div>
 
-                    <div class="interact-item">
-                        <div class="icon cmt-icon">
-                            <img src="./images/comment_icon.svg" alt="" />
+                        <div class="interact-item">
+                            <div class="icon cmt-icon">
+                                <img src="./images/comment_icon.svg" alt="" />
+                            </div>
+                            <p>${postDetail.comments}<p>
                         </div>
-                        <p>${postDetail.comments}<p>
-                    </div>
-                    <div class="interact-item">
-                        <div class="icon">
-                            <img src="./images/award2.svg" alt="" />
-                        </div>
-                        <!-- <p>2</p> -->
-                        <!-- <div class="awards-type">
-                                      <div class="medal">
-                                        <img src="./images/gold.svg" alt="" />
-                                      </div>
-                                      <div class="medal">
-                                        <img src="./images/silver.svg" alt="" />
-                                      </div>
-                                      <div class="medal">
-                                        <img src="./images/bronze.svg" alt="" />
-                                      </div>
-                                    </div> -->
-                    </div>
+                    </c:if>
+
                 </div>
                 <div class="main-content">
                     <c:if test="${currentUser.email == postDetail.emailPost}">
@@ -452,7 +444,6 @@
                                         const postId = document.querySelector("#postId-input");
                                         const ownerCmtEmail = document.querySelector("#ownerEmail-input");
                                         const totalLike = document.querySelector(".totalLike");
-
                                         function loadNewComment() {
                                             $.ajax({
                                                 url: "CommentServlet",
@@ -470,7 +461,6 @@
                                                     console.log("loi me roi");
                                                 }
                                             });
-
                                         }
                                         ;
                                         function likePost() {
@@ -490,7 +480,6 @@
                                             });
                                         }
                                         ;
-
                                         function toggleSidebarPhone() {
                                             const toggle_sidebar = document.getElementById("sidebar_phone");
                                             toggle_sidebar.style.display = "block";
