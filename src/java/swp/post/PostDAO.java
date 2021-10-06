@@ -92,7 +92,7 @@ public class PostDAO implements Serializable {
         return count;
     }
 
-    public int getLikeCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
+    public int getLikeCounting(String postID) throws SQLException, NamingException {
         int count = 0;
         Connection conn = null;
         PreparedStatement stm = null;
@@ -626,5 +626,85 @@ public class PostDAO implements Serializable {
             }
         }
         return post;
+    }
+
+    public boolean checkLike(String postId, String email) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select * from tblLikes where PostID = ? and EmailLike = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return false;
+    }
+
+    public void deleteLike(String postId, String email) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if(conn != null){
+                String sql = "delete from tblLikes where PostID = ? and EmailLike = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                int row = stm.executeUpdate();
+                
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+    }
+    
+    public void insertLike (String postId, String email) throws NamingException, SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        
+        try{
+            conn = DBHelper.makeConnection();
+            if(conn != null){
+                String sql = "insert into tblLikes(ID,PostID,EmailLike,Date,LikeStatus) "
+                        +"values(NEWID(),?,?,getdate(),?)";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                stm.setString(2, email);
+                stm.setBoolean(3, true);
+                int row = stm.executeUpdate();
+            }
+        }finally{
+           if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            } 
+        }
     }
 }
