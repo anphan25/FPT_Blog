@@ -62,7 +62,7 @@ public class LoadPostContentServlet extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            log(e.getMessage());
+            log("Error at Load post content servlet: " + e.getMessage());
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }

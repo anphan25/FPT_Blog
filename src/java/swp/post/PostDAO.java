@@ -101,7 +101,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(id) as TOTAL from tbllikes where LikeStatus = 1 and postid = ? ";
+                String sql = "select count(id) as TOTAL from tbllikes where postid = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 rs = stm.executeQuery();
@@ -605,7 +605,7 @@ public class PostDAO implements Serializable {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        boolean check = false;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
@@ -615,7 +615,7 @@ public class PostDAO implements Serializable {
                 stm.setString(2, email);
                 rs = stm.executeQuery();
                 if (rs.next()) {
-                    return true;
+                    check = true;
                 }
             }
         } finally {
@@ -629,13 +629,13 @@ public class PostDAO implements Serializable {
                 conn.close();
             }
         }
-        return false;
+        return check;
     }
 
-    public void deleteLike(String postId, String email) throws NamingException, SQLException {
+    public boolean deleteLike(String postId, String email) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
-
+        boolean check = false;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
@@ -643,8 +643,8 @@ public class PostDAO implements Serializable {
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
-                int row = stm.executeUpdate();
-
+                stm.executeUpdate();
+                check = true;
             }
         } finally {
             if (stm != null) {
@@ -654,22 +654,22 @@ public class PostDAO implements Serializable {
                 conn.close();
             }
         }
+        return check;
     }
 
-    public void insertLike(String postId, String email) throws NamingException, SQLException {
+    public boolean insertLike(String postId, String email) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
-
+        boolean check = false;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblLikes(ID,PostID,EmailLike,Date,LikeStatus) "
-                        + "values(NEWID(),?,?,getdate(),?)";
+                String sql = "insert into tblLikes(ID, PostID, EmailLike, Date) "
+                        + "values(NEWID(), ?, ?, getdate())";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
-                stm.setBoolean(3, true);
-                int row = stm.executeUpdate();
+                check = stm.executeUpdate() > 0;
             }
         } finally {
             if (stm != null) {
@@ -679,6 +679,7 @@ public class PostDAO implements Serializable {
                 conn.close();
             }
         }
+        return check;
     }
 
     public boolean insertNewContentPost(String postID, String newContent) throws NamingException, SQLException {

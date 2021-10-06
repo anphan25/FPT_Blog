@@ -34,32 +34,37 @@ public class LikePostServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String postId = request.getParameter("postId");
         String email = request.getParameter("emailLike");
         HttpSession session = request.getSession();
-        try{
-            if(session != null){
-            PostDAO dao = new PostDAO();
-            if(dao.checkLike(postId, email)){//unlike
-                dao.deleteLike(postId, email);
-                out.println(dao.getLikeCounting(postId));
-
-            }else{//like
-               dao.insertLike(postId, email);
-               out.println(dao.getLikeCounting(postId));
-
+        try {
+            if (session != null) {
+                PostDAO dao = new PostDAO();
+                if (dao.checkLike(postId, email)) {//Có thông tin trong tblLikes > unlike
+                    if (dao.deleteLike(postId, email)) {
+                        log("Email: " + email + " unliked postID: " + postId + " successfully!");
+                    } else {
+                        log("Email: " + email + " unliked postID: " + postId + " failed!");
+                    }
+                    out.println(dao.getLikeCounting(postId));
+                } else {//like
+                    if (dao.insertLike(postId, email)) {
+                        log("Email: " + email + " liked postID: " + postId + " successfully!");
+                    } else {
+                        log("Email: " + email + " liked postID: " + postId + " failed!");
+                    }
+                    out.println(dao.getLikeCounting(postId));
+                }
             }
-            }
-        }catch (SQLException ex) {
-            log("LikeServlet _ SQL " + ex.getMessage());
-        }catch (NamingException ex) {
-            log("LikeServlet _ Naming " + ex.getMessage());
-        }
-        finally{
-            
+        } catch (SQLException ex) {
+            log("Error at LikeServlet _ SQL " + ex.getMessage());
+        } catch (NamingException ex) {
+            log("Error at LikeServlet _ Naming " + ex.getMessage());
+        } finally {
+
         }
     }
 
