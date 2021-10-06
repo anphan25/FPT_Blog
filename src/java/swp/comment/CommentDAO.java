@@ -71,7 +71,7 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblComments(ID,EmailComment,PostID,Date,Comment,StatusComment) "
+                String sql = "insert into tblComments(ID, EmailComment, PostID, Date, Comment, StatusComment) "
                         + "values(NEWID(), ?, ?, getdate(), ?, 1)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
@@ -94,7 +94,7 @@ public class CommentDAO {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-
+        CommentDTO dto = null;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
@@ -117,8 +117,7 @@ public class CommentDAO {
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
 
-                    CommentDTO dto = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
-                    return dto;
+                    dto = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
                 }
             }
         } finally {
@@ -132,6 +131,6 @@ public class CommentDAO {
                 conn.close();
             }
         }
-        return null;
+        return dto;
     }
 }
