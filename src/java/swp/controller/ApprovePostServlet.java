@@ -67,23 +67,41 @@ public class ApprovePostServlet extends HttpServlet {
                     break;
                 }
                 default: {
-                    log("Value or status is invalid");
+                    log("Value or status post is invalid");
                     break;
                 }
             }
-            if (isSetDate) {
-                if (dao.setNewStatusPost(postID, emailMentor, newStatus)) {
-                    log("Updating successfuly! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
+
+            if (statusPost.equalsIgnoreCase("WFU")) {
+                if (mentorDecision.equalsIgnoreCase("approve")) {
+                    if (dao.approveUpdateContentPost(postID)) {
+                        log("Settine new content for Post ID: " + postID + " successfully!");
+                    } else {
+                        log("Settine new content for Post ID: " + postID + " failed!");
+                    }
                 } else {
-                    log("Updating failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+                    if (dao.rejectUpdateContentPost(postID)) {
+                        log("Reject updating content for Post ID: " + postID + " successfully!");
+                    } else {
+                        log("Reject updating content for Post ID: " + postID + " falied!");
+                    }
                 }
-            } else {//KHÔNG GETDATE() VÌ NÓ REJECT-DELETE > STATUS "A" NHƯ CŨ 
-                if (dao.rejectDeletedPost(postID, newStatus)) {
-                    log("Reject deleted post successfully! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
-                } else {
-                    log("Reject deleted post failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+            } else {
+                if (isSetDate) {
+                    if (dao.setNewStatusPost(postID, emailMentor, newStatus)) {
+                        log("Updating successfuly! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
+                    } else {
+                        log("Updating failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+                    }
+                } else {//KHÔNG GETDATE() VÌ NÓ REJECT-DELETE > STATUS "A" NHƯ CŨ 
+                    if (dao.rejectDeletedPost(postID, newStatus)) {
+                        log("Reject deleted post successfully! PostID: " + postID + ", status post: '" + statusPost + "' to new status post: '" + newStatus + "' by Mentor: " + emailMentor);
+                    } else {
+                        log("Reject deleted post failed! PostID: " + postID + ", status post: " + statusPost + " to new status post: " + newStatus + " by Mentor: " + emailMentor);
+                    }
                 }
             }
+
         } catch (Exception e) {
             log("Error at Approve Post ServletContext: " + e.getMessage());
         } finally {

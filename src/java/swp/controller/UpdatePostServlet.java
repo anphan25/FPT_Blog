@@ -6,12 +6,14 @@
 package swp.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import swp.post.PostDAO;
 
 /**
  *
@@ -32,17 +34,25 @@ public class UpdatePostServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdatePostServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdatePostServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get("loadBlogs");
+
+        try {
+            String newContent = request.getParameter("newContent");
+            String postId = request.getParameter("postId");
+            PostDAO dao = new PostDAO();
+            if (dao.insertNewContentPost(postId, newContent)) {
+                log("Settine new content " + newContent + ", Post ID: " + postId + " successfully!");
+            } else {
+                log("Settine new content" + newContent + ", Post ID: " + postId + " failed!");
+            }
+
+        } catch (Exception e) {
+            log("Error at Update post servlet: " + e.getMessage());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

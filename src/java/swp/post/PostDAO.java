@@ -512,33 +512,6 @@ public class PostDAO implements Serializable {
         return check;
     }
 
-    public boolean rejectDeletedPost(String postID, String newStatus) throws NamingException, SQLException {
-        Connection conn = null;
-        PreparedStatement stm = null;
-        boolean check = false;
-        try {
-            conn = DBHelper.makeConnection();
-            if (conn != null) {
-                String sql = "update tblposts set statuspost = ? where postid = ?";
-                //CHỈ CHỈNH LẠI STATUS LÀ A, VÀ GIỮ NGUYÊN EMAIL MENTOR DUYỆT BAN ĐẦU
-                //KHÔNG UPDATE APPROVEDDATE & EMAILMENTOR !!!
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, newStatus);
-                stm.setString(2, postID);
-
-                check = stm.executeUpdate() > 0;
-            }
-        } finally {
-            if (stm != null) {
-                stm.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return check;
-    }
-
     public boolean deletePost(String postId) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -665,13 +638,13 @@ public class PostDAO implements Serializable {
 
         try {
             conn = DBHelper.makeConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "delete from tblLikes where PostID = ? and EmailLike = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
                 int row = stm.executeUpdate();
-                
+
             }
         } finally {
             if (stm != null) {
@@ -682,29 +655,141 @@ public class PostDAO implements Serializable {
             }
         }
     }
-    
-    public void insertLike (String postId, String email) throws NamingException, SQLException{
+
+    public void insertLike(String postId, String email) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
-        
-        try{
+
+        try {
             conn = DBHelper.makeConnection();
-            if(conn != null){
+            if (conn != null) {
                 String sql = "insert into tblLikes(ID,PostID,EmailLike,Date,LikeStatus) "
-                        +"values(NEWID(),?,?,getdate(),?)";
+                        + "values(NEWID(),?,?,getdate(),?)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
                 stm.setBoolean(3, true);
                 int row = stm.executeUpdate();
             }
-        }finally{
-           if (stm != null) {
+        } finally {
+            if (stm != null) {
                 stm.close();
             }
             if (conn != null) {
                 conn.close();
-            } 
+            }
         }
+    }
+
+    public boolean insertNewContentPost(String postID, String newContent) throws NamingException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblPosts set NewContent = ?, StatusPost = 'WFU' where PostID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, newContent);
+                stm.setString(2, postID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean approveUpdateContentPost(String postID) throws NamingException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblPosts set PostContent = NewContent, StatusPost = 'A', NewContent = NULL where PostID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean rejectUpdateContentPost(String postID) throws NamingException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblPosts set StatusPost = 'A', NewContent = NULL where PostID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
+    public boolean rejectDeletedPost(String postID, String newStatus) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        boolean check = false;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblposts set statuspost = ? where postid = ?";
+                //CHỈ CHỈNH LẠI STATUS LÀ A, VÀ GIỮ NGUYÊN EMAIL MENTOR DUYỆT BAN ĐẦU
+                //KHÔNG UPDATE APPROVEDDATE & EMAILMENTOR !!!
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, newStatus);
+                stm.setString(2, postID);
+
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
     }
 }
