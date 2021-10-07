@@ -9,7 +9,6 @@
     <c:redirect url = "firstLoginPage"/>
 </c:if>
 <c:if test = "${currentadmin.role != 'A'}">
-    Duma admin fake
     <script>window.history.back();</script>
     <%-- sau lày có lỗi thì đổi lại page 404. --%>
 </c:if>
@@ -164,7 +163,7 @@
                 <div class="navigation_left">
                     <div class="sidebar_navigation">
                         <h2 class="title_navigation">Menu</h2>
-                        <a href="LoadAllPostsServlet"> <!-- cái tội không chịu chia ra 1 servlet riêng để handle empty url -->
+                        <a href="loadBlogs">
                             <div class="container_item">
                                 <img src="./images/house_icon.svg" />
                                 <p>Home</p>
@@ -212,7 +211,7 @@
                             </thead>
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
-                                <form action='UserListActionServlet'>
+                                <form action='userAction'>
                                 <tr>
                                     <td>${counter.count}</td>
                                     <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
@@ -290,8 +289,8 @@
         <!-- script   -->
         <!-- script   -->
         <!-- script   -->
+        <script src="./js/userListPage.js"></script>
         <script>
-            var htmldoc; //phòng trường hợp lz DOM lại quăng thêm lỗi dit me may DOM ạ html của m vô duyên như chó rách
             function toggleSidebarPhone() {
                 const toggle_sidebar = document.getElementById("sidebar_phone");
                 toggle_sidebar.style.display = "block";
@@ -305,6 +304,9 @@
                 var form = document.getElementById("searchit");
                 form.submit();
             }
+            //must find another way to hide those shit as a lowend javascript developer
+            var htmldoc; //phòng trường hợp lz DOM lại quăng thêm lỗi dit me may DOM ạ html của m vô duyên như chó rách
+            //Well i just learned jquery for like 3 days that's why the code may look stupid
             function SendData()
             {
                 $("#reloading").empty();
@@ -312,30 +314,31 @@
                 numberOfResult = 0; //back to the matrix
                 htmldoc = null;
                 $.ajax({
-                    url: "SearchFilteringServlet",
-                    type: "get", //send it through get method
-                    data: 
-                    { 
-                    txtSearch: document.getElementById("searchtext").value
-                    },
-                    success: function(text)
-                    {
-                        //100tr bỏ ra cho FPT rồi thì đến lúc cũng phải gặt hái trí tuệ. Những dòng code ko copy paste
-                        $("#reloading").empty();
-                        var parser = new DOMParser();
-                        htmldoc = parser.parseFromString(text,"text/html");
-                        $("#reloading").html(htmldoc.getElementById("freshair"));
-                    },
-                    error: function()
-                    {
-                        //Do Something to handle error
-                        // now i know what to do
-                        $("#reloading").empty();
-                        $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-                        console.log("oi dit me cuoc doi");
-                    }
-                });
+                    url: "searchFilt",
+                        type: "get", //send it through get method
+                        data: 
+                        { 
+                        txtSearch: document.getElementById("searchtext").value
+                        },
+                        success: function(text)
+                        {
+                            //100tr bỏ ra cho FPT rồi thì đến lúc cũng phải gặt hái trí tuệ. Những dòng code ko copy paste
+                            $("#reloading").empty();
+                            var parser = new DOMParser();
+                            htmldoc = parser.parseFromString(text,"text/html");
+                            $("#reloading").html(htmldoc.getElementById("freshair"));
+                        },
+                        error: function()
+                        {
+                            //Do Something to handle error
+                            // now i know what to do
+                            $("#reloading").empty();
+                            $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
+                            console.log("oi dit me cuoc doi");
+                        }
+                    });
             }
+            //this one will carry the duty after the user try to violent data after search. God damn i hate them so much.
             function kingcrimson(kytu)
             {
                 //Kono diavolo da (not wibu by da wei)
@@ -348,21 +351,21 @@
                     var email = document.getElementById("e" + so).value; //lấy i meo
                     var select = document.getElementById(so).value; //lấy value của txtList
                     //ditcon me đến cả việc append cái form rồi submit cũng tự đóng tag THẰNG LZ DOMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-                    $('<form action="' + 'UserListActionServlet">' + 
+                    $('<form action="' + 'userAction">' + 
                             '<input type="text" name="searchAction" value="updating' + '%' + email + '%' + search + '%' + select + '"' + '/>' + //tại sao vậy DOM?
                                                                 '</form>').appendTo('body').submit();
                 }
                 if(action === "b")
                 {
                     var email = document.getElementById("e" + so).value; //lấy i meo
-                    $('<form action="' + 'UserListActionServlet">' + 
+                    $('<form action="' + 'userAction">' + 
                             '<input type="text" name="searchAction" value="banning' + '%' + email + '%' + search + '"' + '/>' + //mày có thể bớt vô duyên đóng tag tự động dc ko
                                                                 '</form>').appendTo('body').submit();
                 }
                 if(action === "a")
                 {
                     var email = document.getElementById("e" + so).value; //lấy i meo
-                    $('<form action="' + 'UserListActionServlet">' + 
+                    $('<form action="' + 'userAction">' + 
                             '<input type="text" name="searchAction" value="unbaning' + '%' + email + '%' + search + '"' + '/>' + //mày có thể bớt vô duyên đóng tag tự động dc ko
                                                                 '</form>').appendTo('body').submit();
                 }
