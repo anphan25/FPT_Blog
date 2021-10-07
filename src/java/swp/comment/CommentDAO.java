@@ -133,4 +133,35 @@ public class CommentDAO {
         }
         return dto;
     }
+
+
+    //chuyen trang thai comment thanh disabled/deleted 
+    //can specify comment nao? cua ai? tren post nao?
+    public boolean disableComment(String postId, String email, String commentID) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        boolean check = false;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblComments " + "set StatusComment = 0 " 
+                        + "where emailComment = ? and postID = ? and commentID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setString(2, postId);
+                stm.setNString(3, commentID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+
 }
