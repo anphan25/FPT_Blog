@@ -37,7 +37,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
         //if you are trying to use this ask Nam before even trying.
 {
     private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
-    private final String SEARCH_RESULT_PAGE = "searchFilt";
+    private final String SEARCH_RESULT_PAGE = "userListResultPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -75,6 +75,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                         UserlistDAO dao = new UserlistDAO();
                         ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
                         url = roadmap.get(SEARCH_RESULT_PAGE);
+                        //url = "resultpage.jsp";
                         request.setAttribute("USER_LIST", newlist);
                     }
                     else //if the search doesn't find any @ symbol
@@ -82,6 +83,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                         UserlistDAO dao = new UserlistDAO();
                         ArrayList<UserlistDTO> newlist = dao.searchAll(search);
                         url = roadmap.get(SEARCH_RESULT_PAGE);
+                        //url = "resultpage.jsp";
                         request.setAttribute("USER_LIST", newlist);
                     }
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
