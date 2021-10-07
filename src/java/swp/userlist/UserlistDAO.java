@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.naming.NamingException;
+import swp.account.AccountDTO;
 import swp.utils.DBHelper;
 
 /**
@@ -212,6 +213,65 @@ public class UserlistDAO implements Serializable
                 stm = con.prepareStatement(sql);
                 stm.setString(1, "%" + searchtext + "%");
                 stm.setString(2, "%" + searchtext + "%");
+                rs = stm.executeQuery();
+                //trỏ tới dòng sql đầu tiên
+                while(rs.next())
+                {
+                    String email = rs.getString(1);
+                    String name = rs.getString(2);
+                    boolean gioitinh = rs.getBoolean(3);
+                    String gender;
+                    if(gioitinh) gender = "Male";
+                    else gender = "Female";
+                    String campus = rs.getString(4);
+                    String RoleID = rs.getString(5);
+                    String statusacc = rs.getString(6);
+                    UserlistDTO dummy = new UserlistDTO(email, name, campus, RoleID, gender, statusacc);
+                    boolean check = lazylist.add(dummy);
+                    if(!check)
+                    {
+                        throw new SQLException("Monday left me broken.");
+                    }
+                }
+                return lazylist;
+            }
+        }
+        finally
+        {
+            if(rs != null)
+            {
+                rs.close();
+            }     
+            if(con != null)
+            {
+                con.close();
+            }
+            if(stm != null)
+            {
+                stm.close();
+            }
+        }
+        return null;
+    }
+    
+    public ArrayList<UserlistDTO> searchSpecificEmail(String localpart, String domain) throws NamingException, SQLException
+    {
+        ArrayList<UserlistDTO> lazylist = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try
+        {
+            //cố gắng thông ass DB
+            con = DBHelper.makeConnection();
+            if(con != null)
+            {
+                String sql = "SELECT a.Email, a.Name, a.Gender, a.Campus, r.RoleName, sa.StatusName "
+                            + "FROM tblAccounts a LEFT JOIN tblRoles r ON a.RoleID = r.RoleID "
+                            + "LEFT JOIN tblStatusAccounts sa ON a.StatusAccountID = sa.StatusAccountID "
+                            + "WHERE a.Email like ?";  //chỉ cần giống tên hoặc email vứt mẹ vô lazylist
+                stm = con.prepareStatement(sql);
+                stm.setString(1, "%" + localpart + "%" + domain + "%");
                 rs = stm.executeQuery();
                 //trỏ tới dòng sql đầu tiên
                 while(rs.next())

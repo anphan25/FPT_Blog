@@ -33,10 +33,11 @@ import swp.userlist.UserlistDTO;
 {
     "/SearchFilteringServlet"
 })
-public class SearchFilteringServlet extends HttpServlet
+public class SearchFilteringServlet extends HttpServlet //servlet này chỉ redirect tới 1 page jsp render ko phải 1 page UI đàng hoàng
+        //if you are trying to use this ask Nam before even trying.
 {
     private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
-    private final String USER_CONTROL_PANEL = "userListPage";
+    private final String SEARCH_RESULT_PAGE = "searchFilt";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -68,11 +69,21 @@ public class SearchFilteringServlet extends HttpServlet
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {
-                    UserlistDAO dao = new UserlistDAO();
-                    ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                    //url = roadmap.get(USER_CONTROL_PANEL);
-                    url = "resultpage.jsp";
-                    request.setAttribute("USER_LIST", newlist);
+                    if(search.contains("@"))
+                    {
+                        String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
+                        UserlistDAO dao = new UserlistDAO();
+                        ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
+                        url = roadmap.get(SEARCH_RESULT_PAGE);
+                        request.setAttribute("USER_LIST", newlist);
+                    }
+                    else //if the search doesn't find any @ symbol
+                    {
+                        UserlistDAO dao = new UserlistDAO();
+                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                        url = roadmap.get(SEARCH_RESULT_PAGE);
+                        request.setAttribute("USER_LIST", newlist);
+                    }
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
             }
         }
