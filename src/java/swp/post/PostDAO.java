@@ -693,7 +693,7 @@ public class PostDAO implements Serializable {
             if (conn != null) {
                 String sql = "update tblPosts set NewContent = ?, StatusPost = 'WFU' where PostID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, newContent);
+                stm.setNString(1, newContent);
                 stm.setString(2, postID);
                 check = stm.executeUpdate() > 0;
             }
