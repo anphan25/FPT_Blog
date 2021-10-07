@@ -40,7 +40,7 @@ public class UpdatePostServlet extends HttpServlet {
         String url = roadmap.get("loadBlogs");
 
         try {
-            String newContent = request.getParameter("newContent");
+            String newContent = new String(request.getParameter("newContent").getBytes("iso-8859-1"), "utf-8");
             String postId = request.getParameter("postId");
             PostDAO dao = new PostDAO();
             if (dao.insertNewContentPost(postId, newContent)) {
