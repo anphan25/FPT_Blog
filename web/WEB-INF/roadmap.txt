@@ -38,3 +38,4 @@ comment=CommentServlet
 loadOldContent=LoadOldContentServlet
 updatePost=UpdatePostServlet
 likePost=LikePostServlet
+deleteComment=DeleteCommentServlet

@@ -146,9 +146,9 @@ public class CommentDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "update tblComments " + "set StatusComment = 0 " 
-                        + "where and ID = ?";
+                        + "where ID = ?";
                 stm = conn.prepareStatement(sql);
-                stm.setNString(1, commentID);
+                stm.setString(1, commentID);
                 check = stm.executeUpdate() > 0;
             }
         } finally {

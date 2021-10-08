@@ -69,7 +69,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(id) as TOTAL from tblComments where postid = ?";
+                String sql = "select count(id) as TOTAL from tblComments where postid = ? and StatusComment = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 rs = stm.executeQuery();
