@@ -926,6 +926,64 @@ footer .text_footer_strong {
   background-color: #efefef;
 }
 
+/* delete-post-modal  */
+/* delete-post-modal  */
+/* delete-post-modal  */
+.delete-modal {
+  width: 480px;
+  height: 400px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 110px 30px 30px;
+}
+
+.del-btn-gr {
+  display: flex;
+  margin-top: 30px;
+  gap: 0 20px;
+  justify-content: center;
+}
+
+.del-btn {
+  width: 84px;
+  height: 40px;
+  background-color: #dc1818;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cancel-btn {
+  width: 84px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.delete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
 /* login-modal  */
 /* login-modal  */
 /* login-modal  */

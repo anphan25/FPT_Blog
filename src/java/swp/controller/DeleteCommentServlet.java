@@ -8,8 +8,11 @@ package swp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,14 +42,13 @@ public class DeleteCommentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
                 response.setContentType("text/html;charset=UTF-8");
-                String postId = request.getParameter("postId");
-                String ownerCmtEmail = request.getParameter("ownerCmtEmail");
-        //        String cmtContent = new String(request.getParameter("cmtContent").getBytes("iso-8859-1"), "utf-8");
+
                 String cmtID = request.getParameter("cmtID");
-        //        ServletContext context = request.getServletContext();
-        //        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        ////        String url = roadmap.get("loadPostContent");
-                PrintWriter out = response.getWriter();
+//                String postId = request.getParameter("postId");
+                ServletContext context = request.getServletContext();
+                Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+                String url = roadmap.get("loadPostContent");
+
                 try {
                     HttpSession session = request.getSession(false);
                     if (session != null) {
@@ -60,8 +62,8 @@ public class DeleteCommentServlet extends HttpServlet {
                 } catch (NamingException ex) {
                     log("CommenrServlet _ Naming " + ex.getMessage());
                 } finally {
-        //            RequestDispatcher rd = request.getRequestDispatcher(url);
-        //            rd.forward(request, response);
+                    RequestDispatcher rd = request.getRequestDispatcher(url);
+                    rd.forward(request, response);
                 }
     }
 

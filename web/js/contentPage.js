@@ -9,6 +9,9 @@ const overlay = document.querySelector(".overlay");
 const closeBtnModal = document.querySelector(".close-btn-modal-div");
 const header = document.querySelector("header");
 const userCommentItem = document.querySelector(".user-comment-item");
+const deleteDiv = document.querySelector(".delete-div");
+const deleteModal = document.querySelector(".delete-modal");
+const deleteOverlay = document.querySelector(".delete-overlay");
 
 submitBtn.addEventListener("mouseenter", () => {
   submitBtn.style.backgroundColor = "#323ebe";
@@ -100,3 +103,18 @@ const disableSubmitBtn = () => {
 
 checkLoginKind();
 disableSubmitBtn();
+
+deleteDiv.addEventListener("click", () => {
+  deleteModal.classList.toggle("hidden");
+  deleteOverlay.classList.toggle("hidden");
+});
+
+deleteOverlay.addEventListener("click", () => {
+  deleteModal.classList.toggle("hidden");
+  deleteOverlay.classList.toggle("hidden");
+});
+
+document.querySelector(".cancel-btn").addEventListener("click", () => {
+  deleteModal.classList.toggle("hidden");
+  deleteOverlay.classList.toggle("hidden");
+});

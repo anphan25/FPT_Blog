@@ -223,7 +223,7 @@
                             <div class="icon cmt-icon">
                                 <img src="./images/comment_icon.svg" alt="" />
                             </div>
-                            <p>${postDetail.comments}<p>
+                            <p class="cmtCount">${postDetail.comments}<p>
                         </div>
                     </c:if>
                     <c:if test="${loginStatus != 'logined'}">
@@ -247,12 +247,12 @@
                     <c:if test="${currentUser.email == postDetail.emailPost}">
                         <i class="fas fa-ellipsis-h dot-icon"></i>
                         <div class="delete-update-div hidden">
-                            <a href="deletePost?postId=${postDetail.ID}">
+                            
                                 <div class="delete-div option-div">
                                     <i class="fas fa-trash"></i>
                                     <p>Delete</p>
                                 </div>
-                            </a>
+                            
                             <a href="loadOldContent?postId=${postDetail.ID}">
                                 <div class="update-div option-div">
                                     <i class="fas fa-edit"></i>
@@ -291,7 +291,7 @@
                         </div>
                     </div>
                     <div class="comment">
-                        <p class="comment-title">Discussion (${postDetail.comments})</p>
+                        <p class="comment-title">Discussion (<span class="cmtCount2">${postDetail.comments}</span>)</p>
                         <div class="current-user-comment">
                             <div class="user-comment-item">
                                 <textarea
@@ -335,13 +335,15 @@
                                                 <p>${listDTO.content}</p>
                                             </div>
                                         </div>
-                                        <c:if test="${currentUser.email == listDTO.emailComment}">
-                                            <form action="">
+                                        <c:if test="${currentUser.email == listDTO.emailComment}">                              
                                                 <div class="edit-delete">
                                                     <button><i class="fas fa-pen"></i> Edit</button>
-                                                    <button><i class="fas fa-trash-alt"></i> Delete</button>
-                                                </div>
-                                            </form>
+                                                    <form action="deleteComment">
+                                                        <input type="hidden" name="cmtID" value="${listDTO.ID}" />
+                                                        <input type="hidden" name="postId" value="${postDetail.ID}" />
+                                                        <button type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
+                                                    </form>
+                                                </div>   
                                         </c:if>
                                     </div>
                                 </c:forEach>
@@ -406,7 +408,17 @@
                 We strive for transparency and don't collect excess data.
             </div>
         </div>
+        <div class="delete-modal hidden">
+            <h1>Are you sure you want to delete this post ?</h1>
+            <div class="del-btn-gr">
+            <a href="deletePost?postId=${postDetail.ID}">
+                <button class="del-btn">Delete</button>
+            </a>
+            <button class="cancel-btn">Cancel</button>
+        </div>
+        </div>
         <div class="overlay hidden"></div>
+        <div class="delete-overlay hidden"></div>
         <!-- footer -->
         <!-- footer -->
         <!-- footer -->
@@ -444,6 +456,10 @@
                                         const postId = document.querySelector("#postId-input");
                                         const ownerCmtEmail = document.querySelector("#ownerEmail-input");
                                         const totalLike = document.querySelector(".totalLike");
+                                        const cmtCount = document.querySelector(".cmtCount");
+                                        const cmtCount2 = document.querySelector(".cmtCount2");
+                                        
+                                        
                                         function loadNewComment() {
                                             $.ajax({
                                                 url: "CommentServlet",
@@ -456,6 +472,8 @@
                                                 success: function (response) {
                                                     const newCmt = document.querySelector("#comments-container");
                                                     newCmt.insertAdjacentHTML('afterbegin', response);
+                                                    cmtCount.textContent = Number(cmtCount.textContent)+1;
+                                                    cmtCount2.textContent = Number(cmtCount2.textContent)+1;
                                                 },
                                                 error: function (xhr) {
                                                     console.log("loi me roi");
@@ -479,6 +497,8 @@
                                                 }
                                             });
                                         }
+                                        
+
                                         ;
                                         function toggleSidebarPhone() {
                                             const toggle_sidebar = document.getElementById("sidebar_phone");
