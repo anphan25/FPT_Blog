@@ -51,7 +51,7 @@ public class DeleteCommentServlet extends HttpServlet {
                     HttpSession session = request.getSession(false);
                     if (session != null) {
                         CommentDAO dao = new CommentDAO();
-                        boolean result = dao.disableComment(postId, ownerCmtEmail, cmtID);
+                        boolean result = dao.disableComment(cmtID);
                         if (result) {
                         }
                     }
