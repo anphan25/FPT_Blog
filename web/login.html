@@ -20,7 +20,7 @@
       content="229851668671-rehm8b9h7e190bhmtvdmf24p19g39p3d.apps.googleusercontent.com"
     />
     <meta name="google-signin-scope" content="profile email" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- jquery -->
     <link rel="stylesheet" href="./styles/login.css" />
     <title>Login | FPT Blog</title>
   </head>
@@ -214,19 +214,24 @@
       window.addEventListener("popstate", function (event) {
         history.pushState(null, document.title, location.href);
       });
-      function onSignIn(googleUser) {
+      function onSignIn(googleUser) 
+      {
         var id_token = googleUser.getAuthResponse().id_token; //gimme ur ass
         if (id_token !== null) {
           //well đây là th đăng nhập thành công và bên hờ tờ mờ lờ lấy được idtoken
           SignOut();
-          window.location.href = "LoginGoogleServlet?token=" + id_token;
-          //dùng cách này cho những dự án đòi hỏi bảo mật thì bán nhà đấy nha mọi người.
+          //window.location.href = "LoginGoogleServlet?token=" + id_token; địt mẹ http get anh em tao làm http post. Sau khi đã tu luyện AJAX 3 ngày 3 đêm
+          $('<form action="' + 'loginGoogle"' + 'method="POST">' +
+                '<input type="text" name="token" value="' + id_token + '" />' + //upgrade complete
+                                                    '</form>').appendTo('body').submit();
+          //ez FAP dùng GET bố m dùng POST
         }
         //console.log(id_token);
         //this code below here is for the situation google dead.
       }
 
-      function SignOut() {
+      function SignOut() 
+      {
         //well if you have to copied just exactly fap.fpt.edu then go write some shit down here
         var gaObject = gapi.auth2.getAuthInstance();
         gaObject.signOut().then(function () {});

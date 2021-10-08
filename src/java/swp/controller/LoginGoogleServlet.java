@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.AuthenticationException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -28,9 +29,10 @@ import swp.utils.ProcessingGoogle;
 public class LoginGoogleServlet extends HttpServlet
 {
     private final String ERROR_PAGE = "notFoundPage";
-    private final String HOME_PAGE = "homePage";
+    //private final String HOME_PAGE = "homePage";
     private final String LOGIN_PAGE = "loginPage";
-    private final String REGISTER_PAGE = "registerPage";
+    private final String LOAD_BLOG = "loadBlogs";
+    //private final String REGISTER_PAGE = "registerPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -80,14 +82,24 @@ public class LoginGoogleServlet extends HttpServlet
                                 AccountDTO information_login = dao.getInformationUserFromEmail(email);
                                 session.setAttribute("LOGIN", "logined");
                                 session.setAttribute("CURRENT_USER", information_login);
-                                url = roadmap.get(HOME_PAGE);
+                                url = roadmap.get(LOAD_BLOG);
                             }
                         }
-                        else //chuyển sang page register
+                        else //email chưa có ở database
                         {
-                            AccountDTO gotoregister = new AccountDTO(email, name, picurl);
-                            request.setAttribute("GMAIL_REGISTER", gotoregister);
-                            url = roadmap.get(REGISTER_PAGE);
+                            boolean checkregister = dao.createAccountForFirstTimeGmail(email, name, picurl);
+                            if(checkregister)
+                            {
+                                AccountDTO information_login = dao.getInformationUserFromEmail(email);
+                                session.setAttribute("LOGIN", "logined");
+                                session.setAttribute("CURRENT_USER", information_login);
+                                url = roadmap.get(LOAD_BLOG);
+                            }
+                            else
+                            {
+                                //set attribute cho request show lỗi bên error page in the fucking future
+                                url = roadmap.get(ERROR_PAGE);
+                            }
                         }
                     }
                     else
