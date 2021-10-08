@@ -186,6 +186,32 @@
             </div>
             <div class="container-item">
                 <h1>List of users</h1>
+                <div class="Filtering">
+                    <div class="dropdown_filt">
+                      <div class="select_filt">
+                        <span>Select Gender</span>
+                      </div>
+                      <input type="hidden" name="gender">
+                      <ul class="dropdown-menu">
+                        <li id="male">Male</li>
+                        <li id="female">Female</li>
+                        <li id="all">View all</li>
+                        <!-- show all when it choose the third one -->
+                      </ul>
+                    </div>
+                    <div class="dropdown_filt">
+                      <div class="select_filt">
+                        <span>Select Status</span>
+                      </div>
+                      <input type="hidden" name="gender">
+                      <ul class="dropdown-menu">
+                        <li id="what">Active</li>
+                        <li id="who">Banned</li>
+                        <li id="all">View all</li>
+                      </ul>
+                    </div>
+                    <button>Em ngu phon end</button>
+                </div>
                 <form onsubmit="SendData();return false">
                 <div class="user-list-searchbar">
                     <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
@@ -304,6 +330,23 @@
                 var form = document.getElementById("searchit");
                 form.submit();
             }
+            //for the dropdown filter
+            $('.dropdown_filt').click(function () 
+            {
+                $(this).attr('tabindex', 1).focus();
+                $(this).toggleClass('active');
+                $(this).find('.dropdown-menu').slideToggle(300);
+            });
+            $('.dropdown_filt').focusout(function () 
+            {
+                $(this).removeClass('active');
+                $(this).find('.dropdown-menu').slideUp(300);
+            });
+            $('.dropdown_filt .dropdown-menu li').click(function () 
+            {
+                $(this).parents('.dropdown_filt').find('span').text($(this).text());
+                $(this).parents('.dropdown_filt').find('input').attr('value', $(this).attr('id'));
+            });
         </script>
     </body>
 </html>

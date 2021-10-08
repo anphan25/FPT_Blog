@@ -258,5 +258,30 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
-
+    
+    public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException 
+    {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image) "
+                        +   "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.setString(2, name);
+                stm.setString(3, url);
+                int row = stm.executeUpdate();
+                if(row > 0) return true;
+            }
+        } 
+        finally 
+        {
+            if (con != null) con.close();
+            if (stm != null) stm.close();
+        }
+        return false;
+    }
 }

@@ -64,7 +64,7 @@ public class LoadProfileServlet extends HttpServlet
             dao.LoadThemAll(email);
             ArrayList<PostDTO> bloglist = dao.getAllPost();
             //bắt đầu múa quạt
-            if(!bloglist.isEmpty()) request.setAttribute("PROFILE_BLOG", bloglist); //chỉ set attribute khi tài khoản đó có post.
+            if(!bloglist.isEmpty()) request.setAttribute("PROFILE_BLOG", bloglist);
             if(dto == null) {
                 url = roadmap.get(FAIL);
             }
