@@ -3,7 +3,7 @@ package swp.userlist;
 
 import java.io.Serializable;
 
-public class UserlistDTO implements Serializable
+public class UserlistDTO implements Serializable, Comparable<UserlistDTO>
 {
     String email, name, campus, role, gender, statusaccount;
     //now noone will touch my package
@@ -16,7 +16,7 @@ public class UserlistDTO implements Serializable
         this.gender = gender;
         this.statusaccount = statusaccount;
     }
-
+    
     public String getEmail()
     {
         return email;
@@ -76,5 +76,18 @@ public class UserlistDTO implements Serializable
     {
         this.statusaccount = statusaccount;
     }
+    
+    @Override
+    public int compareTo(UserlistDTO obj) {
+        // sort student's name by ASC
+        return this.getName().compareTo(obj.getName());
+    }
+
+    @Override
+    public String toString()
+    {
+        return "UserlistDTO{" + "email=" + email + ", name=" + name + ", campus=" + campus + ", role=" + role + ", gender=" + gender + ", statusaccount=" + statusaccount + '}';
+    }
+
     
 }

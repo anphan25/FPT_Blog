@@ -12,7 +12,10 @@
     <script>window.history.back();</script>
     <%-- sau lày có lỗi thì đổi lại page 404. --%>
 </c:if>
-
+<c:if test = "${empty userlist}">
+    <c:redirect url = "loadUserList"/>
+    <%-- tự tôi tìm ra lỗi tự tôi fix. huhu --%>
+</c:if>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -191,10 +194,10 @@
                       <div class="select_filt">
                         <span>Select Gender</span>
                       </div>
-                      <input type="hidden" name="gender">
+                      <input type="hidden" id="selectedgender">
                       <ul class="dropdown-menu">
-                        <li id="male">Male</li>
-                        <li id="female">Female</li>
+                        <li id="Male">Male</li>
+                        <li id="Female">Female</li>
                         <li id="all">View all</li>
                         <!-- show all when it choose the third one -->
                       </ul>
@@ -203,14 +206,14 @@
                       <div class="select_filt">
                         <span>Select Status</span>
                       </div>
-                      <input type="hidden" name="gender">
+                      <input type="hidden" id="selectedstatus">
                       <ul class="dropdown-menu">
-                        <li id="what">Active</li>
-                        <li id="who">Banned</li>
+                        <li id="Actived">Active</li>
+                        <li id="Banned">Banned</li>
                         <li id="all">View all</li>
                       </ul>
                     </div>
-                    <button>Em ngu phon end</button>
+                    <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                 </div>
                 <form onsubmit="SendData();return false">
                 <div class="user-list-searchbar">
@@ -265,7 +268,7 @@
                                         </select>
                                     </td>
                                     <td>${loto.statusaccount}</td>
-                                    <td><button id="submitanlz" class="update-btn" name="btAction" value="updating" onclick="test()" >Update</button></td>
+                                    <td><button id="submitanlz" class="update-btn" name="btAction" value="updating" >Update</button></td>
                                     <td>
                                         <c:if test="${loto.statusaccount == 'Actived'}">
                                         <button class="ban-btn" name="btAction" value="banning" >Ban</button>
@@ -277,7 +280,7 @@
                                 </tr>
                                 </form>
                                 </c:forEach>
-                            </tbody>   
+                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -347,6 +350,55 @@
                 $(this).parents('.dropdown_filt').find('span').text($(this).text());
                 $(this).parents('.dropdown_filt').find('input').attr('value', $(this).attr('id'));
             });
+            
+            function applyButton() 
+            {
+                var start = new Date().getTime();
+                $("#zawarudo").attr("disabled", "disabled");
+                $("#zawarudo").addClass("button_filt_disable");
+                setTimeout(function() 
+                {
+                    $("#zawarudo").removeAttr("disabled");
+                    $("#zawarudo").removeClass("button_filt_disable");
+                }, 3000); //za warudo 3s
+                //3 value
+                let searchtext = document.getElementById("searchtext").value;
+                let selgen = document.getElementById("selectedgender").value;
+                let selstt = document.getElementById("selectedstatus").value;
+                if(selgen === "" && selstt === "") return; //bám search ko bấm bấm apply làm cc gì
+                $("#reloading").empty();
+                $("#reloading").append("<div class='loader'></div>");
+                htmldoc = null;
+                $.ajax({
+                        url: "searchFilt",
+                        type: "get", //send it through get method
+                        data: 
+                        {
+                            selectedGender: selgen,
+                            selectedStatus: selstt,
+                            txtSearch: searchtext
+                        },
+                        success: function(text)
+                        {
+                            //response code is here
+                            $("#reloading").empty();
+                            var parser = new DOMParser();
+                            htmldoc = parser.parseFromString(text,"text/html");
+                            $("#reloading").html(htmldoc.getElementById("freshair"));
+                            var end = new Date().getTime();
+                            var time = end - start;
+                            console.log("Loaded time: " + time.toString());
+                        },
+                        error: function()
+                        {
+                            //Old stuff go here
+                            // now i know what to do
+                            $("#reloading").empty();
+                            $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
+                            console.log("oi dit me cuoc doi");
+                        }
+                    });
+            }
         </script>
     </body>
 </html>

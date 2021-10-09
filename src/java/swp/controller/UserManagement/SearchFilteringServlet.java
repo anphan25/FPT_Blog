@@ -6,10 +6,10 @@
 package swp.controller.UserManagement;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -57,10 +57,13 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
         String url = roadmap.get(ERROR_PAGE);
         //get parameter list
         String search = request.getParameter("txtSearch");
+        String gender = request.getParameter("selectedGender");
+        String status = request.getParameter("selectedStatus");
         //server side decleration
         HttpSession session = request.getSession(false);
         AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
-        if(search.trim().isEmpty()) return; //performance tăng 0.0000000000000000000000000000000000000000000000000001x
+        //if(search.trim().isEmpty()) return; //performance tăng 0.0000000000000000000000000000000000000000000000000001x check bên js ez boi
+        //khá là conflict khi phải check này nếu người dùng nhập thẳng url
         try
         {
             //ko cần check session null khi cái attribute login đã null
@@ -69,23 +72,104 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {
-                    if(search.contains("@"))
-                    {
-                        String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
-                        UserlistDAO dao = new UserlistDAO();
-                        ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
-                        url = roadmap.get(SEARCH_RESULT_PAGE);
-                        //url = "resultpage.jsp";
-                        request.setAttribute("USER_LIST", newlist);
+                    if(gender == null && status == null)
+                    {//all code in this block is using database
+                        if(search.contains("@"))
+                        {   
+                            String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
+                            UserlistDAO dao = new UserlistDAO();
+                            ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
+                            url = roadmap.get(SEARCH_RESULT_PAGE);
+                            //url = "resultpage.jsp";
+                            request.setAttribute("USER_LIST", newlist);
+                        }
+                        else //if the search doesn't find any @ symbol
+                        {
+                            UserlistDAO dao = new UserlistDAO();
+                            ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                            url = roadmap.get(SEARCH_RESULT_PAGE);
+                            //url = "resultpage.jsp";
+                            request.setAttribute("USER_LIST", newlist);
+                        }
                     }
-                    else //if the search doesn't find any @ symbol
-                    {
-                        UserlistDAO dao = new UserlistDAO();
-                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                        url = roadmap.get(SEARCH_RESULT_PAGE);
-                        //url = "resultpage.jsp";
+                    else //this else block will execute the apply button
+                    {//all code in this block will not using the database
+                        ArrayList<UserlistDTO> oldlist = (ArrayList<UserlistDTO>)session.getAttribute("CACHING_USER_LIST");
+                        //PHẢI CẤP PHÁT 1 VÙNG NHỚ CHO NEWLIST NẾU KHÔNG MECHANIC CỦA SESSION SẼ TỰ ĐỘNG CẬP NHẬT SAU KHI MODIFY CÁI OLDLIST DÙ KHÔNG SET ATTRIBUTE
+                        ArrayList<UserlistDTO> newlist = new ArrayList<>(oldlist);
+                        //it's 2021 AND OF COURSE I HAVE READ A LOT OF DOCUMENT SO I WILL USE IT
+                        // IF THERE IS ANYONE WHO STAND IN MY WAY SAYING ABOUT AM NOT UNDERSTANDING WHILE USING THOSE SYNTAX THEN FUCK OFF
+                        // mostly using lambda it can use anonymous class but I prefer C# syntax so...
+                        boolean checksearch = search.equals("");//search all với cái filt
+                        //MAKE SURE EACH BLOCK CONDITION BELOW EXECUTE ONLY ONE TIME
+                        if(gender.equals("")) //filt with status
+                        {
+                            if(checksearch)
+                            {
+                                newlist.removeIf(thestatus -> !thestatus.getStatusaccount().equals(status));
+                            }
+                            else
+                            {
+                                newlist.removeIf(thestatus -> !thestatus.getStatusaccount().equals(status));
+                                //this is anonymous class practice from me dont mind it
+                                Predicate<UserlistDTO> condition = new Predicate<UserlistDTO>()
+                                {
+                                    public boolean test(UserlistDTO user)
+                                    {
+                                        return !user.getEmail().contains(search) && !user.getName().contains(search);
+                                    }
+                                };
+                                newlist.removeIf(condition);
+                            }
+                        }
+                        else if(status.equals("")) //filt with gender
+                        {
+                            if(checksearch)
+                            {
+                                newlist.removeIf(thegender -> !thegender.getGender().equals(gender));
+                            }
+                            else
+                            {
+                                newlist.removeIf(thegender -> !thegender.getGender().equals(gender));
+                                Predicate<UserlistDTO> condition = user -> !user.getEmail().contains(search) && !user.getName().contains(search);
+                                newlist.removeIf(condition);
+                                //tách ra cho dễ kiểm soát
+                            }
+                        }
+                        else //cả 2 đều được chọn
+                        {
+                            if(checksearch)//search ko có gì cả
+                            {
+                                if(status.equals("all") && gender.equals("all"))
+                                {
+                                    //the list is not change if it execute this block only in the whole if else storm
+                                }
+                                else
+                                {
+                                    Predicate<UserlistDTO> condition = user -> !user.getGender().equals(gender) || !user.getStatusaccount().equals(status);
+                                    newlist.removeIf(condition);
+                                }
+                            }
+                            else //có search
+                            {
+                                if(status.equals("all") && gender.equals("all"))
+                                {
+                                    Predicate<UserlistDTO> conditionsearch = user -> !user.getEmail().contains(search) && !user.getName().contains(search);
+                                    newlist.removeIf(conditionsearch);
+                                }
+                                else
+                                {
+                                    Predicate<UserlistDTO> conditionchoice = user -> !user.getGender().equals(gender) || !user.getStatusaccount().equals(status);
+                                    Predicate<UserlistDTO> conditionsearch = user -> !user.getEmail().contains(search) && !user.getName().contains(search);
+                                    newlist.removeIf(conditionchoice);
+                                    newlist.removeIf(conditionsearch);
+                                }
+                            }
+                        }
+                        //thế là ko phải gọi tới DAO ez game
                         request.setAttribute("USER_LIST", newlist);
-                    }
+                        url = roadmap.get(SEARCH_RESULT_PAGE);
+                    }//the end of filtering the list leaving the result
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
             }
         }

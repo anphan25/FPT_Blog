@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.NamingException;
@@ -71,9 +72,10 @@ public class LoadUserListServlet extends HttpServlet
                         url = roadmap.get(USER_CONTROL_PANEL); // check role thành công thì cho qua luôn dù có dto hay ko
                         //url = "resultpage.jsp";
                         //chưa check account đã đăng nhập và chưa check role
-                        if(dto != null) //wow có list và ko có lỗi
+                        if(dto != null) //CAUTION nếu tblAccounts trong database không có gì sẽ bị lỗi stackoverflow
                         {
-                                request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                            request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                            session.setAttribute("CACHING_USER_LIST", dto);
                         }
                     }
                     
