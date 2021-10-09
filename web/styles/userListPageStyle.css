@@ -778,6 +778,24 @@ footer .text_footer_strong {
   margin-top: 10px;
 }
 
+/* làm màu cho cái button */
+.button_filt
+{
+    transition-duration: 0.25s;
+    font-size: 20px;
+    border-radius: 8px;
+    padding: 5px 10px 5px 10px;
+    border: none;
+}
+.button_filt:hover
+{
+    background-color: #3B49E9;
+    color: white;
+}
+.button_filt_disable
+{
+    pointer-events: none;
+}
 /*Styling Selectbox*/
 .dropdown_filt {
   width: 150px;

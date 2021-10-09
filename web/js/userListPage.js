@@ -4,9 +4,10 @@ var htmldoc; //phòng trường hợp lz DOM lại quăng thêm lỗi dit me may
 //Well i just learned jquery for like 3 days that's why the code may look stupid
 function SendData()
 {
+    var start = new Date().getTime();
+    if(document.getElementById("searchtext").value === "") return;
     $("#reloading").empty();
     $("#reloading").append("<div class='loader'></div>");
-    numberOfResult = 0; //back to the matrix
     htmldoc = null;
     $.ajax({
         url: "searchFilt",
@@ -22,6 +23,9 @@ function SendData()
                 var parser = new DOMParser();
                 htmldoc = parser.parseFromString(text,"text/html");
                 $("#reloading").html(htmldoc.getElementById("freshair"));
+                var end = new Date().getTime();
+                var time = end - start;
+                console.log("Loaded time: " + time.toString());
             },
             error: function()
             {
