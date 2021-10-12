@@ -234,13 +234,20 @@
                                             <img src="./images/list_icon.svg" />
                                             <p>Pending Posts</p>
                                         </div>
-                                        <a href="createPostPage">
-                                            <div class="container_item create-post">
-                                                <img src="./images/create-blog.svg" />
-                                                <p>Create Post</p>
-                                            </div>
-                                        </a>
                                     </a>
+                                    <a href="createPostPage">
+                                        <div class="container_item create-post">
+                                            <img src="./images/create-blog.svg" />
+                                            <p>Create Post</p>
+                                        </div>
+                                    </a>
+                                    <a href="awardDashboardPage">
+                                        <div class="container_item create-post">
+                                            <img src="./images/dashborad.svg" />
+                                            <p>Give Award</p>
+                                        </div>
+                                    </a>
+
                                 </c:if>
                                 <c:if test="${currentUser.role == 'A'}">
                                     <a href="createCategoryPage">
@@ -318,7 +325,7 @@
                                                             <c:param name="tag" value="${tag}"/>
                                                         </c:url>
                                                         <a href="${searchByTagLink}">
-                                                        <p><span class="hash"></span>#${tag}</p>
+                                                            <p><span class="hash"></span>#${tag}</p>
                                                         </a>
                                                     </c:forEach>
                                                 </div>
@@ -338,7 +345,7 @@
                                                                 <span class="text_comments_votes">Comments</span>
                                                             </p>
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="time_and_save">
                                                         <div>
@@ -419,7 +426,7 @@
                                                                 <span class="text_comments_votes">Comments</span>
                                                             </p>
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="time_and_save">
                                                         <div>
@@ -433,7 +440,7 @@
                                 </div>
                             </c:forEach>
                         </c:if>
-                        
+
                         <c:set var="searchTagList" value="${requestScope.SEARCHLIST_TAG}"/>
                         <c:if test="${not empty searchTagList}">
                             <c:forEach var="searchTagDTO" items="${searchTagList}">
@@ -497,7 +504,7 @@
                                                                 <span class="text_comments_votes">Comments</span>
                                                             </p>
                                                         </div>
-                                                        
+
                                                     </div>
                                                     <div class="time_and_save">
                                                         <div>
@@ -511,8 +518,8 @@
                                 </div>
                             </c:forEach>
                         </c:if>
-                        
-                        
+
+
                         <c:if test="${empty searchTitleList && empty searchCategoryList && empty searchTagList}">
                             <div class="no-result">
                                 <h1>No result matches</h1>

@@ -15,6 +15,7 @@ messengerPage=messengerPage.jsp
 notFoundPage=notFoundPage.jsp
 updatePostPage=updatePostPage.jsp
 userListResultPage=resultpage.jsp
+awardDashboardPage=awardDashboard.jsp
 login=LoginServlet
 loginGoogle=LoginGoogleServlet
 loadBlogs=LoadAllPostsServlet

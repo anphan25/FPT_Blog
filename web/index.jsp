@@ -248,12 +248,18 @@
                                         <img src="./images/list_icon.svg" />
                                         <p>Pending Posts</p>
                                     </div>
-                                    <a href="createPostPage">
-                                        <div class="container_item create-post">
-                                            <img src="./images/create-blog.svg" />
-                                            <p>Create Post</p>
-                                        </div>
-                                    </a>
+                                </a>    
+                                <a href="createPostPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                                <a href="awardDashboardPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/dashborad.svg" />
+                                        <p>Give Award</p>
+                                    </div>
                                 </a>
                             </c:if>
                             <c:if test="${currentUser.role == 'A'}">
@@ -388,76 +394,76 @@
                         <c:set var="blogs" value="${requestScope.LIST_PAGING}"/>
                         <c:forEach var="blogDTO" items="${blogs}">
                             <div class="post">
-                                
-                                    <div class="container_info_post">
-                                        <div class="user_info">
-                                            <div class="container_avatar">
-                                                <img
-                                                    src="${blogDTO.avatar}"
-                                                    />
-                                            </div>
-                                            <div class="container_name_date_post">
 
-                                                <a href="loadProfile?email=${blogDTO.emailPost}">
-                                                    <p class="username">${blogDTO.namePost}</p>
-                                                </a>
-                                                <p class="date_posted">${blogDTO.approvedDate}</p>
-                                            </div>
+                                <div class="container_info_post">
+                                    <div class="user_info">
+                                        <div class="container_avatar">
+                                            <img
+                                                src="${blogDTO.avatar}"
+                                                />
                                         </div>
-                                        <div class="post_info">
-                                            <a href="loadPostContent?postId=${blogDTO.ID}">
-                                                <h1 class="title_post">
-                                                    ${blogDTO.title}
-                                                </h1>
+                                        <div class="container_name_date_post">
+
+                                            <a href="loadProfile?email=${blogDTO.emailPost}">
+                                                <p class="username">${blogDTO.namePost}</p>
                                             </a>
-                                            <div class="hashtag">
-                                                <c:forEach var="tag" items="${blogDTO.tag}">
+                                            <p class="date_posted">${blogDTO.approvedDate}</p>
+                                        </div>
+                                    </div>
+                                    <div class="post_info">
+                                        <a href="loadPostContent?postId=${blogDTO.ID}">
+                                            <h1 class="title_post">
+                                                ${blogDTO.title}
+                                            </h1>
+                                        </a>
+                                        <div class="hashtag">
+                                            <c:forEach var="tag" items="${blogDTO.tag}">
 
-                                                    <a href="searchByTag?tag=${tag}">
-                                                        <p><span class="hash"></span>#${tag}</p>
-                                                    </a>
-                                                </c:forEach>
+                                                <a href="searchByTag?tag=${tag}">
+                                                    <p><span class="hash"></span>#${tag}</p>
+                                                </a>
+                                            </c:forEach>
 
-                                                <!--                      <p><span class="hash">#</span>vue</p>
-                                                                      <p><span class="hash">#</span>angular</p>
-                                                                      <p><span class="hash">#</span>javascript</p>-->
-                                            </div>
-                                            <div class="statistic">
-                                                <div class="reaction_and_comments">
-                                                    <div>
-                                                        <img src="./images/vote_icon.svg" />
-                                                        <p>
-                                                            ${blogDTO.likes}
-                                                            <span class="text_comments_votes">Likes</span>
-                                                        </p>
-                                                    </div>
-                                                    <div>
-                                                        <img src="./images/comment_icon.svg" />
-                                                        <p>
-                                                            ${blogDTO.comments}
-                                                            <span class="text_comments_votes">Comments</span>
-                                                        </p>
-                                                    </div>
-<!--                                                    <div>
-                                                        <img src="./images/award2.svg" />
-                                                        <p>
-                                                            
-                                                            <span class="text_comments_votes">Awards</span>
-                                                        </p>
-                                                    </div>-->
+                                            <!--                      <p><span class="hash">#</span>vue</p>
+                                                                  <p><span class="hash">#</span>angular</p>
+                                                                  <p><span class="hash">#</span>javascript</p>-->
+                                        </div>
+                                        <div class="statistic">
+                                            <div class="reaction_and_comments">
+                                                <div>
+                                                    <img src="./images/vote_icon.svg" />
+                                                    <p>
+                                                        ${blogDTO.likes}
+                                                        <span class="text_comments_votes">Likes</span>
+                                                    </p>
                                                 </div>
-                                                <div class="time_and_save">
-                                                    <!--                        <div>
-                                                                              <p>3 phÃºt Äá»c</p>
-                                                                            </div>-->
-                                                    <div>
-                                                        <button>Save</button>
-                                                    </div>
+                                                <div>
+                                                    <img src="./images/comment_icon.svg" />
+                                                    <p>
+                                                        ${blogDTO.comments}
+                                                        <span class="text_comments_votes">Comments</span>
+                                                    </p>
+                                                </div>
+                                                <!--                                                    <div>
+                                                                                                        <img src="./images/award2.svg" />
+                                                                                                        <p>
+                                                                                                            
+                                                                                                            <span class="text_comments_votes">Awards</span>
+                                                                                                        </p>
+                                                                                                    </div>-->
+                                            </div>
+                                            <div class="time_and_save">
+                                                <!--                        <div>
+                                                                          <p>3 phÃºt Äá»c</p>
+                                                                        </div>-->
+                                                <div>
+                                                    <button>Save</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                
+                                </div>
+
                             </div>
                         </c:forEach>    
                     </div>
