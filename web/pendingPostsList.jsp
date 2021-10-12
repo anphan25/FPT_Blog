@@ -147,6 +147,12 @@
                                             <p>Create Post</p>
                                         </div>
                                     </a>
+                                    <a href="awardDashboardPage">
+                                        <div class="container_item create-post">
+                                            <img src="./images/dashborad.svg" />
+                                            <p>Give Award</p>
+                                        </div>
+                                    </a>
                                     <!-- <a href="">
                                       <div class="container_item">
                                         <img class="item-trophy-icon" src="./images/trophy_icon.svg" />
@@ -160,23 +166,23 @@
                                     <h1>Pending posts</h1>
                                 </div>
                                 <div class="pending_tab">
-                                    
+
                                     <a href="loadPendingPosts?postStatus=WFA">
                                         <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFA'}">tab_active</c:if>">Public Request</p>
-                                    </a>
-                                    
-                                    
-                                    <a href="loadPendingPosts?postStatus=WFU">
-                                        <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFU'}">tab_active</c:if>">Update Request</p>
-                                    </a>
-                                    
-                                    
-                                    <a href="loadPendingPosts?postStatus=WFD">
-                                        <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFD'}">tab_active</c:if>">Delete Request</p>
-                                    </a>
-                                    
-                                </div>
-                                <div class="pending_posts">
+                                        </a>
+
+
+                                        <a href="loadPendingPosts?postStatus=WFU">
+                                            <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFU'}">tab_active</c:if>">Update Request</p>
+                                        </a>
+
+
+                                        <a href="loadPendingPosts?postStatus=WFD">
+                                            <p class="tab_item <c:if test="${requestScope.TAB_STATUS == 'WFD'}">tab_active</c:if>">Delete Request</p>
+                                        </a>
+
+                                    </div>
+                                    <div class="pending_posts">
                                     <c:if test="${not empty pendingList}">
                                         <c:forEach var="pendingDTO" items="${pendingList}">
 
