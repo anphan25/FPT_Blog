@@ -102,7 +102,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                         // mostly using lambda it can use anonymous class but I prefer C# syntax so...
                         boolean checksearch = search.equals("");//search all với cái filt
                         //MAKE SURE EACH BLOCK CONDITION BELOW EXECUTE ONLY ONE TIME
-                        if(gender.equals("")) //filt with status
+                        if(gender.equals("all") && !status.equals("all")) //filt with status
                         {
                             if(checksearch)
                             {
@@ -122,7 +122,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                                 newlist.removeIf(condition);
                             }
                         }
-                        else if(status.equals("")) //filt with gender
+                        else if(status.equals("all") && !gender.equals("all")) //filt with gender
                         {
                             if(checksearch)
                             {

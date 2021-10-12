@@ -366,6 +366,8 @@
                 let selgen = document.getElementById("selectedgender").value;
                 let selstt = document.getElementById("selectedstatus").value;
                 if(selgen === "" && selstt === "") return; //bám search ko bấm bấm apply làm cc gì
+                if(selgen === "all" && selstt === "") selstt = "all";
+                if(selgen === "" && selstt === "all") selgen = "all";
                 $("#reloading").empty();
                 $("#reloading").append("<div class='loader'></div>");
                 htmldoc = null;
