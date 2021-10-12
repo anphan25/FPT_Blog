@@ -89,6 +89,34 @@ public class CommentDAO {
         }
         return check;
     }
+    
+     public boolean editComment(String commentID, String content) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        boolean check = false;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblComments "
+                           + "set Comment = ? where ID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setNString(1, content);
+                stm.setString(2, commentID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    
 
     public CommentDTO loadNewComment(String postId, String email) throws SQLException, NamingException {
         Connection conn = null;

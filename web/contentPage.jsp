@@ -247,12 +247,12 @@
                     <c:if test="${currentUser.email == postDetail.emailPost}">
                         <i class="fas fa-ellipsis-h dot-icon"></i>
                         <div class="delete-update-div hidden">
-                            
-                                <div class="delete-div option-div">
-                                    <i class="fas fa-trash"></i>
-                                    <p>Delete</p>
-                                </div>
-                            
+
+                            <div class="delete-div option-div">
+                                <i class="fas fa-trash"></i>
+                                <p>Delete</p>
+                            </div>
+
                             <a href="loadOldContent?postId=${postDetail.ID}">
                                 <div class="update-div option-div">
                                     <i class="fas fa-edit"></i>
@@ -324,26 +324,47 @@
                                                 alt=""
                                                 />
                                         </div>
-                                        <div class="comment-item">
-                                            <div class="comment-info">
+                                        <div class="comment-item" id="comment-item-${listDTO.ID}">
+                                            <div class="comment-info" id="comment-info-${listDTO.ID}">
                                                 <a href="loadProfile?email=${listDTO.emailComment}">
                                                     <div class="name">${listDTO.name}</div>
                                                 </a>
                                                 <div class="comment-time">${listDTO.date}</div>
                                             </div>
-                                            <div class="comment-content">
-                                                <p>${listDTO.content}</p>
+                                            <div class="comment-content" id="comment-content-${listDTO.ID}">
+                                                <p id="comment-content-p-${listDTO.ID}">${listDTO.content}</p>
+                                            </div>
+                                            <div class="editForm" id="edit-form-${listDTO.ID}">
+                                                <form action="">
+                                                    <textarea
+                                                        name="cmt"
+                                                        minlength="1"
+                                                        class="textarea-cmt-edit"
+                                                        id="textarea-cmt-edit-${listDTO.ID}"
+                                                        cols="30"
+                                                        rows="10"
+                                                        placeholder="Edit your comment here..."
+                                                        >${listDTO.content}</textarea>
+                                                    <div class="container-button-edit">
+                                                        <div class="container-icon-close" id="${listDTO.ID}">
+                                                            <i class="fas fa-times" id="${listDTO.ID}"></i>
+                                                        </div>
+                                                        <div class="container-icon-edit" id="${listDTO.ID}">
+                                                            <i class="fas fa-check" id="${listDTO.ID}"></i>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                         <c:if test="${currentUser.email == listDTO.emailComment}">                              
-                                                <div class="edit-delete">
-                                                    <button><i class="fas fa-pen"></i> Edit</button>
-                                                    <form action="deleteComment">
-                                                        <input type="hidden" name="cmtID" value="${listDTO.ID}" />
-                                                        <input type="hidden" name="postId" value="${postDetail.ID}" />
-                                                        <button type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
-                                                    </form>
-                                                </div>   
+                                            <div class="edit-delete" id="edit-delete-${listDTO.ID}">
+                                                <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
+                                                <form action="deleteComment">
+                                                    <input type="hidden" name="cmtID" value="${listDTO.ID}" />
+                                                    <input type="hidden" name="postId" value="${postDetail.ID}" />
+                                                    <button type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
+                                                </form>
+                                            </div>   
                                         </c:if>
                                     </div>
                                 </c:forEach>
@@ -411,11 +432,11 @@
         <div class="delete-modal hidden">
             <h1>Are you sure you want to delete this post ?</h1>
             <div class="del-btn-gr">
-            <a href="deletePost?postId=${postDetail.ID}">
-                <button class="del-btn">Delete</button>
-            </a>
-            <button class="cancel-btn">Cancel</button>
-        </div>
+                <a href="deletePost?postId=${postDetail.ID}">
+                    <button class="del-btn">Delete</button>
+                </a>
+                <button class="cancel-btn">Cancel</button>
+            </div>
         </div>
         <div class="overlay hidden"></div>
         <div class="delete-overlay hidden"></div>
@@ -452,71 +473,127 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
-                                        const cmtContent = document.querySelector("#textarea-cmt");
-                                        const postId = document.querySelector("#postId-input");
-                                        const ownerCmtEmail = document.querySelector("#ownerEmail-input");
-                                        const totalLike = document.querySelector(".totalLike");
-                                        const cmtCount = document.querySelector(".cmtCount");
-                                        const cmtCount2 = document.querySelector(".cmtCount2");
-                                        
-                                        
-                                        function loadNewComment() {
-                                            $.ajax({
-                                                url: "CommentServlet",
-                                                data: {
-                                                    postId: postId.value,
-                                                    ownerCmtEmail: ownerCmtEmail.value,
-                                                    cmtContent: cmtContent.value
-                                                },
-                                                type: "POST",
-                                                success: function (response) {
-                                                    const newCmt = document.querySelector("#comments-container");
-                                                    newCmt.insertAdjacentHTML('afterbegin', response);
-                                                    cmtCount.textContent = Number(cmtCount.textContent)+1;
-                                                    cmtCount2.textContent = Number(cmtCount2.textContent)+1;
-                                                },
-                                                error: function (xhr) {
-                                                    console.log("loi me roi");
-                                                }
-                                            });
+                                        function handlePopup(idDOM) {
+                                            let id = idDOM;
+                                            console.log(id);
+                                            $(`#comment-info-` + id).toggleClass('toggleDisplay');
+                                            $(`#comment-content-` + id).toggleClass('toggleDisplay');
+                                            $(`.edit-delete`).toggleClass('toggleDisplay');
+                                            $(`#edit-form-` + id).toggleClass('editFormOpen');
                                         }
-                                        ;
-                                        function likePost() {
-                                            $.ajax({
-                                                url: "LikePostServlet",
-                                                data: {
-                                                    postId: postId.value,
-                                                    emailLike: ownerCmtEmail.value,
-                                                },
-                                                type: "POST",
-                                                success: function (response) {
-                                                    totalLike.textContent = response;
-                                                },
-                                                error: function (xhr) {
-                                                    console.log("loi me roi");
-                                                }
-                                            });
-                                        }
-                                        
 
-                                        ;
-                                        function toggleSidebarPhone() {
-                                            const toggle_sidebar = document.getElementById("sidebar_phone");
-                                            toggle_sidebar.style.display = "block";
+                                        function handleChangedText(idDom, content) {
+                                            let id = idDom;
+                                            document.getElementById(`comment-content-p-` + id).textContent = content;
                                         }
-                                        function handleClickOutside() {
-                                            const toggle_sidebar = document.getElementById("sidebar_phone");
-                                            toggle_sidebar.style.display = "none";
-                                        }
-                                        function submit_form() {
-                                            var form = document.getElementById("searchit");
-                                            form.submit();
-                                        }
-                                        const dotIcon = document.querySelector(".dot-icon");
-                                        const optionDiv = document.querySelector(".delete-update-div");
-                                        dotIcon.addEventListener("click", () => {
-                                            optionDiv.classList.toggle("hidden");
+
+                                        $(document).on('click', '.editButton', function (e) {
+                                            console.log(e);
+                                            handlePopup(e.target.id.length > 0 ? e.target.id : e.currentTarget.id);
                                         });
+                                        $(document).on('click', '.container-icon-close', function (e) {
+                                            e.preventDefault();
+                                            handlePopup(e.target.id.length > 0 ? e.target.id : e.currentTarget.id);
+                                        });
+                                        $(document).on('click', '.container-icon-edit', async function (e) {
+                                            e.preventDefault();
+                                            let id = e.target.id.length > 0 ? e.target.id : e.currentTarget.id;
+                                            let content = document.querySelector("#textarea-cmt-edit-" + id).value;
+                                            if (content.length > 0) {
+                                                await editComment(id, content);
+                                                handleChangedText(id, content);
+                                                handlePopup(id);
+                                            } else {
+                                                alert('Your input is empty! Check again');
+                                            }
+
+                                        });
+
+                                        function editComment(id, content) {
+                                            $.ajax({
+                                                url: "EditCommentServlet",
+                                                data: {
+                                                    cmtID: id,
+                                                    cmtContent: content
+                                                },
+                                                type: "POST",
+                                                success: function (response) {
+//                                                    document.getElementById(`comment-content-p-${id}`).textContent = content;
+                                                },
+                                                error: function (xhr) {
+                                                    console.log("loi me roi");
+                                                }
+                                            });
+                                        }
+                                        ;
+        </script>
+
+        <script>
+            const cmtContent = document.querySelector("#textarea-cmt");
+            const postId = document.querySelector("#postId-input");
+            const ownerCmtEmail = document.querySelector("#ownerEmail-input");
+            const totalLike = document.querySelector(".totalLike");
+            const cmtCount = document.querySelector(".cmtCount");
+            const cmtCount2 = document.querySelector(".cmtCount2");
+
+
+            function loadNewComment() {
+                $.ajax({
+                    url: "CommentServlet",
+                    data: {
+                        postId: postId.value,
+                        ownerCmtEmail: ownerCmtEmail.value,
+                        cmtContent: cmtContent.value
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        const newCmt = document.querySelector("#comments-container");
+                        newCmt.insertAdjacentHTML('afterbegin', response);
+                        cmtCount.textContent = Number(cmtCount.textContent) + 1;
+                        cmtCount2.textContent = Number(cmtCount2.textContent) + 1;
+                    },
+                    error: function (xhr) {
+                        console.log("loi me roi");
+                    }
+                });
+            }
+            ;
+            function likePost() {
+                $.ajax({
+                    url: "LikePostServlet",
+                    data: {
+                        postId: postId.value,
+                        emailLike: ownerCmtEmail.value,
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        totalLike.textContent = response;
+                    },
+                    error: function (xhr) {
+                        console.log("loi me roi");
+                    }
+                });
+            }
+
+
+            ;
+            function toggleSidebarPhone() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "block";
+            }
+            function handleClickOutside() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "none";
+            }
+            function submit_form() {
+                var form = document.getElementById("searchit");
+                form.submit();
+            }
+            const dotIcon = document.querySelector(".dot-icon");
+            const optionDiv = document.querySelector(".delete-update-div");
+            dotIcon.addEventListener("click", () => {
+                optionDiv.classList.toggle("hidden");
+            });
         </script>
         <script src="./js/contentPage.js"></script>
     </body>

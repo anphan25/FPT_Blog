@@ -837,6 +837,14 @@ footer .text_footer_strong {
   background-color: #f9f9f9;
 }
 
+.textarea-cmt-edit {
+  width: 100%;
+  height: 70px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
 .user-avt img {
   width: 100%;
   height: 100%;
@@ -1237,6 +1245,59 @@ footer .text_footer_strong {
     width: 100%;
   }
 }
+
+.toggleDisplay {
+  display: none;
+}
+
+.editForm {
+  display: none;
+}
+.editFormOpen {
+  display: block;
+}
+
+.container-button-edit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.container-icon-edit,
+.container-icon-close {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 50%;
+  margin-left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.container-icon-edit {
+  background-color: #30b24a;
+}
+
+.container-icon-edit:hover {
+  background-color: #168d2e;
+}
+
+.container-icon-close {
+  background-color: #dc3545;
+}
+.container-icon-close:hover {
+  background-color: #a51d2b;
+}
+.container-icon-edit i,
+.container-icon-close i {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+}
+
 
 @media screen and (max-width: 576px) {
 }
