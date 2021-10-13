@@ -594,7 +594,7 @@ footer .text_footer_strong {
 .user-info-item .award-item {
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  margin-top: 6px;
 }
 
 .user-info-item .awarded-icon {

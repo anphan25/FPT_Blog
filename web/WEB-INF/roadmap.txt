@@ -42,3 +42,4 @@ likePost=LikePostServlet
 deleteComment=DeleteCommentServlet
 editComment=EditCommentServlet
 loadDashboard=LoadAwardDashboardServlet
+giveAward=GiveAwardServlet
