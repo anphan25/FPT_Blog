@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -114,23 +114,23 @@ public class AccountDAO implements Serializable {
 
         }
     }
-    
+
     public boolean checkDuplicate(String email) throws SQLException {
-         boolean check = false;
-         PreparedStatement stm = null;
-         Connection conn = null;
-         ResultSet rs = null;
+        boolean check = false;
+        PreparedStatement stm = null;
+        Connection conn = null;
+        ResultSet rs = null;
         try {
             conn = DBHelper.makeConnection();
-           if (conn != null) {
-               String sql = "SELECT email from tblAccounts where email=?";
-               stm = conn.prepareStatement(sql);
-               stm.setString(1, email);
-               rs = stm.executeQuery();  
-               if (rs.next()) {
-                   check = true;
-               }
-           }
+            if (conn != null) {
+                String sql = "SELECT email from tblAccounts where email=?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    check = true;
+                }
+            }
 
             check = stm.executeUpdate() > 0; //wtf ? nó đã false từ đầu rồi mà???
         } catch (Exception e) {
@@ -182,23 +182,23 @@ public class AccountDAO implements Serializable {
         return check;
 
     }
-    
-    public boolean checkBan(String email) throws SQLException, NamingException{
+
+    public boolean checkBan(String email) throws SQLException, NamingException {
         PreparedStatement stm = null;
-         Connection conn = null;
-         ResultSet rs = null;
-         boolean check = false;
-         try{
-             conn = DBHelper.makeConnection();
-             String sql = "select * from tblAccounts where email = ? AND StatusAccountID = 'B' ";
-             stm = conn.prepareStatement(sql);
-             stm.setString(1, email);
-             rs = stm.executeQuery();
-             if(rs.next()){
-                 check = true;
-             }
-         }finally{
-             if (rs != null) {
+        Connection conn = null;
+        ResultSet rs = null;
+        boolean check = false;
+        try {
+            conn = DBHelper.makeConnection();
+            String sql = "select * from tblAccounts where email = ? AND StatusAccountID = 'B' ";
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, email);
+            rs = stm.executeQuery();
+            if (rs.next()) {
+                check = true;
+            }
+        } finally {
+            if (rs != null) {
                 rs.close();
             }
             if (stm != null) {
@@ -207,17 +207,15 @@ public class AccountDAO implements Serializable {
             if (conn != null) {
                 conn.close();
             }
-         }
-         return check;
+        }
+        return check;
     }
-    
-    public AccountDTO getInformationUserFromEmail(String email) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException 
-    {
+
+    public AccountDTO getInformationUserFromEmail(String email) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection con = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
-        try 
-        {
+        try {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image "
@@ -226,8 +224,7 @@ public class AccountDAO implements Serializable {
                 pst = con.prepareCall(sql);
                 pst.setString(1, email);
                 rs = pst.executeQuery();
-                if (rs.next()) 
-                {
+                if (rs.next()) {
                     String userName = rs.getString("Name");
                     boolean userGender = rs.getBoolean("Gender");
                     String userCampus = rs.getString("Campus");
@@ -239,51 +236,49 @@ public class AccountDAO implements Serializable {
                     return info;
                 }
             }
-        } 
-        finally 
-        {
-            if (con != null) 
-            {
+        } finally {
+            if (con != null) {
                 con.close();
             }
-            if (pst != null) 
-            {
+            if (pst != null) {
                 pst.close();
             }
-            if (rs != null) 
-            {
+            if (rs != null) {
                 rs.close();
             }
 
         }
         return null;
     }
-    
-    public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException 
-    {
+
+    public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection con = null;
         PreparedStatement stm = null;
-        try 
-        {
+        try {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image) "
-                        +   "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?)";
+                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, name);
                 stm.setString(3, url);
                 int row = stm.executeUpdate();
-                if(row > 0) return true;
+                if (row > 0) {
+                    return true;
+                }
             }
-        } 
-        finally 
-        {
-            if (con != null) con.close();
-            if (stm != null) stm.close();
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
         }
         return false;
     }
+<<<<<<< HEAD
     
     public boolean giveAward() throws NamingException, SQLException{
         Connection con = null;
@@ -295,5 +290,105 @@ public class AccountDAO implements Serializable {
             if (stm != null) stm.close();
         }
         return false;
+=======
+
+    public ArrayList<AccountDTO> getOutStandingUsers() throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<AccountDTO> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image "
+                        + "from (select COUNT(PostID) as Total, EmailPost from tblPosts group by EmailPost) myTable left join tblAccounts a "
+                        + "on myTable.EmailPost = a.Email order by myTable.Total desc";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String email = rs.getString("EmailPost");
+                    String name = rs.getString("Name");
+                    String avatar = rs.getString("Image");
+                    int totalPosts = rs.getInt("Total");
+                    ArrayList<Integer> awards = getAwardsByEmail(email);
+                    int likes = getTotalLikesByEmail(email);
+                    AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, totalPosts);
+                    list.add(dto);
+                }
+            }
+
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    list.add(rs.getInt("AwardID"));
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+
+    public int getTotalLikesByEmail(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int likes = 0;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select count(ID) as Total from tblLikes where PostID in (select PostID from tblPosts where EmailPost = ?)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    likes = rs.getInt("Total");
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return likes;
+>>>>>>> 088c4f5296287ce55c4bb5ab6679af8370b04f3c
     }
 }
