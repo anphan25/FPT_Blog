@@ -104,16 +104,17 @@ const disableSubmitBtn = () => {
 checkLoginKind();
 disableSubmitBtn();
 
-deleteDiv.addEventListener("click", () => {
-  deleteModal.classList.toggle("hidden");
-  deleteOverlay.classList.toggle("hidden");
-});
+if (deleteDiv) {
+  deleteDiv.addEventListener("click", () => {
+    deleteModal.classList.toggle("hidden");
+    deleteOverlay.classList.toggle("hidden");
+  });
 
-deleteOverlay.addEventListener("click", () => {
-  deleteModal.classList.toggle("hidden");
-  deleteOverlay.classList.toggle("hidden");
-});
-
+  deleteOverlay.addEventListener("click", () => {
+    deleteModal.classList.toggle("hidden");
+    deleteOverlay.classList.toggle("hidden");
+  });
+}
 document.querySelector(".cancel-btn").addEventListener("click", () => {
   deleteModal.classList.toggle("hidden");
   deleteOverlay.classList.toggle("hidden");

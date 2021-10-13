@@ -359,11 +359,7 @@
                                         <c:if test="${currentUser.email == listDTO.emailComment}">                              
                                             <div class="edit-delete" id="edit-delete-${listDTO.ID}">
                                                 <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
-                                                <form action="deleteComment">
-                                                    <input type="hidden" name="cmtID" value="${listDTO.ID}" />
-                                                    <input type="hidden" name="postId" value="${postDetail.ID}" />
-                                                    <button type="submit"><i class="fas fa-trash-alt"></i> Delete</button>
-                                                </form>
+                                                <button class="deleteButton" id="${listDTO.ID}"><i class="fas fa-trash-alt"></i> Delete</button>
                                             </div>   
                                         </c:if>
                                     </div>
@@ -540,8 +536,7 @@
             const totalLike = document.querySelector(".totalLike");
             const cmtCount = document.querySelector(".cmtCount");
             const cmtCount2 = document.querySelector(".cmtCount2");
-
-
+            
             function loadNewComment() {
                 $.ajax({
                     url: "CommentServlet",
@@ -595,10 +590,12 @@
                 form.submit();
             }
             const dotIcon = document.querySelector(".dot-icon");
-            const optionDiv = document.querySelector(".delete-update-div");
-            dotIcon.addEventListener("click", () => {
-                optionDiv.classList.toggle("hidden");
-            });
+            if (dotIcon) {
+                const optionDiv = document.querySelector(".delete-update-div");
+                dotIcon.addEventListener("click", () => {
+                    optionDiv.classList.toggle("hidden");
+                });
+            }
         </script>
         <script src="./js/contentPage.js"></script>
     </body>

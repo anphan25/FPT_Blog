@@ -44,10 +44,6 @@ public class DeleteCommentServlet extends HttpServlet {
                 response.setContentType("text/html;charset=UTF-8");
 
                 String cmtID = request.getParameter("cmtID");
-//                String postId = request.getParameter("postId");
-                ServletContext context = request.getServletContext();
-                Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-                String url = roadmap.get("loadPostContent");
 
                 try {
                     HttpSession session = request.getSession(false);
@@ -55,6 +51,7 @@ public class DeleteCommentServlet extends HttpServlet {
                         CommentDAO dao = new CommentDAO();
                         boolean result = dao.disableComment(cmtID);
                         if (result) {
+                            response.setStatus(200);
                         }
                     }
                 } catch (SQLException ex) {
@@ -62,8 +59,8 @@ public class DeleteCommentServlet extends HttpServlet {
                 } catch (NamingException ex) {
                     log("CommenrServlet _ Naming " + ex.getMessage());
                 } finally {
-                    RequestDispatcher rd = request.getRequestDispatcher(url);
-                    rd.forward(request, response);
+//                    RequestDispatcher rd = request.getRequestDispatcher(url);
+//                    rd.forward(request, response);
                 }
     }
 
