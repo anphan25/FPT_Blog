@@ -25,7 +25,7 @@
                 crossorigin="anonymous"
             ></script>
             <link rel="stylesheet" href="./styles/awardDashboard.css" />
-            <title>Dashboard</title>
+            <title>Dashboard | FPT Blog</title>
         </head>
         <body>
             <!-- header  -->
@@ -158,41 +158,47 @@
                                         <td class="avt-user">
                                             <img
                                                 class="avt"
-                                                src="https://thelifetank.com/wp-content/uploads/2018/08/avatar-default-icon.png"
+                                                src="${user.avatar}"
                                                 alt=""
                                                 />
                                         </td>
-                                        <td>thienan@gmail.com</td>
-                                        <td class="name-td">Thiên An</td>
+                                        <td>${user.email}</td>
+                                        <td class="name-td">${user.name}</td>
                                         <td>
                                             <span class="award-item">
-                                                <i class="fas fa-pen-alt"></i> 20
+                                                <i class="fas fa-pen-alt"></i> ${user.totalPosts}
                                             </span>
                                             <span class="award-item">
-                                                <i class="fas fa-heart"></i> 1500</span
+                                                <i class="fas fa-heart"></i> ${user.totalLikes}</span
                                             >
                                         </td>
                                         <td class="awarded-gr">
-                                            <img
-                                                class="awarded-icon"
-                                                src="./images/contribution-award.svg"
-                                                alt=""
-                                                />
-                                            <img
-                                                class="awarded-icon"
-                                                src="./images/heart-award.png"
-                                                alt=""
-                                                />
+                                            <c:forEach var="award" items="${user.awards}">
+                                                <c:if test="${award == 1}">
+                                                    <img
+                                                        class="awarded-icon"
+                                                        src="./images/contribution-award.svg"
+                                                        alt=""
+                                                        />
+                                                </c:if>
+                                                <c:if test="${award == 2}">
+                                                    <img
+                                                        class="awarded-icon"
+                                                        src="./images/heart-award.png"
+                                                        alt=""
+                                                        />
+                                                </c:if>
+                                            </c:forEach>
                                         </td>
                                         <td>
-                                            <select name="" id="" class="select-award">
+                                            <select name="awardID" id="" class="select-award">
                                                 <option style="display: none">Select Award</option>
-                                                <option value="">Like Collector</option>
-                                                <option value="">Great Contributor</option>
+                                                <option value="2">Like Collector</option>
+                                                <option value="1">Great Contributor</option>
                                             </select>
                                         </td>
                                         <td>
-                                            <input type="hidden" name="" value="" />
+                                            <input type="hidden" name="email" value="${user.email}" />
                                             <button class="give-award-btn">Give award</button>
                                         </td>
                                     </tr>

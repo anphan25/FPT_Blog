@@ -24,7 +24,7 @@
         ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
         <link rel="stylesheet" href="./styles/createPostPage.css" />
-        <title>Update Blog</title>
+        <title>Update Blog | FPT Blog</title>
     </head>
     <body>
         <% AccountDTO user = (AccountDTO) session.getAttribute("CURRENT_USER");

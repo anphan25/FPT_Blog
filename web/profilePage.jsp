@@ -20,7 +20,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="./styles/profilePageStyle.css" />
-    <title>Profile</title>
+    <title>Profile | FPT Blog</title>
   </head>
   <body>
     <!-- header  -->
