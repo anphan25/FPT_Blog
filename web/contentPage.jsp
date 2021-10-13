@@ -537,12 +537,13 @@
             const cmtCount = document.querySelector(".cmtCount");
             const cmtCount2 = document.querySelector(".cmtCount2");
             const deleteBtn = document.querySelector(".deleteButton");
-            
-            function deleteCommentInUI(id){
-                let deleteCmt = document.querySelector("#comment-div-"+id);
+
+            function deleteCommentInUI(id) {
+                let deleteCmt = document.querySelector("#comment-div-" + id);
+                console.log(id);
                 deleteCmt.remove();
             }
-            
+
             function deleteComment(id) {
                 $.ajax({
                     url: "DeleteCommentServlet",
@@ -558,14 +559,11 @@
                     }
                 });
             }
-
-            if (deleteBtn) {
-                deleteBtn.addEventListener("click", function (e) {
-                    let id = e.target.id;
-                    console.log(id);
-                    deleteComment(id);
-                });
-            }
+            $(document).on('click', '.deleteButton', function (e) {
+                e.preventDefault();
+                deleteComment(e.target.id.length > 0 ? e.target.id : e.currentTarget.id);
+                
+            });
 
 
 
