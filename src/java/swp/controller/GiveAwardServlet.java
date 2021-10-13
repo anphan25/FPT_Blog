@@ -7,23 +7,18 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Map;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import swp.account.AccountDAO;
-import swp.account.AccountDTO;
 
 /**
  *
  * @author ASUS
  */
-@WebServlet(name = "LoadAwardDashboardServlet", urlPatterns = {"/LoadAwardDashboardServlet"})
-public class LoadAwardDashboardServlet extends HttpServlet {
+@WebServlet(name = "GiveAwardServlet", urlPatterns = {"/GiveAwardServlet"})
+public class GiveAwardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,20 +32,13 @@ public class LoadAwardDashboardServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("awardDashboardPage");
+        String email = request.getParameter("email");
+        String awardID = request.getParameter("awardID");
+        
         try {
-            AccountDAO accountDAO = new AccountDAO();
-            ArrayList<AccountDTO> list = accountDAO.getOutStandingUsers();
-            request.setAttribute("USER_LIST", list);
-            if(list.isEmpty()){
-                log("Nothing in list to show");
-            }
-        } catch (Exception e) {
-            log("Error at LoadAwardDashboardServlet: " + e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+            
+        }finally{
+            
         }
     }
 

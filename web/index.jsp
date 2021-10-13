@@ -296,14 +296,7 @@
                             <div class="item item-selected">
                                 <p class="selected">Feed</p>
                             </div>
-                            <div class="item">
-                                <p>Week</p>
-                            </div>
-                            <div class="item">
-                                <p>Month</p>
-                            </div>
-                            <div class="item">
-                                <p>Year</p>
+                           
                         </div>
                     </div>
                     <div class="container_posts">
@@ -365,9 +358,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>                     
 
-                            </div>
-                        </c:forEach>    
+                        </c:forEach>
                     </div>
 
                     <div class="pagingIndex">
@@ -377,6 +370,8 @@
                         </c:forEach>
                     </div>
                 </div>
+
+
                 <div class="main_container_right">
                     <div class="news">
                         <h2 class="title">Common posts</h2>
@@ -408,10 +403,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
-
-
+            </div>
         </section>
 
         <!-- Footer -->

@@ -210,12 +210,12 @@
                             <p>Create Post</p>
                         </div>
                     </a>
-                    <!-- <a href="">
-                        <div class="container_item">
-                          <img class="item-trophy-icon" src="./images/trophy_icon.svg" />
-                          <p>Give award</p>
+                    <a href="loadDashboard">
+                        <div class="container_item create-post">
+                            <img src="./images/dashborad.svg" />
+                            <p>Give Award</p>
                         </div>
-                      </a> -->
+                    </a>
                 </div>
             </div>
             <div class="container-item">
