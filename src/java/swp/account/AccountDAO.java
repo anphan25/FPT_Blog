@@ -284,4 +284,16 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
+    
+    public boolean giveAward() throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        try{
+            
+        }finally{
+            if (con != null) con.close();
+            if (stm != null) stm.close();
+        }
+        return false;
+    }
 }
