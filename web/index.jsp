@@ -247,7 +247,7 @@
                                         <p>Create Post</p>
                                     </div>
                                 </a>
-                                <a href="awardDashboardPage">
+                                <a href="loadDashboard">
                                     <div class="container_item create-post">
                                         <img src="./images/dashborad.svg" />
                                         <p>Give Award</p>
@@ -304,6 +304,7 @@
                             </div>
                             <div class="item">
                                 <p>Year</p>
+                            </div>
                         </div>
                     </div>
                     <div class="container_posts">
@@ -365,9 +366,9 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>                     
 
-                            </div>
-                        </c:forEach>    
+                        </c:forEach>
                     </div>
 
                     <div class="pagingIndex">
@@ -377,6 +378,8 @@
                         </c:forEach>
                     </div>
                 </div>
+
+
                 <div class="main_container_right">
                     <div class="news">
                         <h2 class="title">Common posts</h2>
@@ -408,10 +411,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
-
-
+            </div>
         </section>
 
         <!-- Footer -->

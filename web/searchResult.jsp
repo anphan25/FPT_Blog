@@ -241,7 +241,7 @@
                                             <p>Create Post</p>
                                         </div>
                                     </a>
-                                    <a href="awardDashboardPage">
+                                    <a href="loadDashboard">
                                         <div class="container_item create-post">
                                             <img src="./images/dashborad.svg" />
                                             <p>Give Award</p>

@@ -173,7 +173,7 @@
                                             >
                                         </td>
                                         <td class="awarded-gr">
-                                            <c:forEach var="award" items="${user.awards}">
+                                            <c:forEach var="award" items="${user.totalAwards}">
                                                 <c:if test="${award == 1}">
                                                     <img
                                                         class="awarded-icon"
@@ -193,8 +193,13 @@
                                         <td>
                                             <select name="awardID" id="" class="select-award">
                                                 <option style="display: none">Select Award</option>
-                                                <option value="2">Like Collector</option>
-                                                <option value="1">Great Contributor</option>
+                                                <c:forEach var="award" items="${user.totalAwards}">
+
+                                                    <option value="2" <c:if test="${award == 1}">disabled="disabled"</c:if>
+                                                            >Like Collector</option>                                                               
+                                                    <option value="1" <c:if test="${award == 2}">disabled="disabled"</c:if>>Great Contributor</option>
+
+                                                </c:forEach>
                                             </select>
                                         </td>
                                         <td>
