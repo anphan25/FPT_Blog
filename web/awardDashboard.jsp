@@ -135,7 +135,7 @@
                                     <p>Create Post</p>
                                 </div>
                             </a>
-                            <a href="awardDashboardPage">
+                            <a href="loadDashboard">
                                 <div class="container_item create-post">
                                     <img src="./images/dashborad.svg" />
                                     <p>Give Award</p>
@@ -153,7 +153,7 @@
                             <tbody>
                                 <c:set var="userList" value="${requestScope.USER_LIST}"/>
                                 <c:forEach var="user" items="${userList}">
-                                <form action="">
+                                <form action="giveAward">
                                     <tr>
                                         <td class="avt-user">
                                             <img
@@ -173,7 +173,7 @@
                                             >
                                         </td>
                                         <td class="awarded-gr">
-                                            <c:forEach var="award" items="${user.totalAwards}">
+                                            <c:forEach var="award" items="${user.awards}">
                                                 <c:if test="${award == 1}">
                                                     <img
                                                         class="awarded-icon"
@@ -193,13 +193,20 @@
                                         <td>
                                             <select name="awardID" id="" class="select-award">
                                                 <option style="display: none">Select Award</option>
-                                                <c:forEach var="award" items="${user.totalAwards}">
+                                                <c:if test="${empty user.awards}">
+                                                    <option value="2">Like Collector</option>                                                               
+                                                    <option value="1">Great Contributor</option>
+                                                </c:if>
+                                                <c:if test="${not empty user.awards}">                                           
+                                                <c:forEach var="award" items="${user.awards}">
 
                                                     <option value="2" <c:if test="${award == 1}">disabled="disabled"</c:if>
                                                             >Like Collector</option>                                                               
                                                     <option value="1" <c:if test="${award == 2}">disabled="disabled"</c:if>>Great Contributor</option>
 
                                                 </c:forEach>
+                                                   
+                                                </c:if>
                                             </select>
                                         </td>
                                         <td>

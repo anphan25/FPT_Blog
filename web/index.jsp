@@ -296,15 +296,7 @@
                             <div class="item item-selected">
                                 <p class="selected">Feed</p>
                             </div>
-                            <div class="item">
-                                <p>Week</p>
-                            </div>
-                            <div class="item">
-                                <p>Month</p>
-                            </div>
-                            <div class="item">
-                                <p>Year</p>
-                            </div>
+                           
                         </div>
                     </div>
                     <div class="container_posts">

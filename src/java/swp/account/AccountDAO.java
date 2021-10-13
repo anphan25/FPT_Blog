@@ -278,7 +278,7 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
-<<<<<<< HEAD
+
     
     public boolean giveAward() throws NamingException, SQLException{
         Connection con = null;
@@ -290,7 +290,7 @@ public class AccountDAO implements Serializable {
             if (stm != null) stm.close();
         }
         return false;
-=======
+    }
 
     public ArrayList<AccountDTO> getOutStandingUsers() throws NamingException, SQLException {
         Connection con = null;
@@ -389,6 +389,6 @@ public class AccountDAO implements Serializable {
             }
         }
         return likes;
->>>>>>> 088c4f5296287ce55c4bb5ab6679af8370b04f3c
     }
 }
+

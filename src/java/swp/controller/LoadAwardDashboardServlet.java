@@ -46,10 +46,6 @@ public class LoadAwardDashboardServlet extends HttpServlet {
             request.setAttribute("USER_LIST", list);
             if(list.isEmpty()){
                 log("Nothing in list to show");
-            }else{
-                for (AccountDTO acc : list) {
-                    log(acc.toString());
-                }
             }
         } catch (Exception e) {
             log("Error at LoadAwardDashboardServlet: " + e.getMessage());
