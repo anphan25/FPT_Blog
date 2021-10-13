@@ -480,7 +480,7 @@ table tbody td {
 }
 
 .avt-user {
-  width: 90px;
+  width: 75px;
 }
 
 .awarded-icon {
@@ -508,6 +508,14 @@ table tbody td {
 .select-award {
   padding: 10px;
   border-radius: 5px;
+}
+
+.awarded-gr {
+  width: 99px;
+}
+
+.name-td {
+  width: 150px;
 }
 /* select style */
 /* select style */

@@ -7,45 +7,42 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import swp.post.PostDAO;
 
 /**
  *
- * @author macbook
+ * @author ASUS
  */
-public class CreatePostServlet extends HttpServlet {
+@WebServlet(name = "LoadAwardDashboardServlet", urlPatterns = {"/LoadAwardDashboardServlet"})
+public class LoadAwardDashboardServlet extends HttpServlet {
 
-    private static final String SUCCESS = "loadBlogs";
-    private static final String FAIL = "createPost";
-
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        ServletContext context = request.getServletContext();
-        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get(FAIL);
-        try {
-            String email = request.getParameter("email");
-            String title = new String(request.getParameter("title").getBytes("iso-8859-1"), "utf-8");
-            int category = Integer.parseInt(request.getParameter("category"));
-            String tags = new String(request.getParameter("tags").getBytes("iso-8859-1"), "utf-8");
-            String content = new String(request.getParameter("content").getBytes("iso-8859-1"), "utf-8");
-            PostDAO createPost = new PostDAO();
-            boolean check = createPost.insertANewPost(email, tags, title, content, category);
-            if (check) {
-                log("Creating a new post successfully!");
-                url = roadmap.get(SUCCESS);
-            }
-        } catch (Exception e) {
-            log("Error at Create new Post servlet: " + e.getMessage());
-        } finally {
-            request.getRequestDispatcher(url).forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoadAwardDashboardServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoadAwardDashboardServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

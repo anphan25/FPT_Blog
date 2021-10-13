@@ -356,11 +356,15 @@
                                                 </form>
                                             </div>
                                         </div>
-                                        <c:if test="${currentUser.email == listDTO.emailComment}">                              
+                                        <c:if test="${currentUser.email == listDTO.emailComment || currentUser.role == 'A'}">                              
                                             <div class="edit-delete" id="edit-delete-${listDTO.ID}">
+                                                <c:if test="${currentUser.email == listDTO.emailComment}">
                                                 <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
+                                                </c:if>
+                                                <c:if test="${currentUser.role == 'A'}">
                                                 <button class="deleteButton" id="${listDTO.ID}"><i class="fas fa-trash-alt"></i> Delete</button>
-                                            </div>   
+                                                </c:if>
+                                                </div>   
                                         </c:if>
                                     </div>
                                 </c:forEach>
@@ -542,6 +546,8 @@
                 let deleteCmt = document.querySelector("#comment-div-" + id);
                 console.log(id);
                 deleteCmt.remove();
+                cmtCount.textContent = Number(cmtCount.textContent) - 1;
+                cmtCount2.textContent = Number(cmtCount2.textContent) - 1;
             }
 
             function deleteComment(id) {
