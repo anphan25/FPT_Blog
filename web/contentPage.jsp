@@ -496,9 +496,14 @@
                                             let id = e.target.id.length > 0 ? e.target.id : e.currentTarget.id;
                                             let content = document.querySelector("#textarea-cmt-edit-" + id).value;
                                             if (content.length > 0) {
-                                                await editComment(id, content);
-                                                handleChangedText(id, content);
-                                                handlePopup(id);
+                                                let oldContent = document.getElementById(`comment-content-p-` + id).textContent;
+                                                if (oldContent == content) {
+                                                    handlePopup(id);
+                                                } else {
+                                                    await editComment(id, content);
+                                                    handlePopup(id);
+                                                }
+
                                             } else {
                                                 alert('Your input is empty! Check again');
                                             }
@@ -514,10 +519,10 @@
                                                 },
                                                 type: "POST",
                                                 success: function (response) {
-//                                                    document.getElementById(`comment-content-p-${id}`).textContent = content;
+                                                    handleChangedText(id, content);
                                                 },
                                                 error: function (xhr) {
-                                                    console.log("loi me roi");
+                                                    alert('Server internal error.')
                                                 }
                                             });
                                         }

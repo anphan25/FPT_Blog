@@ -32,7 +32,7 @@ public class EditCommentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = "notFoundPage";
         String cmtID = request.getParameter("cmtID");
-        String cmtContent = new String(request.getParameter("cmtContent").getBytes("iso-8859-1"), "utf-8");
+        String cmtContent = request.getParameter("cmtContent");
         HttpSession session = request.getSession(false);
         try {
             if (session != null) {
@@ -40,7 +40,10 @@ public class EditCommentServlet extends HttpServlet {
                 boolean result = dao.editComment(cmtID, cmtContent);
                 if (result) {
                    response.setStatus(200);
+                } else {
+                    response.setStatus(500);
                 }
+                 
             }
         } catch (SQLException ex) {
             log("CommenrServlet _ SQL " + ex.getMessage());
