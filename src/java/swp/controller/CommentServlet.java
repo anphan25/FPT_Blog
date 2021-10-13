@@ -98,11 +98,7 @@ public class CommentServlet extends HttpServlet {
                             + "                                                </div>   \n"
                             + "                                                <div id=\"edit-delete-" + newComment.getID() + "\" class=\"edit-delete\">\n"
                             + "                                                    <button id=\"" + newComment.getID() + "\" class=\"editButton\"><i class=\"fas fa-pen\"></i> Edit</button>\n"
-                            + "                                                    <form action=\"deleteComment\">\n"
-                            + "                                                        <input type=\"hidden\" name=\"cmtID\" value=\"" + newComment.getID() + "\" />\n"
-                            + "                                                        <input type=\"hidden\" name=\"postId\" value=\"" + postId + "\" />\n"
-                            + "                                                        <button type=\"submit\"><i class=\"fas fa-trash-alt\"></i> Delete</button>\n"
-                            + "                                                    </form>\n"
+                            + "                                                    <button class=\"deleteButton\" id=\""+newComment.getID()+"\"><i class=\"fas fa-trash-alt\"></i> Delete</button>\n"
                             + "                                                </div>   \n"
                             + "                                    </div>");
                 }
