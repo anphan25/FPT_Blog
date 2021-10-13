@@ -1,12 +1,14 @@
 package swp.account;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
-public class AccountDTO implements Serializable{
+public class AccountDTO implements Serializable {
+
     private String email;
     private String password;
     private String name;
@@ -16,7 +18,33 @@ public class AccountDTO implements Serializable{
     private String status;
     private String joinDate;
     private String avatar;
+    private int totalPosts;
+    private int totalLikes;
+    private ArrayList<Integer> awards;
 
+    public int getTotalPosts() {
+        return totalPosts;
+    }
+
+    public void setTotalPosts(int totalPosts) {
+        this.totalPosts = totalPosts;
+    }
+
+    public int getTotalLikes() {
+        return totalLikes;
+    }
+
+    public void setTotalLikes(int totalLikes) {
+        this.totalLikes = totalLikes;
+    }
+
+    public ArrayList<Integer> getAwards() {
+        return awards;
+    }
+
+    public void setAwards(ArrayList<Integer> awards) {
+        this.awards = awards;
+    }
 
     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar) {
         this.email = email;
@@ -28,8 +56,8 @@ public class AccountDTO implements Serializable{
         this.joinDate = joinDate;
         this.avatar = avatar;
     }
-    
-        public AccountDTO(String name, boolean gender, String avatarURL, String campus, String email, String password) {
+
+    public AccountDTO(String name, boolean gender, String avatarURL, String campus, String email, String password) {
         this.name = name;
         this.gender = gender;
         this.avatar = avatarURL;
@@ -37,13 +65,21 @@ public class AccountDTO implements Serializable{
         this.email = email;
         this.password = password;
     }
-    
+
     //constructor này dùng để cache dữ liệu gmail login
-    public AccountDTO(String email, String name, String avatar)
-    {
+    public AccountDTO(String email, String name, String avatar) {
         this.email = email;
         this.name = name;
         this.avatar = avatar;
+    }
+
+    public AccountDTO(String email, String name, String avatar, int likes, ArrayList<Integer> awards, int posts) {
+        this.email = email;
+        this.name = name;
+        this.avatar = avatar;
+        this.totalPosts = posts;
+        this.totalLikes = likes;
+        this.awards = awards;
     }
 
     public AccountDTO() {
@@ -120,8 +156,10 @@ public class AccountDTO implements Serializable{
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
-    
-    
+
+    @Override
+    public String toString() {
+        return "AccountDTO{" + "email=" + email + ", password=" + password + ", name=" + name + ", gender=" + gender + ", campus=" + campus + ", role=" + role + ", status=" + status + ", joinDate=" + joinDate + ", avatar=" + avatar + ", totalPosts=" + totalPosts + ", totalLikes=" + totalLikes + ", total awards=" + awards.size() + '}';
+    }
 
 }
