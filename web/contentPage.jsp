@@ -20,7 +20,7 @@
             crossorigin="anonymous"
         ></script>
         <link rel="stylesheet" href="./styles/contentPageStyle.css" />
-        <title>Content</title>
+        <title>Content | FPT Blog</title>
     </head>
     <body>
         <!-- header  -->
@@ -374,7 +374,7 @@
                 </div>
                 <div class="left-container">
                     <div class="left-container-title">
-                        <h3>Những bài viết nổi bật</h3>
+                        <h3>Common Posts</h3>
                     </div>
                     <div class="left-container-content">
                         <div class="left-container-item">

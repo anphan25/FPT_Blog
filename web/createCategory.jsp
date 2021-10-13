@@ -25,7 +25,7 @@
             crossorigin="anonymous"
         ></script>
         <link rel="stylesheet" href="./styles/createCategory.css" />
-        <title>Create Category</title>
+        <title>Create Category | FPT Blog</title>
     </head>
     <body>
         <!-- header  -->

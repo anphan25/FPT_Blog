@@ -17,7 +17,7 @@
                 crossorigin="anonymous"
             ></script>
             <link rel="stylesheet" href="./styles/searchResult.css" />
-            <title>Search Result</title>
+            <title>Search Result | FPT Blog</title>
         </head>
         <body>
             <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
