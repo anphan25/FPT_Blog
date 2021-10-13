@@ -56,7 +56,7 @@ public class CommentServlet extends HttpServlet {
                 if (result) {
                     CommentDTO newComment = dao.loadNewComment(postId, ownerCmtEmail);
 //                                        \"user-avt\">\n"
-                    out.println("<div class=\"others-comments\">\n"
+                    out.println("<div class=\"others-comments\" id=\"comment-div-"+ newComment.getID()+"\">\n"
                             + "                                        <div class=\"user-avt\">\n"
                             + "                                            <img\n"
                             + "                                                class=\"avt-img\"\n"
