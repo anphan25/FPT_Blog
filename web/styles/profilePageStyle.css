@@ -591,6 +591,19 @@ footer .text_footer_strong {
 /* info */
 /* info */
 
+.user-info-item .award-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.user-info-item .awarded-icon {
+  display: inline-block;
+  margin-right: 8px;
+  width: 24px;
+  height: 24px;
+}
+
 .info {
   width: 100%;
   border: 1px solid #e3e3e3;

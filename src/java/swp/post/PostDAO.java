@@ -137,7 +137,7 @@ public class PostDAO implements Serializable {
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, "WFA");
-                stm.setString(3, tag.trim());
+                stm.setNString(3, tag.trim());
                 stm.setNString(4, title);
                 stm.setNString(5, content);
                 stm.setInt(6, categoryID);

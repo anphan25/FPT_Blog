@@ -59,14 +59,6 @@
                         </form>
                     </div>
                 </div>
-                <!-- <div class="container_right">
-                    <div class="container_button_login">
-                      <button><a href="firstloginpage">ÄÄng nháº­p</a></button>
-                    </div>
-                    <div class="container_button_register">
-                      <button><a href="firstloginpage">Táº¡o tÃ i khoáº£n</a></button>
-                    </div>
-                  </div> -->
                 <c:if test="${loginStatus == 'logined'}">
                     <div class="container_right">
                         <c:if test="${currentUser.role == 'S'}">
@@ -312,85 +304,9 @@
                             </div>
                             <div class="item">
                                 <p>Year</p>
-                            </div>
-                            <!-- <div class="item">
-                              <p>CÅ© nháº¥t</p>
-                            </div> -->
-                            <!-- <div class="item">
-                              <p>Má»i nháº¥t</p>
-                            </div> -->
                         </div>
                     </div>
                     <div class="container_posts">
-                        <!-- <div class="first_post post">
-                             <a href="/contentPage.html">
-                                <div class="container_cover">
-                                    <img
-                                        src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                        />
-                                </div>
-                                <div class="container_info_post">
-                                    <div class="user_info">
-                                        <div class="container_avatar">
-                                            <img
-                                                src="https://scontent.fvca1-3.fna.fbcdn.net/v/t1.6435-9/240940699_1592346694443253_6861475202472920742_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=QShWiSLfdbcAX8jkGI7&_nc_ht=scontent.fvca1-3.fna&oh=b32b69a2f8495d0493bef7959757cd3a&oe=61603430"
-                                                />
-                                        </div>
-                                        <div class="container_name_date_post">
-                                            <p class="username">Gia An</p>
-                                            <p class="date_posted">Sep 11 '21</p>
-                                        </div>
-                                    </div>
-                                    <div class="post_info">
-                                        <h1 class="title_post">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                            Optio, numquam.
-                                        </h1>
-                                        <div class="hashtag">
-                                            <p><span class="hash">#</span>react</p>
-                                            <p><span class="hash">#</span>vue</p>
-                                            <p><span class="hash">#</span>angular</p>
-                                            <p><span class="hash">#</span>javascript</p>
-                                        </div>
-                                        <div class="statistic">
-                                            <div class="reaction_and_comments">
-                                                <div>
-                                                    <img src="./images/vote_icon.svg" />
-                                                    <p>
-                                                        176
-                                                        <span class="text_comments_votes">Likes</span>
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <img src="./images/comment_icon.svg" />
-                                                    <p>
-                                                        15
-                                                        <span class="text_comments_votes">Comments</span>
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <img src="./images/award2.svg" />
-                                                    <p>
-                                                        3
-                                                        <span class="text_comments_votes">Awards</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="time_and_save">
-                                                <div>
-                                                    <p>3 phÃºt Äá»c</p>
-                                                </div>
-                                                <div>
-                                                    <button>Save</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a> -->
-                        <!-- <h1>Welcome to FPT Blog</h1>
-                    </div> --> 
-
                         <c:set var="blogs" value="${requestScope.LIST_PAGING}"/>
                         <c:forEach var="blogDTO" items="${blogs}">
                             <div class="post">
@@ -423,10 +339,6 @@
                                                     <p><span class="hash"></span>#${tag}</p>
                                                 </a>
                                             </c:forEach>
-
-                                            <!--                      <p><span class="hash">#</span>vue</p>
-                                                                  <p><span class="hash">#</span>angular</p>
-                                                                  <p><span class="hash">#</span>javascript</p>-->
                                         </div>
                                         <div class="statistic">
                                             <div class="reaction_and_comments">
@@ -444,18 +356,8 @@
                                                         <span class="text_comments_votes">Comments</span>
                                                     </p>
                                                 </div>
-                                                <!--                                                    <div>
-                                                                                                        <img src="./images/award2.svg" />
-                                                                                                        <p>
-                                                                                                            
-                                                                                                            <span class="text_comments_votes">Awards</span>
-                                                                                                        </p>
-                                                                                                    </div>-->
                                             </div>
                                             <div class="time_and_save">
-                                                <!--                        <div>
-                                                                          <p>3 phÃºt Äá»c</p>
-                                                                        </div>-->
                                                 <div>
                                                     <button>Save</button>
                                                 </div>
@@ -477,14 +379,14 @@
                 </div>
                 <div class="main_container_right">
                     <div class="news">
-                        <h2 class="title">#news</h2>
+                        <h2 class="title">Common posts</h2>
                         <div class="item">
                             <h2 class="title_post">
                                 We're a place where coders share, stay up-to-date and grow their
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Mới</p>
+                                <p class="news_button">Hot</p>
                             </div>
                         </div>
                         <div class="item">
@@ -493,7 +395,7 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Mới</p>
+                                <p class="news_button">Hot</p>
                             </div>
                         </div>
                         <div class="item">
@@ -502,40 +404,11 @@
                                 careers.
                             </h2>
                             <div class="container_news_button">
-                                <p class="news_button">Mới</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="news">
-                        <h2 class="title">#tháº£o luáº­n</h2>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Mới</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Mới</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Mới</p>
+                                <p class="news_button">Hot</p>
                             </div>
                         </div>
                     </div>
+                    
                 </div>
 
 

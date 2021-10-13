@@ -137,7 +137,7 @@ uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
             <c:if test="${requestScope.FPT == 'NOTFPT'}">
               <h3>
                 <font color="red">
-                  We only accept FPT gmail (ask Ân for 1) !!!
+                  We only accept FPT gmail !!!
                 </font>
               </h3>
             </c:if>
