@@ -316,7 +316,7 @@
                         <div id="comments-container">
                             <c:if test="${not empty cmtList}">
                                 <c:forEach var="listDTO" items="${cmtList}">
-                                    <div class="others-comments">
+                                    <div class="others-comments" id="comment-div-${listDTO.ID}">
                                         <div class="user-avt">
                                             <img
                                                 class="avt-img"
@@ -536,7 +536,40 @@
             const totalLike = document.querySelector(".totalLike");
             const cmtCount = document.querySelector(".cmtCount");
             const cmtCount2 = document.querySelector(".cmtCount2");
+            const deleteBtn = document.querySelector(".deleteButton");
             
+            function deleteCommentInUI(id){
+                let deleteCmt = document.querySelector("#comment-div-"+id);
+                deleteCmt.remove();
+            }
+            
+            function deleteComment(id) {
+                $.ajax({
+                    url: "DeleteCommentServlet",
+                    data: {
+                        cmtID: id
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        deleteCommentInUI(id);
+                    },
+                    error: function (xhr) {
+                        alert('Server internal error.');
+                    }
+                });
+            }
+
+            if (deleteBtn) {
+                deleteBtn.addEventListener("click", function (e) {
+                    let id = e.target.id;
+                    console.log(id);
+                    deleteComment(id);
+                });
+            }
+
+
+
+
             function loadNewComment() {
                 $.ajax({
                     url: "CommentServlet",
