@@ -452,8 +452,9 @@ public class PostDAO implements Serializable {
                     String avatar = rs.getString("Image");
                     int likes = getLikeCounting(postID);
                     int comments = getCommentCounting(postID);
+                    ArrayList<Integer> awards = getAwardsByEmail(emailPost);
                     PostDTO post = new PostDTO(postID, emailPost, Style.convertTagToArrayList(tag), title, approvedDate,
-                            namePoster, avatar, likes, comments);
+                            namePoster, avatar, likes, comments, awards);
                     list.add(post);
                 }
             }
@@ -469,6 +470,36 @@ public class PostDAO implements Serializable {
             }
         }
 
+        return list;
+    }
+
+    public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    list.add(rs.getInt("AwardID"));
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
         return list;
     }
 

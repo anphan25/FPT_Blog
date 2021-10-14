@@ -21,6 +21,15 @@ public class PostDTO implements Serializable {
     private String avatar;
     private int likes;
     private int comments;
+    private ArrayList<Integer> awards;
+
+    public ArrayList<Integer> getAwards() {
+        return awards;
+    }
+
+    public void setAwards(ArrayList<Integer> awards) {
+        this.awards = awards;
+    }
 
     public PostDTO() {
         ID = "";
@@ -41,6 +50,20 @@ public class PostDTO implements Serializable {
 
     }
 
+    public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String namePost,
+            String avatar, int likes, int comments, ArrayList<Integer> awards) {
+        this.ID = ID;
+        this.emailPost = emailPost;
+        this.tag = tag;
+        this.title = title;
+        this.approvedDate = approvedDate;
+        this.namePost = namePost;
+        this.avatar = avatar;
+        this.likes = likes;
+        this.comments = comments;
+        this.awards = awards;
+    }
+    
     public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String namePost,
             String avatar, int likes, int comments) {
         this.ID = ID;
@@ -271,7 +294,11 @@ public class PostDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + '}';
+        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + ", awards=" + awards.size() + '}';
     }
+
+   
+    
+    
 
 }
