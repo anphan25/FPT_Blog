@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package swp.controller;
 
 import java.io.IOException;
@@ -13,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.account.AccountDTO;
 import swp.post.PostDAO;
 
 /**
@@ -31,13 +28,16 @@ public class CreatePostServlet extends HttpServlet {
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get(FAIL);
         try {
+            HttpSession session = request.getSession(false);
+            AccountDTO accInfo = (AccountDTO) session.getAttribute("CURRENT_USER");
+            String role = accInfo.getRole();
             String email = request.getParameter("email");
             String title = new String(request.getParameter("title").getBytes("iso-8859-1"), "utf-8");
             int category = Integer.parseInt(request.getParameter("category"));
             String tags = new String(request.getParameter("tags").getBytes("iso-8859-1"), "utf-8");
             String content = new String(request.getParameter("content").getBytes("iso-8859-1"), "utf-8");
             PostDAO createPost = new PostDAO();
-            boolean check = createPost.insertANewPost(email, tags, title, content, category);
+            boolean check = createPost.insertANewPost(email, tags, title, content, category, role);
             if (check) {
                 log("Creating a new post successfully!");
                 url = roadmap.get(SUCCESS);
