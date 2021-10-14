@@ -6,12 +6,14 @@
 package swp.comment;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
  * @author ASUS
  */
-public class CommentDTO implements Serializable{
+public class CommentDTO implements Serializable {
+
     private String ID;
     private String emailComment;
     private String postID;
@@ -19,10 +21,21 @@ public class CommentDTO implements Serializable{
     private String content;
     private String avatar;
     private String name;
+    private ArrayList<Integer> awards;
 
     public CommentDTO() {
     }
 
+    public CommentDTO(String ID, String emailComment, String postID, String date, String content, String avatar, String name, ArrayList<Integer> awards) {
+        this.ID = ID;
+        this.emailComment = emailComment;
+        this.postID = postID;
+        this.date = date;
+        this.content = content;
+        this.avatar = avatar;
+        this.name = name;
+        this.awards = awards;
+    }
     public CommentDTO(String ID, String emailComment, String postID, String date, String content, String avatar, String name) {
         this.ID = ID;
         this.emailComment = emailComment;
@@ -33,8 +46,6 @@ public class CommentDTO implements Serializable{
         this.name = name;
     }
 
-    
-    
     public String getAvatar() {
         return avatar;
     }
@@ -50,8 +61,6 @@ public class CommentDTO implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-
-    
 
     public String getID() {
         return ID;
@@ -92,6 +101,5 @@ public class CommentDTO implements Serializable{
     public void setContent(String content) {
         this.content = content;
     }
-    
-    
+
 }
