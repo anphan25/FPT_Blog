@@ -123,25 +123,40 @@ public class PostDAO implements Serializable {
         return count;
     }
 
-    public boolean insertANewPost(String email, String tag, String title, String content, int categoryID)
+    public boolean insertANewPost(String email, String tag, String title, String content, int categoryID, String roleID)
             throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
         boolean check = false;
-
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
-                        + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
-                stm = conn.prepareStatement(sql);
-                stm.setString(1, email);
-                stm.setString(2, "WFA");
-                stm.setNString(3, tag.trim());
-                stm.setNString(4, title);
-                stm.setNString(5, content);
-                stm.setInt(6, categoryID);
-                check = stm.executeUpdate() > 0;
+                if (roleID.equalsIgnoreCase("M")) {// mentor auto approve lên
+                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
+                            + "values(NEWID(), ?, ?, ?, getdate(), ?, ?, getdate(), ?, ?, null)";
+                    stm = conn.prepareStatement(sql);
+                    stm.setString(1, email);
+                    stm.setString(2, email);
+                    stm.setString(3, "A");
+                    stm.setNString(4, tag.trim());
+                    stm.setNString(5, title);
+                    stm.setNString(6, content);
+                    stm.setInt(7, categoryID);
+                    check = stm.executeUpdate() > 0;
+                } else if (roleID.equalsIgnoreCase("S")) {//Student đăng bài thì chờ duyệt
+                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
+                            + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
+                    stm = conn.prepareStatement(sql);
+                    stm.setString(1, email);
+                    stm.setString(2, "WFA");
+                    stm.setNString(3, tag.trim());
+                    stm.setNString(4, title);
+                    stm.setNString(5, content);
+                    stm.setInt(6, categoryID);
+                    check = stm.executeUpdate() > 0;
+                } else {
+                    check = false;
+                }
             }
         } finally {
             if (stm != null) {
