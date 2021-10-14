@@ -49,10 +49,13 @@ public class LoadPostContentServlet extends HttpServlet {
             PostDTO post = getPost.getPostById(postId);
             CommentDAO cmt = new CommentDAO();
             ArrayList<CommentDTO> cmtList = cmt.getAllCommentOfPost(postId);
+            ArrayList<PostDTO> commonPosts = getPost.getCommonPosts();
             if (post != null) {
                 url = roadmap.get(SUCCESS);
                 request.setAttribute("POST_DETAIL", post);
                 request.setAttribute("POST_CMT", cmtList);
+                request.setAttribute("COMMON_POST", commonPosts);
+                
                 if (session != null) {
                     AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
                     String email = acc.getEmail();

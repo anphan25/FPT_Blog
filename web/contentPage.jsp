@@ -359,12 +359,12 @@
                                         <c:if test="${currentUser.email == listDTO.emailComment || currentUser.role == 'A'}">                              
                                             <div class="edit-delete" id="edit-delete-${listDTO.ID}">
                                                 <c:if test="${currentUser.email == listDTO.emailComment}">
-                                                <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
+                                                    <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
                                                 </c:if>
                                                 <c:if test="${currentUser.role == 'A'}">
-                                                <button class="deleteButton" id="${listDTO.ID}"><i class="fas fa-trash-alt"></i> Delete</button>
+                                                    <button class="deleteButton" id="${listDTO.ID}"><i class="fas fa-trash-alt"></i> Delete</button>
                                                 </c:if>
-                                                </div>   
+                                            </div>   
                                         </c:if>
                                     </div>
                                 </c:forEach>
@@ -376,32 +376,21 @@
                     <div class="left-container-title">
                         <h3>Common Posts</h3>
                     </div>
-                    <div class="left-container-content">
-                        <div class="left-container-item">
-                            <h6>I Createdd my VSCode theme</h6>
-                            <p class="title-content">#Javascript #HTML #CSS</p>
-                        </div>
-                    </div>
-                    <div class="left-container-content">
-                        <div class="left-container-item">
-                            <h6>Sharing my experience in learning</h6>
-                            <p class="title-content">#Javascript #HTML #CSS</p>
-                        </div>
-                    </div>
-                    <div class="left-container-content">
-                        <div class="left-container-item">
-                            <h6>Tips for HTML/CSS</h6>
-                            <p class="title-content">#Javascript #HTML #CSS</p>
-                        </div>
-                    </div>
-                    <div class="left-container-content">
-                        <div class="left-container-item">
-                            <h6>How to learn Java</h6>
-                            <p class="title-content">#Javascript #HTML #CSS</p>
-                        </div>
-                    </div>
+                    <c:forEach var="commonPost" items="${requestScope.COMMON_POST}">
+                        <a href="loadPostContent?postId=${commonPost.ID}">
+                            <div class="left-container-content">
+                                <div class="left-container-item">
+                                    <h6>${commonPost.title}</h6>
+                                    <div class="like-cmt">
+                                        <p>${commonPost.likes} Likes</p>
+                                        <p>${commonPost.comments} Comments</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </c:forEach>
                 </div>
-            </div>
+            </div>  
         </div>
         <!-- modal -->
         <!-- modal -->
@@ -568,7 +557,7 @@
             $(document).on('click', '.deleteButton', function (e) {
                 e.preventDefault();
                 deleteComment(e.target.id.length > 0 ? e.target.id : e.currentTarget.id);
-                
+
             });
 
 

@@ -811,7 +811,7 @@ public class PostDAO implements Serializable {
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 int count = 0;
-                while (rs.next() && count < 6) {
+                while (rs.next() && count < 7) {
                     ++count;
                     String postID = rs.getString("PostID");
                     int totalLikes = rs.getInt("Total");

@@ -991,6 +991,15 @@ footer .text_footer_strong {
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 9;
 }
+.like-cmt {
+  display: flex;
+}
+.like-cmt p {
+  font-size: 12px;
+  font-weight: 300;
+  margin-right: 8px;
+  margin-top: 6px;
+}
 
 /* login-modal  */
 /* login-modal  */
@@ -1297,7 +1306,6 @@ footer .text_footer_strong {
   color: #fff;
   pointer-events: none;
 }
-
 
 @media screen and (max-width: 576px) {
 }

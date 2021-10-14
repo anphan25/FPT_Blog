@@ -237,31 +237,31 @@
                 </div>
             </footer>
             <script>
-                let forms = document.querySelectorAll("form");
-                
-//                forms.forEach((form)=>{
-//                    form.addEventListener("submit",(e)=>{
+//                let forms = document.querySelectorAll("form");
+//                
+////                forms.forEach((form)=>{
+////                    form.addEventListener("submit",(e)=>{
+////                        let select = e.target.querySelector("select");
+////                        if(select.value === 0){
+////                            alert('You have to choose an award');
+////                            return;
+////                        }else{
+////                            e.target.submit();
+////                        }
+////                    })
+////                })
+//                let i;
+//                for(i=0;i<forms.length;i++){
+//                    forms[i].addEventListener("submit",(e)=>{
 //                        let select = e.target.querySelector("select");
-//                        if(select.value === 0){
+//                        if(select.value === '0'){
 //                            alert('You have to choose an award');
 //                            return;
 //                        }else{
 //                            e.target.submit();
 //                        }
-//                    })
-//                })
-                let i;
-                for(i=0;i<forms.length;i++){
-                    forms[i].addEventListener("submit",(e)=>{
-                        let select = e.target.querySelector("select");
-                        if(select.value === '0'){
-                            alert('You have to choose an award');
-                            return;
-                        }else{
-                            e.target.submit();
-                        }
-                    });
-                }
+//                    });
+//                }
             </script>
         </body>
 
