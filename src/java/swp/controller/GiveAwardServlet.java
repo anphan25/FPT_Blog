@@ -7,11 +7,15 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.account.AccountDAO;
 
 /**
  *
@@ -33,12 +37,26 @@ public class GiveAwardServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("email");
-        String awardID = request.getParameter("awardID");
-        
+        int awardID = Integer.parseInt(request.getParameter("awardID"));
+
         try {
-            
-        }finally{
-            
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                if (awardID != 0) {
+                    AccountDAO dao = new AccountDAO();
+                    if (!dao.checkAward(email, awardID)) {
+                        dao.giveAward(email, awardID);
+                    }
+                }
+
+            }
+
+        } catch (SQLException ex) {
+            log("GiveAwardSVL _ SQl" + ex.getMessage());
+        } catch (NamingException ex) {
+            log("GiveAwardSVL _ Naming" + ex.getMessage());
+        } finally {
+            response.sendRedirect("loadDashboard");
         }
     }
 
