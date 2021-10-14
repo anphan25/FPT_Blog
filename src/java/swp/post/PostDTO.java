@@ -93,6 +93,13 @@ public class PostDTO implements Serializable {
         this.avatar = avatar;
     }
 
+    public PostDTO(String ID, String title, int comments, int likes) {
+        this.ID = ID;
+        this.title = title;
+        this.comments = comments;
+        this.likes = likes;
+    }
+
     //dao.getOldPost > update post
     public PostDTO(String id, String email, String title, String postContent) {
         this.ID = id;
@@ -141,7 +148,6 @@ public class PostDTO implements Serializable {
         this.comments = comments;
     }
     //DTO for content of pending post
-    
 
     public String getID() {
         return ID;

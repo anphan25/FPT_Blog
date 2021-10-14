@@ -793,4 +793,45 @@ public class PostDAO implements Serializable {
         }
         return check;
     }
+
+    public ArrayList<PostDTO> getCommonPosts() throws NamingException, NamingException, SQLException, ClassNotFoundException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<PostDTO> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select p.PostID, myTable.Total, p.Title, p.Tag, p.ApprovedDate "
+                        + "from (select postid, count(distinct EmailLike) as Total from tblLikes group by PostID) myTable "
+                        + "left join tblPosts p "
+                        + "on myTable.PostID = p.PostID "
+                        + "where p.StatusPost = 'A' "
+                        + "order by myTable.Total desc";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                int count = 0;
+                while (rs.next() && count < 6) {
+                    ++count;
+                    String postID = rs.getString("PostID");
+                    int totalLikes = rs.getInt("Total");
+                    String title = rs.getString("Title");
+                    int totalComments = getCommentCounting(postID);
+                    PostDTO dto = new PostDTO(postID, title, totalComments, totalLikes);
+                    list.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return list;
+    }
 }
