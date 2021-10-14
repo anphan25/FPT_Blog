@@ -44,9 +44,9 @@ public class CommentDAO {
                     String content = rs.getNString("Comment");
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
-                    CommentDTO cmt = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
+                    ArrayList<Integer> awards = getAwardsByEmail(emailComment);
+                    CommentDTO cmt = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name, awards);
                     list.add(cmt);
-
                 }
             }
         } finally {
@@ -58,6 +58,36 @@ public class CommentDAO {
             }
             if (conn != null) {
                 conn.close();
+            }
+        }
+        return list;
+    }
+    
+    public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<Integer> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    list.add(rs.getInt("AwardID"));
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
             }
         }
         return list;
@@ -144,7 +174,6 @@ public class CommentDAO {
                     String content = rs.getNString("Comment");
                     String avatar = rs.getString("Image");
                     String name = rs.getString("Name");
-
                     dto = new CommentDTO(commentID, emailComment, idPost, commentDate, content, avatar, name);
                 }
             }

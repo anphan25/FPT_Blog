@@ -158,7 +158,7 @@ public class AccountDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             String sql = "insert into tblAccounts(email, password, name, gender, campus, roleID, "
-                    + "statusAccountID, CreatedDate, Image) " + "VALUES(?,?,?,?,?,?,?,?,?)";
+                    + "statusAccountID, CreatedDate, Image, Major) " + "VALUES(?,?,?,?,?,?,?,?,?,null)";
             stm = conn.prepareStatement(sql);
             stm.setString(1, user.getEmail());
             stm.setString(2, user.getPassword());
@@ -258,8 +258,8 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image) "
-                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?)";
+                String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, Major) "
+                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, null)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, name);

@@ -132,8 +132,8 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 if (roleID.equalsIgnoreCase("M")) {// mentor auto approve lên
-                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
-                            + "values(NEWID(), ?, ?, ?, getdate(), ?, ?, getdate(), ?, ?, null)";
+                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent, Note) "
+                            + "values(NEWID(), ?, ?, ?, getdate(), ?, ?, getdate(), ?, ?, null, null)";
                     stm = conn.prepareStatement(sql);
                     stm.setString(1, email);
                     stm.setString(2, email);
@@ -253,7 +253,8 @@ public class PostDAO implements Serializable {
                     String email = rs.getString("email");
                     int like = getLikeCounting(id);
                     int comments = getCommentCounting(id);
-                    post = new PostDTO(postID, email, Style.convertTagToArrayList(tags), title, approvedDate, content, name, avatar, like, comments);
+                    ArrayList<Integer> awards = getAwardsByEmail(email);
+                    post = new PostDTO(postID, email, Style.convertTagToArrayList(tags), title, approvedDate, content, name, avatar, like, comments, awards);
                 }
             }
         } finally {

@@ -63,7 +63,7 @@ public class PostDTO implements Serializable {
         this.comments = comments;
         this.awards = awards;
     }
-    
+
     public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String namePost,
             String avatar, int likes, int comments) {
         this.ID = ID;
@@ -158,7 +158,7 @@ public class PostDTO implements Serializable {
     }
 
     //DTo for content of a post
-    public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String postContent, String namePost, String avatar, int likes, int comments) {
+    public PostDTO(String ID, String emailPost, List<String> tag, String title, String approvedDate, String postContent, String namePost, String avatar, int likes, int comments, ArrayList<Integer> awards) {
         this.ID = ID;
         this.emailPost = emailPost;
         this.tag = tag;
@@ -169,6 +169,7 @@ public class PostDTO implements Serializable {
         this.avatar = avatar;
         this.likes = likes;
         this.comments = comments;
+        this.awards = awards;
     }
     //DTO for content of pending post
 
@@ -296,9 +297,5 @@ public class PostDTO implements Serializable {
     public String toString() {
         return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + ", awards=" + awards.size() + '}';
     }
-
-   
-    
-    
 
 }
