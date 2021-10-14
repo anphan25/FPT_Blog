@@ -132,11 +132,10 @@
                 <div style="padding: 0.5rem">
                     <div class="introduce_community">
                         <h2 class="introduce_title">
-                            <span class="brand_text">FPT Community</span> is a community of
-                            690,628 amazing developers
+                            <span class="brand_text">FPT Community</span> is a place where students can share knowledge and learn from each other
                         </h2>
                         <p class="introduce_content">
-                            We're a place where coders share, stay up-to-date and grow their
+                            We're a place where students share, stay up-to-date and grow their
                             careers.
                         </p>
                         <div class="container_button">
@@ -296,7 +295,7 @@
                             <div class="item item-selected">
                                 <p class="selected">Feed</p>
                             </div>
-                           
+
                         </div>
                     </div>
                     <div class="container_posts">
@@ -375,33 +374,22 @@
                 <div class="main_container_right">
                     <div class="news">
                         <h2 class="title">Common posts</h2>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Hot</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Hot</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <h2 class="title_post">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </h2>
-                            <div class="container_news_button">
-                                <p class="news_button">Hot</p>
-                            </div>
-                        </div>
+                        <c:forEach var="commonPost" items="${requestScope.COMMON_POSTS}">
+                            <a href="loadPostContent?postId=${commonPost.ID}">
+                                <div class="item">
+                                    <h2 class="title_post">
+                                        ${commonPost.title}
+                                    </h2>
+                                    <div class="like-cmt">
+                                        <p>${commonPost.likes} Likes</p>
+                                        <p>${commonPost.comments} Comments</p>
+                                    </div>
+                                    <div class="container_news_button">
+                                        <p class="news_button">Hot</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </c:forEach>
                     </div>
 
                 </div>
