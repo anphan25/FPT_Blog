@@ -31,19 +31,21 @@ public class LoadAllPostsServlet extends HttpServlet {
             CategoryDAO cateDAO = new CategoryDAO();
             PostDAO postDAO = new PostDAO();
             int count = postDAO.getTotalPost();
-            int endPage = count/10;
+            int endPage = count / 10;
             String indexPage = request.getParameter("index"); //lấy trang user muốn
-            if(indexPage == null){
-                indexPage= "1";
+            if (indexPage == null) {
+                indexPage = "1";
             }
             int index = Integer.parseInt(indexPage);
-            
-            if(count % 10 != 0){
+
+            if (count % 10 != 0) {
                 endPage++;
             }
             cateDAO.loadCategoryList();
             ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
             ArrayList<PostDTO> listPaging = postDAO.pagingPosts(index);
+            ArrayList<PostDTO> commonPosts = postDAO.getCommonPosts();
+            request.setAttribute("COMMON_POSTS", commonPosts);
             request.setAttribute("LIST_PAGING", listPaging);
             request.setAttribute("ENDPAGE", endPage);
             request.setAttribute("CHECK_INDEX", index);
