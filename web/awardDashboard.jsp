@@ -191,22 +191,10 @@
                                             </c:forEach>
                                         </td>
                                         <td>
-                                            <select name="awardID" id="" class="select-award">
-                                                <option style="display: none">Select Award</option>
-                                                <c:if test="${empty user.awards}">
-                                                    <option value="2">Like Collector</option>                                                               
-                                                    <option value="1">Great Contributor</option>
-                                                </c:if>
-                                                <c:if test="${not empty user.awards}">                                           
-                                                <c:forEach var="award" items="${user.awards}">
-
-                                                    <option value="2" <c:if test="${award == 1}">disabled="disabled"</c:if>
-                                                            >Like Collector</option>                                                               
-                                                    <option value="1" <c:if test="${award == 2}">disabled="disabled"</c:if>>Great Contributor</option>
-
-                                                </c:forEach>
-                                                   
-                                                </c:if>
+                                            <select name="awardID" class="select-award">
+                                                <option value="0" style="display: none">Select Award</option>             
+                                                <option value="1">Great Contributor</option>                               
+                                                <option value="2">Like Collector</option> 
                                             </select>
                                         </td>
                                         <td>
@@ -248,5 +236,33 @@
                     <img src="./images/forem_icon.svg" />
                 </div>
             </footer>
+            <script>
+                let forms = document.querySelectorAll("form");
+                
+//                forms.forEach((form)=>{
+//                    form.addEventListener("submit",(e)=>{
+//                        let select = e.target.querySelector("select");
+//                        if(select.value === 0){
+//                            alert('You have to choose an award');
+//                            return;
+//                        }else{
+//                            e.target.submit();
+//                        }
+//                    })
+//                })
+                let i;
+                for(i=0;i<forms.length;i++){
+                    forms[i].addEventListener("submit",(e)=>{
+                        let select = e.target.querySelector("select");
+                        if(select.value === '0'){
+                            alert('You have to choose an award');
+                            return;
+                        }else{
+                            e.target.submit();
+                        }
+                    });
+                }
+            </script>
         </body>
+
     </html>
