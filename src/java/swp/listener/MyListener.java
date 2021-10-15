@@ -8,8 +8,12 @@ package swp.listener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -36,19 +40,35 @@ Map<String, String> roadmap= new HashMap<>();
             }
             br.close();
             fr.close();
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
 
         }
     }
 
     @Override
-    public void contextInitialized(ServletContextEvent sce) {
+    public void contextInitialized(ServletContextEvent sce)
+    {
         ServletContext context = sce.getServletContext();
         String realPath = context.getRealPath("/");
         String txtFile = realPath+"WEB-INF/roadmap.txt";
         readRoadMapFromFile(txtFile);
         context.setAttribute("ROADMAP", roadmap);
         System.out.println("real "+txtFile);
+        //True init start here above code is bull shit
+        InitStuff start = new InitStuff();
+        try
+        {
+        start.loadAwardTrigger();
+        } 
+        catch (NamingException ex)
+        {
+            context.log("Listener fail: " + ex.getMessage());
+        } 
+        catch (SQLException ex)
+        {
+            context.log("Listener fail:: " + ex.getMessage());
+        }
     }
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
