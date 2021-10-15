@@ -96,6 +96,11 @@
                         <div class="icon_notification_container">
                             <img src="./images/notification_icon.svg" />
                         </div>
+                        <a href="messengerPage">
+                            <div class="icon_notification_container">
+                                <img src="./images/chat.svg" />
+                            </div>
+                        </a>
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img src="${currentUser.avatar}" />
@@ -279,8 +284,22 @@
                                     <img class="avt-img" src="${postDetail.avatar}" alt="" />
                                 </div>
                                 <form action="">
-                                    <div class="name">
-                                        <a href="loadProfile?email=${postDetail.emailPost}">${postDetail.namePost}</a>
+                                    <div class="name-award">
+                                        <div class="name">
+                                            <a href="loadProfile?email=${postDetail.emailPost}">${postDetail.namePost}</a>
+                                        </div>
+                                        <p class="user-award">
+                                            <c:if test="${not empty postDetail.awards}">
+                                                <c:forEach var="award" items="${postDetail.awards}">
+                                                    <c:if test="${award == 1}">
+                                                        <img src="./images/contribution-award.svg" alt="">
+                                                    </c:if>
+                                                    <c:if test="${award == 2}">
+                                                        <img src="./images/heart-award.png" alt="">
+                                                    </c:if>
+                                                </c:forEach>
+                                            </c:if>
+                                        </p>
                                     </div>
                                 </form>
                                 <div class="time">${postDetail.approvedDate}</div>
@@ -327,7 +346,21 @@
                                         <div class="comment-item" id="comment-item-${listDTO.ID}">
                                             <div class="comment-info" id="comment-info-${listDTO.ID}">
                                                 <a href="loadProfile?email=${listDTO.emailComment}">
-                                                    <div class="name">${listDTO.name}</div>
+                                                    <div class="name-award">
+                                                        <div class="name">${listDTO.name}</div>
+                                                        <p class="user-award">
+                                                            <c:if test="${not empty postDetail.awards}">
+                                                                <c:forEach var="award" items="${postDetail.awards}">
+                                                                    <c:if test="${award == 1}">
+                                                                        <img src="./images/contribution-award.svg" alt="">
+                                                                    </c:if>
+                                                                    <c:if test="${award == 2}">
+                                                                        <img src="./images/heart-award.png" alt="">
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                            </c:if>
+                                                        </p>
+                                                    </div>
                                                 </a>
                                                 <div class="comment-time">${listDTO.date}</div>
                                             </div>

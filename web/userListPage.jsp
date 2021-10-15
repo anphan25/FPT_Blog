@@ -88,6 +88,11 @@
                     <div class="icon_notification_container" onclick="kingcrimson()">
                         <img src="./images/notification_icon.svg" />
                     </div>
+                    <a href="messengerPage">
+                        <div class="icon_notification_container">
+                            <img src="./images/chat.svg" />
+                        </div>
+                    </a>
                     <div class="dropdown">
                         <div class="dropbtn">
                             <img
@@ -96,27 +101,27 @@
                         </div>
                         <div class="dropdown-content">
                             <div class="dropdown-content">
-                            <div class="item-top">
-                                <a
-                                    ><h2>${currentadmin.name}</h2>
-                                    <p>@${currentadmin.campus}</p></a
-                                >
-                            </div>
-                            <div style="padding: 0.5rem 0">
-                                <div class="item">
-                                    <a href="loadProfile?email=${currentadmin.email}"><p>Profile</p></a>
+                                <div class="item-top">
+                                    <a
+                                        ><h2>${currentadmin.name}</h2>
+                                        <p>@${currentadmin.campus}</p></a
+                                    >
                                 </div>
-                                <div class="item">
-                                    <a><p>Create Post</p></a>
+                                <div style="padding: 0.5rem 0">
+                                    <div class="item">
+                                        <a href="loadProfile?email=${currentadmin.email}"><p>Profile</p></a>
+                                    </div>
+                                    <div class="item">
+                                        <a><p>Create Post</p></a>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="item-bottom">
-                                <a href="logout">Sign Out</a>
+                                <div class="item-bottom">
+                                    <a href="logout">Sign Out</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </header>
 
         <!-- sidebar_phone -->
@@ -157,7 +162,7 @@
                 ></div>
         </section>
         -->
-        
+
         <!-- container  -->
         <!-- container  -->
         <!-- container  -->
@@ -191,37 +196,37 @@
                 <h1>List of users</h1>
                 <div class="Filtering">
                     <div class="dropdown_filt">
-                      <div class="select_filt">
-                        <span>Select Gender</span>
-                      </div>
-                      <input type="hidden" id="selectedgender">
-                      <ul class="dropdown-menu">
-                        <li id="Male">Male</li>
-                        <li id="Female">Female</li>
-                        <li id="all">View all</li>
-                        <!-- show all when it choose the third one -->
-                      </ul>
+                        <div class="select_filt">
+                            <span>Select Gender</span>
+                        </div>
+                        <input type="hidden" id="selectedgender">
+                        <ul class="dropdown-menu">
+                            <li id="Male">Male</li>
+                            <li id="Female">Female</li>
+                            <li id="all">View all</li>
+                            <!-- show all when it choose the third one -->
+                        </ul>
                     </div>
                     <div class="dropdown_filt">
-                      <div class="select_filt">
-                        <span>Select Status</span>
-                      </div>
-                      <input type="hidden" id="selectedstatus">
-                      <ul class="dropdown-menu">
-                        <li id="Actived">Active</li>
-                        <li id="Banned">Banned</li>
-                        <li id="all">View all</li>
-                      </ul>
+                        <div class="select_filt">
+                            <span>Select Status</span>
+                        </div>
+                        <input type="hidden" id="selectedstatus">
+                        <ul class="dropdown-menu">
+                            <li id="Actived">Active</li>
+                            <li id="Banned">Banned</li>
+                            <li id="all">View all</li>
+                        </ul>
                     </div>
                     <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                 </div>
                 <form onsubmit="SendData();return false">
-                <div class="user-list-searchbar">
-                    <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
-                    <div class="user-list-icon" onclick="SendData()">
-                        <i class="fas fa-search"></i>
+                    <div class="user-list-searchbar">
+                        <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
+                        <div class="user-list-icon" onclick="SendData()">
+                            <i class="fas fa-search"></i>
+                        </div>
                     </div>
-                </div>
                 </form>
                 <div id="reloading" class="user-list-container" style = "height: 590px;">
                     <div id="freshair">
@@ -241,29 +246,29 @@
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
                                 <form action='userAction'>
-                                <tr>
-                                    <td>${counter.count}</td>
-                                    <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
+                                    <tr>
+                                        <td>${counter.count}</td>
+                                        <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
                                     <input type="hidden" name="victimEmail" value="${loto.email}" />
-                                    <td>${loto.name}</td>
+                                    <td class="td-name">${loto.name}</td>
                                     <td>${loto.gender}</td>
                                     <td>${loto.campus}</td>
                                     <td>
                                         <select name="txtList" >
                                             <c:if test = "${loto.role == 'Admin'}" >
-                                            <option selected="selected" value="A">Admin</option>
-                                            <option value="S">Student</option>
-                                            <option value="M">Mentor</option>
+                                                <option selected="selected" value="A">Admin</option>
+                                                <option value="S">Student</option>
+                                                <option value="M">Mentor</option>
                                             </c:if>
                                             <c:if test = "${loto.role == 'Mentor'}" >
-                                            <option value="A">Admin</option>
-                                            <option value="S">Student</option>
-                                            <option selected="selected" value="M">Mentor</option>
+                                                <option value="A">Admin</option>
+                                                <option value="S">Student</option>
+                                                <option selected="selected" value="M">Mentor</option>
                                             </c:if>
                                             <c:if test = "${loto.role == 'Student'}" >
-                                            <option value="A">Admin</option>
-                                            <option selected="selected" value="S">Student</option>
-                                            <option value="M">Mentor</option>
+                                                <option value="A">Admin</option>
+                                                <option selected="selected" value="S">Student</option>
+                                                <option value="M">Mentor</option>
                                             </c:if>
                                         </select>
                                     </td>
@@ -271,15 +276,15 @@
                                     <td><button id="submitanlz" class="update-btn" name="btAction" value="updating" >Update</button></td>
                                     <td>
                                         <c:if test="${loto.statusaccount == 'Actived'}">
-                                        <button class="ban-btn" name="btAction" value="banning" >Ban</button>
+                                            <button class="ban-btn" name="btAction" value="banning" >Ban</button>
                                         </c:if>
                                         <c:if test="${loto.statusaccount == 'Banned'}">
-                                        <button class="ban-btn" name="btAction" value="unbaning" >Unban</button>
+                                            <button class="ban-btn" name="btAction" value="unbaning" >Unban</button>
                                         </c:if>
                                     </td>    
-                                </tr>
+                                    </tr>
                                 </form>
-                                </c:forEach>
+                            </c:forEach>
                             </tbody>
                         </table>
                     </div>
@@ -320,87 +325,90 @@
         <!-- script   -->
         <script src="./js/userListPage.js"></script>
         <script>
-            function toggleSidebarPhone() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "block";
-            }
-            function handleClickOutside() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "none";
-            }
-            function submit_form()
-            {
-                var form = document.getElementById("searchit");
-                form.submit();
-            }
-            //for the dropdown filter
-            $('.dropdown_filt').click(function () 
-            {
-                $(this).attr('tabindex', 1).focus();
-                $(this).toggleClass('active');
-                $(this).find('.dropdown-menu').slideToggle(300);
-            });
-            $('.dropdown_filt').focusout(function () 
-            {
-                $(this).removeClass('active');
-                $(this).find('.dropdown-menu').slideUp(300);
-            });
-            $('.dropdown_filt .dropdown-menu li').click(function () 
-            {
-                $(this).parents('.dropdown_filt').find('span').text($(this).text());
-                $(this).parents('.dropdown_filt').find('input').attr('value', $(this).attr('id'));
-            });
-            
-            function applyButton() 
-            {
-                var start = new Date().getTime();
-                $("#zawarudo").attr("disabled", "disabled");
-                $("#zawarudo").addClass("button_filt_disable");
-                setTimeout(function() 
-                {
-                    $("#zawarudo").removeAttr("disabled");
-                    $("#zawarudo").removeClass("button_filt_disable");
-                }, 3000); //za warudo 3s
-                //3 value
-                let searchtext = document.getElementById("searchtext").value;
-                let selgen = document.getElementById("selectedgender").value;
-                let selstt = document.getElementById("selectedstatus").value;
-                if(selgen === "" && selstt === "") return; //bám search ko bấm bấm apply làm cc gì
-                if(selgen === "all" && selstt === "") selstt = "all";
-                if(selgen === "" && selstt === "all") selgen = "all";
-                $("#reloading").empty();
-                $("#reloading").append("<div class='loader'></div>");
-                htmldoc = null;
-                $.ajax({
-                        url: "searchFilt",
-                        type: "get", //send it through get method
-                        data: 
-                        {
-                            selectedGender: selgen,
-                            selectedStatus: selstt,
-                            txtSearch: searchtext
-                        },
-                        success: function(text)
-                        {
-                            //response code is here
-                            $("#reloading").empty();
-                            var parser = new DOMParser();
-                            htmldoc = parser.parseFromString(text,"text/html");
-                            $("#reloading").html(htmldoc.getElementById("freshair"));
-                            var end = new Date().getTime();
-                            var time = end - start;
-                            console.log("Loaded time: " + time.toString());
-                        },
-                        error: function()
-                        {
-                            //Old stuff go here
-                            // now i know what to do
-                            $("#reloading").empty();
-                            $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-                            console.log("oi dit me cuoc doi");
+                        function toggleSidebarPhone() {
+                            const toggle_sidebar = document.getElementById("sidebar_phone");
+                            toggle_sidebar.style.display = "block";
                         }
-                    });
-            }
+                        function handleClickOutside() {
+                            const toggle_sidebar = document.getElementById("sidebar_phone");
+                            toggle_sidebar.style.display = "none";
+                        }
+                        function submit_form()
+                        {
+                            var form = document.getElementById("searchit");
+                            form.submit();
+                        }
+                        //for the dropdown filter
+                        $('.dropdown_filt').click(function ()
+                        {
+                            $(this).attr('tabindex', 1).focus();
+                            $(this).toggleClass('active');
+                            $(this).find('.dropdown-menu').slideToggle(300);
+                        });
+                        $('.dropdown_filt').focusout(function ()
+                        {
+                            $(this).removeClass('active');
+                            $(this).find('.dropdown-menu').slideUp(300);
+                        });
+                        $('.dropdown_filt .dropdown-menu li').click(function ()
+                        {
+                            $(this).parents('.dropdown_filt').find('span').text($(this).text());
+                            $(this).parents('.dropdown_filt').find('input').attr('value', $(this).attr('id'));
+                        });
+
+                        function applyButton()
+                        {
+                            var start = new Date().getTime();
+                            $("#zawarudo").attr("disabled", "disabled");
+                            $("#zawarudo").addClass("button_filt_disable");
+                            setTimeout(function ()
+                            {
+                                $("#zawarudo").removeAttr("disabled");
+                                $("#zawarudo").removeClass("button_filt_disable");
+                            }, 3000); //za warudo 3s
+                            //3 value
+                            let searchtext = document.getElementById("searchtext").value;
+                            let selgen = document.getElementById("selectedgender").value;
+                            let selstt = document.getElementById("selectedstatus").value;
+                            if (selgen === "" && selstt === "")
+                                return; //bám search ko bấm bấm apply làm cc gì
+                            if (selgen === "all" && selstt === "")
+                                selstt = "all";
+                            if (selgen === "" && selstt === "all")
+                                selgen = "all";
+                            $("#reloading").empty();
+                            $("#reloading").append("<div class='loader'></div>");
+                            htmldoc = null;
+                            $.ajax({
+                                url: "searchFilt",
+                                type: "get", //send it through get method
+                                data:
+                                        {
+                                            selectedGender: selgen,
+                                            selectedStatus: selstt,
+                                            txtSearch: searchtext
+                                        },
+                                success: function (text)
+                                {
+                                    //response code is here
+                                    $("#reloading").empty();
+                                    var parser = new DOMParser();
+                                    htmldoc = parser.parseFromString(text, "text/html");
+                                    $("#reloading").html(htmldoc.getElementById("freshair"));
+                                    var end = new Date().getTime();
+                                    var time = end - start;
+                                    console.log("Loaded time: " + time.toString());
+                                },
+                                error: function ()
+                                {
+                                    //Old stuff go here
+                                    // now i know what to do
+                                    $("#reloading").empty();
+                                    $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
+                                    console.log("oi dit me cuoc doi");
+                                }
+                            });
+                        }
         </script>
     </body>
 </html>

@@ -895,6 +895,7 @@ footer .text_footer_strong {
 .comment-info .comment-time {
   font-size: 14px;
   color: #717171;
+  margin-left: 5px;
 }
 
 .hidden {
@@ -999,6 +1000,17 @@ footer .text_footer_strong {
   font-weight: 300;
   margin-right: 8px;
   margin-top: 6px;
+}
+
+.user-award img {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+}
+
+.name-award {
+  display: flex;
+  align-items: center;
 }
 
 /* login-modal  */

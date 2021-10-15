@@ -93,6 +93,11 @@
                     <div class="icon_notification_container">
                         <img src="./images/notification_icon.svg" />
                     </div>
+                    <a href="messengerPage">
+                        <div class="icon_notification_container">
+                            <img src="./images/chat.svg" />
+                        </div>
+                    </a>
                     <div class="dropdown">
                         <div class="dropbtn">
                             <img

@@ -79,6 +79,11 @@
                         <div class="icon_notification_container">
                             <img src="./images/notification_icon.svg" />
                         </div>
+                        <a href="messengerPage">
+                            <div class="icon_notification_container">
+                                <img src="./images/chat.svg" />
+                            </div>
+                        </a>
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img
@@ -311,10 +316,23 @@
                                                 />
                                         </div>
                                         <div class="container_name_date_post">
-
-                                            <a href="loadProfile?email=${blogDTO.emailPost}">
-                                                <p class="username">${blogDTO.namePost}</p>
-                                            </a>
+                                            <div class="name-award">
+                                                <a href="loadProfile?email=${blogDTO.emailPost}">                                              
+                                                    <p class="username">${blogDTO.namePost}</p>
+                                                </a>
+                                                <p class="user-award">
+                                                    <c:if test="${not empty blogDTO.awards}">
+                                                        <c:forEach var="award" items="${blogDTO.awards}">
+                                                            <c:if test="${award == 1}">
+                                                            <img src="./images/contribution-award.svg" alt="">
+                                                            </c:if>
+                                                            <c:if test="${award == 2}">
+                                                            <img src="./images/heart-award.png" alt="">
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </p>
+                                            </div>
                                             <p class="date_posted">${blogDTO.approvedDate}</p>
                                         </div>
                                     </div>
