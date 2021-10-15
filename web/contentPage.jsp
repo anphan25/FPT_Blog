@@ -349,8 +349,8 @@
                                                     <div class="name-award">
                                                         <div class="name">${listDTO.name}</div>
                                                         <p class="user-award">
-                                                            <c:if test="${not empty postDetail.awards}">
-                                                                <c:forEach var="award" items="${postDetail.awards}">
+                                                            <c:if test="${not empty listDTO.awards}">
+                                                                <c:forEach var="award" items="${listDTO.awards}">
                                                                     <c:if test="${award == 1}">
                                                                         <img src="./images/contribution-award.svg" alt="">
                                                                     </c:if>

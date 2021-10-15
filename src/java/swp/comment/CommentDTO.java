@@ -102,4 +102,12 @@ public class CommentDTO implements Serializable {
         this.content = content;
     }
 
+    public ArrayList<Integer> getAwards() {
+        return awards;
+    }
+
+    public void setAwards(ArrayList<Integer> awards) {
+        this.awards = awards;
+    }
+    
 }
