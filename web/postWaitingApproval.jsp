@@ -271,28 +271,69 @@
                             <h3>Update Request</h3>
                         </c:if>
                     </div>
-                    <div class="decision_btn">
-                        <form action="approvePost" method="POST">
-                            <button type="submit"  class="approve-btn"
-                                    >Approve</button>
-                            <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                            <input type="hidden" name="emailMentor" value="${currentUser.email}" />
-                            <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                            <input type="hidden" name="mentorDecision" value="approve"/>
-                        </form>
+                    <c:if test="${pendingPostContent.statusPost != 'WFA'}">
+                        <div class="decision_btn">
+                            <form action="approvePost" method="POST">
+                                <button type="submit"  class="approve-btn"
+                                        >Approve</button>
+                                <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                                <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                                <input type="hidden" name="mentorDecision" value="approve"/>
+                            </form>
 
-                        <form action="approvePost" method="POST">
-                            <button type="submit" class="reject-btn">Reject</button>
-                            <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                            <input type="hidden" name="emailMentor" value="${currentUser.email}" />
-                            <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                            <input type="hidden" name="mentorDecision" value="reject"/>
-                        </form>
-                    </div>
+                            <form action="approvePost" method="POST">
+                                <button type="submit" class="reject-btn">Reject</button>
+                                <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                                <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                                <input type="hidden" name="mentorDecision" value="reject"/>
+                            </form>
+                        </div>
+                    </c:if>
+                    <c:if test="${pendingPostContent.statusPost == 'WFA'}">
+                        <div class="decision_btn">
+                            <form action="approvePost" method="POST">
+                                <button type="submit"  class="approve-btn"
+                                        >Approve</button>
+                                <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                                <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                                <input type="hidden" name="mentorDecision" value="approve"/>
+                            </form>
+
+                            <form action="approvePost" method="POST" id="rejectWFA">
+                                <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                                <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                                <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                                <input type="hidden" name="mentorDecision" value="reject"/>
+                                <input type="hidden" name="reason" value="" id="reason-value"/>
+                            </form>
+                            <button class="reject-btn reject-btn-WFA">Reject</button>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- modal -->
+    <!-- modal -->
+    <!-- modal -->
+    <div class="reason-modal hidden">
+        <h1>Please input the reason why you reject this post</h1>
+
+            <textarea id="reason-textarea" cols="30" rows="10" placeholder="Input your reason here">
+            </textarea>
+
+        <div class="btn-gr">
+            <button class="submit-btn">Submit</button>
+            <button class="cancel-btn">Cancel</button>
+        </div>
+
+
+    </div>
+    <div class="overlay hidden"></div>
 
     <!-- footer -->
     <!-- footer -->
@@ -325,6 +366,44 @@
     <!-- script   -->
     <!-- script   -->
     <script>
+        const rejectWFABtn = document.querySelector(".reject-btn-WFA");
+        const overlay = document.querySelector(".overlay");
+        const reasonModal = document.querySelector(".reason-modal")
+        const cancelBtn = document.querySelector(".cancel-btn");
+        const reasonTextArea = document.querySelector("#reason-textarea");
+        const submitBtn = document.querySelector(".submit-btn");
+        const reasonHiddenForm = document.querySelector("#reason-value");
+        
+        overlay.addEventListener("click",()=>{
+            reasonModal.classList.toggle("hidden");
+            overlay.classList.toggle("hidden");
+        })
+
+        rejectWFABtn.addEventListener("click",()=>{
+            reasonModal.classList.toggle("hidden");
+            overlay.classList.toggle("hidden");
+            reasonTextArea.focus();
+
+        })
+
+        cancelBtn.addEventListener("click",()=>{
+            reasonModal.classList.toggle("hidden");
+            overlay.classList.toggle("hidden");
+        })
+
+        submitBtn.addEventListener("click",()=>{       
+            reasonHiddenForm.value = reasonTextArea.value;  
+            document.querySelector("#rejectWFA").submit();
+            
+        })
+        // document.querySelector("#rejectWFA").addEventListener("submit",()=>{
+        //     console.log('submit form: '+reasonTextArea.value); 
+            
+        //     document.querySelector("#rejectWFA").submit();
+        // })
+
+
+        
         function toggleSidebarPhone() {
             const toggle_sidebar = document.getElementById("sidebar_phone");
             toggle_sidebar.style.display = "block";

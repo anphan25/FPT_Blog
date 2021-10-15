@@ -894,7 +894,7 @@ public class PostDAO implements Serializable {
         return check;
     }
 
-    public ArrayList<PostDTO> getCommonPosts() throws NamingException, NamingException, SQLException, ClassNotFoundException {
+    public ArrayList<PostDTO> getCommonPosts() throws  NamingException, SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -933,5 +933,28 @@ public class PostDAO implements Serializable {
             }
         }
         return list;
+    }
+    
+    public void insertRejectReason (String postId, String reason) throws  NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if (con != null){
+                String sql = "update tblPosts set Note = ? where PostID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setNString(1, reason);
+                stm.setString(2, postId);
+                stm.executeUpdate();
+            }
+        }finally{
+            if (stm != null) {
+                stm.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
     }
 }
