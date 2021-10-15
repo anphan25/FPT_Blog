@@ -171,7 +171,8 @@
                     </div>
                     <div class="navigation_right">
                         <div class="title">
-                            <h1>Pending posts</h1>
+                            <c:set var="cateName" value="${requestScope.CATE_NAME}"/>
+                            <h1>${cateName} pending posts</h1>
                         </div>
                         <div class="pending_tab">
 
