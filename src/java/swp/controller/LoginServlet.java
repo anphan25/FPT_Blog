@@ -59,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             String password = request.getParameter("txtPassword");
             AccountDAO dao = new AccountDAO();
             dao.getUser(email, password);
-            AccountDTO result = dao.getCurrentUser();
+            AccountDTO result = dao.getCurrentUser();// Thêm CM
             boolean checkBan = dao.checkBan(email);
                 if(checkBan){
                     url = roadmap.get(LOGIN_INVALID_PAGE);

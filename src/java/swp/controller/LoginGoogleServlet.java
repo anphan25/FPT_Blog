@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.AuthenticationException;
 import javax.naming.NamingException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -90,7 +89,7 @@ public class LoginGoogleServlet extends HttpServlet
                             boolean checkregister = dao.createAccountForFirstTimeGmail(email, name, picurl);
                             if(checkregister)
                             {
-                                AccountDTO information_login = dao.getInformationUserFromEmail(email);
+                                AccountDTO information_login = dao.getInformationUserFromEmail(email);// thêm CM
                                 session.setAttribute("LOGIN", "logined");
                                 session.setAttribute("CURRENT_USER", information_login);
                                 url = roadmap.get(LOAD_BLOG);
