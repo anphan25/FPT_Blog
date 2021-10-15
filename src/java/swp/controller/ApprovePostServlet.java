@@ -45,6 +45,8 @@ public class ApprovePostServlet extends HttpServlet {
             String emailMentor = request.getParameter("emailMentor");
             String statusPost = request.getParameter("statusPost");
             String mentorDecision = request.getParameter("mentorDecision");
+            
+            
             String newStatus = null;
             boolean isSetDate = true;
             PostDAO dao = new PostDAO();
@@ -59,7 +61,10 @@ public class ApprovePostServlet extends HttpServlet {
                 }
                 case "reject": {
                     if (statusPost.equalsIgnoreCase("WFA")) {
-                        newStatus = "D";
+                        String rejectReason = new String(request.getParameter("reason").getBytes("iso-8859-1"), "utf-8");
+                        newStatus = "R";
+                        dao.insertRejectReason(postID, rejectReason);
+                        
                     } else if (statusPost.equalsIgnoreCase("WFD")) {
                         newStatus = "A";
                         isSetDate = false;//t push được chưa nhỉ?
