@@ -570,6 +570,17 @@ a {
   margin-right: 8px;
   margin-top: 6px;
 }
+
+.user-award img {
+  width: 20px;
+  height: 20px;
+  margin-left: 4px;
+}
+
+.name-award {
+  display: flex;
+  align-items: center;
+}
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */

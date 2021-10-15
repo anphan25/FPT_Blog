@@ -44,13 +44,6 @@ public class LoadAllPostsServlet extends HttpServlet {
             cateDAO.loadCategoryList();
             ArrayList<CategoryDTO> categorylist = cateDAO.getCategoryList();
             ArrayList<PostDTO> listPaging = postDAO.pagingPosts(index);
-            if(listPaging.isEmpty()){
-                log("Nothing in list");
-            }else{
-                for (PostDTO p : listPaging) {
-                    log(p.toString());
-                }
-            }
             ArrayList<PostDTO> commonPosts = postDAO.getCommonPosts();
             request.setAttribute("COMMON_POSTS", commonPosts);
             request.setAttribute("LIST_PAGING", listPaging);

@@ -84,6 +84,11 @@
                     <div class="icon_notification_container">
                         <img src="./images/notification_icon.svg" />
                     </div>
+                    <a href="messengerPage">
+                        <div class="icon_notification_container">
+                            <img src="./images/chat.svg" />
+                        </div>
+                    </a>
                     <div class="dropdown">
                         <div class="dropbtn">
                             <img
@@ -254,34 +259,36 @@
                     </c:if>
                     <c:out value="${contentPending}" escapeXml="false"/>
                 </div>
-                <div class="label-request">
-                    <c:if test="${pendingPostContent.statusPost == 'WFA'}">
-                        <h3>Public Request</h3>
-                    </c:if>
-                    <c:if test="${pendingPostContent.statusPost == 'WFD'}">
-                        <h3>Delete Request</h3>
-                    </c:if>
-                    <c:if test="${pendingPostContent.statusPost == 'WFU'}">
-                        <h3>Update Request</h3>
-                    </c:if>
-                </div>
-                <div class="decision_btn">
-                    <form action="approvePost" method="POST">
-                        <button type="submit"  class="approve-btn"
-                                >Approve</button>
-                        <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                        <input type="hidden" name="emailMentor" value="${currentUser.email}" />
-                        <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                        <input type="hidden" name="mentorDecision" value="approve"/>
-                    </form>
+                <div>
+                    <div class="label-request">
+                        <c:if test="${pendingPostContent.statusPost == 'WFA'}">
+                            <h3>Public Request</h3>
+                        </c:if>
+                        <c:if test="${pendingPostContent.statusPost == 'WFD'}">
+                            <h3>Delete Request</h3>
+                        </c:if>
+                        <c:if test="${pendingPostContent.statusPost == 'WFU'}">
+                            <h3>Update Request</h3>
+                        </c:if>
+                    </div>
+                    <div class="decision_btn">
+                        <form action="approvePost" method="POST">
+                            <button type="submit"  class="approve-btn"
+                                    >Approve</button>
+                            <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                            <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                            <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                            <input type="hidden" name="mentorDecision" value="approve"/>
+                        </form>
 
-                    <form action="approvePost" method="POST">
-                        <button type="submit" class="reject-btn">Reject</button>
-                        <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
-                        <input type="hidden" name="emailMentor" value="${currentUser.email}" />
-                        <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
-                        <input type="hidden" name="mentorDecision" value="reject"/>
-                    </form>
+                        <form action="approvePost" method="POST">
+                            <button type="submit" class="reject-btn">Reject</button>
+                            <input type="hidden" name="postID" value="${pendingPostContent.ID}" />
+                            <input type="hidden" name="emailMentor" value="${currentUser.email}" />
+                            <input type="hidden" name="statusPost" value="${pendingPostContent.statusPost}" />
+                            <input type="hidden" name="mentorDecision" value="reject"/>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
