@@ -179,6 +179,8 @@ public class AccountDTO implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+    
+    
 
     @Override
     public String toString() {
