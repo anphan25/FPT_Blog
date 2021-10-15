@@ -5,6 +5,7 @@
  */
 package swp.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Equals;
 import java.io.IOException;
 import java.util.Map;
 import javax.servlet.ServletContext;
@@ -13,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.account.AccountDTO;
 import swp.post.PostDAO;
 
 /**
@@ -38,17 +41,33 @@ public class UpdatePostServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("loadBlogs");
+        HttpSession session = request.getSession(false);
+        String newContent = new String(request.getParameter("newContent").getBytes("iso-8859-1"), "utf-8");
+        String postId = request.getParameter("postId");// Conversion failed when converting from a character string to uniqueidentifier.
 
         try {
-            String newContent = new String(request.getParameter("newContent").getBytes("iso-8859-1"), "utf-8");
-            String postId = request.getParameter("postId");
-            PostDAO dao = new PostDAO();
-            if (dao.insertNewContentPost(postId, newContent)) {
-                log("Settine new content " + newContent + ", Post ID: " + postId + " successfully!");
+            if (postId.isEmpty()) {
+                log("PostID is empty");
             } else {
-                log("Settine new content" + newContent + ", Post ID: " + postId + " failed!");
+                log("PostID: " + postId);
             }
-
+            PostDAO dao = new PostDAO();
+            AccountDTO dto = (AccountDTO) session.getAttribute("CURRENT_USER");
+            if (dto.getRole().equals("M")) {
+                if (dao.adminUpdatePost(postId, newContent)) {//Student update post and waiting for approving
+                    log("Admin update PostContent " + newContent + ", Post ID: " + postId + " successfully!");
+                } else {
+                    log("Admin update PostContent " + newContent + ", Post ID: " + postId + " failed!");
+                }
+            } else if (dto.getRole().equals("S")) {
+                if (dao.insertNewContentPost(postId, newContent)) {//Student update post and waiting for approving
+                    log("Settine new content " + newContent + ", Post ID: " + postId + " successfully!");
+                } else {
+                    log("Settine new content" + newContent + ", Post ID: " + postId + " failed!");
+                }
+            } else {
+                log("Updating FAILED because roleID is not S or M");
+            }
         } catch (Exception e) {
             log("Error at Update post servlet: " + e.getMessage());
         } finally {

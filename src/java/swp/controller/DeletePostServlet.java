@@ -47,10 +47,20 @@ public class DeletePostServlet extends HttpServlet {
                 String email = dto.getEmail();
                 PostDAO dao = new PostDAO();
                 if (dao.checkOwnerPost(email, postId)) {
-                    boolean result = dao.deletePost(postId);
-                    if (result) {
-                        url = "loadBlogs";
+                    if (dto.getRole().equals("S")) {//Student delete thì phải qua hàng chờ
+                        if (dao.deletePost(postId)) {
+                            log("Student delete post successfully and waiting for approving!");
+                            url = "loadBlogs";
+                        }
+                    } else if (dto.getRole().equals("M")) {
+                        if (dao.adminDeletePost(postId)) {
+                            log("Admin delete post successfully!");
+                            url = "loadBlogs";
+                        }
+                    } else {
+                        log("This roleID is not S or M! Maybe Admin???");
                     }
+
                 }
             }
         } catch (SQLException e) {
