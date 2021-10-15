@@ -13,7 +13,7 @@ import swp.utils.DBHelper;
 
 public class PendingPostDAO implements Serializable {
 
-    public ArrayList<PendingPostDTO> getAllWaitingPost(String postStatus) throws NamingException, SQLException {
+    public ArrayList<PendingPostDTO> getAllWaitingPost(String postStatus, int categoryManagement) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -21,17 +21,18 @@ public class PendingPostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT StatusPost, tag, title, postid, emailpost, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
+                String sql = "SELECT CategoryID, StatusPost, tag, title, postid, emailpost, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
                         + ", DATEPART(day, p.createdDate) as CreatedDay, DATEPART(month, p.createdDate) as CreatedMonth, DATEPART(year, p.createdDate) as CreatedYear"
                         + ", name, image, p.PostID, p.EmailPost "
                         + "FROM tblPosts p LEFT JOIN tblAccounts a "
                         + "ON emailpost = email "
-                        + "WHERE p.StatusPost = ? "
+                        + "WHERE p.StatusPost = ? and p.CategoryID = ? "
                         + "ORDER BY p.createdDate desc";
                 //sau lày nếu hệ thống chạy chậm hơn con rùa trước nhà t thì hãy chuyển sàng dùng join và on
                 //vòng lặp while ở dưới sẽ có chữ continue
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postStatus);
+                stm.setInt(2, categoryManagement);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String tag = rs.getString("tag");
@@ -43,7 +44,8 @@ public class PendingPostDAO implements Serializable {
                     String postID = rs.getString("PostID");
                     String EmailPost = rs.getString("EmailPost");
                     String statusPost = rs.getString("StatusPost");
-                    PendingPostDTO dummy = new PendingPostDTO(title, url, createdAt, name, postID, EmailPost, statusPost, Style.convertTagToArrayList(tag));
+                    int categoryID = rs.getInt("CategoryID");
+                    PendingPostDTO dummy = new PendingPostDTO(title, url, createdAt, name, postID, EmailPost, statusPost, Style.convertTagToArrayList(tag),categoryID);
                     boolean checker = dto.add(dummy);
                     if (!checker) {
                         throw new SQLException("oi dit me cuoc doi");

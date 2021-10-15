@@ -11,10 +11,11 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public class PendingPostDTO
-{
+public class PendingPostDTO {
+
     String title, imageURL, dateCreated, name, postID, emailPost, statusPost;
-        private List<String> tag;
+    int categoryID;
+    private List<String> tag;
 
     public List<String> getTag() {
         return tag;
@@ -24,7 +25,7 @@ public class PendingPostDTO
         this.tag = tag;
     }
 
-    public PendingPostDTO(String title, String imageURL, String dateCreated, String name, String postID, String emailPost, String statusPost, List<String> tag) {
+    public PendingPostDTO(String title, String imageURL, String dateCreated, String name, String postID, String emailPost, String statusPost, List<String> tag, int categoryID) {
         this.title = title;
         this.imageURL = imageURL;
         this.dateCreated = dateCreated;
@@ -33,9 +34,8 @@ public class PendingPostDTO
         this.emailPost = emailPost;
         this.statusPost = statusPost;
         this.tag = tag;
+        this.categoryID = categoryID;
     }
-
-
 
     public String getStatusPost() {
         return statusPost;
@@ -45,69 +45,52 @@ public class PendingPostDTO
         this.statusPost = statusPost;
     }
 
-    
-    
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-
-    public String getImageURL()
-    {
+    public String getImageURL() {
         return imageURL;
     }
 
-    public void setImageURL(String imageURL)
-    {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 
-    public String getDateCreated()
-    {
+    public String getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(String dateCreated)
-    {
+    public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public String getPostID()
-    {
+    public String getPostID() {
         return postID;
     }
 
-    public void setPostID(String postID)
-    {
+    public void setPostID(String postID) {
         this.postID = postID;
     }
 
-    public String getEmailPost()
-    {
+    public String getEmailPost() {
         return emailPost;
     }
 
-    public void setEmailPost(String emailPost)
-    {
+    public void setEmailPost(String emailPost) {
         this.emailPost = emailPost;
     }
-
-    
 
 }

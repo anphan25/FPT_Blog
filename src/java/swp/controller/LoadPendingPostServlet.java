@@ -71,8 +71,9 @@ public class LoadPendingPostServlet extends HttpServlet
                     String role = accInfo.getRole();
                     if(role.equals("M"))
                     {
+                        int categoryManagement = accInfo.getCategoryManagement();
                         PendingPostDAO dao = new PendingPostDAO();
-                        ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost(postStatus);
+                        ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost(postStatus, categoryManagement);
                         request.setAttribute("TAB_STATUS", postStatus);
                         if(!dto.isEmpty())
                         {
