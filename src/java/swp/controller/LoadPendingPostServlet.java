@@ -74,7 +74,9 @@ public class LoadPendingPostServlet extends HttpServlet
                         int categoryManagement = accInfo.getCategoryManagement();
                         PendingPostDAO dao = new PendingPostDAO();
                         ArrayList<PendingPostDTO> dto = dao.getAllWaitingPost(postStatus, categoryManagement);
+                        String cateName = dao.getCategoryName(categoryManagement);
                         request.setAttribute("TAB_STATUS", postStatus);
+                        request.setAttribute("CATE_NAME", cateName);
                         if(!dto.isEmpty())
                         {
                             request.setAttribute("PENDING_LIST", dto);

@@ -67,6 +67,36 @@ public class PendingPostDAO implements Serializable {
         }
         return null;
     }
+    
+    public String getCategoryName(int categoryManagement) throws NamingException, SQLException{
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            conn = DBHelper.makeConnection();
+            if(conn != null){
+                String sql = "select CategoryName from tblCategories where CategoryID = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, categoryManagement);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    return rs.getString("CategoryName");
+                }
+            }
+        }finally{
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return null;
+    }
 
     //private boolean checkResult
 }
