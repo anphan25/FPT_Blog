@@ -81,7 +81,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "Select Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, Password "
+                String sql = "Select Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, Password, CategoryManagement "
                         + "from tblAccounts "
                         + "where email = ?";
                 pst = con.prepareCall(sql);
@@ -97,7 +97,8 @@ public class AccountDAO implements Serializable {
                     String userStatus = rs.getString("StatusAccountID");
                     String accountCreatedDate = rs.getString("CreatedDate");
                     String userAvatar = rs.getString("Image");
-                    AccountDTO obj = new AccountDTO(userMail, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
+                    int categoryManagement = rs.getInt("CategoryManagement");
+                    AccountDTO obj = new AccountDTO(userMail, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar, categoryManagement);
                     boolean comparePassword = HashPassword.validatePassword(password, passwordHashed);
                     this.currentUser = comparePassword == true ? obj : null;
                 }
@@ -153,22 +154,20 @@ public class AccountDAO implements Serializable {
         boolean check = false;
         PreparedStatement stm = null;
         Connection conn = null;
-        java.util.Date date = new java.util.Date();
-        java.sql.Timestamp sqlTimeStamp = new java.sql.Timestamp(date.getTime());
         try {
             conn = DBHelper.makeConnection();
             String sql = "insert into tblAccounts(email, password, name, gender, campus, roleID, "
-                    + "statusAccountID, CreatedDate, Image, CategoryManagement) " + "VALUES(?,?,?,?,?,?,?,?,?,null)";
+                    + "statusAccountID, CreatedDate, Image, CategoryManagement) " + "VALUES(?, ?, ?, ?, ?, ?, ?, getdate(), ?, ?)";
             stm = conn.prepareStatement(sql);
             stm.setString(1, user.getEmail());
             stm.setString(2, user.getPassword());
             stm.setNString(3, user.getName());
             stm.setBoolean(4, user.isGender());
             stm.setNString(5, user.getCampus());
-            stm.setString(6, "S");
-            stm.setString(7, "A");
-            stm.setTimestamp(8, sqlTimeStamp);
-            stm.setNString(9, user.getAvatar());
+            stm.setString(6, "S");//Student
+            stm.setString(7, "A");//Active
+            stm.setNString(8, user.getAvatar());
+            stm.setInt(9, 0);//set 0 là mặc định đó là Student
 
             check = stm.executeUpdate() > 0;
         } catch (Exception e) {
@@ -219,7 +218,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image "
+                String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, CategoryManagement "
                         + "FROM tblAccounts "
                         + "where email = ?";
                 pst = con.prepareCall(sql);
@@ -233,7 +232,8 @@ public class AccountDAO implements Serializable {
                     String userStatus = rs.getString("StatusAccountID");
                     String accountCreatedDate = rs.getString("CreatedDate");
                     String userAvatar = rs.getString("Image");
-                    AccountDTO info = new AccountDTO(email, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar);
+                    int categoryManagement = rs.getInt("CategoryManagement");
+                    AccountDTO info = new AccountDTO(email, userName, userGender, userCampus, userRole, userStatus, accountCreatedDate, userAvatar, categoryManagement);
                     return info;
                 }
             }
@@ -259,11 +259,13 @@ public class AccountDAO implements Serializable {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement) "
-                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, null)";
+                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, name);
                 stm.setString(3, url);
+                stm.setInt(4, 0);//tạo nick là auto student
+
                 int row = stm.executeUpdate();
                 if (row > 0) {
                     return true;
@@ -280,27 +282,30 @@ public class AccountDAO implements Serializable {
         return false;
     }
 
-    
-    public boolean giveAward(String email, int awardID) throws NamingException, SQLException{
+    public boolean giveAward(String email, int awardID) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-        try{
+        try {
             con = DBHelper.makeConnection();
-            if(con != null){
+            if (con != null) {
                 String sql = "insert into tblAwardDetails(AwardDetailID, AwardID, EmailStudent, Date) "
-                        +"values(NEWID(), ?, ?,GETDATE())";
+                        + "values(NEWID(), ?, ?,GETDATE())";
                 stm = con.prepareStatement(sql);
-                
+
                 stm.setInt(1, awardID);
                 stm.setString(2, email);
                 int row = stm.executeUpdate();
-                if(row >0){
+                if (row > 0) {
                     return true;
                 }
-            }   
-        }finally{
-            if (con != null) con.close();
-            if (stm != null) stm.close();
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
         }
         return false;
     }
@@ -313,9 +318,9 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image " 
-                        +"from (select COUNT(PostID) as Total, EmailPost from tblPosts where StatusPost = 'A' group by EmailPost ) myTable left join tblAccounts a " 
-                        +"on myTable.EmailPost = a.Email order by myTable.Total desc";
+                String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image "
+                        + "from (select COUNT(PostID) as Total, EmailPost from tblPosts where StatusPost = 'A' group by EmailPost ) myTable left join tblAccounts a "
+                        + "on myTable.EmailPost = a.Email order by myTable.Total desc";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -327,7 +332,7 @@ public class AccountDAO implements Serializable {
                     int likes = getTotalLikesByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, totalPosts);
                     list.add(dto);
-                    
+
                 }
             }
 
@@ -404,25 +409,25 @@ public class AccountDAO implements Serializable {
         }
         return likes;
     }
-    
+
     public boolean checkAward(String email, int awardId) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             con = DBHelper.makeConnection();
-            if(con != null){
+            if (con != null) {
                 String sql = "select AwardDetailID from tblAwardDetails where EmailStudent = ? and AwardID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setInt(2, awardId);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     return true;
                 }
             }
-        }finally{
+        } finally {
             if (con != null) {
                 con.close();
             }
@@ -436,4 +441,3 @@ public class AccountDAO implements Serializable {
         return false;
     }
 }
-
