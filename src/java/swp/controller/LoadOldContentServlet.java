@@ -45,7 +45,7 @@ public class LoadOldContentServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("updatePostPage");
-        String postId = request.getParameter("postId");
+        String postId = request.getParameter("postId");//có id
         HttpSession session = request.getSession(false);
         try {
             if (session.getAttribute("LOGIN").equals("logined")) {
@@ -57,8 +57,8 @@ public class LoadOldContentServlet extends HttpServlet {
                     if (post == null) {
                         log("Loading Old post return null");
                     } else {
+                        request.setAttribute("OLD_CONTENT", post);//sao không vô đây
                         log("Loading Old post successfully! Return POST: " + post.toString());
-                        request.setAttribute("OLD_CONTENT", post);
                     }
                 }
             }

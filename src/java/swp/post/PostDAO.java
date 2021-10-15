@@ -582,6 +582,30 @@ public class PostDAO implements Serializable {
         }
         return check;
     }
+    
+    public boolean adminDeletePost(String postId) throws NamingException, SQLException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        boolean check = false;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblPosts set statuspost = 'D' where postid = ? ";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
 
     public boolean checkOwnerPost(String email, String postId) throws NamingException, SQLException {
         Connection conn = null;
@@ -739,6 +763,35 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "update tblPosts set NewContent = ?, StatusPost = 'WFU' where PostID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setNString(1, newContent);
+                stm.setString(2, postID);
+                check = stm.executeUpdate() > 0;
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return check;
+    }
+    
+    public boolean adminUpdatePost(String postID, String newContent) throws NamingException, SQLException {
+        boolean check = false;
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "update tblPosts set PostContent = ? where PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, newContent);
                 stm.setString(2, postID);
