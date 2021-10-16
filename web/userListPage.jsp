@@ -325,90 +325,19 @@
         <!-- script   -->
         <script src="./js/userListPage.js"></script>
         <script>
-                        function toggleSidebarPhone() {
-                            const toggle_sidebar = document.getElementById("sidebar_phone");
-                            toggle_sidebar.style.display = "block";
-                        }
-                        function handleClickOutside() {
-                            const toggle_sidebar = document.getElementById("sidebar_phone");
-                            toggle_sidebar.style.display = "none";
-                        }
-                        function submit_form()
-                        {
-                            var form = document.getElementById("searchit");
-                            form.submit();
-                        }
-                        //for the dropdown filter
-                        $('.dropdown_filt').click(function ()
-                        {
-                            $(this).attr('tabindex', 1).focus();
-                            $(this).toggleClass('active');
-                            $(this).find('.dropdown-menu').slideToggle(300);
-                        });
-                        $('.dropdown_filt').focusout(function ()
-                        {
-                            $(this).removeClass('active');
-                            $(this).find('.dropdown-menu').slideUp(300);
-                        });
-                        $('.dropdown_filt .dropdown-menu li').click(function ()
-                        {
-                            $(this).parents('.dropdown_filt').find('span').text($(this).text());
-                            $(this).parents('.dropdown_filt').find('input').attr('value', $(this).attr('id'));
-                        });
-
-                        function applyButton()
-                        {
-                            var start = new Date().getTime();
-                            $("#zawarudo").attr("disabled", "disabled");
-                            $("#zawarudo").addClass("button_filt_disable");
-                            setTimeout(function ()
-                            {
-                                $("#zawarudo").removeAttr("disabled");
-                                $("#zawarudo").removeClass("button_filt_disable");
-                            }, 3000); //za warudo 3s
-                            //3 value
-                            let searchtext = document.getElementById("searchtext").value;
-                            let selgen = document.getElementById("selectedgender").value;
-                            let selstt = document.getElementById("selectedstatus").value;
-                            if (selgen === "" && selstt === "")
-                                return; //bám search ko bấm bấm apply làm cc gì
-                            if (selgen === "all" && selstt === "")
-                                selstt = "all";
-                            if (selgen === "" && selstt === "all")
-                                selgen = "all";
-                            $("#reloading").empty();
-                            $("#reloading").append("<div class='loader'></div>");
-                            htmldoc = null;
-                            $.ajax({
-                                url: "searchFilt",
-                                type: "get", //send it through get method
-                                data:
-                                        {
-                                            selectedGender: selgen,
-                                            selectedStatus: selstt,
-                                            txtSearch: searchtext
-                                        },
-                                success: function (text)
-                                {
-                                    //response code is here
-                                    $("#reloading").empty();
-                                    var parser = new DOMParser();
-                                    htmldoc = parser.parseFromString(text, "text/html");
-                                    $("#reloading").html(htmldoc.getElementById("freshair"));
-                                    var end = new Date().getTime();
-                                    var time = end - start;
-                                    console.log("Loaded time: " + time.toString());
-                                },
-                                error: function ()
-                                {
-                                    //Old stuff go here
-                                    // now i know what to do
-                                    $("#reloading").empty();
-                                    $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-                                    console.log("oi dit me cuoc doi");
-                                }
-                            });
-                        }
+            function toggleSidebarPhone() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "block";
+            }
+            function handleClickOutside() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "none";
+            }
+            function submit_form()
+            {
+                var form = document.getElementById("searchit");
+                form.submit();
+            }
         </script>
     </body>
 </html>

@@ -45,7 +45,7 @@ public class InitStuff implements Serializable
             stm = con.createStatement();
             String sql = AWARDS_TRIGGER_CHECKING;
             rs = stm.executeQuery(sql);
-            if(!rs.next()) //trigger exist
+            if(!rs.next()) //trigger does not exist
             {
                 sql = AWARDS_TRIGGER;
                 stm.execute(sql);
