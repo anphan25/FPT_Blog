@@ -60,6 +60,50 @@ public class PostDAO implements Serializable {
         return list;
     }
 
+    public PostDTO getRejectedPost(String postId) throws SQLException, ClassNotFoundException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PostDTO post = null;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select tag, title, p.note, PostContent, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
+                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
+                        + ", a.name, a.image, a.Email"
+                        + " from tblPosts p left join tblAccounts a on EmailApprover = Email where PostID = ?";
+                stm = conn.prepareStatement(sql);
+                stm.setString(1, postId);
+                rs = stm.executeQuery();
+
+                if (rs.next()) {
+                    String emailMentor = rs.getString("Email");
+                    //day:monnth:year  hour:minute
+                    String approvedDate = Style.convertToDateFormat(rs.getInt("ApprovedDay"), rs.getInt("ApprovedMonth"),
+                            rs.getInt("ApprovedYear"), rs.getInt("ApprovedHour"), rs.getInt("ApprovedMinute"));
+                    String tag = rs.getString("Tag");
+                    String title = rs.getString("Title");
+                    String nameMentor = rs.getString("Name");
+                    String avatarMentor = rs.getString("Image");
+                    String note = rs.getNString("Note");
+                    String postContent = rs.getNString("PostContent");
+                    post = new PostDTO(postId, emailMentor, Style.convertTagToArrayList(tag), title, approvedDate, nameMentor, avatarMentor, postContent, note);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return post;
+    }
+
     public int getCommentCounting(String postID) throws SQLException, ClassNotFoundException, NamingException {
         int count = 0;
         Connection conn = null;

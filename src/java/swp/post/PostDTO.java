@@ -18,6 +18,7 @@ public class PostDTO implements Serializable {
     private String newContent;
     private String categoryID;
     private String namePost;
+    private String nameMentor;
     private String avatar;
     private int likes;
     private int comments;
@@ -26,6 +27,14 @@ public class PostDTO implements Serializable {
 
     public String getNote() {
         return note;
+    }
+
+    public String getNameMentor() {
+        return nameMentor;
+    }
+
+    public void setNameMentor(String nameMentor) {
+        this.nameMentor = nameMentor;
     }
 
     public void setNote(String note) {
@@ -84,6 +93,18 @@ public class PostDTO implements Serializable {
         this.avatar = avatar;
         this.likes = likes;
         this.comments = comments;
+    }
+
+    //get rejected post by postid => avatarmentor, emailmentor, namementor, note, approvedDate, title, tag, content
+    public PostDTO(String ID, String emailMentor, List<String> tag, String title, String approvedDate, String nameMentor, String avatarMentor, String postContents, String note) {
+        this.ID = ID;
+        this.emailApprover = emailMentor;
+        this.tag = tag;
+        this.title = title;
+        this.approvedDate = approvedDate;
+        this.nameMentor = nameMentor;
+        this.avatar = avatarMentor;
+        this.postContent = postContents;
     }
 
     public PostDTO(String ID, String emailPost, String emailApprover, String statusPost, String createdDate, List<String> tag,
@@ -180,9 +201,8 @@ public class PostDTO implements Serializable {
         this.comments = comments;
         this.awards = awards;
     }
-    
-    //load rejected posted
 
+    //load rejected posted
     public PostDTO(String ID, List<String> tag, String title, String approvedDate, String emailApprover) {
         this.ID = ID;
         this.tag = tag;
@@ -190,7 +210,6 @@ public class PostDTO implements Serializable {
         this.approvedDate = approvedDate;
         this.emailApprover = emailApprover;
     }
-    
 
     public String getID() {
         return ID;
@@ -314,7 +333,7 @@ public class PostDTO implements Serializable {
 
     @Override
     public String toString() {
-        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + ", awards=" + awards.size() + '}';
+        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + ", award list has =" + awards.size() + ", note=" + note + '}';
     }
 
 }
