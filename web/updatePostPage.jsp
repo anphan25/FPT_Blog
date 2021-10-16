@@ -1,4 +1,3 @@
-
 <%@page import="swp.account.AccountDTO"%> 
 <%@page contentType="text/html" pageEncoding="UTF-8"%> 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -45,11 +44,11 @@
                     </div>
                 </div>
                 <a href="loadProfile?email=${currentUser.email}">
-                <div class="container_right">
-                    <div class="icon_notification_container">
-                        <img src="./images/close_button_icon.svg" />
+                    <div class="container_right">
+                        <div class="icon_notification_container">
+                            <img src="./images/close_button_icon.svg" />
+                        </div>
                     </div>
-                </div>
                 </a>
             </div>
         </header>
@@ -63,17 +62,14 @@
                     <div class="absolute_edit">
                         <p>Update Post</p>
                     </div>
-                    <form
-                        action="updatePost"
-                        method="POST"
-                        >
+                    <form action="updatePost" method="POST">
                         <input type="hidden" name="postId" value="${oldContent.ID}" />
                         <div class="container_content">
                             <div class="textarea_title_container">
                                 <p class="update-title">${oldContent.title}</p>
                             </div>
                             <div class="textarea_content_container">
-                                <textarea id="content_area" name="newContent" >
+                                <textarea id="content_area" name="newContent">
                                     ${oldContent.postContent}
                                 </textarea
                                 >
@@ -83,7 +79,6 @@
                             <button type="submit">Update</button>
                         </div>
                     </form>
-
                 </div>
                 <div class="container_info"></div>
             </div>
@@ -112,55 +107,55 @@
                 statusbar: false,
             });
 
-//            const form = document.querySelector("form");
-//            form.addEventListener("submit", (event) => {
-//                event.preventDefault();
-//            });
-//
-//            function getContent() {
-//                let tags = "";
-//                let tagJquery = $("#textarea_tags_container button");
-//                console.log(tagJquery);
-//                let title = document.getElementById("title_textarea").value;
-//                if (title) {
-//                    if (tagJquery.length == 0 || tagJquery.length > 4) {
-//                        console.log(tagJquery.length == 0);
-//                        if (tagJquery.length == 0) {
-//                            swal(
-//                                    "Have some tags for better",
-//                                    "Tags help your post a lot in SEO",
-//                                    "error",
-//                                    {
-//                                        button: "Ok",
-//                                    }
-//                            );
-//                        } else {
-//                            swal(
-//                                    "Too much tags",
-//                                    "Too much tags make your post over control",
-//                                    "error",
-//                                    {
-//                                        button: "Ok",
-//                                    }
-//                            );
-//                        }
-//                        return;
-//                    } else {
-//                        $("#textarea_tags_container button").each(function () {
-//                            let test = $(this)[0].innerHTML;
-//                            tags += test + " ";
-//                        });
-//                        var myContent = tinymce.get("content_area").getContent();
-//                        $("#tags").val(tags);
-//                        form.submit();
-//                    }
-//                } else {
-//                    swal("You miss your title", "", "error", {button: "Ok"});
-//                    return;
-//                }
-//            }
+            //            const form = document.querySelector("form");
+            //            form.addEventListener("submit", (event) => {
+            //                event.preventDefault();
+            //            });
+            //
+            //            function getContent() {
+            //                let tags = "";
+            //                let tagJquery = $("#textarea_tags_container button");
+            //                console.log(tagJquery);
+            //                let title = document.getElementById("title_textarea").value;
+            //                if (title) {
+            //                    if (tagJquery.length == 0 || tagJquery.length > 4) {
+            //                        console.log(tagJquery.length == 0);
+            //                        if (tagJquery.length == 0) {
+            //                            swal(
+            //                                    "Have some tags for better",
+            //                                    "Tags help your post a lot in SEO",
+            //                                    "error",
+            //                                    {
+            //                                        button: "Ok",
+            //                                    }
+            //                            );
+            //                        } else {
+            //                            swal(
+            //                                    "Too much tags",
+            //                                    "Too much tags make your post over control",
+            //                                    "error",
+            //                                    {
+            //                                        button: "Ok",
+            //                                    }
+            //                            );
+            //                        }
+            //                        return;
+            //                    } else {
+            //                        $("#textarea_tags_container button").each(function () {
+            //                            let test = $(this)[0].innerHTML;
+            //                            tags += test + " ";
+            //                        });
+            //                        var myContent = tinymce.get("content_area").getContent();
+            //                        $("#tags").val(tags);
+            //                        form.submit();
+            //                    }
+            //                } else {
+            //                    swal("You miss your title", "", "error", {button: "Ok"});
+            //                    return;
+            //                }
+            //            }
         </script>
-        
+
         <% }%>
     </body>
 </html>

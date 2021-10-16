@@ -80,7 +80,7 @@
                     <div class="container_right">
                         <div class="container_button_register">
                             <button>
-                                <a href="loadPendingPosts?postStatus=WFA">Pending Post</a>
+                                <a href="createPostPage">Create Post</a>
                             </button>
                         </div>
                         <div class="icon_notification_container">
