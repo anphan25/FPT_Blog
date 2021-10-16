@@ -159,7 +159,7 @@
                 </div>
             </div>
             <div class="rejected-posts">
-                <c:forEach var="post" items="${REJECTED_POSTSLIST}">
+            <c:forEach var="post" items="${requestScope.REJECTED_POSTSLIST}">
                     <div class="container-item">
                         <div class="rejected-reason">
                             <div class="reason-label">
@@ -171,7 +171,7 @@
                                         <img src="${post.avatar}" alt="">
                                     </div>
                                     <a href="loadProfile?email=${post.emailApprover}">
-                                        <p class="mentor-name">${post.namePost}</p>
+                                        <p class="mentor-name">${post.nameMentor}</p>
                                     </a>
                                 </div>
                                 <div class="reason-content">
