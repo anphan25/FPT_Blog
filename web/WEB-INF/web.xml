@@ -63,6 +63,10 @@
             30
         </session-timeout>
     </session-config>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/notFoundPage.jsp</location>
+    </error-page>
     <resource-ref>
         <res-ref-name>DS</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
