@@ -160,7 +160,7 @@
                                                 <div class="time">
                                                     ${post.approvedDate}
                                                 </div>
-                                                <a href="">
+                                                <a href="loadRejectedContent?postId=${post.ID}">
                                                     <p class="post-title">${post.title}</p>
                                                 </a>
                                                 <div class="post-tags">

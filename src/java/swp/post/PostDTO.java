@@ -22,6 +22,15 @@ public class PostDTO implements Serializable {
     private int likes;
     private int comments;
     private ArrayList<Integer> awards;
+    private String note;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 
     public ArrayList<Integer> getAwards() {
         return awards;

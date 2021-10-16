@@ -46,3 +46,4 @@ editComment=EditCommentServlet
 loadDashboard=LoadAwardDashboardServlet
 giveAward=GiveAwardServlet
 loadRejectedPosts=LoadRejectedPosts
+loadRejectedContent=LoadRejectedContentServlet
