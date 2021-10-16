@@ -171,7 +171,17 @@ public class PostDTO implements Serializable {
         this.comments = comments;
         this.awards = awards;
     }
-    //DTO for content of pending post
+    
+    //load rejected posted
+
+    public PostDTO(String ID, List<String> tag, String title, String approvedDate, String emailApprover) {
+        this.ID = ID;
+        this.tag = tag;
+        this.title = title;
+        this.approvedDate = approvedDate;
+        this.emailApprover = emailApprover;
+    }
+    
 
     public String getID() {
         return ID;

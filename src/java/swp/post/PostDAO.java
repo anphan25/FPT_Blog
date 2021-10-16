@@ -582,7 +582,7 @@ public class PostDAO implements Serializable {
         }
         return check;
     }
-    
+
     public boolean adminDeletePost(String postId) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -781,7 +781,7 @@ public class PostDAO implements Serializable {
         }
         return check;
     }
-    
+
     public boolean adminUpdatePost(String postID, String newContent) throws NamingException, SQLException {
         boolean check = false;
         Connection conn = null;
@@ -894,7 +894,7 @@ public class PostDAO implements Serializable {
         return check;
     }
 
-    public ArrayList<PostDTO> getCommonPosts() throws  NamingException, SQLException, ClassNotFoundException {
+    public ArrayList<PostDTO> getCommonPosts() throws NamingException, SQLException, ClassNotFoundException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -934,21 +934,21 @@ public class PostDAO implements Serializable {
         }
         return list;
     }
-    
-    public void insertRejectReason (String postId, String reason) throws  NamingException, SQLException{
+
+    public void insertRejectReason(String postId, String reason) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
-        
-        try{
+
+        try {
             con = DBHelper.makeConnection();
-            if (con != null){
+            if (con != null) {
                 String sql = "update tblPosts set Note = ? where PostID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, reason);
                 stm.setString(2, postId);
                 stm.executeUpdate();
             }
-        }finally{
+        } finally {
             if (stm != null) {
                 stm.close();
             }
@@ -956,5 +956,47 @@ public class PostDAO implements Serializable {
                 con.close();
             }
         }
+    }
+
+    public ArrayList<PostDTO> LoadRejectdPosts(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<PostDTO> list = new ArrayList<>();
+
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select PostID, Title, Tag, EmailApprover, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute,"
+                        + " Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear"
+                        + " from tblPosts"
+                        + " where EmailPost = ? and StatusPost = 'R' ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String postID = rs.getString("PostID");
+                    String title = rs.getString("Title");
+                    String tags = rs.getString("Tag");
+                    String emailApprover = rs.getString("EmailApprover");
+                    String approvedDate = Style.convertToDateFormat(rs.getInt("ApprovedDay"), rs.getInt("ApprovedMonth"),
+                            rs.getInt("ApprovedYear"), rs.getInt("ApprovedHour"), rs.getInt("ApprovedMinute"));
+
+                    PostDTO dto = new PostDTO(postID, Style.convertTagToArrayList(tags), title, approvedDate, emailApprover);
+                    list.add(dto);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return list;
     }
 }

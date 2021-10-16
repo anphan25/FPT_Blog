@@ -1,6 +1,6 @@
-<%@page import="swp.account.AccountDTO"%> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%> 
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="swp.account.AccountDTO"%> <%@page contentType="text/html"
+                                                  pageEncoding="UTF-8"%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
+                                                  prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -42,12 +42,13 @@
                         </a>
                     </div>
                 </div>
-
-                <div class="container_right">
-                    <div class="icon_notification_container">
-                        <img src="./images/close_button_icon.svg" />
+                <a href="loadBlogs">
+                    <div class="container_right">
+                        <div class="icon_notification_container">
+                            <img src="./images/close_button_icon.svg" />
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
         </header>
 
@@ -123,75 +124,105 @@
         </section>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script>
-                    tinymce.init({
-                        selector: "#content_area",
-                        setup: function (ed) {
-                            ed.on("click", function (event) {
-                                console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
-                                const ref = document.querySelector(".container_info");
-                                const stringHtml = `<div style="position: sticky; top: ${50}vh" class="pseudo_info"><h3>Editor Basics</h3><li>We use TinyMCE.</li></div>`;
-                                ref.innerHTML = stringHtml;
+                            tinymce.init({
+                                selector: "#content_area",
+                                setup: function (ed) {
+                                    ed.on("click", function (event) {
+                                        console.log(`Mouse X: ${event.clientX}, Mouse Y: ${event.clientY}`);
+                                        const ref = document.querySelector(".container_info");
+                                        const stringHtml = `<div style="position: sticky; top: ${50}vh" class="pseudo_info"><h3>Editor Basics</h3><li>We use TinyMCE.</li></div>`;
+                                        ref.innerHTML = stringHtml;
+                                    });
+                                },
+                                plugins: "autoresize | image code",
+                                toolbar:
+                                        "formatselect | " +
+                                        "bold italic backcolor forecolor| alignleft aligncenter " +
+                                        "alignright alignjustify | bullist numlist outdent indent | " +
+                                        "removeformat | help | codesample | link image | undo redo | code",
+                                content_style:
+                                        "body { font-weight: 400; font-size:18px }" + "p { margin: 0",
+                                toolbar_mode: "floating",
+                                statusbar: false,
+
+                                image_title: true,
+
+                                automatic_uploads: true,
+
+                                file_picker_types: "image",
+
+                                file_picker_callback: function (cb, value, meta) {
+                                    var input = document.createElement("input");
+                                    input.setAttribute("type", "file");
+                                    input.setAttribute("accept", "image/*");
+
+                                    input.onchange = function () {
+                                        var file = this.files[0];
+
+                                        var reader = new FileReader();
+                                        reader.onload = function () {
+                                            var id = "blobid" + new Date().getTime();
+                                            var blobCache = tinymce.activeEditor.editorUpload.blobCache;
+                                            var base64 = reader.result.split(",")[1];
+                                            var blobInfo = blobCache.create(id, file, base64);
+                                            blobCache.add(blobInfo);
+
+                                            cb(blobInfo.blobUri(), {title: file.name});
+                                        };
+                                        reader.readAsDataURL(file);
+                                    };
+
+                                    input.click();
+                                },
                             });
-                        },
-                        plugins: "autoresize",
-                        toolbar:
-                                "formatselect | " +
-                                "bold italic backcolor forecolor| alignleft aligncenter " +
-                                "alignright alignjustify | bullist numlist outdent indent | " +
-                                "removeformat | help | codesample",
-                        content_style:
-                                "body { font-weight: 400; font-size:18px }" + "p { margin: 0",
-                        toolbar_mode: "floating",
-                        statusbar: false,
-                    });
 
-                    const form = document.querySelector("form");
-                    form.addEventListener("submit", (event) => {
-                        event.preventDefault();
-                    });
+                            const form = document.querySelector("form");
+                            form.addEventListener("submit", (event) => {
+                                event.preventDefault();
+                            });
 
-                    function getContent() {
-                        let tags = "";
-                        let tagJquery = $("#textarea_tags_container button");
-                        console.log(tagJquery);
-                        let title = document.getElementById("title_textarea").value;
-                        if (title) {
-                            if (tagJquery.length == 0 || tagJquery.length > 4) {
-                                console.log(tagJquery.length == 0);
-                                if (tagJquery.length == 0) {
-                                    swal(
-                                            "Have some tags for better",
-                                            "Tags help your post a lot in SEO",
-                                            "error",
-                                            {
-                                                button: "Ok",
-                                            }
-                                    );
+                            function getContent() {
+                                let tags = "";
+                                let tagJquery = $("#textarea_tags_container button");
+                                console.log(tagJquery);
+                                let title = document.getElementById("title_textarea").value;
+                                if (title) {
+                                    if (tagJquery.length == 0 || tagJquery.length > 4) {
+                                        console.log(tagJquery.length == 0);
+                                        if (tagJquery.length == 0) {
+                                            swal(
+                                                    "Have some tags for better",
+                                                    "Tags help your post a lot in SEO",
+                                                    "error",
+                                                    {
+                                                        button: "Ok",
+                                                    }
+                                            );
+                                        } else {
+                                            swal(
+                                                    "Too much tags",
+                                                    "Too much tags make your post over control",
+                                                    "error",
+                                                    {
+                                                        button: "Ok",
+                                                    }
+                                            );
+                                        }
+                                        return;
+                                    } else {
+                                        $("#textarea_tags_container button").each(function () {
+                                            let test = $(this)[0].innerHTML;
+                                            tags += test + " ";
+                                        });
+                                        var myContent = tinymce.get("content_area").getContent();
+                                        $("#tags").val(tags);
+                                        form.submit();
+                                    }
                                 } else {
-                                    swal(
-                                            "Too much tags",
-                                            "Too much tags make your post over control",
-                                            "error",
-                                            {
-                                                button: "Ok",
-                                            }
-                                    );
+                                    swal("You miss your title", "", "error", {button: "Ok"});
+                                    return;
                                 }
-                                return;
-                            } else {
-                                $("#textarea_tags_container button").each(function () {
-                                    let test = $(this)[0].innerHTML;
-                                    tags += test + " ";
-                                });
-                                var myContent = tinymce.get("content_area").getContent();
-                                $("#tags").val(tags);
-                                form.submit();
                             }
-                        } else {
-                            swal("You miss your title", "", "error", {button: "Ok"});
-                            return;
-                        }
-                    }
         </script>
         <script>
             $("#textarea_tags_container input").on("keyup", function (e) {
@@ -236,7 +267,7 @@
                     ref.innerHTML = stringHtml;
                 } else {
                     const stringHtml = `<div style="position: sticky; top: ${event.clientY}px" class="pseudo_info"><h3>Tagging Guidelines</h3><li>Tags help people find your post.</li><li>Think of tags as the topics or categories that best describe your post.</li><li>Add up to four comma-separated tags per post. Combine tags to reach the appropriate subcommunities.</li><li>Use existing tags whenever possible.
-        Some tags, such as “help” or “healthydebate”, have special posting guidelines.</li></div>`;
+            Some tags, such as “help” or “healthydebate”, have special posting guidelines.</li></div>`;
                     ref.innerHTML = stringHtml;
                 }
             }

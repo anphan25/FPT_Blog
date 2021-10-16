@@ -54,9 +54,8 @@ Map<String, String> roadmap= new HashMap<>();
         String txtFile = realPath+"WEB-INF/roadmap.txt";
         readRoadMapFromFile(txtFile);
         context.setAttribute("ROADMAP", roadmap);
-        System.out.println("real "+txtFile);
         //True init start here above code is bull shit
-        InitStuff start = new InitStuff();
+        InitStuff start = new InitStuff();//True bullshit here
         try
         {
         start.loadAwardTrigger();
