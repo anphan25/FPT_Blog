@@ -479,7 +479,8 @@ footer .text_footer_strong {
 }
 .main .container .row .navigation_right {
   width: calc(100vw - 240px);
-  /* margin-left: 1rem; */
+  margin-left: 1rem;
+  min-height: 500px;
 }
 
 .main .container .row .navigation_right .pending_posts {

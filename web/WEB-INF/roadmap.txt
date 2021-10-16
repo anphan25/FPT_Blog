@@ -17,6 +17,7 @@ updatePostPage=updatePostPage.jsp
 userListResultPage=resultpage.jsp
 awardDashboardPage=awardDashboard.jsp
 rejectedPostsPage=rejectedPostsPage.jsp
+rejectedPostsContent=rejectedPostsContent.jsp
 login=LoginServlet
 loginGoogle=LoginGoogleServlet
 loadBlogs=LoadAllPostsServlet

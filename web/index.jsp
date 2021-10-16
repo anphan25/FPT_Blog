@@ -240,7 +240,7 @@
                                 <a href="loadRejectedPosts">
                                     <div class="container_item create-post">
                                         <img src="./images/post-management.png" />
-                                        <p>Posts Management</p>
+                                        <p>Rejected Posts</p>
                                     </div>
                                 </a>
                             </c:if>

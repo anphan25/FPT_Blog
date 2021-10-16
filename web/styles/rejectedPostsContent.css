@@ -10,17 +10,22 @@ a {
   color: unset;
 }
 
+body {
+  background-color: #efefef;
+}
+
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 /* HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER HEADER   */
 
-header{
+header {
   background-color: #fff;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
   z-index: 9999;
+  top: 0;
 }
 
 header .container_header {
@@ -551,6 +556,90 @@ header .container_right .container_button_register .num-post span {
 .create-post img {
   width: 24px;
   height: 24px;
+}
+
+/* container item */
+/* container item */
+/* container item */
+.container-item {
+  width: 80%;
+}
+
+.content-item {
+  background-color: white;
+  border-radius: 5px;
+  padding: 40px 52px 52px;
+}
+.title-text {
+  font-weight: 700;
+  font-size: 3rem;
+}
+
+.mentor-info {
+  display: flex;
+}
+
+.avt {
+  width: 32px;
+  height: 32px;
+}
+
+.avt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.mentor-name {
+  font-weight: 500;
+  padding: 7px 5px;
+  border-radius: 5px;
+  margin-left: 8px;
+}
+
+.reason-content {
+  margin-top: 1rem;
+}
+
+.tag {
+  display: flex;
+  padding: 1rem 0;
+}
+
+.time {
+  font-size: 14px;
+  color: #717171;
+}
+
+.tag p {
+  background-color: #3b49df;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 8px;
+  padding: 2px 5px;
+}
+
+.post-content {
+  line-height: 30px;
+}
+
+.rejected-reason {
+  margin-bottom: 20px;
+}
+
+.rejected-reason .reason-label {
+  padding: 0.6rem;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  color: white;
+  background-color: #3b49df;
+}
+
+.rejected-reason .reason-main-item {
+  padding: 1rem;
+  background-color: white;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */

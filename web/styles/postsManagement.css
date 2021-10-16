@@ -470,7 +470,7 @@ footer .text_footer_strong {
 }
 .main .container .row .navigation_right {
   width: calc(100vw - 240px);
-  /* margin-left: 1rem; */
+  margin-left: 1rem;
 }
 
 .main .container .row .navigation_right .pending_posts {
@@ -678,8 +678,7 @@ footer .text_footer_strong {
 .post-info-item {
   background-color: white;
   padding: 1rem;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-radius: 10px;
 }
 
 .post-info {
@@ -704,4 +703,13 @@ footer .text_footer_strong {
   font-size: 14px;
   color: #717171;
   margin-bottom: 10px;
+}
+
+.no-post {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.posts {
+  min-height: 500px;
 }

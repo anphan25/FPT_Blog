@@ -232,6 +232,12 @@
                                             <p>Create Post</p>
                                         </div>
                                     </a>
+                                    <a href="loadRejectedPosts">
+                                        <div class="container_item create-post">
+                                            <img src="./images/post-management.png" />
+                                            <p>Rejected Posts</p>
+                                        </div>
+                                    </a>
                                 </c:if>
                                 <c:if test="${currentUser.role == 'M'}">
                                     <a href="loadPendingPosts?postStatus=WFA">
