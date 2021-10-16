@@ -18,17 +18,19 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author ASUS
+ * @author ADMIN
  */
-@WebFilter(filterName = "FilterServlet", urlPatterns = {"/*"})
-public class FilterServlet implements Filter {
+public class LoginBlockFilter implements Filter
+{
+    private final String ERROR_PAGE = "notFoundPage";
+    private final String HOME_PAGE = "LoadAllPostsServlet"; //nếu để "" hậu quả sẽ vô cùng dark bủh
+    //cái giá phải trả là nếu nó trả về 404 sẽ hiện cái url này ra
     
     private static final boolean debug = true;
 
@@ -37,13 +39,16 @@ public class FilterServlet implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public FilterServlet() {
+    public LoginBlockFilter()
+    {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (debug) {
-            log("FilterServlet:DoBeforeProcessing");
+            throws IOException, ServletException
+    {
+        if (debug)
+        {
+            log("LoginBlockFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -69,9 +74,11 @@ public class FilterServlet implements Filter {
     }    
     
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-        if (debug) {
-            log("FilterServlet:DoAfterProcessing");
+            throws IOException, ServletException
+    {
+        if (debug)
+        {
+            log("LoginBlockFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -104,43 +111,41 @@ public class FilterServlet implements Filter {
      */
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String uri = req.getRequestURI();
-        String url = "";
-        //The biggest brain know how to solve the problem with their mindset, their intelligent
+            throws IOException, ServletException
+    {
+        //dùng stand the hand để catch cá chê
+        HttpServletResponse res = (HttpServletResponse)response;
+        res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        res.setHeader("Pragma", "no-cache");
+        res.setDateHeader("Expires", -1);
+        //không lưu lại dữ liệu browser sẽ phải load hoàn toàn cái resource của server và check ở dưới thấy có login sẽ ko back
+        //serverside declaration
+        HttpServletRequest req = (HttpServletRequest)request;
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>)context.getAttribute("ROADMAP");
+        String url = roadmap.get(ERROR_PAGE);
+        //lấy true đỡ phai handle 2 vấn đề
         HttpSession session = req.getSession(true);
-        String cache = (String) session.getAttribute("LOGIN");
-        if(cache == null) //chưa đăng nhập sẽ ko store cache
+        String checkLogin = (String) session.getAttribute("LOGIN");
+        //logined ? wtf
+        log("it does run");
+        if(checkLogin != null)
         {
-            HttpServletResponse res = (HttpServletResponse)response;
-            res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-            res.setHeader("Pragma", "no-cache");
-            res.setDateHeader("Expires", -1);
-        }// điều này sẽ cải thiện UX lên lv max ditme UI
-        try{
-            ServletContext context = request.getServletContext();
-            Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-            int lastIndex = uri.lastIndexOf("/");
-            String resource = uri.substring(lastIndex + 1);
-            url = roadmap.get(resource);
-            if (url != null) {
-                RequestDispatcher rd = request.getRequestDispatcher(url);
-                rd.forward(request, response);
-            } else {
-                chain.doFilter(request, response);
-            }
-        
-        }catch (IOException | ServletException ex) {
-            log("FilterServlet "+ ex.getMessage());
+            url = HOME_PAGE; //tất cả là tại thằng Ân ko phân biệt ProcessRequest và LoadPost
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
-        
+        else //chưa login thì được truy cập 2 đường dẫn html và 2 servlet login
+        {
+            chain.doFilter(request, response);
+        }
     }
 
     /**
      * Return the filter configuration object for this filter.
      */
-    public FilterConfig getFilterConfig() {
+    public FilterConfig getFilterConfig()
+    {
         return (this.filterConfig);
     }
 
@@ -149,24 +154,29 @@ public class FilterServlet implements Filter {
      *
      * @param filterConfig The filter configuration object
      */
-    public void setFilterConfig(FilterConfig filterConfig) {
+    public void setFilterConfig(FilterConfig filterConfig)
+    {
         this.filterConfig = filterConfig;
     }
 
     /**
      * Destroy method for this filter
      */
-    public void destroy() {        
+    public void destroy()
+    {        
     }
 
     /**
      * Init method for this filter
      */
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig)
+    {        
         this.filterConfig = filterConfig;
-        if (filterConfig != null) {
-            if (debug) {                
-                log("FilterServlet:Initializing filter");
+        if (filterConfig != null)
+        {
+            if (debug)
+            {                
+                log("LoginBlockFilter:Initializing filter");
             }
         }
     }
@@ -175,21 +185,26 @@ public class FilterServlet implements Filter {
      * Return a String representation of this object.
      */
     @Override
-    public String toString() {
-        if (filterConfig == null) {
-            return ("FilterServlet()");
+    public String toString()
+    {
+        if (filterConfig == null)
+        {
+            return ("LoginBlockFilter()");
         }
-        StringBuffer sb = new StringBuffer("FilterServlet(");
+        StringBuffer sb = new StringBuffer("LoginBlockFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
     
-    private void sendProcessingError(Throwable t, ServletResponse response) {
+    private void sendProcessingError(Throwable t, ServletResponse response)
+    {
         String stackTrace = getStackTrace(t);        
         
-        if (stackTrace != null && !stackTrace.equals("")) {
-            try {
+        if (stackTrace != null && !stackTrace.equals(""))
+        {
+            try
+            {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
                 PrintWriter pw = new PrintWriter(ps);                
@@ -202,34 +217,42 @@ public class FilterServlet implements Filter {
                 pw.close();
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
             }
-        } else {
-            try {
+        } else
+        {
+            try
+            {
                 PrintStream ps = new PrintStream(response.getOutputStream());
                 t.printStackTrace(ps);
                 ps.close();
                 response.getOutputStream().close();
-            } catch (Exception ex) {
+            } catch (Exception ex)
+            {
             }
         }
     }
     
-    public static String getStackTrace(Throwable t) {
+    public static String getStackTrace(Throwable t)
+    {
         String stackTrace = null;
-        try {
+        try
+        {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             t.printStackTrace(pw);
             pw.close();
             sw.close();
             stackTrace = sw.getBuffer().toString();
-        } catch (Exception ex) {
+        } catch (Exception ex)
+        {
         }
         return stackTrace;
     }
     
-    public void log(String msg) {
+    public void log(String msg)
+    {
         filterConfig.getServletContext().log(msg);        
     }
     
