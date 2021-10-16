@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>LoginBlockFilter</filter-name>
+        <filter-class>swp.filter.LoginBlockFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginBlockFilter</filter-name>
+        <!-- all blocked html and jsp -->
+        <url-pattern>/login.html/*</url-pattern>
+        <url-pattern>/login.jsp/*</url-pattern>
+        <url-pattern>/register.jsp/*</url-pattern>
+        <!-- all blocked road map name -->
+        <url-pattern>/firstLoginPage/*</url-pattern>
+        <url-pattern>/registerPage/*</url-pattern>
+        <url-pattern>/loginPage/*</url-pattern>
+        <url-pattern>/register/*</url-pattern>
+        <url-pattern>/login/*</url-pattern>
+        <url-pattern>/loginGoogle/*</url-pattern>
+        <!-- all blocked servlet -->
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>LoginGoogleServlet</servlet-name>
+        <servlet-name>RegisterServlet</servlet-name>
+    </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>swp.listener.MyListener</listener-class>
@@ -16,7 +38,7 @@
         <servlet-name>CreatePostServlet</servlet-name>
         <servlet-class>swp.controller.CreatePostServlet</servlet-class>
     </servlet>
-<!--    <servlet>
+    <!--    <servlet>
         <servlet-name>LoadPostDetail</servlet-name>
         <servlet-class>swp.controller.LoadPostContentServlet</servlet-class>
     </servlet>-->
@@ -32,7 +54,7 @@
         <servlet-name>CreatePostServlet</servlet-name>
         <url-pattern>/CreatePostServlet</url-pattern>
     </servlet-mapping>
-<!--    <servlet-mapping>
+    <!--    <servlet-mapping>
         <servlet-name>LoadPostDetail</servlet-name>
         <url-pattern>/LoadPostDetail</url-pattern>
     </servlet-mapping>-->

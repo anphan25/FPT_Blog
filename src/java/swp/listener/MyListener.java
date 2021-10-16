@@ -58,7 +58,7 @@ Map<String, String> roadmap= new HashMap<>();
         InitStuff start = new InitStuff();//True bullshit here
         try
         {
-        start.loadAwardTrigger();
+            start.loadAwardTrigger();
         } 
         catch (NamingException ex)
         {
@@ -70,7 +70,23 @@ Map<String, String> roadmap= new HashMap<>();
         }
     }
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void contextDestroyed(ServletContextEvent sce) 
+    {
+        ServletContext context = sce.getServletContext();
+        //Call the event of human extinction
+        Apocalypse doom = new Apocalypse();
+        try
+        {
+            doom.deleteTrigger();
+        }
+        catch (NamingException ex)
+        {
+            context.log("Listener failed destroy: " + ex.getMessage());
+        } 
+        catch (SQLException ex)
+        {
+            context.log("Listener failed destroy: " + ex.getMessage());
+        }
         
     }
 }
