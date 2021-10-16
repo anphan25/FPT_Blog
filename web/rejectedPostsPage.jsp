@@ -136,10 +136,10 @@
                                         <p>Create Post</p>
                                     </div>
                                 </a>
-                                <a href="postsManagementPage">
+                                <a href="loadRejectedPosts">
                                     <div class="container_item create-post">
                                         <img src="./images/post-management.png" />
-                                        <p>Posts Management</p>
+                                        <p>Rejected Posts</p>
                                     </div>
                                 </a>
 
@@ -147,15 +147,15 @@
                         </div>
                         <div class="navigation_right">
                             <div class="title">
-                                <h1>Posts Management</h1>
+                                <h1>Rejected Posts</h1>
                             </div>
                             <div class="posts">
                                 <c:if test="${not empty postList}">
                                     <c:forEach var="post" items="${postList}">
                                         <div class="post-info">
-                                            <div class="reject-by-label">
+<!--                                            <div class="reject-by-label">
                                                 <h1>Rejected Post</h1>
-                                            </div>
+                                            </div>-->
                                             <div class="post-info-item">
                                                 <div class="time">
                                                     ${post.approvedDate}
@@ -176,6 +176,11 @@
                                             </div>
                                         </div>
                                     </c:forEach>
+                                </c:if>
+                                <c:if test="${empty postList}">
+                                    <div class="no-post">
+                                        <h1>No rejected post</h1>
+                                    </div>
                                 </c:if>
                             </div>
                         </div>

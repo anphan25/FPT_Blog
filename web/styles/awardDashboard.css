@@ -369,6 +369,7 @@ header .container_right .container_button_register button:hover {
   width: 85%;
   height: 600px;
   margin-top: 1rem;
+  margin-left: 1rem;
 }
 
 .left-menu {
