@@ -158,41 +158,48 @@
                     </a>
                 </div>
             </div>
-            <div class="container-item">
-                <div class="rejected-reason">
-                    <div class="reason-label">
-                        <h1>Reason of rejecting</h1>
-                    </div>
-                    <div class="reason-main-item">
-                        <div class="mentor-info">
-                            <div class="avt">
-                                <img src="https://scontent.fsgn5-4.fna.fbcdn.net/v/t1.6435-9/72292410_1373089232859266_4631699621133942784_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=21WMcRYhh0AAX81Pgxl&tn=sfQDfW--ggkIUpOz&_nc_ht=scontent.fsgn5-4.fna&oh=473610f3f236dea03d11f747223b4951&oe=618F7893" alt="">
+            <div class="rejected-posts">
+                <c:forEach var="post" items="${REJECTED_POSTSLIST}">
+                    <div class="container-item">
+                        <div class="rejected-reason">
+                            <div class="reason-label">
+                                <h1>Reason of rejecting</h1>
                             </div>
-                            <p class="mentor-name">Thiên Ân</p>
+                            <div class="reason-main-item">
+                                <div class="mentor-info">
+                                    <div class="avt">
+                                        <img src="${post.avatar}" alt="">
+                                    </div>
+                                    <a href="loadProfile?email=${post.emailApprover}">
+                                        <p class="mentor-name">${post.namePost}</p>
+                                    </a>
+                                </div>
+                                <div class="reason-content">
+                                    ${post.note}
+                                </div>
+                            </div>
                         </div>
-                        <div class="reason-content">
-                            Bài này viết như cc, xem lại đi nhé
+                        <div class="content-item">
+                            <div class="title">
+                                <div class="time">${post.approvedDate}</div>
+                                <p class="title-text">${post.title}</p>
+                                <div class="tag">
+                                    <c:forEach var="tag" items="${post.tag}">
+                                        <c:url var="searchByTagLink" value="searchByTag">
+                                            <c:param name="tag" value="${tag}" />
+                                        </c:url>
+                                        <a href="${searchByTagLink}">
+                                            <p class="post-tag">#${tag}</p>
+                                        </a>
+                                    </c:forEach>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                ${post.postContent}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="content-item">
-                    <div class="title">
-                        <div class="time">25/11/2021 10:15</div>
-                        <p class="title-text">Title</p>
-                        <div class="tag">
-                            <a href="">
-                                <p>#test</p>
-                            </a>
-                            <a href="">
-                                <p>#test</p>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="post-content">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque aliquam nobis autem corrupti non dolor eius, dolorum mollitia, vero nemo voluptatum dolores sint doloribus alias repellat? Saepe eaque maiores est!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, repellat. Odio atque eos fugiat quisquam quibusdam adipisci quia minus dolores optio, quasi rerum mollitia facilis? Omnis mollitia at earum quam.
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </section>
 
