@@ -127,8 +127,6 @@ public class LoginBlockFilter implements Filter
         //lấy true đỡ phai handle 2 vấn đề
         HttpSession session = req.getSession(true);
         String checkLogin = (String) session.getAttribute("LOGIN");
-        //logined ? wtf
-        log("it does run");
         if(checkLogin != null)
         {
             url = HOME_PAGE; //tất cả là tại thằng Ân ko phân biệt ProcessRequest và LoadPost
