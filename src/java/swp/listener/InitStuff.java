@@ -8,7 +8,8 @@ import java.sql.Statement;
 import javax.naming.NamingException;
 import swp.utils.DBHelper;
 
-/*** THIS WRITED BY SAPHAREONG ***/
+/*** THIS WRITED BY SAPHAREONG BEDE ***/ //canh sat chínhh tả đây, mày đã bị bắt
+
 public class InitStuff implements Serializable
 {
     private final String AWARDS_TRIGGER_CHECKING = "SELECT 12 FROM sys.triggers WHERE Name = 'AwardTrigger'";
@@ -22,7 +23,7 @@ public class InitStuff implements Serializable
                 + "SELECT @totallike = COUNT(PostID) "
                 + "FROM tblLikes "
                 + "WHERE PostID = @postid "
-                + "IF @totallike >= 100 "   //here is the standard
+                + "IF @totallike >= 2 "   //here is the standard
                 + "BEGIN "
                     + "DECLARE @email varchar(50) "
                     + "SELECT @email = EmailPost "
