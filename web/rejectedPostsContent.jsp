@@ -1,6 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<c:set var="loginStatus" value="${sessionScope.LOGIN}"/>
+<c:set var="currentUser" value="${sessionScope.CURRENT_USER}"/>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -158,25 +159,31 @@
                     </a>
                 </div>
             </div>
-            <div class="rejected-posts">
-                    <div class="container-item">
-                        <div class="rejected-reason">
-                            <div class="reason-label">
-                                <h1>Reason of rejecting</h1>
-                            </div>
-                            <div class="reason-main-item">
-                                <div class="mentor-info">
-                                    <div class="avt">
-                                        <img src="${post.avatar}" alt="">
-                                    </div>
-                                    <a href="loadProfile?email=${post.emailApprover}">
-                                        <p class="mentor-name">${post.nameMentor}</p>
-                                    </a>
+
+            <div class="container-item">
+                <div class="rejected-posts">
+                    <div class="rejected-reason">
+                        <div class="reason-label">
+                            <h1>Reason of rejecting</h1>
+                        </div>
+                        <div class="reason-main-item">
+                            <div class="mentor-info">
+                                <div class="avt">
+                                    <img src="${post.avatar}" alt="">
                                 </div>
-                                <div class="reason-content">
-                                    ${post.note}
-                                </div>
+                                <a href="loadProfile?email=${post.emailApprover}">
+                                    <p class="mentor-name">${post.nameMentor}</p>
+                                </a>
                             </div>
+                            <div class="reason-content">
+                                ${post.note}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="reason-label">
+                            <h1>Your post</h1>
                         </div>
                         <div class="content-item">
                             <div class="title">
@@ -198,6 +205,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </section>
 

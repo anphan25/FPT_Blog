@@ -105,6 +105,7 @@ public class PostDTO implements Serializable {
         this.nameMentor = nameMentor;
         this.avatar = avatarMentor;
         this.postContent = postContents;
+        this.note = note;
     }
 
     public PostDTO(String ID, String emailPost, String emailApprover, String statusPost, String createdDate, List<String> tag,
