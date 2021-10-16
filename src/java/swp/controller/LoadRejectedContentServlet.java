@@ -7,11 +7,20 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.Map;
+import javax.naming.NamingException;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.account.AccountDTO;
+import swp.post.PostDAO;
+import swp.post.PostDTO;
 
 /**
  *
@@ -32,17 +41,25 @@ public class LoadRejectedContentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoadRejectedContentServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoadRejectedContentServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        /**
+         * postID > avatarmentor, emailmentor, namementor, note, approvedDate,
+         * title tag content
+         */
+
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get("rejectedPostsContent");
+        String postId = request.getParameter("postId");
+        try {
+            PostDAO dao = new PostDAO();
+            PostDTO rejectedPost = dao.getRejectedPost(postId);
+            request.setAttribute("REJECTED_POST", rejectedPost);
+
+        } catch (Exception e) {
+            log("Error at LoadRejectedContentServlet: " + e.getMessage());
+        } finally {
+            RequestDispatcher rd = request.getRequestDispatcher(url);
+            rd.forward(request, response);
         }
     }
 
