@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.account.AccountDTO;
+import swp.userlist.Userlist;
 import swp.userlist.UserlistDAO;
 import swp.userlist.UserlistDTO;
 
@@ -69,13 +70,14 @@ public class LoadUserListServlet extends HttpServlet
                     {
                         UserlistDAO dao = new UserlistDAO();
                         ArrayList<UserlistDTO> dto = dao.getUserList();
-                        url = roadmap.get(USER_CONTROL_PANEL); // check role thành công thì cho qua luôn dù có dto hay ko
                         //url = "resultpage.jsp";
                         //chưa check account đã đăng nhập và chưa check role
                         if(dto != null) //CAUTION nếu tblAccounts trong database không có gì sẽ bị lỗi stackoverflow
                         {
                             request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
-                            session.setAttribute("CACHING_USER_LIST", dto);
+                            Userlist naplandau = new Userlist(dto);
+                            session.setAttribute("CACHING_USER_LIST", naplandau);
+                            url = roadmap.get(USER_CONTROL_PANEL);
                         }
                     }
                     

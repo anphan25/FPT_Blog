@@ -5,8 +5,11 @@ import java.io.Serializable;
 
 public class UserlistDTO implements Serializable, Comparable<UserlistDTO>
 {
-    String email, name, campus, role, gender, statusaccount;
+    private String email, name, campus, role, gender, statusaccount, major;
+    private int categoryID;
     //now noone will touch my package
+
+    //constructor for viewing all role.
     public UserlistDTO(String email, String name, String campus, String role, String gender, String statusaccount)
     {
         this.email = email;
@@ -15,6 +18,31 @@ public class UserlistDTO implements Serializable, Comparable<UserlistDTO>
         this.role = role;
         this.gender = gender;
         this.statusaccount = statusaccount;
+    }
+    
+    //constructor for view selected mentor
+    public UserlistDTO(String email, String name, String campus, String role, String gender, String statusaccount, String major)
+    {
+        this.email = email;
+        this.name = name;
+        this.campus = campus;
+        this.role = role;
+        this.gender = gender;
+        this.statusaccount = statusaccount;
+        this.major = major;
+    }
+
+    //full list
+    public UserlistDTO(String email, String name, String campus, String role, String gender, String statusaccount, String major, int categoryID)
+    {
+        this.email = email;
+        this.name = name;
+        this.campus = campus;
+        this.role = role;
+        this.gender = gender;
+        this.statusaccount = statusaccount;
+        this.major = major;
+        this.categoryID = categoryID;
     }
     
     public String getEmail()
@@ -75,6 +103,16 @@ public class UserlistDTO implements Serializable, Comparable<UserlistDTO>
     public void setStatusaccount(String statusaccount)
     {
         this.statusaccount = statusaccount;
+    }
+
+    public String getMajor()
+    {
+        return major;
+    }
+
+    public void setMajor(String major)
+    {
+        this.major = major;
     }
     
     @Override

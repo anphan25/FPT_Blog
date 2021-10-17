@@ -102,12 +102,29 @@ function applyButton()
     let searchtext = document.getElementById("searchtext").value;
     let selgen = document.getElementById("selectedgender").value;
     let selstt = document.getElementById("selectedstatus").value;
-    if (selgen === "" && selstt === "")
+    let selr = document.getElementById("selectedrole").value;
+    let selm = document.getElementById("selectedmajor").value;
+    //checking condition before send to server
+    if (selgen === "" && selstt === "" && selr === "" && selm === "")
         return; //bám search ko bấm bấm apply làm cc gì
-    if (selgen === "all" && selstt === "")
-        selstt = "all";
-    if (selgen === "" && selstt === "all")
-        selgen = "all";
+    //convert to full rolename
+    switch(selr)
+    {
+        case "S": selr = "Student"; break;
+        case "A": selr = "Admin"; break;
+        case "M": selr = "Mentor"; break;
+        default: selr = "all";
+    }
+    if (selgen !== "" || selstt !== "" || selr !== "" || selm !== "") 
+    //đã select 1 cái nhưng những thứ khác để trống
+    {
+        if(selgen === "") selgen = "all";
+        if(selstt === "") selstt = "all";
+        if(selr === "") selr = "all";
+        if(selm === "") selm = "all";
+    }
+    console.log("all parameters: " + selgen + " _ " + selstt + " _ " + selr + " _ " + selm);
+    //starting the sending
     $("#reloading").empty();
     $("#reloading").append("<div class='loader'></div>");
     htmldoc = null;
@@ -118,6 +135,8 @@ function applyButton()
                 {
                     selectedGender: selgen,
                     selectedStatus: selstt,
+                    selectedRole: selr,
+                    selectedMajor: selm,
                     txtSearch: searchtext
                 },
         success: function (text)

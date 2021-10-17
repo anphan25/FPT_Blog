@@ -34,9 +34,10 @@ public class UserlistDAO implements Serializable
             con = DBHelper.makeConnection();
             if(con != null)
             {
-                String sql = "SELECT a.Email, a.Name, a.Gender, a.Campus, r.RoleName, sa.StatusName "
+                String sql = "SELECT a.Email, a.Name, a.Gender, a.Campus, r.RoleName, sa.StatusName, a.CategoryManagement, c.CategoryName "
                             + "FROM tblAccounts a LEFT JOIN tblRoles r ON a.RoleID = r.RoleID "
-                            + "LEFT JOIN tblStatusAccounts sa ON a.StatusAccountID = sa.StatusAccountID"; 
+                            + "LEFT JOIN tblStatusAccounts sa ON a.StatusAccountID = sa.StatusAccountID "
+                            + "LEFT JOIN tblCategories c ON c.CategoryID = a.CategoryManagement"; 
                         //cân nhắc vứt mẹ bảng tblroles và tblstatusAccount đi nếu hệ thống bị chậm trong tương lai
                         //chẳng ai dùng 1 bảng với 1 mối quan hệ duy nhất chỉ để show ra selection. (việc show selection có thể thông qua việc múa javascript
                 stm = con.prepareStatement(sql);
@@ -53,7 +54,9 @@ public class UserlistDAO implements Serializable
                     String campus = rs.getString(4);
                     String RoleID = rs.getString(5);
                     String statusacc = rs.getString(6);
-                    UserlistDTO dummy = new UserlistDTO(email, name, campus, RoleID, gender, statusacc);
+                    int CatID = rs.getInt(7);
+                    String CatName = rs.getString(8);
+                    UserlistDTO dummy = new UserlistDTO(email, name, campus, RoleID, gender, statusacc, CatName, CatID);
                     boolean check = lazylist.add(dummy);
                     if(!check)
                     {

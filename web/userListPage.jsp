@@ -4,6 +4,7 @@
 
 <c:set var = "userlist" value = "${requestScope.USER_LIST}" />
 <c:set var = "currentadmin" value = "${sessionScope.CURRENT_USER}" />
+<c:set var = "major" value = "${sessionScope.CATEGORY_LIST}" />
 
 <c:if test = "${empty currentadmin}">
     <c:redirect url = "firstLoginPage"/>
@@ -218,6 +219,31 @@
                             <li id="all">View all</li>
                         </ul>
                     </div>
+                    <div class="dropdown_filt">
+                        <div class="select_filt">
+                            <span>Select Role</span>
+                        </div>
+                        <input type="hidden" id="selectedrole">
+                        <ul class="dropdown-menu" onclick="ShowMajor()">
+                            <li id="S">Student</li>
+                            <li id="M">Mentor</li>
+                            <li id="A">Admin</li>
+                            <li id="all">View all</li>
+                            <!-- show all when it choose the third one -->
+                        </ul>
+                    </div>
+                    <div class="dropdown_filt" id="hiddenmajor">
+                        <div class="select_filt">
+                            <span>Select Major</span>
+                        </div>
+                        <input type="hidden" id="selectedmajor">
+                        <ul class="dropdown-menu">
+                            <c:forEach var = "categories" items = "${major}">
+                                <li id="${categories.name}">${categories.name}</li>
+                            </c:forEach>
+                            <!-- show all when it choose the third one -->
+                        </ul>
+                    </div>
                     <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                 </div>
                 <form onsubmit="SendData();return false">
@@ -337,6 +363,14 @@
             {
                 var form = document.getElementById("searchit");
                 form.submit();
+            }
+            document.getElementById("hiddenmajor").style.display = "none";
+            function ShowMajor()
+            {
+                if(document.getElementById("selectedrole").value === "M")
+                document.getElementById("hiddenmajor").style.display = "inline-block";
+                else
+                document.getElementById("hiddenmajor").style.display = "none";
             }
         </script>
     </body>
