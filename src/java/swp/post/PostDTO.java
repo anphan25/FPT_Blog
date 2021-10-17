@@ -332,9 +332,4 @@ public class PostDTO implements Serializable {
         this.comments = comments;
     }
 
-    @Override
-    public String toString() {
-        return "PostDTO{" + "ID=" + ID + ", emailPost=" + emailPost + ", emailApprover=" + emailApprover + ", statusPost=" + statusPost + ", createdDate=" + createdDate + ", tag=" + tag + ", title=" + title + ", approvedDate=" + approvedDate + ", postContent=" + postContent + ", newContent=" + newContent + ", categoryID=" + categoryID + ", namePost=" + namePost + ", avatar=" + avatar + ", likes=" + likes + ", comments=" + comments + ", award list has =" + awards.size() + ", note=" + note + '}';
-    }
-
 }
