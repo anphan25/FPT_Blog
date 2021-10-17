@@ -58,7 +58,7 @@ public class LoadOldContentServlet extends HttpServlet {
                         log("Loading Old post return null");
                     } else {
                         request.setAttribute("OLD_CONTENT", post);//sao không vô đây
-                        log("Loading Old post successfully! Return POST: " + post.toString());
+                        log("Loading Old post successfully! Return POST: " + post.getPostContent());
                     }
                 }
             }
