@@ -547,41 +547,59 @@ header .container_right .container_button_register button:hover {
 .category-list {
   background-color: #fff;
   border-radius: 5px;
-  border: 1px solid #e3e3e3;
   /* padding: 40px 30px; */
-  height: 510px;
-  overflow-y: scroll;
+  height: 380px;
+  overflow-y: auto;
 }
 
 .category-list table {
-  border-collapse: collapse;
-  text-align: center;
-  border: 1px solid #e3e3e3;
-  width: 100%;
-  border-radius: 5px;
-}
-
-.category-list table th {
-  padding: 10px;
-}
-
-.category-list table thead {
-  background-color: #3b49df;
-  color: #fff;
-}
-
-.category-list table tbody tr {
-  border: 1px solid #e3e3e3;
-}
-
-.category-list table tbody td {
-  padding: 10px 0px;
-}
-
-.user-list-icon img {
-  width: 24px;
-  height: 24px;
-}
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 .125rem .3rem 0 rgba(48, 53, 69, 0.08);
+  }
+  
+  .category-list table th {
+   padding: 1rem;
+    background-color: #000;
+    color: #fff;
+  }
+  
+  .category-list table thead tr {
+    padding: 1rem;
+  }
+  
+  .category-list table tbody tr {
+    border: 1px solid #e3e3e3;
+  }
+  
+  .category-list table tbody td {
+    padding: 0.5rem;
+  }
+  
+  .user-list-icon img {
+    width: 24px;
+    height: 24px;
+  }
+  .title {
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .wrapper {
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    background: rgba(20, 0, 255, 0.2);
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #5951ED;
+    cursor: pointer;
+  }
+  
+  
 
 /* Footer */
 /* Footer */

@@ -243,8 +243,8 @@
                                 varStatus="counter"
                                 >
                                 <tr>
-                                    <td>${counter.count}</td>
-                                    <td>${cateDTO.name}</td>
+                                    <td><p class="title">${counter.count}</p></td>
+                                    <td><p class="wrapper">${cateDTO.name}</p></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
