@@ -102,6 +102,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                         if(newlist != null)
                         {
                             request.setAttribute("USER_LIST", newlist);
+                            request.setAttribute("IS_IT_MENTOR", role);
                             url = roadmap.get(SEARCH_RESULT_PAGE);
                         }
                     }//the end of filtering the list leaving the result
