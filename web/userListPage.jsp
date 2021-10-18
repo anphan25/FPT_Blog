@@ -112,9 +112,6 @@
                                     <div class="item">
                                         <a href="loadProfile?email=${currentadmin.email}"><p>Profile</p></a>
                                     </div>
-                                    <div class="item">
-                                        <a><p>Create Post</p></a>
-                                    </div>
                                 </div>
                                 <div class="item-bottom">
                                     <a href="logout">Sign Out</a>
@@ -240,7 +237,7 @@
                         <ul class="dropdown-menu">
                             <c:forEach var = "categories" items = "${major}">
                                 <li id="${categories.name}">${categories.name}</li>
-                            </c:forEach>
+                                </c:forEach>
                             <!-- show all when it choose the third one -->
                         </ul>
                     </div>
@@ -271,10 +268,10 @@
                             </thead>
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
-                                <form action='userAction'>
+                                <form action='userAction' class="user-form">
                                     <tr>
                                         <td>${counter.count}</td>
-                                        <td><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
+                                        <td class="email-td"><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
                                     <input type="hidden" name="victimEmail" value="${loto.email}" />
                                     <td class="td-name">${loto.name}</td>
                                     <td>${loto.gender}</td>
@@ -318,6 +315,38 @@
             </div>
         </div>
 
+
+        <!-- modal  -->
+        <!-- modal  -->
+        <!-- modal  -->
+        <div class="ban-modal hidden">
+            <h1>Please input the reason why you ban this user</h1>
+            <textarea name="" id="ban-area" cols="30" rows="10" placeholder="Input the reason"></textarea>
+            <div class="ban-btn-gr">
+                <button class="ban-btn-modal">Ban</button>
+                <button class="cancel-btn-ban-modal">Cancel</button>
+            </div>
+        </div>
+        <div class="ban-overlay hidden"></div>
+
+
+        <!-- updateRole-modal -->
+        <!-- updateRole-modal -->
+        <!-- updateRole-modal -->
+        <div class="updateRole-modal hidden">
+            <h1>Select the Category this mentor will manage</h1>
+            <select name="" id="select-category">
+            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
+                <option value="${cateDTO.ID}">${cateDTO.name}</option>
+            </c:forEach>
+            </select>
+            <div class="updateRole-btn-gr">
+                <button class="updateRole-btn-modal">Ban</button>
+                <button class="cancel-btn-updateRole-modal">Cancel</button>
+            </div>
+        </div>
+        <div class="updateRole-overlay hidden"></div>
+
         <!-- footer -->
         <!-- footer -->
         <!-- footer -->
@@ -351,27 +380,27 @@
         <!-- script   -->
         <script src="./js/userListPage.js"></script>
         <script>
-            function toggleSidebarPhone() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "block";
-            }
-            function handleClickOutside() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "none";
-            }
-            function submit_form()
-            {
-                var form = document.getElementById("searchit");
-                form.submit();
-            }
-            document.getElementById("hiddenmajor").style.display = "none";
-            function ShowMajor()
-            {
-                if(document.getElementById("selectedrole").value === "M")
-                document.getElementById("hiddenmajor").style.display = "inline-block";
-                else
-                document.getElementById("hiddenmajor").style.display = "none";
-            }
+                            function toggleSidebarPhone() {
+                                const toggle_sidebar = document.getElementById("sidebar_phone");
+                                toggle_sidebar.style.display = "block";
+                            }
+                            function handleClickOutside() {
+                                const toggle_sidebar = document.getElementById("sidebar_phone");
+                                toggle_sidebar.style.display = "none";
+                            }
+                            function submit_form()
+                            {
+                                var form = document.getElementById("searchit");
+                                form.submit();
+                            }
+                            document.getElementById("hiddenmajor").style.display = "none";
+                            function ShowMajor()
+                            {
+                                if (document.getElementById("selectedrole").value === "M")
+                                    document.getElementById("hiddenmajor").style.display = "inline-block";
+                                else
+                                    document.getElementById("hiddenmajor").style.display = "none";
+                            }
         </script>
     </body>
 </html>

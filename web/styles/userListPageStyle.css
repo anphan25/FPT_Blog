@@ -699,6 +699,173 @@ footer .text_footer_strong {
   cursor: pointer;
 }
 
+.email-td {
+  position: relative;
+}
+
+.email-td::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #3b49df;
+  transform-origin: bottom right;
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+}
+
+.email-td:hover::before {
+  transform-origin: bottom left;
+  transform: scaleX(1);
+}
+
+.hidden {
+  display: none;
+}
+
+.ban-modal {
+  width: 700px;
+  height: 500px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 90px 30px 30px;
+}
+
+.ban-modal h1 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.ban-btn-gr {
+  display: flex;
+  margin-top: 30px;
+  gap: 0 20px;
+  justify-content: center;
+}
+
+.ban-btn-modal {
+  width: 84px;
+  height: 40px;
+  background-color: #dc1818;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cancel-btn-ban-modal {
+  width: 84px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.ban-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
+#ban-area {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  outline-color: #3b49df;
+}
+
+/* updateRole-modal */
+/* updateRole-modal */
+/* updateRole-modal */
+.updateRole-modal {
+  width: 500px;
+  height: 350px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 50px 30px 30px;
+}
+
+.updateRole-modal h1 {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.updateRole-btn-gr {
+  display: flex;
+  margin-top: 30px;
+  gap: 0 20px;
+  justify-content: center;
+}
+
+.updateRole-btn-modal {
+  width: 84px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cancel-btn-updateRole-modal {
+  width: 84px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cancel-btn-updateRole-modal:hover {
+  background-color: #efefef;
+}
+
+.updateRole-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
+#select-category {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 15px;
+}
+
 /* toggle_sidebar */
 /* toggle_sidebar */
 /* toggle_sidebar */
