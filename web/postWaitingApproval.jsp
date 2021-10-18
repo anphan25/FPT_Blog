@@ -26,6 +26,7 @@
             src="https://kit.fontawesome.com/1b1fb57155.js"
             crossorigin="anonymous"
         ></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="./styles/postWaitingApprovalStyle.css" />
     </head>
     <body>
@@ -373,7 +374,22 @@
         const reasonTextArea = document.querySelector("#reason-textarea");
         const submitBtn = document.querySelector(".submit-btn");
         const reasonHiddenForm = document.querySelector("#reason-value");
+        const reasonForm = document.querySelector("#rejectWFA")
         
+
+        // reasonForm.addEventListener("submit",(e)=>{
+        //     if(reasonHiddenForm.value === ""){
+        //         e.preventDefault();
+        //         swal({
+        //             title: "Reason is blank",
+        //             text: "You have to input the reason",
+        //             icon: "Error",
+        //             button: "Ok",
+        //             });
+        //         return;
+        //     }
+        // })
+
         overlay.addEventListener("click",()=>{
             reasonModal.classList.toggle("hidden");
             overlay.classList.toggle("hidden");
@@ -391,9 +407,21 @@
             overlay.classList.toggle("hidden");
         })
 
-        submitBtn.addEventListener("click",()=>{       
+        submitBtn.addEventListener("click",()=>{
+            console.log(reasonTextArea.value);
+            if(reasonTextArea.value.trim() === ""){
+                swal({
+                    title: "Reason is blank",
+                    text: "You have to input the reason",
+                    icon: "error",
+                    button: "Ok",
+                    });
+                return;
+            }else{
             reasonHiddenForm.value = reasonTextArea.value;  
-            document.querySelector("#rejectWFA").submit();
+            reasonForm.submit();
+            }   
+            
             
         })
         // document.querySelector("#rejectWFA").addEventListener("submit",()=>{
@@ -401,7 +429,6 @@
             
         //     document.querySelector("#rejectWFA").submit();
         // })
-
 
         
         function toggleSidebarPhone() {
