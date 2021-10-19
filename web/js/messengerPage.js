@@ -3,6 +3,7 @@ let body = eval(DomID('body'));
 let dest = eval(DomID('destination'));
 let likeButton = eval(DomID('like'));
 let lastestMessageCreatedAt = "";
+let initMdl = "chat-global";
 
 $('textarea')
         .each(function () {
