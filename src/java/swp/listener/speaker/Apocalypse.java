@@ -1,4 +1,4 @@
-package swp.listener;
+package swp.listener.speaker;
 
 import java.io.Serializable;
 import java.sql.Connection;
