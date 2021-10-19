@@ -414,7 +414,7 @@ header .container_right .container_button_register button:hover {
   height: calc(100vh - 56px);
   background: #efefef;
   border-right: 1px solid #d6d6d6;
-  padding: 1rem;
+  padding: 0;
 }
 
 .main .right_main {
@@ -428,7 +428,7 @@ header .container_right .container_button_register button:hover {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0.5rem;
 }
 
 .main .right_main .body {
@@ -493,6 +493,7 @@ header .container_right .container_button_register button:hover {
   color: #4e57ef;
   background: #e9ecff;
   border-radius: 3px;
+  margin: 1rem;
 }
 
 .message_container {
@@ -576,6 +577,56 @@ header .container_right .container_button_register button:hover {
 .not_login_container a {
   color: #3b49df;
   text-decoration: underline;
+}
+
+.messageItemContainer {
+  margin-top: 1rem;
+}
+.containerCover {
+  pointer-events: none;
+}
+.containerCover img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.groupItem {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.5s;
+}
+.groupItemNav {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0rem;
+  cursor: pointer;
+}
+.nameGroupNav {
+  margin-left: 8px;
+  font-weight: 500;
+}
+.containerCoverNav img {
+  height: 40px;
+  width: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.groupItem:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  transition: background-color 0.5s;
+}
+.groupItemSelected {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color 0.5s;
+}
+.nameGroup {
+  margin-left: 8px;
+  font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {
