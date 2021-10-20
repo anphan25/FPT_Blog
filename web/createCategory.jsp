@@ -211,6 +211,12 @@
                                 <p>User List</p>
                             </div>
                         </a>
+                        <a href="">
+                            <div class="container_item user-list-icon">
+                                <img src="./images/comment.png" />
+                                <p>Comments Management</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -25,7 +25,7 @@ public class InitStuff implements Serializable
                 + "SELECT @totallike = COUNT(PostID) "
                 + "FROM tblLikes "
                 + "WHERE PostID = @postid "
-                + "IF @totallike >= 100 "   //here is the standard
+                + "IF @totallike >= 5 "   //here is the standard
                 + "BEGIN "
                     + "DECLARE @email varchar(50) "
                     + "SELECT @email = EmailPost "
@@ -42,7 +42,7 @@ public class InitStuff implements Serializable
           + "FROM tblPosts po LEFT JOIN tblLikes li ON po.PostID = li.PostID "
           + "LEFT JOIN tblAwardDetails ad ON po.EmailPost = ad.EmailStudent "
           + "GROUP BY po.EmailPost, ad.AwardID "
-          + "HAVING ad.AwardID IS NULL AND COUNT(li.PostID) >= 100";
+          + "HAVING ad.AwardID IS NULL AND COUNT(li.PostID) >= 5";
     public void loadAwardTrigger() throws NamingException, SQLException
     {
         Connection con = null;
