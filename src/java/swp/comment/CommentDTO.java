@@ -22,10 +22,23 @@ public class CommentDTO implements Serializable {
     private String avatar;
     private String name;
     private ArrayList<Integer> awards;
-
+    private String postName;
+    
     public CommentDTO() {
     }
 
+    public CommentDTO(String ID, String emailComment, String postID, String titlePost, String date, String content, String avatar, String name, ArrayList<Integer> awards) {
+        this.ID = ID;
+        this.emailComment = emailComment;
+        this.postID = postID;
+        this.date = date;
+        this.content = content;
+        this.avatar = avatar;
+        this.name = name;
+        this.awards = awards;
+        this.postName = titlePost;
+    }
+    
     public CommentDTO(String ID, String emailComment, String postID, String date, String content, String avatar, String name, ArrayList<Integer> awards) {
         this.ID = ID;
         this.emailComment = emailComment;
@@ -36,6 +49,7 @@ public class CommentDTO implements Serializable {
         this.name = name;
         this.awards = awards;
     }
+
     public CommentDTO(String ID, String emailComment, String postID, String date, String content, String avatar, String name) {
         this.ID = ID;
         this.emailComment = emailComment;
@@ -109,5 +123,13 @@ public class CommentDTO implements Serializable {
     public void setAwards(ArrayList<Integer> awards) {
         this.awards = awards;
     }
-    
+
+    public String getPostName() {
+        return postName;
+    }
+
+    public void setPostName(String postName) {
+        this.postName = postName;
+    }
+
 }
