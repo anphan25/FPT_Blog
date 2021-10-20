@@ -19,6 +19,7 @@ function SendData() {
       $("#reloading").empty();
       var parser = new DOMParser();
       htmldoc = parser.parseFromString(text, "text/html");
+      DidYouDoIt = true;
       $("#reloading").html(htmldoc.getElementById("freshair"));
       var end = new Date().getTime();
       var time = end - start;
@@ -33,204 +34,6 @@ function SendData() {
     },
   });
 }
-//this one will carry the duty after the user try to violent data after search. God damn i hate them so much.
-function kingcrimson(kytu) {
-  //Kono diavolo da (not wibu by da wei)
-  var action = kytu.substring(0, 1);
-  var so = kytu.substring(1); //lấy số;
-  var search = document.getElementById("searchtext").value; //lấy giá trị search
-  console.log(action === "u");
-  if (action === "u") {
-    var email = document.getElementById("e" + so).value; //lấy i meo
-    var select = document.getElementById(so).value; //lấy value của txtList
-    //ditcon me đến cả việc append cái form rồi submit cũng tự đóng tag THẰNG LZ DOMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
-    $(
-      '<form action="' +
-        'userAction">' +
-        '<input type="text" name="searchAction" value="updating' +
-        "%" +
-        email +
-        "%" +
-        search +
-        "%" +
-        select +
-        '"' +
-        "/>" + //tại sao vậy DOM?
-        "</form>"
-    )
-      .appendTo("body")
-      .submit();
-  }
-  if (action === "b") {
-    var email = document.getElementById("e" + so).value; //lấy i meo
-    $(
-      '<form action="' +
-        'userAction">' +
-        '<input type="text" name="searchAction" value="banning' +
-        "%" +
-        email +
-        "%" +
-        search +
-        '"' +
-        "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
-        "</form>"
-    )
-      .appendTo("body")
-      .submit();
-  }
-  if (action === "a") {
-    var email = document.getElementById("e" + so).value; //lấy i meo
-    $(
-      '<form action="' +
-        'userAction">' +
-        '<input type="text" name="searchAction" value="unbaning' +
-        "%" +
-        email +
-        "%" +
-        search +
-        '"' +
-        "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
-        "</form>"
-    )
-      .appendTo("body")
-      .submit();
-  }
-}
-
-/****************************** THE ORIGINAL IS HERE ***************************/
-var HitOrMiss;
-function updateButton(formid)
-{
-    //popup
-    HitOrMiss = document.getElementById(formid);
-    var selectedRole = HitOrMiss.elements["txtList"].value;
-    var search = "all";
-    console.log(selectedRole);
-    if(selectedRole === "M")
-    {
-        $("#updatemodal").removeClass("hidden");
-        $("#updateoverlay").removeClass("hidden");
-    }
-    else
-    {
-        var email = HitOrMiss.elements["victimEmail"].value;
-        $('<form action="' +
-        'userAction">' +
-        '<input type="text" name="searchAction" method="POST" value="updating' +
-        "%" +
-        email +
-        "%" +
-        search +
-        "%" +
-        selectedRole + //one and only for not violating the system
-        '"' +
-        "/>" + //tại sao vậy DOM?
-        "</form>"
-        )
-       .appendTo("body")
-       .submit();
-    }
-    /*
-     */
-    //
-}
-function banButton(formid)
-{
-    //popup
-    $("#banmodal").removeClass("hidden");
-    $("#banoverlay").removeClass("hidden");
-    HitOrMiss = document.getElementById(formid);
-}
-function unbanButton(formid) //only for the first time cumhere and the later too
-{//NOT WORKING AFTER USING SEARCH OR FILTER FUNCTION AS I HAVE USING ANOTHER STAND TO HANDLE IT
-    const formdata = document.getElementById(formid);
-    var email = formdata.elements["victimEmail"].value;
-    var search = "all";
-    $('<form action="' + 'userAction" method="POST">' +    //action
-            '<input type="text" name="searchAction" value="unbaning' +
-      "%" +
-      email +
-      "%" +
-      search +
-      '"' +
-      "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
-      "</form>"
-    )
-    .appendTo("body")
-    .submit();
-}
-function updateForMentor()
-{
-    var email = HitOrMiss.elements["victimEmail"].value;
-    var search = "all";
-    var categoryID = document.getElementById("select-category").value;
-    console.log(email + " + " + search + " + " + categoryID);
-    $('<form action="' +
-        'userAction">' +
-        '<input type="text" name="searchAction" method="POST" value="updating' +
-        "%" +
-        email +
-        "%" +
-        search +
-        "%" +
-        "M" + //one and only for not violating the system
-        "%" +
-        categoryID +
-        '"' +
-        "/>" + //tại sao vậy DOM?
-        "</form>"
-     )
-    .appendTo("body")
-    .submit();
-}
-function submitBan()
-{
-    var reason = document.getElementById("ban-area").value;
-    var email = HitOrMiss.elements["victimEmail"].value;
-    var search = "all"; // well tôi ko muốn thay đổi tên biến vì đây là code xương máu mà tôi tìm hiểu và fix bug 3 ngày nên là dit me search là search
-    console.log(reason + " _ " + email + " _ " + search);
-    if(reason.trim() === "")
-    {
-        alert("Just give me a reason, just a little bit's enough\n" +
-                "Just a second we're not broken just bent, and we can learn to love again");
-        return;
-    }
-    $('<form action="' + 'userAction" method="POST">' +    //action
-            '<input type="text" name="searchAction" value="banning' +
-      "%" +
-      email +
-      "%" +
-      search +
-      "%" +
-      reason +
-      '"' +
-      "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
-      "</form>"
-    )
-    .appendTo("body")
-    .submit();
-}
-/**************************** END OF ORIGINAL ***********************/
-
-
-
-//for the dropdown filter
-$(".dropdown_filt").click(function () {
-  $(this).attr("tabindex", 1).focus();
-  $(this).toggleClass("active");
-  $(this).find(".dropdown-menu").slideToggle(300);
-});
-$(".dropdown_filt").focusout(function () {
-  $(this).removeClass("active");
-  $(this).find(".dropdown-menu").slideUp(300);
-});
-$(".dropdown_filt .dropdown-menu li").click(function () {
-  $(this).parents(".dropdown_filt").find("span").text($(this).text());
-  $(this)
-    .parents(".dropdown_filt")
-    .find("input")
-    .attr("value", $(this).attr("id"));
-});
 
 function applyButton() {
   var start = new Date().getTime();
@@ -291,6 +94,7 @@ function applyButton() {
       $("#reloading").empty();
       var parser = new DOMParser();
       htmldoc = parser.parseFromString(text, "text/html");
+      DidYouDoIt = true;
       $("#reloading").html(htmldoc.getElementById("freshair"));
       var end = new Date().getTime();
       var time = end - start;
@@ -305,6 +109,341 @@ function applyButton() {
     },
   });
 }
+
+//this one will carry the duty after the user try to violent data after search. God damn i hate them so much.
+//GLOBAL WARMING GLOBAL VARIABLE GLOBAL SILENT
+var WhichForm; //to query the button for the first time and forever
+var DidYouDoIt = false; //check first or second after
+var WhichButtonNumber;
+
+
+function kingcrimson(kytu) 
+{
+    var action = kytu.substring(0, 1);
+    var so = kytu.substring(1); //lấy số;
+    var search = document.getElementById("searchtext").value;
+    if(search === "") search = "all";
+    WhichButtonNumber = so;
+    if (action === "u") 
+    {
+        //var email = document.getElementById("e" + so).value; //lấy i meo
+        var selectrole = document.getElementById(so).value; //lấy value của txtList
+        if(selectrole === "M")
+        {
+          $("#updatemodal").removeClass("hidden");
+          $("#updateoverlay").removeClass("hidden");
+        }
+        else
+        {
+          var email = document.getElementById("e" + so);
+          $(
+            '<form action="' +
+            'userAction" method="POST">' +
+            '<input type="text" name="searchAction" value="updating' +
+            "%" +
+            email +
+            "%" +
+            search +
+            "%" +
+            selectrole +
+            '"' +
+            "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
+            "</form>"
+            )
+            .appendTo("body")
+            .submit();
+        }
+    }
+    if (action === "b") 
+    {
+        $("#banmodal").removeClass("hidden");
+        $("#banoverlay").removeClass("hidden");
+    }
+    if (action === "a") 
+    {
+        var email = document.getElementById("e" + so).value; //lấy i meo
+        $(
+          '<form action="' +
+            'userAction" method="POST">' +
+            '<input type="text" name="searchAction" value="unbaning' +
+            "%" +
+            email +
+            "%" +
+            search +
+            '"' +
+            "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
+            "</form>"
+        )
+          .appendTo("body")
+          .submit();
+    }
+    console.log(WhichButtonNumber);
+    console.log(DidYouDoIt);
+    /* old code ko muốn xóa huhu 
+    //Kono diavolo da (not wibu by da wei)
+    var action = kytu.substring(0, 1);
+    var so = kytu.substring(1); //lấy số;
+    var search = document.getElementById("searchtext").value; //lấy giá trị search
+    console.log(action === "u");
+    if (action === "u") {
+      var email = document.getElementById("e" + so).value; //lấy i meo
+      var select = document.getElementById(so).value; //lấy value của txtList
+      //ditcon me đến cả việc append cái form rồi submit cũng tự đóng tag THẰNG LZ DOMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+      $(
+        '<form action="' +
+          'userAction">' +
+          '<input type="text" name="searchAction" value="updating' +
+          "%" +
+          email +
+          "%" +
+          search +
+          "%" +
+          select +
+          '"' +
+          "/>" + //tại sao vậy DOM?
+          "</form>"
+      )
+        .appendTo("body")
+        .submit();
+    }
+    if (action === "b") {
+      var email = document.getElementById("e" + so).value; //lấy i meo
+      $(
+        '<form action="' +
+          'userAction">' +
+          '<input type="text" name="searchAction" value="banning' +
+          "%" +
+          email +
+          "%" +
+          search +
+          '"' +
+          "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
+          "</form>"
+      )
+        .appendTo("body")
+        .submit();
+    }
+    if (action === "a") {
+      var email = document.getElementById("e" + so).value; //lấy i meo
+      $(
+        '<form action="' +
+          'userAction">' +
+          '<input type="text" name="searchAction" value="unbaning' +
+          "%" +
+          email +
+          "%" +
+          search +
+          '"' +
+          "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
+          "</form>"
+      )
+        .appendTo("body")
+        .submit();
+    }*/
+}
+
+/****************************** THE ORIGINAL IS HERE ***************************/
+
+function updateButton(formid)
+{
+    //popup
+    WhichForm = document.getElementById(formid);
+    var selectedRole = WhichForm.elements["txtList"].value;
+    var search = document.getElementById("searchtext").value;
+    if(search === "") search = "all";
+    console.log(selectedRole);
+    if(selectedRole === "M")
+    {
+        $("#updatemodal").removeClass("hidden");
+        $("#updateoverlay").removeClass("hidden");
+    }
+    else
+    {
+        var email = WhichForm.elements["victimEmail"].value;
+        $('<form action="' +
+        'userAction">' +
+        '<input type="text" name="searchAction" method="POST" value="updating' +
+        "%" +
+        email +
+        "%" +
+        search +
+        "%" +
+        selectedRole + //one and only for not violating the system
+        '"' +
+        "/>" + //tại sao vậy DOM?
+        "</form>"
+        )
+       .appendTo("body")
+       .submit();
+    }
+}
+function banButton(formid)
+{
+    //popup
+    $("#banmodal").removeClass("hidden");
+    $("#banoverlay").removeClass("hidden");
+    WhichForm = document.getElementById(formid);
+    console.log(DidYouDoIt);
+}
+function unbanButton(formid) //only for the first time cumhere and the later too
+{//NOT WORKING AFTER USING SEARCH OR FILTER FUNCTION AS I HAVE USING ANOTHER STAND TO HANDLE IT
+    const formdata = document.getElementById(formid);
+    var email = formdata.elements["victimEmail"].value;
+    var search = document.getElementById("searchtext").value;
+    if(search === "") search = "all";
+    console.log(search);
+    $(
+          '<form action="' +
+            'userAction" method="POST">' +
+            '<input type="text" name="searchAction" value="unbaning' +
+            "%" +
+            email +
+            "%" +
+            search +
+            '"' +
+            "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
+            "</form>"
+        )
+          .appendTo("body")
+          .submit();
+}
+
+// ---------------------------------------------------------ALL THE NORMAL BUTTON IS DONE WE WON'T USE THOSE IF THE SEARCH OR FILTER HAS CLICKED
+function updateForMentor()
+{
+    if(!DidYouDoIt) //no he didn't
+    {
+        var email = WhichForm.elements["victimEmail"].value;
+        var search = document.getElementById("searchtext").value;
+        if(search === "") search = "all";
+        var categoryID = document.getElementById("select-category").value;
+        console.log(email + " + " + search + " + " + categoryID);
+        $('<form action="' +
+            'userAction" method="POST">' +
+            '<input type="text" name="searchAction" method="POST" value="updating' +
+            "%" +
+            email +
+            "%" +
+            search +
+            "%" +
+            "M" + //one and only for not violating the system
+            "%" +
+            categoryID +
+            '"' +
+            "/>" + //tại sao vậy DOM?
+            "</form>"
+         )
+        .appendTo("body")
+        .submit();
+    }
+    else //what did it cost
+    {
+        var email = document.getElementById("e" + WhichButtonNumber).value;
+        var search = document.getElementById("searchtext").value;
+        if(search === "") search = "all";
+        var categoryID = document.getElementById("select-category").value;
+        $('<form action="' +
+            'userAction" method="POST">' +
+            '<input type="text" name="searchAction" method="POST" value="updating' +
+            "%" +
+            email +
+            "%" +
+            search +
+            "%" +
+            "M" + //one and only for not violating the system
+            "%" +
+            categoryID +
+            '"' +
+            "/>" + //tại sao vậy DOM?
+            "</form>"
+         )
+        .appendTo("body")
+        .submit();
+    }
+    
+}
+function submitBan()
+{
+    if(!DidYouDoIt)
+    {
+        let reason = document.getElementById("ban-area").value;
+        let email = WhichForm.elements["victimEmail"].value;
+        let search = document.getElementById("searchtext").value;
+        if(search === "") search = "all";
+        console.log(reason + " _ " + email + " _ " + search);
+        if(reason.trim() === "")
+        {
+            alert("Just give me a reason, just a little bit's enough\n" +
+                    "Just a second we're not broken just bent, and we can learn to love again");
+            return;
+        }
+        $('<form action="' + 'userAction" method="POST">' +    //action
+                '<input type="text" name="searchAction" value="banning' +
+          "%" +
+          email +
+          "%" +
+          search +
+          "%" +
+          reason +
+          '"' +
+          "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
+          "</form>"
+        )
+        .appendTo("body")
+        .submit();
+    }
+    else
+    {
+
+        let reason = document.getElementById("ban-area").value;
+        let email = document.getElementById("e" + WhichButtonNumber).value;
+        let search = document.getElementById("searchtext").value;
+        if(search === "") search = "all";
+        console.log(reason + " _ " + email + " _ " + search);
+        if(reason.trim() === "")
+        {
+            alert("Just give me a reason, just a little bit's enough\n" +
+                    "Just a second we're not broken just bent, and we can learn to love again");
+            return;
+        }
+        $('<form action="' + 'userAction" method="POST">' +    //action
+                '<input type="text" name="searchAction" value="banning' +
+          "%" +
+          email +
+          "%" +
+          search +
+          "%" +
+          reason +
+          '"' +
+          "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
+          "</form>"
+        )
+        .appendTo("body")
+        .submit();
+        //console.log("Are you here");
+    }
+}
+/**************************** END OF ORIGINAL ***********************/
+
+
+
+//for the dropdown filter
+$(".dropdown_filt").click(function () {
+  $(this).attr("tabindex", 1).focus();
+  $(this).toggleClass("active");
+  $(this).find(".dropdown-menu").slideToggle(300);
+});
+$(".dropdown_filt").focusout(function () {
+  $(this).removeClass("active");
+  $(this).find(".dropdown-menu").slideUp(300);
+});
+$(".dropdown_filt .dropdown-menu li").click(function () {
+  $(this).parents(".dropdown_filt").find("span").text($(this).text());
+  $(this)
+    .parents(".dropdown_filt")
+    .find("input")
+    .attr("value", $(this).attr("id"));
+});
 
 const banBtns = document.querySelectorAll(".ban-btn");
 const banModal = document.querySelector(".ban-modal");
