@@ -211,7 +211,7 @@
                                 <p>User List</p>
                             </div>
                         </a>
-                        <a href="">
+                        <a href="loadAllComments">
                             <div class="container_item user-list-icon">
                                 <img src="./images/comment.png" />
                                 <p>Comments Management</p>
