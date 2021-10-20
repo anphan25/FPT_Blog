@@ -85,7 +85,7 @@ public class UserlistDAO implements Serializable
     }
     
     public boolean updateRoleAccount(String email, String roleID) throws NamingException, SQLException
-    {
+    { //only 2 division
         Connection con = null;
         PreparedStatement stm = null;
         try
@@ -95,7 +95,7 @@ public class UserlistDAO implements Serializable
             if(con != null)
             {
                 String sql = "UPDATE tblAccounts "
-                            + "SET RoleID = ? "
+                            + "SET RoleID = ?, CategoryManagement = 0 "
                             + "WHERE Email = ?";
                         
                 stm = con.prepareStatement(sql);
@@ -122,7 +122,45 @@ public class UserlistDAO implements Serializable
         return false;
     }
     
-    public boolean banAccount(String email) throws NamingException, SQLException
+    public boolean updateRoleMentor(String email, int categoryID) throws NamingException, SQLException
+    { //only mentor
+        Connection con = null;
+        PreparedStatement stm = null;
+        try
+        {
+            //cố gắng thông ass DB
+            con = DBHelper.makeConnection();
+            if(con != null)
+            {
+                String sql = "UPDATE tblAccounts "
+                            + "SET RoleID = 'M', CategoryManagement = ? "
+                            + "WHERE Email = ?";
+                        
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, categoryID);
+                stm.setString(2, email);
+                int row = stm.executeUpdate();
+                if(row == 1)
+                {
+                    return true;
+                }//nếu có vấn đề gì về việc row có tận 2 dòng thì holly fuck
+            }
+        }
+        finally
+        {
+            if(con != null)
+            {
+                con.close();
+            }
+            if(stm != null)
+            {
+                stm.close();
+            }
+        }
+        return false;
+    }
+    
+    public boolean banAccount(String email, String reason) throws NamingException, SQLException
     {
         Connection con = null;
         PreparedStatement stm = null;
@@ -133,11 +171,12 @@ public class UserlistDAO implements Serializable
             if(con != null)
             {
                 String sql = "UPDATE tblAccounts "
-                            + "SET StatusAccountID = 'B' "
+                            + "SET StatusAccountID = 'B', Note = ? "
                             + "WHERE Email = ?";
                         
                 stm = con.prepareStatement(sql);
-                stm.setString(1, email);
+                stm.setString(1, reason);
+                stm.setString(2, email);
                 int row = stm.executeUpdate();
                 if(row == 1)
                 {
@@ -170,7 +209,7 @@ public class UserlistDAO implements Serializable
             if(con != null)
             {
                 String sql = "UPDATE tblAccounts "
-                            + "SET StatusAccountID = 'A' "
+                            + "SET StatusAccountID = 'A', Note = NULL "
                             + "WHERE Email = ?";
                         
                 stm = con.prepareStatement(sql);

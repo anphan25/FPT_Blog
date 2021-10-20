@@ -86,7 +86,7 @@
                     <div class="container_button_register">
                         <button><a href="https://youtu.be/rvrZJ5C_Nwg?t=127">Create Category</a></button>
                     </div>
-                    <div class="icon_notification_container" onclick="kingcrimson()">
+                    <div class="icon_notification_container">
                         <img src="./images/notification_icon.svg" />
                     </div>
                     <a href="messengerPage">
@@ -274,16 +274,16 @@
                             </thead>
                             <tbody>
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
-                                <form action='userAction' class="user-form">
+                                <form id="form${counter.count}" class="user-form" onsubmit="return false;">
                                     <tr>
                                         <td>${counter.count}</td>
                                         <td class="email-td"><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
-                                    <input type="hidden" name="victimEmail" value="${loto.email}" />
+                                    <input type="hidden" id="victimEmail" value="${loto.email}" />
                                     <td class="td-name">${loto.name}</td>
                                     <td>${loto.gender}</td>
                                     <td>${loto.campus}</td>
                                     <td>
-                                        <select name="txtList" >
+                                        <select id="txtList" >
                                             <c:if test = "${loto.role == 'Admin'}" >
                                                 <option selected="selected" value="A">Admin</option>
                                                 <option value="S">Student</option>
@@ -302,13 +302,13 @@
                                         </select>
                                     </td>
                                     <td>${loto.statusaccount}</td>
-                                    <td><button id="submitanlz" class="update-btn" name="btAction" value="updating" >Update</button></td>
+                                    <td><button class="update-btn" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" >Update</button></td>
                                     <td>
                                         <c:if test="${loto.statusaccount == 'Actived'}">
-                                            <button class="ban-btn" name="btAction" value="banning" >Ban</button>
+                                            <button class="ban-btn" name="btAction" value="banning" onclick="banButton('form${counter.count}')" >Ban</button>
                                         </c:if>
                                         <c:if test="${loto.statusaccount == 'Banned'}">
-                                            <button class="ban-btn" name="btAction" value="unbaning" >Unban</button>
+                                            <button class="ban-btn" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" >Unban</button>
                                         </c:if>
                                     </td>    
                                     </tr>
@@ -325,21 +325,21 @@
         <!-- modal  -->
         <!-- modal  -->
         <!-- modal  -->
-        <div class="ban-modal hidden">
+        <div class="ban-modal hidden" id="banmodal">
             <h1>Please input the reason why you ban this user</h1>
-            <textarea name="" id="ban-area" cols="30" rows="10" placeholder="Input the reason"></textarea>
+            <textarea name="" id="ban-area" cols="30" rows="10" placeholder="Input the reason" value=""></textarea>
             <div class="ban-btn-gr">
-                <button class="ban-btn-modal">Ban</button>
+                <button class="ban-btn-modal" onclick="submitBan()">Ban</button>
                 <button class="cancel-btn-ban-modal">Cancel</button>
             </div>
         </div>
-        <div class="ban-overlay hidden"></div>
+        <div class="ban-overlay hidden" id="banoverlay"></div>
 
 
         <!-- updateRole-modal -->
         <!-- updateRole-modal -->
         <!-- updateRole-modal -->
-        <div class="updateRole-modal hidden">
+        <div class="updateRole-modal hidden" id="updatemodal">
             <h1>Select the Category this mentor will manage</h1>
             <select name="" id="select-category">
                 <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
@@ -347,11 +347,11 @@
                 </c:forEach>
             </select>
             <div class="updateRole-btn-gr">
-                <button class="updateRole-btn-modal">Ban</button>
+                <button class="updateRole-btn-modal" onclick="updateForMentor()">Update</button>
                 <button class="cancel-btn-updateRole-modal">Cancel</button>
             </div>
         </div>
-        <div class="updateRole-overlay hidden"></div>
+        <div class="updateRole-overlay hidden" id="updateoverlay"></div>
 
         <!-- footer -->
         <!-- footer -->
@@ -386,27 +386,27 @@
         <!-- script   -->
         <script src="./js/userListPage.js"></script>
         <script>
-                            function toggleSidebarPhone() {
-                                const toggle_sidebar = document.getElementById("sidebar_phone");
-                                toggle_sidebar.style.display = "block";
-                            }
-                            function handleClickOutside() {
-                                const toggle_sidebar = document.getElementById("sidebar_phone");
-                                toggle_sidebar.style.display = "none";
-                            }
-                            function submit_form()
-                            {
-                                var form = document.getElementById("searchit");
-                                form.submit();
-                            }
-                            document.getElementById("hiddenmajor").style.display = "none";
-                            function ShowMajor()
-                            {
-                                if (document.getElementById("selectedrole").value === "M")
-                                    document.getElementById("hiddenmajor").style.display = "inline-block";
-                                else
-                                    document.getElementById("hiddenmajor").style.display = "none";
-                            }
+            function toggleSidebarPhone() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "block";
+            }
+            function handleClickOutside() {
+                const toggle_sidebar = document.getElementById("sidebar_phone");
+                toggle_sidebar.style.display = "none";
+            }
+            function submit_form()
+            {
+                var form = document.getElementById("searchit");
+                form.submit();
+            }
+            document.getElementById("hiddenmajor").style.display = "none";
+            function ShowMajor()
+            {
+                if (document.getElementById("selectedrole").value === "M")
+                    document.getElementById("hiddenmajor").style.display = "inline-block";
+                else
+                    document.getElementById("hiddenmajor").style.display = "none";
+            }
         </script>
     </body>
 </html>

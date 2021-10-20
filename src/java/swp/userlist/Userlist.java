@@ -14,6 +14,8 @@ public class Userlist implements Serializable
         this.fulllist = fulllist;
     }
     
+    public ArrayList<UserlistDTO> napLanCuoi() { return this.fulllist; }
+    
     public ArrayList<UserlistDTO> filteredList(String gender, String status, String role, String major)
     {
         //tạm if else sau này có thời gian chuyển thành switch cave(động phò)

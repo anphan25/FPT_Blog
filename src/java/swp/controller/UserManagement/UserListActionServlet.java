@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.account.AccountDTO;
+import swp.userlist.Userlist;
 import swp.userlist.UserlistDAO;
 import swp.userlist.UserlistDTO;
 
@@ -53,10 +54,10 @@ public class UserListActionServlet extends HttpServlet
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get(ERROR_PAGE);
-        //receiving parameter list (if we not using in try catch it wont throw null)
-        String email = request.getParameter("victimEmail");
-        String button = request.getParameter("btAction");
-        String actionline = request.getParameter("searchAction"); //ditme DOM
+        //receiving parameter list
+        //String email = request.getParameter("victimEmail");
+        //String button = request.getParameter("btAction");
+        String actionline = request.getParameter("searchAction"); //ditme DOM giờ chỉ còn mỗi mình em
         //server side declaration
         HttpSession session = request.getSession(false);
         AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
@@ -71,31 +72,68 @@ public class UserListActionServlet extends HttpServlet
                 {
                     if(actionline != null) //tôi tính làm thêm hàm tránh lặp lại mà dcm thậm chí C# còn dùng delegate để khai báo bừa bãi việc gì phải làm thế (:
                     {
-                        String[] araara = actionline.split("%");
+                        String[] araara = actionline.split("%"); //true parameter is here not line 56 in this class lol
                         String action = araara[0];
                         String gmail = araara[1];
                         String search = araara[2];
+                        Userlist Backtracking = (Userlist)session.getAttribute("CACHING_USER_LIST"); //why do we call this? because we refresh the whole page
+                        //and we want to remain the user list that stupid user interacted.
                         if(action.equals("updating"))
                         {
-                            String list = araara[3];
+                            String role = araara[3];
                             UserlistDAO dao = new UserlistDAO();
-                            boolean IsItUpdate = dao.updateRoleAccount(gmail, list);
-                            if(IsItUpdate)
+                            if(role.equals("M"))
                             {
-                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                                request.setAttribute("USER_LIST", newlist);
-                                url = roadmap.get(USER_CONTROL_PANEL);
+                                int cateID = Integer.parseInt(araara[4]);
+                                if(dao.updateRoleMentor(gmail, cateID))
+                                {
+                                    if(search.equals("all"))
+                                    {
+                                        ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else
+                                    {
+                                        //current working
+                                    }
+                                }
+                                
                             }
-                        }
+                            else //update cho 2 role khác
+                            {
+                                if(dao.updateRoleAccount(gmail, role))
+                                {
+                                    if(search.equals("all"))
+                                    {
+                                        ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else
+                                    {
+                                        //current working
+                                    }
+                                }
+                            }
+                        }//kết thúc việc update complex mother fucker shitty gang bang
                         else if(action.equals("banning")) //nếu họ muốn ban
                         {
+                            String reason = araara[3];
                             UserlistDAO dao = new UserlistDAO();
-                            boolean IsItUpdate = dao.banAccount(gmail);
+                            boolean IsItUpdate = dao.banAccount(gmail, reason);
                             if(IsItUpdate)
                             {
-                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                                request.setAttribute("USER_LIST", newlist);
-                                url = roadmap.get(USER_CONTROL_PANEL);
+                                if(search.equals("all"))
+                                {
+                                    ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else
+                                {
+                                    //current working
+                                }
                             }
                         }
                         else if(action.equals("unbaning")) //nếu họ muốn ban
@@ -104,48 +142,19 @@ public class UserListActionServlet extends HttpServlet
                             boolean IsItUpdate = dao.unbanAccount(gmail);
                             if(IsItUpdate)
                             {
-                                ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                                request.setAttribute("USER_LIST", newlist);
-                                url = roadmap.get(USER_CONTROL_PANEL);
+                                if(search.equals("all"))
+                                {
+                                    ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else
+                                {
+                                    //current working
+                                }
                             }
                         }
-                        return;
-                         //jump to the finally mother fucker
-                    }
-                    if(button.equals("updating")) //nếu họ muốn update
-                    {
-                        String roleID = request.getParameter("txtList");
-                        UserlistDAO dao = new UserlistDAO();
-                        boolean IsItUpdate = dao.updateRoleAccount(email, roleID);
-                        if(IsItUpdate)
-                        {
-                            ArrayList<UserlistDTO> newlist = dao.getUserList();
-                            request.setAttribute("USER_LIST", newlist);
-                            url = roadmap.get(USER_CONTROL_PANEL);
-                        }
-                    }
-                    else if(button.equals("banning")) //nếu họ muốn ban
-                    {
-                        UserlistDAO dao = new UserlistDAO();
-                        boolean IsItUpdate = dao.banAccount(email);
-                        if(IsItUpdate)
-                        {
-                            ArrayList<UserlistDTO> newlist = dao.getUserList();
-                            request.setAttribute("USER_LIST", newlist);
-                            url = roadmap.get(USER_CONTROL_PANEL);
-                        }
-                    }
-                    else if(button.equals("unbaning"))
-                    {
-                        UserlistDAO dao = new UserlistDAO();
-                        boolean IsItUpdate = dao.unbanAccount(email);
-                        if(IsItUpdate)
-                        {
-                            ArrayList<UserlistDTO> newlist = dao.getUserList();
-                            request.setAttribute("USER_LIST", newlist);
-                            url = roadmap.get(USER_CONTROL_PANEL);
-                        }
-                    }
+                    }//kết thúc việc múa mây java brace ở dưới đống cho việc check admin
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case
             }
         }
