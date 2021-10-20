@@ -187,6 +187,12 @@
                                 <p>Check Log(under maintain)</p>
                             </div>
                         </a>
+                        <a href="">
+                            <div class="container_item create-post">
+                                <img src="./images/comment.png" />
+                                <p>Comments Management</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -336,9 +342,9 @@
         <div class="updateRole-modal hidden">
             <h1>Select the Category this mentor will manage</h1>
             <select name="" id="select-category">
-            <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
-                <option value="${cateDTO.ID}">${cateDTO.name}</option>
-            </c:forEach>
+                <c:forEach var="cateDTO" items="${sessionScope.CATEGORY_LIST}" >
+                    <option value="${cateDTO.ID}">${cateDTO.name}</option>
+                </c:forEach>
             </select>
             <div class="updateRole-btn-gr">
                 <button class="updateRole-btn-modal">Ban</button>

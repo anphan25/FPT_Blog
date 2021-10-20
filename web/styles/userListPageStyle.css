@@ -1043,3 +1043,8 @@ footer .text_footer_strong {
 .dropdown_filt .dropdown-menu li:active {
   background-color: #e2e2e2;
 }
+
+.create-post img {
+  width: 24px;
+  height: 24px;
+}
