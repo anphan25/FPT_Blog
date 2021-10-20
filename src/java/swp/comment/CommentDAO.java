@@ -62,7 +62,7 @@ public class CommentDAO {
         }
         return list;
     }
-    
+
     public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -119,8 +119,8 @@ public class CommentDAO {
         }
         return check;
     }
-    
-     public boolean editComment(String commentID, String content) throws SQLException, NamingException {
+
+    public boolean editComment(String commentID, String content) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
         boolean check = false;
@@ -129,7 +129,7 @@ public class CommentDAO {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 String sql = "update tblComments "
-                           + "set Comment = ? where ID = ?";
+                        + "set Comment = ? where ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, content);
                 stm.setString(2, commentID);
@@ -145,8 +145,6 @@ public class CommentDAO {
         }
         return check;
     }
-    
-    
 
     public CommentDTO loadNewComment(String postId, String email) throws SQLException, NamingException {
         Connection conn = null;
@@ -191,7 +189,6 @@ public class CommentDAO {
         return dto;
     }
 
-
     //chuyen trang thai comment thanh disabled/deleted 
     //can specify comment nao? cua ai? tren post nao?
     public boolean disableComment(String commentID) throws SQLException, NamingException {
@@ -202,7 +199,7 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblComments " + "set StatusComment = 0 " 
+                String sql = "update tblComments " + "set StatusComment = 0 "
                         + "where ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, commentID);
@@ -219,4 +216,85 @@ public class CommentDAO {
         return check;
     }
 
+    
+    public ArrayList<CommentDTO> getAllComments(int index) throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<CommentDTO> list = new ArrayList<>();
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select my.Image, my.Name, my.EmailComment, my.Comment, my.ID, my.PostID, p.Title, "
+                        + "DATEPART(DAY, my.Date) as DayComment, DATEPART(MONTH, my.Date) as MonthComment, "
+                        + "DATEPART(YEAR, my.Date) as YearComment, DATEPART(HOUR, my.Date) as HourComment, "
+                        + "DATEPART(MINUTE, my.Date) as MinuteComment "
+                        + "from (select a.Image, a.Name, c.EmailComment, c.Comment, c.ID, c.PostID, c.Date "
+                        + "from tblComments c left join tblAccounts a "
+                        + "on c.EmailComment = a.Email where c.StatusComment = 1) my "
+                        + "left join tblPosts p on my.PostID = p.PostID where p.StatusPost = 'a' "
+                        + "ORDER BY my.Date desc OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
+                stm = conn.prepareStatement(sql);
+                stm.setInt(1, (index - 1) * 20);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String commentID = rs.getString("ID");
+                    String emailComment = rs.getString("EmailComment");
+                    String postID = rs.getString("PostID");
+                    String commentDate = Style.convertToDateFormat(rs.getInt("DayComment"), rs.getInt("MonthComment"),
+                            rs.getInt("YearComment"), rs.getInt("HourComment"), rs.getInt("MinuteComment"));
+                    String content = rs.getNString("Comment");
+                    String avatar = rs.getString("Image");
+                    String name = rs.getString("Name");
+                    String title = rs.getNString("Title");
+                    ArrayList<Integer> awards = getAwardsByEmail(emailComment);
+                    CommentDTO cmt = new CommentDTO(commentID, emailComment, postID, title, commentDate, content, avatar, name, awards);
+                    list.add(cmt);
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return list;
+    }
+
+    public int getTotalComments() throws SQLException, NamingException {
+        Connection conn = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int count = 0;
+        try {
+            conn = DBHelper.makeConnection();
+            if (conn != null) {
+                String sql = "select count(c.ID) as Total "
+                        + "from tblComments c "
+                        + "left join tblPosts p on c.PostID = p.PostID "
+                        + "where p.StatusPost = 'a' and c.StatusComment = 1";
+                stm = conn.prepareStatement(sql);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    count = rs.getInt("Total");
+                }
+            }
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return count;
+    }
 }

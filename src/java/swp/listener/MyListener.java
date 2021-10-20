@@ -5,6 +5,8 @@
  */
 package swp.listener;
 
+import swp.listener.speaker.InitStuff;
+import swp.listener.speaker.Apocalypse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -59,6 +61,8 @@ Map<String, String> roadmap= new HashMap<>();
         try
         {
             start.loadAwardTrigger();
+            int row = start.getNumberOfRowForRickRoll();
+            context.log("Listener have updated " + row + " row(s) in tblAwardDetails.");
         } 
         catch (NamingException ex)
         {
