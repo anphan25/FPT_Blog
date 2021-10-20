@@ -37,6 +37,7 @@ public class UserListActionServlet extends HttpServlet
 {
     private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
     private final String USER_CONTROL_PANEL = "userListPage";
+    private final String RESULT_PAGE = "userListResultPage"; //This again? YES
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -76,7 +77,6 @@ public class UserListActionServlet extends HttpServlet
                         String action = araara[0];
                         String gmail = araara[1];
                         String search = araara[2];
-                        Userlist Backtracking = (Userlist)session.getAttribute("CACHING_USER_LIST"); //why do we call this? because we refresh the whole page
                         //and we want to remain the user list that stupid user interacted.
                         if(action.equals("updating"))
                         {
@@ -89,13 +89,16 @@ public class UserListActionServlet extends HttpServlet
                                 {
                                     if(search.equals("all"))
                                     {
-                                        ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                        ArrayList<UserlistDTO> newlist = dao.getUserList();
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
                                     else
                                     {
-                                        //current working
+                                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                        request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
                                     }
                                 }
                                 
@@ -106,13 +109,16 @@ public class UserListActionServlet extends HttpServlet
                                 {
                                     if(search.equals("all"))
                                     {
-                                        ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                        ArrayList<UserlistDTO> newlist = dao.getUserList();
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
                                     else
                                     {
-                                        //current working
+                                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                        request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
                                     }
                                 }
                             }
@@ -126,13 +132,16 @@ public class UserListActionServlet extends HttpServlet
                             {
                                 if(search.equals("all"))
                                 {
-                                    ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
                                 else
                                 {
-                                    //current working
+                                    ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                    request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
                                 }
                             }
                         }
@@ -144,13 +153,16 @@ public class UserListActionServlet extends HttpServlet
                             {
                                 if(search.equals("all"))
                                 {
-                                    ArrayList<UserlistDTO> newlist = Backtracking.napLanCuoi();
+                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
                                 else
                                 {
-                                    //current working
+                                    ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                    request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
                                 }
                             }
                         }

@@ -251,7 +251,7 @@
                 </div>
                 <form onsubmit="SendData();return false">
                     <div class="user-list-searchbar">
-                        <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
+                        <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${requestScope.SEARCH_TEXT}"/>
                         <div class="user-list-icon" onclick="SendData()">
                             <i class="fas fa-search"></i>
                         </div>
