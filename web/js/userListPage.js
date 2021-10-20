@@ -97,6 +97,123 @@ function kingcrimson(kytu) {
   }
 }
 
+/****************************** THE ORIGINAL IS HERE ***************************/
+var HitOrMiss;
+function updateButton(formid)
+{
+    //popup
+    HitOrMiss = document.getElementById(formid);
+    var selectedRole = HitOrMiss.elements["txtList"].value;
+    var search = "all";
+    console.log(selectedRole);
+    if(selectedRole === "M")
+    {
+        $("#updatemodal").removeClass("hidden");
+        $("#updateoverlay").removeClass("hidden");
+    }
+    else
+    {
+        var email = HitOrMiss.elements["victimEmail"].value;
+        $('<form action="' +
+        'userAction">' +
+        '<input type="text" name="searchAction" method="POST" value="updating' +
+        "%" +
+        email +
+        "%" +
+        search +
+        "%" +
+        selectedRole + //one and only for not violating the system
+        '"' +
+        "/>" + //tại sao vậy DOM?
+        "</form>"
+        )
+       .appendTo("body")
+       .submit();
+    }
+    /*
+     */
+    //
+}
+function banButton(formid)
+{
+    //popup
+    $("#banmodal").removeClass("hidden");
+    $("#banoverlay").removeClass("hidden");
+    HitOrMiss = document.getElementById(formid);
+}
+function unbanButton(formid) //only for the first time cumhere and the later too
+{//NOT WORKING AFTER USING SEARCH OR FILTER FUNCTION AS I HAVE USING ANOTHER STAND TO HANDLE IT
+    const formdata = document.getElementById(formid);
+    var email = formdata.elements["victimEmail"].value;
+    var search = "all";
+    $('<form action="' + 'userAction" method="POST">' +    //action
+            '<input type="text" name="searchAction" value="unbaning' +
+      "%" +
+      email +
+      "%" +
+      search +
+      '"' +
+      "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
+      "</form>"
+    )
+    .appendTo("body")
+    .submit();
+}
+function updateForMentor()
+{
+    var email = HitOrMiss.elements["victimEmail"].value;
+    var search = "all";
+    var categoryID = document.getElementById("select-category").value;
+    console.log(email + " + " + search + " + " + categoryID);
+    $('<form action="' +
+        'userAction">' +
+        '<input type="text" name="searchAction" method="POST" value="updating' +
+        "%" +
+        email +
+        "%" +
+        search +
+        "%" +
+        "M" + //one and only for not violating the system
+        "%" +
+        categoryID +
+        '"' +
+        "/>" + //tại sao vậy DOM?
+        "</form>"
+     )
+    .appendTo("body")
+    .submit();
+}
+function submitBan()
+{
+    var reason = document.getElementById("ban-area").value;
+    var email = HitOrMiss.elements["victimEmail"].value;
+    var search = "all"; // well tôi ko muốn thay đổi tên biến vì đây là code xương máu mà tôi tìm hiểu và fix bug 3 ngày nên là dit me search là search
+    console.log(reason + " _ " + email + " _ " + search);
+    if(reason.trim() === "")
+    {
+        alert("Just give me a reason, just a little bit's enough\n" +
+                "Just a second we're not broken just bent, and we can learn to love again");
+        return;
+    }
+    $('<form action="' + 'userAction" method="POST">' +    //action
+            '<input type="text" name="searchAction" value="banning' +
+      "%" +
+      email +
+      "%" +
+      search +
+      "%" +
+      reason +
+      '"' +
+      "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
+      "</form>"
+    )
+    .appendTo("body")
+    .submit();
+}
+/**************************** END OF ORIGINAL ***********************/
+
+
+
 //for the dropdown filter
 $(".dropdown_filt").click(function () {
   $(this).attr("tabindex", 1).focus();
