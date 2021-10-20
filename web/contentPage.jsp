@@ -394,7 +394,7 @@
                                                 <c:if test="${currentUser.email == listDTO.emailComment}">
                                                     <button class="editButton" id="${listDTO.ID}"><i class="fas fa-pen"></i>Edit</button>
                                                 </c:if>
-                                                <c:if test="${currentUser.role == 'A'}">
+                                                <c:if test="${currentUser.role == 'A' || currentUser.email == listDTO.emailComment}">
                                                     <button class="deleteButton" id="${listDTO.ID}"><i class="fas fa-trash-alt"></i> Delete</button>
                                                 </c:if>
                                             </div>   
