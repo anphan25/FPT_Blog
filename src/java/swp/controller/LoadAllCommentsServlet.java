@@ -47,19 +47,23 @@ public class LoadAllCommentsServlet extends HttpServlet {
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("commentManagementPage");
         try {
-            CommentDAO commentDAO = new CommentDAO();
-            ArrayList<CommentDTO> commentList = commentDAO.getAllComments();
+            CommentDAO commentDAO = new CommentDAO(); 
             int totalComments = commentDAO.getTotalComments();
-            if (commentList.isEmpty()) {
-                log("Don't have any comment in system! Maybe error at LoadAllCommentsServlet!!!");
-            } else {
-                for (CommentDTO c : commentList) {
-                    log("Title: " + c.getPostName() + ", comment: " + c.getContent() + " by Email: " + c.getEmailComment());
-                }
+            int endPage = totalComments / 20;
+            String indexPage = request.getParameter("index");
+            if (indexPage == null) {
+                indexPage = "1";
             }
-            log("Total comment is: " + totalComments);
+            int index = Integer.parseInt(indexPage);
+
+            if (totalComments % 20 != 0) {
+                endPage++;
+            }
+            ArrayList<CommentDTO> commentList = commentDAO.getAllComments(index);
             request.setAttribute("COMMENT_LIST", commentList);
             request.setAttribute("TOTAL_COMMENTS", totalComments);
+            request.setAttribute("CHECK_INDEX", index);
+            request.setAttribute("ENDPAGE", endPage);
         } catch (Exception e) {
             log("Error at LoadAllCommentsServlet: " + e.getMessage());
         } finally {

@@ -602,6 +602,7 @@ footer .text_footer_strong {
   background-color: #fff;
   border-radius: 5px;
   height: 880px;
+  overflow-y: scroll;
 }
 
 table {
@@ -673,4 +674,28 @@ table tbody .del-btn {
 .del-btn:hover::after {
   transition: transform 0.45s ease-in-out;
   transform: translate3d(200%, 0, 0) rotate(35deg);
+}
+
+.indexPage {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  color: #3b49df;
+  font-weight: bold;
+  border: 1px solid #e3e3e3;
+  text-align: center;
+  padding-top: 5px;
+  margin-top: 1rem;
+}
+
+.indexPage.active {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #3b49df;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #e3e3e3;
+  text-align: center;
 }

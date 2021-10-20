@@ -216,7 +216,8 @@ public class CommentDAO {
         return check;
     }
 
-    public ArrayList<CommentDTO> getAllComments() throws SQLException, NamingException {
+    
+    public ArrayList<CommentDTO> getAllComments(int index) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
@@ -231,8 +232,10 @@ public class CommentDAO {
                         + "from (select a.Image, a.Name, c.EmailComment, c.Comment, c.ID, c.PostID, c.Date "
                         + "from tblComments c left join tblAccounts a "
                         + "on c.EmailComment = a.Email where c.StatusComment = 1) my "
-                        + "left join tblPosts p on my.PostID = p.PostID where p.StatusPost = 'a'";
+                        + "left join tblPosts p on my.PostID = p.PostID where p.StatusPost = 'a' "
+                        + "ORDER BY my.Date desc OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
                 stm = conn.prepareStatement(sql);
+                stm.setInt(1, (index - 1) * 20);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String commentID = rs.getString("ID");

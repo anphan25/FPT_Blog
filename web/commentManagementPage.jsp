@@ -4,6 +4,12 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
 <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
 <c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
 <c:set var="commentList" value="${requestScope.COMMENT_LIST}" />
+<c:if test="${empty currentUser}">
+    <c:redirect url="notFoundPage" />
+</c:if>
+<c:if test="${currentUser.role != 'A'}">
+    <c:redirect url="notFoundPage" />
+</c:if>
 <!DOCTYPE html>
 <html>
     <head>
@@ -167,7 +173,7 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
             </div>
             <div class="navigation_right">
                 <div class="title">
-                    <h1>Comments Management</h1>
+                    <h1>Comments Management (${requestScope.TOTAL_COMMENTS})</h1>
                 </div>
                 <div class="comment-list">
                     <table>
@@ -177,32 +183,37 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>At Post</th>
+                                <th>Comment Date</th>
                                 <th>Content of comment</th>
                                 <th>Action</th>
                             </tr>
-                        </thead>
+                        </thead>                      
                         <tbody>
-                        <c:forEach var="cmt" items="${commentList}">
-                        <form action="deleteComment">
-                            <tr>
-                                <td class="avt-td">
-                                    <img
-                                        src="${cmt.avatar}"
-                                        />
-                                </td>
-                                <td>${cmt.name}</td>
-                                <td>${cmt.emailComment}</td>
-                                <td>${cmt.postName}</td>
-                                <td>${cmt.content}</td>
-                                <td>
-                                    <input type="hidden" name="commentID" value="${cmt.ID}" />
-                                    <button class="del-btn" type="submit">Delete</button>
-                                </td>
-                            </tr>
-                         </c:forEach>
-                        </form>
+                            <c:forEach var="cmt" items="${commentList}">
+                                <tr id="cmt-${cmt.ID}">
+                                    <td class="avt-td">
+                                        <img
+                                            src="${cmt.avatar}"
+                                            />
+                                    </td>
+                                    <td>${cmt.name}</td>
+                                    <td>${cmt.emailComment}</td>
+                                    <td>${cmt.postName}</td>
+                                    <td>${cmt.date}</td>
+                                    <td>${cmt.content}</td>
+                                    <td>
+                                        <button class="del-btn" id="${cmt.ID}">Delete</button>
+                                    </td>
+                                </tr>
+                            </c:forEach>
                         </tbody>
                     </table>
+                </div>
+                <div class="pagingIndex">
+                    <c:set var="activeIndex" value="${requestScope.CHECK_INDEX}"/>
+                    <c:forEach begin="1" end="${requestScope.ENDPAGE}" var="i">
+                        <a class="${activeIndex == i ? "active": ""} indexPage" href="loadAllComments?index=${i}">${i}</a>
+                    </c:forEach>
                 </div>
             </div>
         </section>
@@ -234,4 +245,32 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
             </div>
         </footer>
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function deleteCommentInUI(id) {
+            let deleteCmt = document.querySelector("#cmt-" + id);
+            deleteCmt.remove();
+        }
+
+        function deleteComment(id) {
+            $.ajax({
+                url: "DeleteCommentServlet",
+                data: {
+                    cmtID: id
+                },
+                type: "POST",
+                success: function (response) {
+                    deleteCommentInUI(id);
+                },
+                error: function (xhr) {
+                    alert('Server internal error.');
+                }
+            });
+        }
+        $(document).on('click', '.del-btn', function (e) {
+            e.preventDefault();
+            deleteComment(e.target.id.length > 0 ? e.target.id : e.currentTarget.id);
+
+        });
+    </script>
 </html>

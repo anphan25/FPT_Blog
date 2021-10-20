@@ -566,7 +566,6 @@
 
             function deleteCommentInUI(id) {
                 let deleteCmt = document.querySelector("#comment-div-" + id);
-                console.log(id);
                 deleteCmt.remove();
                 cmtCount.textContent = Number(cmtCount.textContent) - 1;
                 cmtCount2.textContent = Number(cmtCount2.textContent) - 1;
