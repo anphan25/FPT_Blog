@@ -182,7 +182,7 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                             </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="cmt" items="commentList">
+                        <c:forEach var="cmt" items="${commentList}">
                         <form action="deleteComment">
                             <tr>
                                 <td class="avt-td">

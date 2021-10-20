@@ -7,11 +7,21 @@ package swp.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import swp.category.CategoryDAO;
+import swp.category.CategoryDTO;
+import swp.comment.CommentDAO;
+import swp.comment.CommentDTO;
+import swp.post.PostDAO;
+import swp.post.PostDTO;
 
 /**
  *
@@ -32,17 +42,28 @@ public class LoadAllCommentsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoadAllCommentsServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoadAllCommentsServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get("commentManagementPage");
+        try {
+            CommentDAO commentDAO = new CommentDAO();
+            ArrayList<CommentDTO> commentList = commentDAO.getAllComments();
+            int totalComments = commentDAO.getTotalComments();
+            if (commentList.isEmpty()) {
+                log("Don't have any comment in system! Maybe error at LoadAllCommentsServlet!!!");
+            } else {
+                for (CommentDTO c : commentList) {
+                    log("Title: " + c.getPostName() + ", comment: " + c.getContent() + " by Email: " + c.getEmailComment());
+                }
+            }
+            log("Total comment is: " + totalComments);
+            request.setAttribute("COMMENT_LIST", commentList);
+            request.setAttribute("TOTAL_COMMENTS", totalComments);
+        } catch (Exception e) {
+            log("Error at LoadAllCommentsServlet: " + e.getMessage());
+        } finally {
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 
