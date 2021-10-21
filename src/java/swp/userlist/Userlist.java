@@ -2,7 +2,7 @@ package swp.userlist;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.function.Predicate;
+//import java.util.function.Predicate;
 
 /*** DON'T PUT ME IN HORNY JAIL FOR THIS CODING SHIT ***/
 public class Userlist implements Serializable
@@ -124,6 +124,112 @@ public class Userlist implements Serializable
         return null;
     }
     
+    public ArrayList<UserlistDTO> filteredList(String gender, String status, String role, String major, ArrayList<UserlistDTO> splist)
+    {
+        ArrayList<UserlistDTO> result = new ArrayList<>(splist);
+        String all = "all";
+        //all of this relate to tree diagram
+        boolean isMentor = role.equals("Mentor");      //this will determine whether the number 6 will split or not
+        //relative to number 1 3 5 and 8
+        boolean isFullGender = gender.equals(all); //1 false mean 2
+        boolean isFullStatus = status.equals(all); //3 false mean 4
+        boolean isFullRole = role.equals(all);     //5 false mean 6
+        boolean isFullMajor = major.equals(all);   //7 false mean 8
+        //CHECK all block that's exist 2 4 6 8 for the extra bug
+        if(isFullGender && isFullStatus && isFullRole) // 1 3 5
+        {
+            return result;
+        }
+        else if(isFullGender && isFullStatus && !isFullRole) // 1 3 6
+        {
+            result.removeIf(otherrole -> !otherrole.getRole().equals(role));
+            if(isMentor) // i love coding
+            {
+                if(isFullMajor) // 1 3 6 7
+                {
+                    return result;
+                }
+                else // 1 3 6 8
+                {
+                    result.removeIf(othermajor -> !othermajor.getMajor().equals(major));
+                    return result;
+                }
+            }
+            return result;
+        }
+        else if(isFullGender && !isFullStatus && isFullRole) //1 4 5
+        {
+            result.removeIf(otherstatus -> !otherstatus.getStatusaccount().equals(status));
+            return result;
+        }
+        else if(isFullGender && !isFullStatus && !isFullRole) //1 4 6  PLEASE RUN THIS FIRST BEFORE 1 4 7
+        {
+            result.removeIf(otherrole -> !otherrole.getRole().equals(role));
+            result.removeIf(otherstatus -> !otherstatus.getStatusaccount().equals(status));
+            if(isMentor) // i love coding
+            {
+                if(isFullMajor) // 1 3 6 7
+                {
+                    return result;
+                }
+                else // 1 3 6 8
+                {
+                    result.removeIf(othermajor -> !othermajor.getMajor().equals(major));
+                    return result;
+                }
+            }
+            return result;
+        }
+        else if(!isFullGender && isFullStatus && isFullRole) // 2 3 5
+        {
+            result.removeIf(othergender -> !othergender.getGender().equals(gender));
+            return result;
+        }
+        else if(!isFullGender && isFullStatus && !isFullRole) // 2 3 6
+        {
+            result.removeIf(othergender -> !othergender.getGender().equals(gender)); //2
+            result.removeIf(otherrole -> !otherrole.getRole().equals(role));//6
+            if(isMentor) // i love coding
+            {
+                if(isFullMajor) // 2 3 6 7
+                {
+                    return result;
+                }
+                else // 2 3 6 8
+                {
+                    result.removeIf(othermajor -> !othermajor.getMajor().equals(major));
+                    return result;
+                }
+            }
+            return result;
+        }
+        else if(!isFullGender && !isFullStatus && isFullRole) // 2 4 5
+        {
+            result.removeIf(othergender -> !othergender.getGender().equals(gender));
+            result.removeIf(otherstatus -> !otherstatus.getStatusaccount().equals(status));
+            return result;
+        }
+        else if(!isFullGender && !isFullStatus && !isFullRole) // 2 4 6
+        {
+            result.removeIf(othergender -> !othergender.getGender().equals(gender));
+            result.removeIf(otherstatus -> !otherstatus.getStatusaccount().equals(status));
+            result.removeIf(otherrole -> !otherrole.getRole().equals(role));
+            if(isMentor) // i love coding
+            {
+                if(isFullMajor) // 2 4 6 7
+                {
+                    return result;
+                }
+                else // 2 4 6 8
+                {
+                    result.removeIf(othermajor -> !othermajor.getMajor().equals(major));
+                    return result;
+                }
+            }
+            return result;
+        }
+        return null;
+    }
 /*    remarkable code in memory of old code
 if(gender.equals("all") && !status.equals("all")) //filt with status
 {

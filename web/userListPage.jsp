@@ -5,6 +5,7 @@
 <c:set var = "userlist" value = "${requestScope.USER_LIST}" />
 <c:set var = "currentadmin" value = "${sessionScope.CURRENT_USER}" />
 <c:set var = "major" value = "${sessionScope.CATEGORY_LIST}" />
+<c:set var = "select" value = "${requestScope.SELECTION_TEXT}" />
 
 <c:if test = "${empty currentadmin}">
     <c:redirect url = "firstLoginPage"/>
@@ -198,6 +199,7 @@
             </div>
             <div class="container-item">
                 <h1>List of users</h1>
+                <c:if test="${empty select}">
                 <div class="Filtering">
                     <div class="dropdown_filt">
                         <div class="select_filt">
@@ -249,9 +251,92 @@
                     </div>
                     <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                 </div>
+                </c:if>
+                <c:if test="${not empty select}">
+                <div class="Filtering">
+                    <div class="dropdown_filt">
+                        <div class="select_filt">
+                            <span>
+                                <c:if test="${select[0] == 'all'}">
+                                    View all
+                                </c:if>
+                                <c:if test="${select[0] != 'all'}">
+                                    ${select[0]}
+                                </c:if>
+                            </span>
+                        </div>
+                        <input type="hidden" id="selectedgender" value="${select[0]}">
+                        <ul class="dropdown-menu">
+                            <li id="Male">Male</li>
+                            <li id="Female">Female</li>
+                            <li id="all">View all</li>
+                            <!-- show all when it choose the third one -->
+                        </ul>
+                    </div>
+                    <div class="dropdown_filt">
+                        <div class="select_filt">
+                            <span>
+                                <c:if test="${select[1] == 'all'}">
+                                    View all
+                                </c:if>
+                                <c:if test="${select[1] != 'all'}">
+                                    ${select[1]}
+                                </c:if>
+                            </span>
+                        </div>
+                        <input type="hidden" id="selectedstatus" value="${select[1]}">
+                        <ul class="dropdown-menu">
+                            <li id="Actived">Active</li>
+                            <li id="Banned">Banned</li>
+                            <li id="all">View all</li>
+                        </ul>
+                    </div>
+                    <div class="dropdown_filt">
+                        <div class="select_filt">
+                            <span>
+                                <c:if test="${select[2] == 'all'}">
+                                    View all
+                                </c:if>
+                                <c:if test="${select[2] != 'all'}">
+                                    ${select[2]}
+                                </c:if>
+                            </span>
+                        </div>
+                        <input type="hidden" id="selectedrole" value="${select[2]}">
+                        <ul class="dropdown-menu" onclick="ShowMajor()">
+                            <li id="S">Student</li>
+                            <li id="M">Mentor</li>
+                            <li id="A">Admin</li>
+                            <li id="all">View all</li>
+                            <!-- show all when it choose the third one -->
+                        </ul>
+                    </div>
+                    <div class="dropdown_filt" id="hiddenmajor">
+                        <div class="select_filt">
+                            <span>
+                                <c:if test="${select[3] == 'all'}">
+                                    View all
+                                </c:if>
+                                <c:if test="${select[3] != 'all'}">
+                                    ${select[3]}
+                                </c:if>
+                            </span>
+                        </div>
+                        <input type="hidden" id="selectedmajor" value="${select[3]}">
+                        <ul class="dropdown-menu">
+                            <c:forEach var = "categories" items = "${major}">
+                                <li id="${categories.name}">${categories.name}</li>
+                            </c:forEach>
+                                <li id="all">View all</li>
+                            <!-- show all when it choose the third one -->
+                        </ul>
+                    </div>
+                    <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
+                </div>
+                </c:if>
                 <form onsubmit="SendData();return false">
                     <div class="user-list-searchbar">
-                        <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${param.txtSearch}"/>
+                        <input id="searchtext" class="search-user" type="text" placeholder="Search email" name="txtSearch" value="${requestScope.SEARCH_TEXT}"/>
                         <div class="user-list-icon" onclick="SendData()">
                             <i class="fas fa-search"></i>
                         </div>
@@ -407,6 +492,11 @@
                 else
                     document.getElementById("hiddenmajor").style.display = "none";
             }
+            <c:if test="${not empty select}">
+                <c:if test="${select[2] == 'Mentor'}">
+                    document.getElementById("hiddenmajor").style.display = "inline-block";
+                </c:if>
+            </c:if>
         </script>
     </body>
 </html>

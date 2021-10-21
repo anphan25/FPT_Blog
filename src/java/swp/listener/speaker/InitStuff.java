@@ -93,6 +93,7 @@ public class InitStuff implements Serializable
                             "VALUES(NEWID(), 2, ?, GETDATE())";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getEmail());
+                //stm.executeUpdate();
                 numbereffect += 1;
             }
         }

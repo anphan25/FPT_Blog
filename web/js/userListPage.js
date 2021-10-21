@@ -2,120 +2,185 @@
 
 var htmldoc; //phòng trường hợp lz DOM lại quăng thêm lỗi dit me may DOM ạ html của m vô duyên như chó rách
 //Well i just learned jquery for like 3 days that's why the code may look stupid
-function SendData() {
-  var start = new Date().getTime();
-  if (document.getElementById("searchtext").value === "") return;
-  $("#reloading").empty();
-  $("#reloading").append("<div class='loader'></div>");
-  htmldoc = null;
-  $.ajax({
-    url: "searchFilt",
-    type: "get", //send it through get method
-    data: {
-      txtSearch: document.getElementById("searchtext").value,
-    },
-    success: function (text) {
-      //100tr bỏ ra cho FPT rồi thì đến lúc cũng phải gặt hái trí tuệ. Những dòng code ko copy paste
-      $("#reloading").empty();
-      var parser = new DOMParser();
-      htmldoc = parser.parseFromString(text, "text/html");
-      DidYouDoIt = true;
-      $("#reloading").html(htmldoc.getElementById("freshair"));
-      var end = new Date().getTime();
-      var time = end - start;
-      console.log("Loaded time: " + time.toString());
-    },
-    error: function () {
-      //Do Something to handle error
-      // now i know what to do
-      $("#reloading").empty();
-      $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-      console.log("oi dit me cuoc doi");
-    },
-  });
+function SendData() 
+{
+    var searchtext = document.getElementById("searchtext").value;
+    if (searchtext === "") return;
+    $("#reloading").empty();
+    $("#reloading").append("<div class='loader'></div>");
+    htmldoc = null;
+    //THIS IS VALIDATING INFORMATION
+    let selgen = document.getElementById("selectedgender").value;
+    let selstt = document.getElementById("selectedstatus").value;
+    let selr = document.getElementById("selectedrole").value;
+    let selm = document.getElementById("selectedmajor").value;
+    //checking condition before send to server
+    //if (selgen === "" && selstt === "" && selr === "" && selm === "") return; //bám search ko bấm bấm apply làm cc gì
+    //convert to full rolename
+    switch (selr) 
+    {
+      case "S":
+        selr = "Student";
+        break;
+      case "A":
+        selr = "Admin";
+        break;
+      case "M":
+        selr = "Mentor";
+        break;
+      default:
+        selr = "all";
+    }
+    if (selgen !== "" || selstt !== "" || selr !== "" || selm !== "") 
+    {
+        //đã select 1 cái nhưng những thứ khác để trống
+        if (selgen === "") selgen = "all";
+        if (selstt === "") selstt = "all";
+        if (selr === "") selr = "all";
+        if (selm === "") selm = "all";
+    }
+    $.ajax({
+      url: "searchFilt",
+      type: "get", //send it through get method
+      data: {
+        txtSearch: searchtext,
+        selectedGender: selgen,
+        selectedStatus: selstt,
+        selectedRole: selr,
+        selectedMajor: selm
+      },
+      success: function (text) {
+        //100tr bỏ ra cho FPT rồi thì đến lúc cũng phải gặt hái trí tuệ. Những dòng code ko copy paste
+        $("#reloading").empty();
+        var parser = new DOMParser();
+        htmldoc = parser.parseFromString(text, "text/html");
+        DidYouDoIt = true;
+        $("#reloading").html(htmldoc.getElementById("freshair"));
+      },
+      error: function () {
+        //Do Something to handle error
+        // now i know what to do
+        $("#reloading").empty();
+        $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
+        console.log("oi dit me cuoc doi");
+      }
+    });
 }
 
-function applyButton() {
-  var start = new Date().getTime();
-  $("#zawarudo").attr("disabled", "disabled");
-  $("#zawarudo").addClass("button_filt_disable");
-  setTimeout(function () {
-    $("#zawarudo").removeAttr("disabled");
-    $("#zawarudo").removeClass("button_filt_disable");
-  }, 3000); //za warudo 3s
-  //3 value
-  let searchtext = document.getElementById("searchtext").value;
-  let selgen = document.getElementById("selectedgender").value;
-  let selstt = document.getElementById("selectedstatus").value;
-  let selr = document.getElementById("selectedrole").value;
-  let selm = document.getElementById("selectedmajor").value;
-  //checking condition before send to server
-  if (selgen === "" && selstt === "" && selr === "" && selm === "") return; //bám search ko bấm bấm apply làm cc gì
-  //convert to full rolename
-  switch (selr) {
-    case "S":
-      selr = "Student";
-      break;
-    case "A":
-      selr = "Admin";
-      break;
-    case "M":
-      selr = "Mentor";
-      break;
-    default:
-      selr = "all";
-  }
-  if (selgen !== "" || selstt !== "" || selr !== "" || selm !== "") {
-    //đã select 1 cái nhưng những thứ khác để trống
-    if (selgen === "") selgen = "all";
-    if (selstt === "") selstt = "all";
-    if (selr === "") selr = "all";
-    if (selm === "") selm = "all";
-  }
-  console.log(
-    "all parameters: " + selgen + " _ " + selstt + " _ " + selr + " _ " + selm
-  );
-  //starting the sending
-  $("#reloading").empty();
-  $("#reloading").append("<div class='loader'></div>");
-  htmldoc = null;
-  $.ajax({
-    url: "searchFilt",
-    type: "get", //send it through get method
-    data: {
-      selectedGender: selgen,
-      selectedStatus: selstt,
-      selectedRole: selr,
-      selectedMajor: selm,
-      txtSearch: searchtext,
-    },
-    success: function (text) {
-      //response code is here
-      $("#reloading").empty();
-      var parser = new DOMParser();
-      htmldoc = parser.parseFromString(text, "text/html");
-      DidYouDoIt = true;
-      $("#reloading").html(htmldoc.getElementById("freshair"));
-      var end = new Date().getTime();
-      var time = end - start;
-      console.log("Loaded time: " + time.toString());
-    },
-    error: function () {
-      //Old stuff go here
-      // now i know what to do
-      $("#reloading").empty();
-      $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-      console.log("oi dit me cuoc doi");
-    },
-  });
+function applyButton() 
+{
+    var start = new Date().getTime();
+    $("#zawarudo").attr("disabled", "disabled");
+    $("#zawarudo").addClass("button_filt_disable");
+    setTimeout(function () 
+    {
+      $("#zawarudo").removeAttr("disabled");
+      $("#zawarudo").removeClass("button_filt_disable");
+    }, 3000); //za warudo 3s
+    let selgen = document.getElementById("selectedgender").value;
+    let selstt = document.getElementById("selectedstatus").value;
+    let selr = document.getElementById("selectedrole").value;
+    let selm = document.getElementById("selectedmajor").value;
+    //checking condition before send to server
+    if (selgen === "" && selstt === "" && selr === "" && selm === "") return; //bám search ko bấm bấm apply làm cc gì
+    //convert to full rolename
+    switch (selr) 
+    {
+      case "S":
+        selr = "Student";
+        break;
+      case "A":
+        selr = "Admin";
+        break;
+      case "M":
+        selr = "Mentor";
+        break;
+      default:
+        selr = "all";
+    }
+    if (selgen !== "" || selstt !== "" || selr !== "" || selm !== "") 
+    {
+        //đã select 1 cái nhưng những thứ khác để trống
+        if (selgen === "") selgen = "all";
+        if (selstt === "") selstt = "all";
+        if (selr === "") selr = "all";
+        if (selm === "") selm = "all";
+    }
+    //starting the sending
+    $("#reloading").empty();
+    $("#reloading").append("<div class='loader'></div>");
+    htmldoc = null;
+    $.ajax({
+      url: "searchFilt",
+      type: "get", //send it through get method
+      data: {
+        selectedGender: selgen,
+        selectedStatus: selstt,
+        selectedRole: selr,
+        selectedMajor: selm
+      },
+      success: function (text) {
+        //response code is here
+        $("#reloading").empty();
+        var parser = new DOMParser();
+        htmldoc = parser.parseFromString(text, "text/html");
+        DidYouDoIt = true;
+        $("#reloading").html(htmldoc.getElementById("freshair"));
+        var end = new Date().getTime();
+        var time = end - start;
+        console.log("Loaded time: " + time.toString());
+      },
+      error: function () {
+        //Old stuff go here
+        // now i know what to do
+        $("#reloading").empty();
+        $("#reloading").append("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
+        console.log("oi dit me cuoc doi");
+      },
+    });
 }
 
 //this one will carry the duty after the user try to violent data after search. God damn i hate them so much.
 //GLOBAL WARMING GLOBAL VARIABLE GLOBAL SILENT
 var WhichForm; //to query the button for the first time and forever
-var DidYouDoIt = false; //check first or second after
+var DidYouDoIt = false; //check first or second after || DOES NOT RELATED TO after filt
 var WhichButtonNumber;
 
+
+function locMem()
+{
+    var selectstt = document.getElementById("selectedstatus").value;
+    var selectgen = document.getElementById("selectedgender").value;
+    var selectrl = document.getElementById("selectedrole").value;
+    var selectm = document.getElementById("selectedmajor").value;
+    var selected;
+    if(selectstt === "" && selectgen === "" && selectrl === "" && selectm === "")
+    {
+        selected = "all";
+    }
+    else
+    {
+        switch (selectrl) 
+        {
+          case "S":
+            selectrl = "Student";
+            break;
+          case "A":
+            selectrl = "Admin";
+            break;
+          case "M":
+            selectrl = "Mentor";
+            break;
+          default:
+            selectrl = "all";
+        }
+        if(selectstt === "") selectstt = "all";
+        if(selectgen === "") selectgen = "all";
+        if(selectm === "") selectm = "all";
+        selected = selectgen + "." + selectstt + "." + selectrl + "." + selectm;
+    }
+    return selected;
+}
 
 function kingcrimson(kytu) 
 {
@@ -123,6 +188,7 @@ function kingcrimson(kytu)
     var so = kytu.substring(1); //lấy số;
     var search = document.getElementById("searchtext").value;
     if(search === "") search = "all";
+    var selected = locMem();
     WhichButtonNumber = so;
     if (action === "u") 
     {
@@ -135,7 +201,7 @@ function kingcrimson(kytu)
         }
         else
         {
-          var email = document.getElementById("e" + so);
+          var email = document.getElementById("e" + so).value;
           $(
             '<form action="' +
             'userAction" method="POST">' +
@@ -146,6 +212,8 @@ function kingcrimson(kytu)
             search +
             "%" +
             selectrole +
+            "%" +
+            selected +
             '"' +
             "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
             "</form>"
@@ -170,6 +238,8 @@ function kingcrimson(kytu)
             email +
             "%" +
             search +
+            "%" +
+            selected +
             '"' +
             "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
             "</form>"
@@ -251,7 +321,7 @@ function updateButton(formid)
     var selectedRole = WhichForm.elements["txtList"].value;
     var search = document.getElementById("searchtext").value;
     if(search === "") search = "all";
-    console.log(selectedRole);
+    var selected = locMem();
     if(selectedRole === "M")
     {
         $("#updatemodal").removeClass("hidden");
@@ -261,7 +331,7 @@ function updateButton(formid)
     {
         var email = WhichForm.elements["victimEmail"].value;
         $('<form action="' +
-        'userAction">' +
+        'userAction" method="POST">' +
         '<input type="text" name="searchAction" method="POST" value="updating' +
         "%" +
         email +
@@ -269,6 +339,8 @@ function updateButton(formid)
         search +
         "%" +
         selectedRole + //one and only for not violating the system
+        "%" +
+        selected +
         '"' +
         "/>" + //tại sao vậy DOM?
         "</form>"
@@ -291,6 +363,7 @@ function unbanButton(formid) //only for the first time cumhere and the later too
     var email = formdata.elements["victimEmail"].value;
     var search = document.getElementById("searchtext").value;
     if(search === "") search = "all";
+    var selected = locMem();
     console.log(search);
     $(
           '<form action="' +
@@ -300,6 +373,8 @@ function unbanButton(formid) //only for the first time cumhere and the later too
             email +
             "%" +
             search +
+            "%" +
+            selected +
             '"' +
             "/>" + //mày có thể bớt vô duyên đóng tag tự động dc ko
             "</form>"
@@ -316,6 +391,7 @@ function updateForMentor()
         var email = WhichForm.elements["victimEmail"].value;
         var search = document.getElementById("searchtext").value;
         if(search === "") search = "all";
+        var selected = locMem();
         var categoryID = document.getElementById("select-category").value;
         console.log(email + " + " + search + " + " + categoryID);
         $('<form action="' +
@@ -329,6 +405,8 @@ function updateForMentor()
             "M" + //one and only for not violating the system
             "%" +
             categoryID +
+            "%" +
+            selected +
             '"' +
             "/>" + //tại sao vậy DOM?
             "</form>"
@@ -341,6 +419,7 @@ function updateForMentor()
         var email = document.getElementById("e" + WhichButtonNumber).value;
         var search = document.getElementById("searchtext").value;
         if(search === "") search = "all";
+        var selected = locMem();
         var categoryID = document.getElementById("select-category").value;
         $('<form action="' +
             'userAction" method="POST">' +
@@ -353,6 +432,8 @@ function updateForMentor()
             "M" + //one and only for not violating the system
             "%" +
             categoryID +
+            "%" +
+            selected +
             '"' +
             "/>" + //tại sao vậy DOM?
             "</form>"
@@ -370,7 +451,7 @@ function submitBan()
         let email = WhichForm.elements["victimEmail"].value;
         let search = document.getElementById("searchtext").value;
         if(search === "") search = "all";
-        console.log(reason + " _ " + email + " _ " + search);
+        let selected = locMem();
         if(reason.trim() === "")
         {
             alert("Just give me a reason, just a little bit's enough\n" +
@@ -385,6 +466,8 @@ function submitBan()
           search +
           "%" +
           reason +
+          "%" +
+          selected +
           '"' +
           "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
           "</form>"
@@ -399,6 +482,7 @@ function submitBan()
         let email = document.getElementById("e" + WhichButtonNumber).value;
         let search = document.getElementById("searchtext").value;
         if(search === "") search = "all";
+        let selected = locMem();
         console.log(reason + " _ " + email + " _ " + search);
         if(reason.trim() === "")
         {
@@ -414,6 +498,8 @@ function submitBan()
           search +
           "%" +
           reason +
+          "%" +
+          selected +
           '"' +
           "/>" + //chỉ 1 input dc insert thêm cái nữa thì tôi đi ngao du tây tạng
           "</form>"

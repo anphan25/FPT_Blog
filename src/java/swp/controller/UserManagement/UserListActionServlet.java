@@ -51,7 +51,6 @@ public class UserListActionServlet extends HttpServlet
             throws ServletException, IOException, NamingException, SQLException
     {
         response.setContentType("text/html;charset=UTF-8");
-        
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get(ERROR_PAGE);
@@ -62,7 +61,6 @@ public class UserListActionServlet extends HttpServlet
         //server side declaration
         HttpSession session = request.getSession(false);
         AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
-        
         try
         {
             //ko cần check session null khi cái attribute login đã null
@@ -73,7 +71,7 @@ public class UserListActionServlet extends HttpServlet
                 {
                     if(actionline != null) //tôi tính làm thêm hàm tránh lặp lại mà dcm thậm chí C# còn dùng delegate để khai báo bừa bãi việc gì phải làm thế (:
                     {
-                        String[] araara = actionline.split("%"); //true parameter is here not line 56 in this class lol
+                        String[] araara = actionline.split("%"); //true parameter is here
                         String action = araara[0];
                         String gmail = araara[1];
                         String search = araara[2];
@@ -85,38 +83,79 @@ public class UserListActionServlet extends HttpServlet
                             if(role.equals("M"))
                             {
                                 int cateID = Integer.parseInt(araara[4]);
+                                String selection = araara[5];
                                 if(dao.updateRoleMentor(gmail, cateID))
                                 {
-                                    if(search.equals("all"))
+                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
+                                    Userlist cachingTool = new Userlist(newlist);
+                                    session.setAttribute("CACHING_USER_LIST", cachingTool);
+                                    if(search.equals("all") && selection.equals("all"))
                                     {
-                                        ArrayList<UserlistDTO> newlist = dao.getUserList();
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
-                                    else
+                                    else if(search.equals("all")) //lọc only
                                     {
-                                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                        String[] selected = selection.split("\\.");
+                                        newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3]);
+                                        request.setAttribute("SELECTION_TEXT", selected);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else if(selection.equals("all")) //search only
+                                    {
+                                        newlist = dao.searchAll(search);
                                         request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else //vừa lọc vừa search
+                                    {
+                                        String[] selected = selection.split("\\.");
+                                        newlist = dao.searchAll(search);
+                                        newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3], newlist);
+                                        request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("SELECTION_TEXT", selected);
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
                                 }
-                                
                             }
                             else //update cho 2 role khác
                             {
+                                String selection = araara[4];
                                 if(dao.updateRoleAccount(gmail, role))
                                 {
-                                    if(search.equals("all"))
+                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
+                                    Userlist cachingTool = new Userlist(newlist);
+                                    session.setAttribute("CACHING_USER_LIST", cachingTool);
+                                    if(search.equals("all") && selection.equals("all"))
                                     {
-                                        ArrayList<UserlistDTO> newlist = dao.getUserList();
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
-                                    else
+                                    else if(search.equals("all")) //lọc only
                                     {
-                                        ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                        String[] selected = selection.split("\\.");
+                                        newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3]);
+                                        request.setAttribute("SELECTION_TEXT", selected);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else if(selection.equals("all")) //search only
+                                    {
+                                        newlist = dao.searchAll(search);
                                         request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("USER_LIST", newlist);
+                                        url = roadmap.get(USER_CONTROL_PANEL);
+                                    }
+                                    else //vừa lọc vừa search
+                                    {
+                                        String[] selected = selection.split("\\.");
+                                        newlist = dao.searchAll(search);
+                                        newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3], newlist);
+                                        request.setAttribute("SEARCH_TEXT", search);
+                                        request.setAttribute("SELECTION_TEXT", selected);
                                         request.setAttribute("USER_LIST", newlist);
                                         url = roadmap.get(USER_CONTROL_PANEL);
                                     }
@@ -126,20 +165,41 @@ public class UserListActionServlet extends HttpServlet
                         else if(action.equals("banning")) //nếu họ muốn ban
                         {
                             String reason = araara[3];
+                            String selection = araara[4];
                             UserlistDAO dao = new UserlistDAO();
                             boolean IsItUpdate = dao.banAccount(gmail, reason);
                             if(IsItUpdate)
                             {
-                                if(search.equals("all"))
+                                ArrayList<UserlistDTO> newlist = dao.getUserList();
+                                Userlist cachingTool = new Userlist(newlist);
+                                session.setAttribute("CACHING_USER_LIST", cachingTool);
+                                if(search.equals("all") && selection.equals("all"))
                                 {
-                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
-                                else
+                                else if(search.equals("all")) //lọc only
                                 {
-                                    ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                    String[] selected = selection.split("\\.");
+                                    newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3]);
+                                    request.setAttribute("SELECTION_TEXT", selected);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else if(selection.equals("all")) //search only
+                                {
+                                    newlist = dao.searchAll(search);
                                     request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else //vừa lọc vừa search
+                                {
+                                    String[] selected = selection.split("\\.");
+                                    newlist = dao.searchAll(search);
+                                    newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3], newlist);
+                                    request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("SELECTION_TEXT", selected);
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
@@ -147,20 +207,41 @@ public class UserListActionServlet extends HttpServlet
                         }
                         else if(action.equals("unbaning")) //nếu họ muốn ban
                         {
+                            String selection = araara[3];
                             UserlistDAO dao = new UserlistDAO();
                             boolean IsItUpdate = dao.unbanAccount(gmail);
                             if(IsItUpdate)
                             {
-                                if(search.equals("all"))
+                                ArrayList<UserlistDTO> newlist = dao.getUserList();
+                                Userlist cachingTool = new Userlist(newlist);
+                                session.setAttribute("CACHING_USER_LIST", cachingTool);
+                                if(search.equals("all") && selection.equals("all"))
                                 {
-                                    ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
-                                else
+                                else if(search.equals("all")) //lọc only
                                 {
-                                    ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                                    String[] selected = selection.split("\\.");
+                                    newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3]);
+                                    request.setAttribute("SELECTION_TEXT", selected);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else if(selection.equals("all")) //search only
+                                {
+                                    newlist = dao.searchAll(search);
                                     request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    url = roadmap.get(USER_CONTROL_PANEL);
+                                }
+                                else //vừa lọc vừa search
+                                {
+                                    String[] selected = selection.split("\\.");
+                                    newlist = dao.searchAll(search);
+                                    newlist = cachingTool.filteredList(selected[0], selected[1], selected[2], selected[3], newlist);
+                                    request.setAttribute("SEARCH_TEXT", search);
+                                    request.setAttribute("SELECTION_TEXT", selected);
                                     request.setAttribute("USER_LIST", newlist);
                                     url = roadmap.get(USER_CONTROL_PANEL);
                                 }
@@ -180,12 +261,6 @@ public class UserListActionServlet extends HttpServlet
         }
         finally
         {
-            //temporary stupid code
-            UserlistDAO dao = new UserlistDAO();
-            ArrayList<UserlistDTO> newlist = dao.getUserList();
-            Userlist fulllist = new Userlist(newlist);
-            session.setAttribute("CACHING_USER_LIST", fulllist);
-            //dont mind this one
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
         }
