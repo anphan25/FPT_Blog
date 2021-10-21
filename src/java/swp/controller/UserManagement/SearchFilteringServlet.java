@@ -74,14 +74,16 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
             {
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
-                {
-                    if(gender == null && status == null && status == null && role == null && major == null) // One servlet do all the thing
+                {//first thing first is apply button
+                    Userlist filter = (Userlist)session.getAttribute("CACHING_USER_LIST");
+                    if(search != null) // One servlet do all the thing 
                     {//all code in this block is using database
                         if(search.contains("@"))
-                        {   
+                        {
                             String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
                             UserlistDAO dao = new UserlistDAO();
                             ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
+                            newlist = filter.filteredList(gender, status, role, major, newlist);
                             url = roadmap.get(SEARCH_RESULT_PAGE);
                             //url = "resultpage.jsp";
                             request.setAttribute("USER_LIST", newlist);
@@ -90,14 +92,14 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                         {
                             UserlistDAO dao = new UserlistDAO();
                             ArrayList<UserlistDTO> newlist = dao.searchAll(search);
+                            newlist = filter.filteredList(gender, status, role, major, newlist);
                             url = roadmap.get(SEARCH_RESULT_PAGE);
                             //url = "resultpage.jsp";
                             request.setAttribute("USER_LIST", newlist);
                         }
                     }
                     else //this else block will execute the apply button AND search with filtered
-                    {//all code in this block will not using the database
-                        Userlist filter = (Userlist) session.getAttribute("CACHING_USER_LIST");
+                    {//as well as Search icon
                         ArrayList<UserlistDTO> newlist = filter.filteredList(gender, status, role, major);
                         if(newlist != null)
                         {
