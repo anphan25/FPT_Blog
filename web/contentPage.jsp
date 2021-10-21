@@ -368,7 +368,7 @@
                                                 <p id="comment-content-p-${listDTO.ID}">${listDTO.content}</p>
                                             </div>
                                             <div class="editForm" id="edit-form-${listDTO.ID}">
-                                                <form action="">
+
                                                     <textarea
                                                         name="cmt"
                                                         minlength="1"
@@ -386,7 +386,7 @@
                                                             <i class="fas fa-check" id="${listDTO.ID}"></i>
                                                         </div>
                                                     </div>
-                                                </form>
+
                                             </div>
                                         </div>
                                         <c:if test="${currentUser.email == listDTO.emailComment || currentUser.role == 'A'}">                              
