@@ -866,6 +866,97 @@ footer .text_footer_strong {
   padding: 15px;
 }
 
+.update-successfully-modal {
+  width: 450px;
+  height: 300px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 50px 30px 30px;
+}
+
+.update-successfully-modal img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+
+.update-successfully-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
+.OKbtn-update-successfully {
+  width: 60px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
+/* ban successfully */
+/* ban successfully */
+/* ban successfully */
+.ban-successfully-modal {
+  width: 450px;
+  height: 300px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 50px 30px 30px;
+}
+
+.ban-successfully-modal img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+
+.ban-successfully-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
+.OKbtn-ban-successfully {
+  width: 60px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
 /* toggle_sidebar */
 /* toggle_sidebar */
 /* toggle_sidebar */
