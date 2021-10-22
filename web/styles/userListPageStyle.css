@@ -693,18 +693,20 @@ footer .text_footer_strong {
   color: #5951ed;
 }
 .activeStatus {
+    display: inline-block;
     font-size: 14px;
     background-color: rgba(0, 255, 143, 0.15);
    color: #24B374;
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 1rem;
     border-radius: 26px;
     font-weight: 500;
 }
 
 .bannedStatus {
+    display: inline-block;
     font-size: 14px;
     background-color: rgba(255, 0, 0, 0.2);
-    padding: 0.35rem 0.5rem;
+    padding: 0.35rem 1rem;
     border-radius: 26px;
     font-weight: 500;
     color: red;
@@ -1129,6 +1131,10 @@ footer .text_footer_strong {
 /* style cho việc xổ xuống phần filt (dropdown filt) */
 .Filtering {
   margin-top: 10px;
+}
+
+.banAcStatus {
+    width: 150px;
 }
 
 /* làm màu cho cái button */
