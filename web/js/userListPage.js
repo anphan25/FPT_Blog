@@ -594,6 +594,18 @@ const banSuccessfullyOverlay = document.querySelector(
   ".ban-successfully-overlay"
 );
 
+//var cmpdm = (function() {
+//    var executed = false;
+//    return function() {
+//        if (!executed) {
+//            executed = true;
+//             banSuccessfullyModal.classList.toggle("hidden");
+//             banSuccessfullyOverlay.classList.toggle("hidden");
+//        }
+//    };
+//})();
+//cmpdm();
+
 document
   .querySelector(".OKbtn-ban-successfully")
   .addEventListener("click", () => {

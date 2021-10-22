@@ -591,30 +591,40 @@ footer .text_footer_strong {
   font-size: 2rem;
 }
 
+.avt-td {
+    text-align: center;
+}
+
 .avt-td img {
   width: 32px;
   height: 32px;
   object-fit: cover;
   border-radius: 50%;
+  
 }
 
 .comment-list {
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   height: 580px;
   overflow-y: scroll;
+  box-shadow: 0 0.125rem 0.3rem 0 rgba(48, 53, 69, 0.08);
 }
 
 table {
-  border-collapse: collapse;
+/*  border-collapse: collapse;
   text-align: center;
   border: 1px solid #e3e3e3;
+  width: 100%;*/
+  border-collapse: collapse;
+  text-align: left;
   width: 100%;
-  border-radius: 5px;
 }
 
 table th {
-  padding: 10px;
+    padding: 1rem 0.75rem;
+  background-color: #3b49df;
+  color: #fff;
 }
 
 table thead {
@@ -627,22 +637,83 @@ table tbody tr {
 }
 
 table tbody td {
-  padding: 10px 0px;
+  padding: 10px 8px;
 }
 
 table tbody .del-btn {
   cursor: pointer;
   border: none;
-  border-radius: 5px;
-  padding: 8px 16px;
-  font-size: 1rem;
+  margin: 0 auto;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.5rem;
   transition: cubic(0.17, 0.67, 0.5, 0.71) 100ms;
   color: #fff;
-  background-color: #3b49df;
+  background-color: red;
+}
+.username {
+    width: 150px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.username p{
+    font-weight: 500;
+      font-size: 14px;
+}
+.postTitle {
+    width: 150px;
+}
+.postTitle p{
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5951ed;
+  cursor: pointer;
+}
+.userMail {
+    padding: 0.5rem 1rem;
+  display: inline-block;
+  background: rgba(20, 0, 255, 0.2);
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5951ed;
+  cursor: pointer;
+}
+.postDate {
+    width: 150px;
+}
+.postDate p{
+  display: inline-block;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  text-align: center 
 }
 
+.userCmt {
+/*    width: 50%;*/
+}
+.userCmt p{
+  display: inline-block;
+  color: black;
+  cursor: pointer;
+  text-align: left; 
+  padding: 0.5rem 1rem;
+  background: #e4e6eb;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
 /* table tbody .del-btn {
   background-color: #323ebe;
 } */

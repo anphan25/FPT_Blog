@@ -3,7 +3,7 @@ let body = eval(DomID('body'));
 let dest = eval(DomID('destination'));
 let likeButton = eval(DomID('like'));
 let lastestMessageCreatedAt = "";
-let initMdl = "chat-global";
+let initMdl = true;
 
 $('textarea')
         .each(function () {
@@ -46,6 +46,32 @@ const addDocument = (name, email, message, avatar = '') => {
                 console.error('Error adding document: ', error);
             });
 };
+
+const addDocumentPrivateAdmin = (name, email, message, avatar = '', ) => {
+    db.collection('admin-chat').doc("admin").collection("with-user").doc("user").collection(email.split("@")[0])
+            .add({
+                name: name,
+                email: email,
+                createdAt: new Date(),
+                avatar: avatar,
+                message: message ? message : null,
+            })
+            .catch((error) => {
+                console.error('Error adding document: ', error);
+            });
+    db.collection('user-chat').doc(email.split("@")[0]).collection("with-admin")
+            .add({
+                name: name,
+                email: email,
+                createdAt: new Date(),
+                avatar: avatar,
+                message: message ? message : null,
+            })
+            .catch((error) => {
+                console.error('Error adding document: ', error);
+            });
+};
+
 
 function DomID(element) {
     return document.getElementById(element);

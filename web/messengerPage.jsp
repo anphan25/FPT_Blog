@@ -223,14 +223,14 @@
                             <p class="nameGroup">Mọi người đang online</p>
                         </div>
                     </div>
-<!--                    <div class="groupItem">
+                    <div class="groupItem">
                         <div class="containerCover">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIXIrqiW3R5OstWAjkuFvNwvjYHRaTmwEQWg&usqp=CAU"/>
                         </div>
                         <div class="nameVsLastMessage">
                             <p class="nameGroup">Hỗ trợ</p>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </div>
             <div class="right_main">
@@ -303,25 +303,27 @@
         <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script type="text/javascript" src="./js/messengerPage.js"></script>
         <script>
-            $('.groupItem').click(function (e) {
-                let img = $(this).find("img")[0].src;
-                let content = e.target.innerText;
-                $(".groupItem").toggleClass('groupItemSelected');
-                $(".containerCoverNav img").attr('src', img);
-                $(".nameGroupNav").text(content);
-            });
             textarea &&
                     textarea.addEventListener('keydown', function (e) {
                         if (e.key !== 'Enter' || e.target.value.length === 0)
                             return;
                         else {
                             const {value} = e.target;
-                            addDocument(
-                                    '${currentUser.name}',
-                                    '${currentUser.email}',
-                                    value,
-                                    '${currentUser.avatar}'
-                                    );
+                            if (initMdl === true) {
+                                addDocument(
+                                        '${currentUser.name}',
+                                        '${currentUser.email}',
+                                        value,
+                                        '${currentUser.avatar}'
+                                        );
+                            } else {
+                                addDocumentPrivateAdmin(
+                                        '${currentUser.name}',
+                                        '${currentUser.email}',
+                                        value,
+                                        '${currentUser.avatar}'
+                                        )
+                            }
                         }
                         textarea.value = '';
                     });
@@ -345,6 +347,16 @@
                     }
                 };
             })();
+
+            $('.groupItem').click(function (e) {
+                let img = $(this).find("img")[0].src;
+                let content = e.target.innerText;
+                $(".groupItem").toggleClass('groupItemSelected');
+                $(".containerCoverNav img").attr('src', img);
+                $(".nameGroupNav").text(content);
+                initMdl = !initMdl;
+
+            });
 
             // useEffect
             componentDidMount();
@@ -379,39 +391,40 @@
                 body.innerHTML = domMessage;
                 dest.scrollIntoView({behavior: 'smooth'});
             }
-            
-            if (initMdl === "chat-global") {
-                 db.collection('chat-global')
-                    .orderBy('createdAt', 'desc')
-                    .limit(1)
-                    .onSnapshot((querySnapshot) => {
-                        let domMessage = '';
-                        let messagesRealtime = [];
-                        querySnapshot.forEach((doc) => {
-                            if (doc.exists) {
-                                let id = doc.id;
-                                let data = {...doc.data(), id};
-                                messagesRealtime.push(data);
-                            }
-                        });
-                        messagesRealtime.forEach((doc) => {
-                            if (doc.createdAt) {
-                                if (lastestMessageCreatedAt !== doc.createdAt.seconds) {
-                                    if ('${currentUser.email}' === doc.email) {
-                                        domMessage += rightMessage(doc.message);
-                                    } else {
-                                        domMessage += leftMessage(doc.avatar, doc.message, doc.name);
+
+               if (initMdl) {
+                db.collection('chat-global')
+                        .orderBy('createdAt', 'desc')
+                        .limit(1)
+                        .onSnapshot((querySnapshot) => {
+                            let domMessage = '';
+                            let messagesRealtime = [];
+                            querySnapshot.forEach((doc) => {
+                                if (doc.exists) {
+                                    let id = doc.id;
+                                    let data = {...doc.data(), id};
+                                    messagesRealtime.push(data);
+                                }
+                            });
+                            messagesRealtime.forEach((doc) => {
+                                if (doc.createdAt) {
+                                    if (lastestMessageCreatedAt !== doc.createdAt.seconds) {
+                                        if ('${currentUser.email}' === doc.email) {
+                                            domMessage += rightMessage(doc.message);
+                                        } else {
+                                            domMessage += leftMessage(doc.avatar, doc.message, doc.name);
+                                        }
                                     }
                                 }
+                            });
+                            if (domMessage !== '') {
+                                body.insertAdjacentHTML('beforeend', domMessage);
+                                dest.scrollIntoView({behavior: 'smooth'});
                             }
                         });
-                        if (domMessage !== '') {
-                            body.insertAdjacentHTML('beforeend', domMessage);
-                            dest.scrollIntoView({behavior: 'smooth'});
-                        }
-                    });
-    
-            }
+
+                    } 
+               
         </script>
     </body>
 </html>

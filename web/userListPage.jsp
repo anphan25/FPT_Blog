@@ -362,12 +362,19 @@
                                 <c:forEach var = "loto" items = "${userlist}" varStatus = "counter">
                                 <form id="form${counter.count}" class="user-form" onsubmit="return false;">
                                     <tr>
-                                        <td>${counter.count}</td>
+                                        <td class="count">${counter.count}</td>
                                         <td class="email-td"><a href="loadProfile?email=${loto.email}">${loto.email}</a></td>
                                     <input type="hidden" id="victimEmail" value="${loto.email}" />
                                     <td class="td-name">${loto.name}</td>
-                                    <td>${loto.gender}</td>
-                                    <td>${loto.campus}</td>
+                                    <td>
+                                           <c:if test="${loto.gender == 'Male'}">
+                                             <i class="fas fa-mars"></i>
+                                        </c:if>
+                                        <c:if test="${loto.gender == 'Female'}">
+                                            <i class="fas fa-venus"></i>
+                                        </c:if>
+                                    </td>
+                                    <td class="campusUser">${loto.campus}</td>
                                     <td>
                                         <select id="txtList" >
                                             <c:if test = "${loto.role == 'Admin'}" >
@@ -387,14 +394,22 @@
                                             </c:if>
                                         </select>
                                     </td>
-                                    <td>${loto.statusaccount}</td>
-                                    <td><button class="update-btn" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" >Update</button></td>
                                     <td>
-                                        <c:if test="${loto.statusaccount == 'Actived'}">
-                                            <button class="ban-btn" name="btAction" value="banning" onclick="banButton('form${counter.count}')" >Ban</button>
+                                         <c:if test="${loto.statusaccount == 'Actived'}">
+                                             <p class="activeStatus">Active</p>
                                         </c:if>
                                         <c:if test="${loto.statusaccount == 'Banned'}">
-                                            <button class="ban-btn" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" >Unban</button>
+                                             <p class="bannedStatus">Banned</p>
+
+                                        </c:if>
+                                    </td>
+                                    <td><button class="update-btn" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" ><i class="fas fa-pen"></i></button></td>
+                                    <td>
+                                        <c:if test="${loto.statusaccount == 'Actived'}">
+                                            <button class="ban-btn" name="btAction" value="banning" onclick="banButton('form${counter.count}')" ><i class="fas fa-user-slash"></i></button>
+                                        </c:if>
+                                        <c:if test="${loto.statusaccount == 'Banned'}">
+                                            <button class="unban-btn" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" ><i class="fas fa-user-check"></i></button>
                                         </c:if>
                                     </td>    
                                     </tr>
@@ -456,7 +471,7 @@
             <h1>Banning Successfully !!!</h1> 
                 <button class="OKbtn-ban-successfully">Ok</button>
         </div>
-        <div class="ban-successfully-overlay "></div>
+        <div class="ban-successfully-overlay"></div>
 
         <!-- footer -->
         <!-- footer -->
