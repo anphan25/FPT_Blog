@@ -42,10 +42,19 @@ public class LoadAwardDashboardServlet extends HttpServlet {
         String url = roadmap.get("awardDashboardPage");
         try {
             AccountDAO accountDAO = new AccountDAO();
-            ArrayList<AccountDTO> list = accountDAO.getOutStandingUsers();
-            request.setAttribute("USER_LIST", list);
-            if(list.isEmpty()){
-                log("Nothing in list to show");
+            ArrayList<AccountDTO> outStandingListBelongToPosts = accountDAO.getOutStandingUsers();
+            ArrayList<AccountDTO> outStandingListBelongToLikes = accountDAO.getOutStandingUsersByLikes();
+
+            request.setAttribute("USER_LIST", outStandingListBelongToPosts);
+            if (outStandingListBelongToPosts.isEmpty()) {
+                log("Nothing in list (by posts) to show");
+            }
+            if (outStandingListBelongToLikes.isEmpty()) {
+                log("Nothing in list (by likes) to show");
+            } else {
+                for (AccountDTO a : outStandingListBelongToLikes) {
+                    log("Name: " + a.getName() + ", likes: " + a.getTotalLikes());
+                }
             }
         } catch (Exception e) {
             log("Error at LoadAwardDashboardServlet: " + e.getMessage());

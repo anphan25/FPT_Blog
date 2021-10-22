@@ -1,6 +1,5 @@
 package swp.account;
 
-import com.google.common.primitives.Ints;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -90,7 +89,7 @@ public class AccountDAO implements Serializable {
                 if (rs.next()) {
                     String userMail = rs.getString("Email");
                     String passwordHashed = rs.getString("Password");
-                    String userName = rs.getString("Name");
+                    String userName = rs.getNString("Name"); // get n string
                     boolean userGender = rs.getBoolean("Gender");
                     String userCampus = rs.getString("Campus");
                     String userRole = rs.getString("RoleID");
@@ -135,6 +134,7 @@ public class AccountDAO implements Serializable {
             }
 
             check = stm.executeUpdate() > 0; //wtf ? nó đã false từ đầu rồi mà???
+            //(P): Ủa sao lại có câu này nhỉ, chưa hiểu lắm///
         } catch (Exception e) {
         } finally {
             if (rs != null) {
@@ -259,7 +259,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
-                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?,null)";
+                                            + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?,null)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, name);
@@ -325,14 +325,13 @@ public class AccountDAO implements Serializable {
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String email = rs.getString("EmailPost");
-                    String name = rs.getString("Name");
+                    String name = rs.getNString("Name");
                     String avatar = rs.getString("Image");
                     int totalPosts = rs.getInt("Total");
                     ArrayList<Integer> awards = getAwardsByEmail(email);
                     int likes = getTotalLikesByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, totalPosts);
                     list.add(dto);
-
                 }
             }
 
@@ -348,6 +347,78 @@ public class AccountDAO implements Serializable {
             }
         }
         return list;
+    }
+
+    public ArrayList<AccountDTO> getOutStandingUsersByLikes() throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<AccountDTO> list = new ArrayList<>();
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select t.Email, a.Name, a.Image, t.Total "
+                        + "from (select a.Email, count(l.ID) as Total "
+                        + "from tblAccounts a, tblPosts p, tblLikes l "
+                        + "where a.Email = p.EmailPost and p.PostID = l.PostID and a.StatusAccountID = 'A' "
+                        + "and p.StatusPost = 'A' group by a.Email) t left join tblAccounts a "
+                        + "on t.Email = a.Email order by Total desc";
+                stm = con.prepareStatement(sql);
+                rs = stm.executeQuery();
+                while (rs.next()) {
+                    String email = rs.getString("Email");
+                    String name = rs.getNString("Name");
+                    String avatar = rs.getString("Image");
+                    int likes = rs.getInt("Total");
+                    ArrayList<Integer> awards = getAwardsByEmail(email);
+                    int posts = getTotalPostsByEmail(email);
+                    AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, posts);
+                    list.add(dto);
+                }
+            }
+
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return list;
+    }
+    
+    public int getTotalPostsByEmail(String email) throws NamingException, SQLException {
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        int posts = 0;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select count(PostID) as Total from tblPosts where EmailPost = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if (rs.next()) {
+                    posts = rs.getInt("Total");
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+        return posts;
     }
 
     public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
