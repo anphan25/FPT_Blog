@@ -654,8 +654,8 @@ table tbody .del-btn {
   font-weight: 500;
   line-height: 1.5rem;
   transition: cubic(0.17, 0.67, 0.5, 0.71) 100ms;
-  color: #fff;
-  background-color: red;
+     background-color: rgba(255, 0, 0, 0.2);
+  color: red;
 }
 .username {
     width: 150px;

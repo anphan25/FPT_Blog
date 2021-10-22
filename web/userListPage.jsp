@@ -394,7 +394,7 @@
                                             </c:if>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td class="banAcStatus">
                                          <c:if test="${loto.statusaccount == 'Actived'}">
                                              <p class="activeStatus">Active</p>
                                         </c:if>
