@@ -442,10 +442,9 @@
         <!-- update successfully -->
         <!-- update successfully -->
         <div class="update-successfully-modal hidden" >
-            <img src="https://icon-library.com/images/success-icon-png/success-icon-png-8.jpg" alt="">
+            <img src="./images/success-icon.jpg" alt="">
             <h1>Updating Successfully !!!</h1> 
                 <button class="OKbtn-update-successfully">Ok</button>
-            </div>
         </div>
         <div class="update-successfully-overlay hidden"></div>
 
@@ -453,10 +452,9 @@
         <!-- ban successfully -->
         <!-- ban successfully -->
         <div class="ban-successfully-modal" >
-            <img src="https://icon-library.com/images/success-icon-png/success-icon-png-8.jpg" alt="">
+            <img src="./images/success-icon.jpg" alt="">
             <h1>Banning Successfully !!!</h1> 
                 <button class="OKbtn-ban-successfully">Ok</button>
-            </div>
         </div>
         <div class="ban-successfully-overlay "></div>
 
