@@ -614,11 +614,12 @@ footer .text_footer_strong {
 
 .user-list-container {
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid #e3e3e3;
   /* padding: 40px 30px; */
   /* height: 590px; */
   overflow-y: scroll;
+  box-shadow: 0 0.125rem 0.3rem 0 rgba(48, 53, 69, 0.08);
 }
 
 .user-list-container table {
@@ -630,11 +631,11 @@ footer .text_footer_strong {
 }
 
 .user-list-container table th {
-  padding: 10px;
+  padding: 1rem 0.75rem;
 }
 
 .user-list-container table thead {
-  background-color: #3b49df;
+  background-color: #000;
   color: #fff;
 }
 
@@ -658,30 +659,105 @@ footer .text_footer_strong {
 }
 .user-list-container table .td-name {
   width: 180px;
+  font-weight: 500
+}
+
+.campusUser {
+    font-weight: 500;
+}
+
+.fa-mars {
+    color: #01A3F6;
+    font-size: 20px;
+}
+.fa-venus {
+    color: #F783B4;
+    font-size: 20px;
 }
 
 .user-list-container .update-btn {
-  background-color: #3b49df;
-  color: #fff;
+  background-color: rgba(20, 0, 255, 0.2);
+   cursor: pointer;
+  border: none;
+  margin: 0 auto;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5rem;
+  transition: cubic(0.17, 0.67, 0.5, 0.71) 100ms;
+  color: #5951ed;
+}
+.activeStatus {
+    font-size: 14px;
+    background-color: rgba(0, 255, 143, 0.15);
+   color: #24B374;
+    padding: 0.35rem 0.5rem;
+    border-radius: 26px;
+    font-weight: 500;
 }
 
-.user-list-container .update-btn:hover {
-  background-color: #323ebe;
+.bannedStatus {
+    font-size: 14px;
+    background-color: rgba(255, 0, 0, 0.2);
+    padding: 0.35rem 0.5rem;
+    border-radius: 26px;
+    font-weight: 500;
+    color: red;
 }
+
+.count {
+    font-weight: 500;
+}
+
 
 .user-list-container .ban-btn {
-  background-color: #dc1818;
-  color: #fff;
-  width: 83px;
+  background-color: rgba(255, 0, 0, 0.2);
+  color: red;
+     cursor: pointer;
+  border: none;
+  margin: 0 auto;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5rem;
 }
 
 .user-list-container .ban-btn:hover {
-  background-color: #af1414;
+  background-color: rgba(255, 0, 0, 0.5);
 }
+
+.user-list-container .unban-btn {
+  background-color: rgba(0, 255, 143, 0.15);
+  color: #24B374;
+  cursor: pointer;
+  border: none;
+  margin: 0 auto;
+  border-radius: 8px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+
 
 .user-list-container tbody td select {
   padding: 8px;
   border-radius: 5px;
+  font-weight: 500;
 }
 
 .stupid-buttons {
@@ -700,7 +776,19 @@ footer .text_footer_strong {
 }
 
 .email-td {
-  position: relative;
+      position: relative;
+}
+
+.email-td a{
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  background: rgba(20, 0, 255, 0.2);
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5951ed;
+  cursor: pointer;
+
 }
 
 .email-td::before {
@@ -1046,7 +1134,7 @@ footer .text_footer_strong {
 /* làm màu cho cái button */
 .button_filt {
   transition-duration: 0.25s;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 8px;
   padding: 5px 10px 5px 10px;
   border: none;

@@ -197,13 +197,15 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                                             src="${cmt.avatar}"
                                             />
                                     </td>
-                                    <td>${cmt.name}</td>
-                                    <td>${cmt.emailComment}</td>
-                                    <td>${cmt.postName}</td>
-                                    <td>${cmt.date}</td>
-                                    <td>${cmt.content}</td>
+                                    <td class="username"><p>${cmt.name}</p></td>
+                                    <td><p class="userMail">${cmt.emailComment}</p></td>
+                                    <td class="postTitle"><p>${cmt.postName}</p></td>
+                                    <td class="postDate"><p >${cmt.date}</p></td>
+                                    <td class="userCmt"><p>${cmt.content}</p></td>
                                     <td>
-                                        <button class="del-btn" id="${cmt.ID}">Delete</button>
+                                        <button class="del-btn" id="${cmt.ID}">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             </c:forEach>
