@@ -399,7 +399,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select count(PostID) as Total from tblPosts where EmailPost = ?";
+                String sql = "select count(PostID) as Total from tblPosts where EmailPost = ? and StatusPost = 'A'";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
