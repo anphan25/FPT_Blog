@@ -26,6 +26,7 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
             src="https://kit.fontawesome.com/03ade0a214.js"
             crossorigin="anonymous"
         ></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <link rel="stylesheet" href="./styles/commentManagement.css" />
         <title>Comments Management</title>
     </head>
@@ -261,6 +262,11 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                 type: "POST",
                 success: function (response) {
                     deleteCommentInUI(id);
+                    swal({
+                        title: "Deleting Successfully !!!",
+                        icon: "success",
+                        button: "Ok",
+}                       );
                 },
                 error: function (xhr) {
                     alert('Server internal error.');

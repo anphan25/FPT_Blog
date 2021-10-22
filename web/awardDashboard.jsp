@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <%@page
+contentType="text/html" pageEncoding="UTF-8"%>
 <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
 <c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
 <c:if test="${empty currentUser}">
@@ -150,6 +150,11 @@
       <div class="main-content">
         <div class="title">
           <h1>Award Dashboard</h1>
+        </div>
+        <div class="dashborad-tab">
+            <c:set var="tab" value="${requestScope.TAB_TYPE}"/>
+            <a class="tab_item ${tab == 'post' ? "tab-active" : ""}" href="loadDashboard?tab=post">Sort by posts</a>
+          <a class="tab_item ${tab == 'like' ? "tab-active" : ""}" href="loadDashboard?tab=like">Sort by likes</a>
         </div>
         <div class="award-dashboard-list">
           <table>

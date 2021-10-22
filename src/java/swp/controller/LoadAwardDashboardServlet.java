@@ -40,22 +40,21 @@ public class LoadAwardDashboardServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get("awardDashboardPage");
+        String tab = request.getParameter("tab");
         try {
+            if(tab == null){
+                tab = "post";
+            }
             AccountDAO accountDAO = new AccountDAO();
-            ArrayList<AccountDTO> outStandingListBelongToPosts = accountDAO.getOutStandingUsers();
-            ArrayList<AccountDTO> outStandingListBelongToLikes = accountDAO.getOutStandingUsersByLikes();
-
-            request.setAttribute("USER_LIST", outStandingListBelongToPosts);
-            if (outStandingListBelongToPosts.isEmpty()) {
-                log("Nothing in list (by posts) to show");
+            ArrayList<AccountDTO> list= null;
+            if(tab.equals("post") ){
+                list = accountDAO.getOutStandingUsers();
+            }else if(tab.equals("like")){
+                list = accountDAO.getOutStandingUsersByLikes();
             }
-            if (outStandingListBelongToLikes.isEmpty()) {
-                log("Nothing in list (by likes) to show");
-            } else {
-                for (AccountDTO a : outStandingListBelongToLikes) {
-                    log("Name: " + a.getName() + ", likes: " + a.getTotalLikes());
-                }
-            }
+            request.setAttribute("TAB_TYPE", tab);
+            request.setAttribute("USER_LIST", list);
+            
         } catch (Exception e) {
             log("Error at LoadAwardDashboardServlet: " + e.getMessage());
         } finally {

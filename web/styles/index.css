@@ -548,6 +548,7 @@ a {
   border: 1px solid #e3e3e3;
   text-align: center;
   padding-top: 5px;
+  border-radius: 6px;
 }
 
 .indexPage.active {
