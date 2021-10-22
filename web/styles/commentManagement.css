@@ -601,7 +601,7 @@ footer .text_footer_strong {
 .comment-list {
   background-color: #fff;
   border-radius: 5px;
-  height: 880px;
+  height: 580px;
   overflow-y: scroll;
 }
 
@@ -687,6 +687,7 @@ table tbody .del-btn {
   text-align: center;
   padding-top: 5px;
   margin-top: 1rem;
+  border-radius: 6px;
 }
 
 .indexPage.active {

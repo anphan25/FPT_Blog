@@ -257,7 +257,7 @@
                                         <p>Create Post</p>
                                     </div>
                                 </a>
-                                <a href="loadDashboard">
+                                <a href="loadDashboard?tab=post">
                                     <div class="container_item create-post">
                                         <img src="./images/dashborad.svg" />
                                         <p>Give Award</p>
@@ -380,9 +380,6 @@
                                                 </div>
                                             </div>
                                             <div class="time_and_save">
-                                                <div>
-                                                    <button>Save</button>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

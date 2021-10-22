@@ -320,7 +320,7 @@ public class AccountDAO implements Serializable {
             if (con != null) {
                 String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image "
                         + "from (select COUNT(PostID) as Total, EmailPost from tblPosts where StatusPost = 'A' group by EmailPost ) myTable left join tblAccounts a "
-                        + "on myTable.EmailPost = a.Email order by myTable.Total desc";
+                        + "on myTable.EmailPost = a.Email where a.StatusAccountID = 'A' order by myTable.Total desc";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
