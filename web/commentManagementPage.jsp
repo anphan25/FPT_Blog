@@ -197,7 +197,7 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                                             src="${cmt.avatar}"
                                             />
                                     </td>
-                                    <td class="username"><p>${cmt.name}</p></td>
+                                    <td class="username"><a href="loadProfile?email=${cmt.emailComment}"><p>${cmt.name}</p></a></td>
                                     <td><p class="userMail">${cmt.emailComment}</p></td>
                                     <td class="postTitle"><p>${cmt.postName}</p></td>
                                     <td class="postDate"><p >${cmt.date}</p></td>

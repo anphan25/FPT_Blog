@@ -659,25 +659,25 @@ footer .text_footer_strong {
 }
 .user-list-container table .td-name {
   width: 180px;
-  font-weight: 500
+  font-weight: 500;
 }
 
 .campusUser {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 .fa-mars {
-    color: #01A3F6;
-    font-size: 20px;
+  color: #01a3f6;
+  font-size: 20px;
 }
 .fa-venus {
-    color: #F783B4;
-    font-size: 20px;
+  color: #f783b4;
+  font-size: 20px;
 }
 
 .user-list-container .update-btn {
   background-color: rgba(20, 0, 255, 0.2);
-   cursor: pointer;
+  cursor: pointer;
   border: none;
   margin: 0 auto;
   border-radius: 8px;
@@ -693,34 +693,33 @@ footer .text_footer_strong {
   color: #5951ed;
 }
 .activeStatus {
-    display: inline-block;
-    font-size: 14px;
-    background-color: rgba(0, 255, 143, 0.15);
-   color: #24B374;
-    padding: 0.35rem 1rem;
-    border-radius: 26px;
-    font-weight: 500;
+  display: inline-block;
+  font-size: 14px;
+  background-color: rgba(0, 255, 143, 0.15);
+  color: #24b374;
+  padding: 0.35rem 1rem;
+  border-radius: 26px;
+  font-weight: 500;
 }
 
 .bannedStatus {
-    display: inline-block;
-    font-size: 14px;
-    background-color: rgba(255, 0, 0, 0.2);
-    padding: 0.35rem 1rem;
-    border-radius: 26px;
-    font-weight: 500;
-    color: red;
+  display: inline-block;
+  font-size: 14px;
+  background-color: rgba(255, 0, 0, 0.2);
+  padding: 0.35rem 1rem;
+  border-radius: 26px;
+  font-weight: 500;
+  color: red;
 }
 
 .count {
-    font-weight: 500;
+  font-weight: 500;
 }
-
 
 .user-list-container .ban-btn {
   background-color: rgba(255, 0, 0, 0.2);
   color: red;
-     cursor: pointer;
+  cursor: pointer;
   border: none;
   margin: 0 auto;
   border-radius: 8px;
@@ -740,7 +739,7 @@ footer .text_footer_strong {
 
 .user-list-container .unban-btn {
   background-color: rgba(0, 255, 143, 0.15);
-  color: #24B374;
+  color: #24b374;
   cursor: pointer;
   border: none;
   margin: 0 auto;
@@ -754,7 +753,6 @@ footer .text_footer_strong {
   font-weight: 500;
   line-height: 1.5rem;
 }
-
 
 .user-list-container tbody td select {
   padding: 8px;
@@ -778,10 +776,10 @@ footer .text_footer_strong {
 }
 
 .email-td {
-      position: relative;
+  position: relative;
 }
 
-.email-td a{
+.email-td a {
   padding: 0.5rem 1rem;
   display: inline-block;
   background: rgba(20, 0, 255, 0.2);
@@ -790,7 +788,6 @@ footer .text_footer_strong {
   font-weight: bold;
   color: #5951ed;
   cursor: pointer;
-
 }
 
 .email-td::before {
@@ -1047,6 +1044,53 @@ footer .text_footer_strong {
   margin-top: 30px;
 }
 
+/* unban successfully */
+/* unban successfully */
+/* unban successfully */
+.unban-successfully-modal {
+  width: 450px;
+  height: 300px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 5px;
+  border: 2px solid #000;
+  box-shadow: 10px 10px;
+  z-index: 10;
+  text-align: center;
+  padding: 50px 30px 30px;
+}
+
+.unban-successfully-modal img {
+  width: 70px;
+  height: 70px;
+  margin-bottom: 20px;
+}
+
+.unban-successfully-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9;
+}
+
+.OKbtn-unban-successfully {
+  width: 60px;
+  height: 40px;
+  background-color: #3b49df;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 30px;
+}
+
 /* toggle_sidebar */
 /* toggle_sidebar */
 /* toggle_sidebar */
@@ -1134,7 +1178,7 @@ footer .text_footer_strong {
 }
 
 .banAcStatus {
-    width: 150px;
+  width: 150px;
 }
 
 /* làm màu cho cái button */
