@@ -617,3 +617,24 @@ banSuccessfullyOverlay.addEventListener("click", () => {
   banSuccessfullyModal.classList.toggle("hidden");
   banSuccessfullyOverlay.classList.toggle("hidden");
 });
+
+// unban
+
+const unbanSuccessfullyModal = document.querySelector(
+  ".unban-successfully-modal"
+);
+const unbanSuccessfullyOverlay = document.querySelector(
+  ".unban-successfully-overlay"
+);
+
+document
+  .querySelector(".OKbtn-unban-successfully")
+  .addEventListener("click", () => {
+    unbanSuccessfullyModal.classList.toggle("hidden");
+    unbanSuccessfullyOverlay.classList.toggle("hidden");
+  });
+
+unbanSuccessfullyOverlay.addEventListener("click", () => {
+  unbanSuccessfullyModal.classList.toggle("hidden");
+  unbanSuccessfullyOverlay.classList.toggle("hidden");
+});

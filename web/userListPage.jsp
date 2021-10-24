@@ -466,12 +466,22 @@
         <!-- ban successfully -->
         <!-- ban successfully -->
         <!-- ban successfully -->
-        <div class="ban-successfully-modal" >
+        <div class="ban-successfully-modal hidden" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Banning Successfully !!!</h1> 
                 <button class="OKbtn-ban-successfully">Ok</button>
         </div>
-        <div class="ban-successfully-overlay"></div>
+        <div class="ban-successfully-overlay hidden"></div>
+
+        <!-- ban successfully -->
+        <!-- ban successfully -->
+        <!-- ban successfully -->
+        <div class="unban-successfully-modal" >
+            <img src="./images/success-icon.jpg" alt="">
+            <h1>Unbanning Successfully !!!</h1> 
+                <button class="OKbtn-unban-successfully">Ok</button>
+        </div>
+        <div class="unban-successfully-overlay"></div>
 
         <!-- footer -->
         <!-- footer -->
