@@ -367,7 +367,7 @@ header .container_right .container_button_register button:hover {
 
 .main-content {
   width: 85%;
-  height: 600px;
+  /* height: 600px; */
   margin-top: 1rem;
   margin-left: 1rem;
 }
@@ -445,7 +445,6 @@ table {
   border: 1px solid #e3e3e3;
   width: 100%;
   border-radius: 5px;
-  margin-top: 15px;
 }
 
 table tr {
@@ -457,6 +456,15 @@ table .avt {
   height: 40px;
   object-fit: cover;
   border-radius: 50%;
+}
+
+table thead {
+  background-color: #000;
+  color: #fff;
+}
+
+table thead th {
+  padding: 1rem 0.75rem;
 }
 
 table tbody td {
@@ -475,6 +483,8 @@ table tbody td {
 .award-dashboard-list {
   overflow-y: scroll;
   height: 590px;
+  margin-top: 15px;
+  border-radius: 8px;
 }
 
 .give-award-btn {
@@ -512,12 +522,23 @@ table tbody td {
   border-radius: 5px;
 }
 
-.awarded-gr {
+/* .awarded-gr {
   width: 99px;
-}
+} */
 
 .name-td {
   width: 150px;
+}
+
+.email-td a {
+  padding: 0.5rem 1rem;
+  display: inline-block;
+  background: rgba(20, 0, 255, 0.2);
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #5951ed;
+  cursor: pointer;
 }
 /* select style */
 /* select style */

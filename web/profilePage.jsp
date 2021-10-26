@@ -265,6 +265,16 @@
                                                 <p>Like Collector</p>
                                             </div>
                                         </c:if>
+                                        <c:if test="${award == 3}">
+                                            <div class="award-item">
+                                                <img
+                                                    class="awarded-icon"
+                                                    src="./images/top-author.png"
+                                                    alt=""
+                                                    />
+                                                <p>Excellent Writer</p>
+                                            </div>
+                                        </c:if>
                                     </c:forEach>
                                 </c:if>
                                 <c:if test="${empty profile.awards}">

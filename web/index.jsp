@@ -336,10 +336,13 @@
                                                     <c:if test="${not empty blogDTO.awards}">
                                                         <c:forEach var="award" items="${blogDTO.awards}">
                                                             <c:if test="${award == 1}">
-                                                            <img src="./images/contribution-award.svg" alt="">
+                                                                <img src="./images/contribution-award.svg" alt=""/>
                                                             </c:if>
                                                             <c:if test="${award == 2}">
-                                                            <img src="./images/heart-award.png" alt="">
+                                                                <img src="./images/heart-award.png" alt=""/>
+                                                            </c:if>
+                                                            <c:if test="${award == 3}">
+                                                                <img src="./images/top-author.png" alt=""/>
                                                             </c:if>
                                                         </c:forEach>
                                                     </c:if>
@@ -465,9 +468,9 @@
                 form.submit();
             }
             //ko cho resubmiss đầu bùi browser rác
-            if ( window.history.replaceState ) 
+            if (window.history.replaceState)
             {
-                window.history.replaceState( null, null, window.location.href );
+                window.history.replaceState(null, null, window.location.href);
             }
         </script>
     </body>

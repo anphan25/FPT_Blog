@@ -161,6 +161,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
               <td>${loto.statusaccount}</td>
               <td>
                 <button
+                    title="Update Account"
                   class="update-btn"
                   name="btAction"
                   value="updating"
@@ -172,6 +173,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
               <td>
                 <c:if test="${loto.statusaccount == 'Actived'}">
                   <button
+                    title="Ban Account"
                     class="ban-btn"
                     name="btAction"
                     value="banning"
@@ -182,6 +184,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                 </c:if>
                 <c:if test="${loto.statusaccount == 'Banned'}">
                   <button
+                    title="Unban Account"
                     class="ban-btn"
                     name="btAction"
                     value="unbaning"

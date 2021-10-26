@@ -292,11 +292,15 @@
                                             <c:if test="${not empty postDetail.awards}">
                                                 <c:forEach var="award" items="${postDetail.awards}">
                                                     <c:if test="${award == 1}">
-                                                        <img src="./images/contribution-award.svg" alt="">
+                                                        <img src="./images/contribution-award.svg" alt=""/>
                                                     </c:if>
                                                     <c:if test="${award == 2}">
-                                                        <img src="./images/heart-award.png" alt="">
+                                                        <img src="./images/heart-award.png" alt=""/>
                                                     </c:if>
+                                                    <c:if test="${award == 3}">
+                                                        <img src="./images/top-author.png" alt=""/>
+                                                    </c:if>
+
                                                 </c:forEach>
                                             </c:if>
                                         </p>
@@ -352,10 +356,13 @@
                                                             <c:if test="${not empty listDTO.awards}">
                                                                 <c:forEach var="award" items="${listDTO.awards}">
                                                                     <c:if test="${award == 1}">
-                                                                        <img src="./images/contribution-award.svg" alt="">
+                                                                        <img src="./images/contribution-award.svg" alt=""/>
                                                                     </c:if>
                                                                     <c:if test="${award == 2}">
-                                                                        <img src="./images/heart-award.png" alt="">
+                                                                        <img src="./images/heart-award.png" alt=""/>
+                                                                    </c:if>
+                                                                    <c:if test="${award == 3}">
+                                                                        <img src="./images/top-author.png" alt="">
                                                                     </c:if>
                                                                 </c:forEach>
                                                             </c:if>
@@ -369,23 +376,23 @@
                                             </div>
                                             <div class="editForm" id="edit-form-${listDTO.ID}">
 
-                                                    <textarea
-                                                        name="cmt"
-                                                        minlength="1"
-                                                        class="textarea-cmt-edit"
-                                                        id="textarea-cmt-edit-${listDTO.ID}"
-                                                        cols="30"
-                                                        rows="10"
-                                                        placeholder="Edit your comment here..."
-                                                        >${listDTO.content}</textarea>
-                                                    <div class="container-button-edit">
-                                                        <div class="container-icon-close" id="${listDTO.ID}">
-                                                            <i class="fas fa-times" id="${listDTO.ID}"></i>
-                                                        </div>
-                                                        <div class="container-icon-edit" id="${listDTO.ID}">
-                                                            <i class="fas fa-check" id="${listDTO.ID}"></i>
-                                                        </div>
+                                                <textarea
+                                                    name="cmt"
+                                                    minlength="1"
+                                                    class="textarea-cmt-edit"
+                                                    id="textarea-cmt-edit-${listDTO.ID}"
+                                                    cols="30"
+                                                    rows="10"
+                                                    placeholder="Edit your comment here..."
+                                                    >${listDTO.content}</textarea>
+                                                <div class="container-button-edit">
+                                                    <div class="container-icon-close" id="${listDTO.ID}">
+                                                        <i class="fas fa-times" id="${listDTO.ID}"></i>
                                                     </div>
+                                                    <div class="container-icon-edit" id="${listDTO.ID}">
+                                                        <i class="fas fa-check" id="${listDTO.ID}"></i>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                         </div>

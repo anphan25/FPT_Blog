@@ -160,15 +160,23 @@
                     </div>
                     <div class="award-dashboard-list">
                         <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Information</th>
+                                    <th>Total Post/Likes</th>
+                                    <th>Award received</th>
+                                    <th colspan="2">Action</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <c:set var="userList" value="${requestScope.USER_LIST}" />
                                 <c:forEach var="user" items="${userList}">
-                                <form action="giveAward">
+                                <form action="giveAward" method="POST">
                                     <tr>
                                         <td class="avt-user">
                                             <img class="avt" src="${user.avatar}" alt="" />
                                         </td>
-                                        <td>${user.email}</td>
+                                        <td class="email-td"><a href="loadProfile?email=${user.email}">${user.email}</a></td>
                                         <td class="name-td">${user.name}</td>
                                         <td>
                                             <span class="award-item">
@@ -194,6 +202,13 @@
                                                         alt=""
                                                         />
                                                 </c:if>
+                                                <c:if test="${award == 3}">
+                                                    <img
+                                                        class="awarded-icon"
+                                                        src="./images/top-author.png"
+                                                        alt=""
+                                                        />
+                                                </c:if>
                                             </c:forEach>
                                         </td>
                                         <td>
@@ -203,6 +218,7 @@
                                                 </option>
                                                 <option value="1">Great Contributor</option>
                                                 <option value="2">Like Collector</option>
+                                                <option value="3">Excellent Writer</option>
                                             </select>
                                         </td>
                                         <td>
@@ -251,6 +267,8 @@
                 <h1>
                     <c:if test="${notify == 'error'}">Please select an award !!!</c:if>
                     <c:if test="${notify == 'error2'}">This user already has this award !!!</c:if>
+                    <c:if test="${notify == 'unqualified-post'}">This user does not have enough post (3 or upper)</c:if>
+                    <c:if test="${notify == 'unqualified-like'}">This user does not have enough like (5 or upper)</c:if>
                     </h1>
                     <button class="OKbtn-error-modal">Ok</button>
                 </div>
