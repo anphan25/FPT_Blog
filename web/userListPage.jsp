@@ -6,6 +6,7 @@
 <c:set var = "currentadmin" value = "${sessionScope.CURRENT_USER}" />
 <c:set var = "major" value = "${sessionScope.CATEGORY_LIST}" />
 <c:set var = "select" value = "${requestScope.SELECTION_TEXT}" />
+<c:set var = "success" value = "${requestScope.NOTIFY}" />
 
 <c:if test = "${empty currentadmin}">
     <c:redirect url = "firstLoginPage"/>
@@ -456,32 +457,32 @@
         <!-- update successfully -->
         <!-- update successfully -->
         <!-- update successfully -->
-        <div class="update-successfully-modal hidden" >
+        <div class="update-successfully-modal hidden" id="updatesuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Updating Successfully !!!</h1> 
                 <button class="OKbtn-update-successfully">Ok</button>
         </div>
-        <div class="update-successfully-overlay hidden"></div>
+        <div class="update-successfully-overlay hidden" id="updatesuccessfully"></div>
 
         <!-- ban successfully -->
         <!-- ban successfully -->
         <!-- ban successfully -->
-        <div class="ban-successfully-modal hidden" >
+        <div class="ban-successfully-modal hidden" id="bansuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Banning Successfully !!!</h1> 
                 <button class="OKbtn-ban-successfully">Ok</button>
         </div>
-        <div class="ban-successfully-overlay hidden"></div>
+        <div class="ban-successfully-overlay hidden" id="bansuccessfully"></div>
 
-        <!-- ban successfully -->
-        <!-- ban successfully -->
-        <!-- ban successfully -->
-        <div class="unban-successfully-modal" >
+        <!-- unban successfully -->
+        <!-- unban successfully -->
+        <!-- unban successfully -->
+        <div class="unban-successfully-modal hidden" id="unbansuccess">
             <img src="./images/success-icon.jpg" alt="">
-            <h1>Unbanning Successfully !!!</h1> 
+            <h1>Unbanning Successfully !!!</h1>
                 <button class="OKbtn-unban-successfully">Ok</button>
         </div>
-        <div class="unban-successfully-overlay"></div>
+        <div class="unban-successfully-overlay hidden" id="unbansuccessfully" ></div>
 
         <!-- footer -->
         <!-- footer -->
@@ -537,11 +538,32 @@
                 else
                     document.getElementById("hiddenmajor").style.display = "none";
             }
+            if ( window.history.replaceState )
+            {
+                window.history.replaceState( null, null, window.location.href );
+            }
             <c:if test="${not empty select}">
                 <c:if test="${select[2] == 'Mentor'}">
                     document.getElementById("hiddenmajor").style.display = "inline-block";
                 </c:if>
             </c:if>
+            <c:if test="${not empty success}">
+                <c:choose>
+                    <c:when test = "${success == 'Updating'}">
+                        $("#updatesuccess").removeClass("hidden");
+                        $("#updatesuccessfully").removeClass("hidden");
+                    </c:when>
+                    <c:when test = "${success == 'Banning'}">
+                        $("#bansuccess").removeClass("hidden");
+                        $("#bansuccessfully").removeClass("hidden");
+                    </c:when>
+                    <c:when test = "${success == 'Unbanning'}">
+                        $("#unbansuccess").removeClass("hidden");
+                        $("#unbansuccessfully").removeClass("hidden");
+                    </c:when>
+                </c:choose>
+            </c:if>
+                
         </script>
     </body>
 </html>

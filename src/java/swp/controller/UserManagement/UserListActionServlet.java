@@ -37,6 +37,7 @@ public class UserListActionServlet extends HttpServlet
 {
     private final String ERROR_PAGE = "notFoundPage"; //lẻ ra là lỗi 500 ko phải 404
     private final String USER_CONTROL_PANEL = "userListPage";
+    private final String START_AGAIN = "loadUserList";
     //private final String RESULT_PAGE = "userListResultPage"; //This again? YES
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,6 +62,10 @@ public class UserListActionServlet extends HttpServlet
         //server side declaration
         HttpSession session = request.getSession(false);
         AccountDTO currentadmin = (AccountDTO)session.getAttribute("CURRENT_USER");
+        //say no
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", -1);
         try
         {
             //ko cần check session null khi cái attribute login đã null
@@ -88,6 +93,7 @@ public class UserListActionServlet extends HttpServlet
                                 {
                                     ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     Userlist cachingTool = new Userlist(newlist);
+                                    request.setAttribute("NOTIFY", "Updating");
                                     session.setAttribute("CACHING_USER_LIST", cachingTool);
                                     if(search.equals("all") && selection.equals("all"))
                                     {
@@ -128,6 +134,7 @@ public class UserListActionServlet extends HttpServlet
                                 {
                                     ArrayList<UserlistDTO> newlist = dao.getUserList();
                                     Userlist cachingTool = new Userlist(newlist);
+                                    request.setAttribute("NOTIFY", "Updating");
                                     session.setAttribute("CACHING_USER_LIST", cachingTool);
                                     if(search.equals("all") && selection.equals("all"))
                                     {
@@ -172,6 +179,7 @@ public class UserListActionServlet extends HttpServlet
                             {
                                 ArrayList<UserlistDTO> newlist = dao.getUserList();
                                 Userlist cachingTool = new Userlist(newlist);
+                                request.setAttribute("NOTIFY", "Banning");
                                 session.setAttribute("CACHING_USER_LIST", cachingTool);
                                 if(search.equals("all") && selection.equals("all"))
                                 {
@@ -214,6 +222,7 @@ public class UserListActionServlet extends HttpServlet
                             {
                                 ArrayList<UserlistDTO> newlist = dao.getUserList();
                                 Userlist cachingTool = new Userlist(newlist);
+                                request.setAttribute("NOTIFY", "Unbanning");
                                 session.setAttribute("CACHING_USER_LIST", cachingTool);
                                 if(search.equals("all") && selection.equals("all"))
                                 {
@@ -248,6 +257,10 @@ public class UserListActionServlet extends HttpServlet
                             }
                         }
                     }//kết thúc việc múa mây java brace ở dưới đống cho việc check admin
+                    else
+                    {
+                        url = roadmap.get(START_AGAIN);
+                    }
                 }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case
             }
         }
