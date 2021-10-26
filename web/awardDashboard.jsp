@@ -3,6 +3,7 @@
     contentType="text/html" pageEncoding="UTF-8"%>
     <c:set var="loginStatus" value="${sessionScope.LOGIN}" />
     <c:set var="currentUser" value="${sessionScope.CURRENT_USER}" />
+    <c:set var="notify" value="${requestScope.NOTIFY}"/>
     <c:if test="${empty currentUser}">
         <c:redirect url="notFoundPage" />
     </c:if>
@@ -243,5 +244,41 @@
                     <img src="./images/forem_icon.svg" />
                 </div>
             </footer>
+
+            <!-- error -->
+            <div class="error-modal hidden">
+                <img src="./images/error_alert.png" alt="">
+                <h1>
+                    <c:if test="${notify == 'error'}">Please select an award !!!</c:if>
+                    <c:if test="${notify == 'error2'}">This user already has this award !!!</c:if>
+                    </h1>
+                    <button class="OKbtn-error-modal">Ok</button>
+                </div>
+                <div class="error-modal-overlay hidden"></div>
+
+                <script>
+                    const errorModal = document.querySelector(
+                            ".error-modal"
+                            );
+                    const errorModalOverlay = document.querySelector(
+                            ".error-modal-overlay"
+                            );
+
+                    document
+                            .querySelector(".OKbtn-error-modal")
+                            .addEventListener("click", () => {
+                                errorModal.classList.toggle("hidden");
+                                errorModalOverlay.classList.toggle("hidden");
+                            });
+
+                    errorModalOverlay.addEventListener("click", () => {
+                        errorModal.classList.toggle("hidden");
+                        errorModalOverlay.classList.toggle("hidden");
+                    });
+                <c:if test="${not empty notify}">
+                    errorModal.classList.remove("hidden");
+                    errorModalOverlay.classList.remove("hidden");
+                </c:if>
+            </script>
         </body>
     </html>

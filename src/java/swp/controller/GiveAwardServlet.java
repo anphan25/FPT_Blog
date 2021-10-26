@@ -8,7 +8,9 @@ package swp.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Map;
 import javax.naming.NamingException;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,6 +40,9 @@ public class GiveAwardServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String email = request.getParameter("email");
         int awardID = Integer.parseInt(request.getParameter("awardID"));
+        ServletContext context = request.getServletContext();
+        Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
+        String url = roadmap.get("loadDashboard");
 
         try {
             HttpSession session = request.getSession(false);
@@ -46,7 +51,11 @@ public class GiveAwardServlet extends HttpServlet {
                     AccountDAO dao = new AccountDAO();
                     if (!dao.checkAward(email, awardID)) {
                         dao.giveAward(email, awardID);
+                    }else{
+                        request.setAttribute("NOTIFY", "error2");
                     }
+                }else{
+                    request.setAttribute("NOTIFY", "error");
                 }
 
             }
@@ -56,7 +65,7 @@ public class GiveAwardServlet extends HttpServlet {
         } catch (NamingException ex) {
             log("GiveAwardSVL _ Naming" + ex.getMessage());
         } finally {
-            response.sendRedirect("loadDashboard");
+            request.getRequestDispatcher(url).forward(request, response);
         }
     }
 

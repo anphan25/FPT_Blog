@@ -663,3 +663,7 @@ footer .text_footer_strong {
   font-weight: 700;
   margin-top: 30px;
 }
+
+.hidden {
+  display: none;
+}

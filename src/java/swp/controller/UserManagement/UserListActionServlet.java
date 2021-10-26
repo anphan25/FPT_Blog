@@ -171,7 +171,7 @@ public class UserListActionServlet extends HttpServlet
                         }//kết thúc việc update complex mother fucker shitty gang bang
                         else if(action.equals("banning")) //nếu họ muốn ban
                         {
-                            String reason = araara[3];
+                            String reason = new String(araara[3].getBytes("iso-8859-1"), "utf-8") ;
                             String selection = araara[4];
                             UserlistDAO dao = new UserlistDAO();
                             boolean IsItUpdate = dao.banAccount(gmail, reason);

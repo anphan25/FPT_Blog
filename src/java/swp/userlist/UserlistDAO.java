@@ -166,7 +166,6 @@ public class UserlistDAO implements Serializable
         PreparedStatement stm = null;
         try
         {
-            //cố gắng thông ass DB
             con = DBHelper.makeConnection();
             if(con != null)
             {
@@ -181,7 +180,7 @@ public class UserlistDAO implements Serializable
                 if(row == 1)
                 {
                     return true;
-                }//nếu có vấn đề gì về việc row có tận 2 dòng thì holly fuck
+                }
             }
         }
         finally
