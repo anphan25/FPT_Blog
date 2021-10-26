@@ -49,8 +49,24 @@ public class GiveAwardServlet extends HttpServlet {
             if (session != null) {
                 if (awardID != 0) {
                     AccountDAO dao = new AccountDAO();
-                    if (!dao.checkAward(email, awardID)) {
-                        dao.giveAward(email, awardID);
+                    if (!dao.checkAward(email, awardID)) { //kiểm tra coi có award này chưa, có rùi thì báo lỗi
+                        if(awardID == 1){
+                            if(dao.getTotalPostsByEmail(email) >= 3){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
+                                dao.giveAward(email, awardID);
+                            }else{
+                                request.setAttribute("NOTIFY", "unqualified-post");
+                            }
+                        }
+                        if(awardID == 2){
+                            if(dao.getTotalLikesByEmail(email) >= 5){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
+                                dao.giveAward(email, awardID);
+                            }else{
+                                request.setAttribute("NOTIFY", "unqualified-like");
+                            }
+                        }
+                        if(awardID == 3){
+                            dao.giveAward(email, awardID);
+                        }
                     }else{
                         request.setAttribute("NOTIFY", "error2");
                     }

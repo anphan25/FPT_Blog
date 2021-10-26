@@ -404,13 +404,13 @@
 
                                         </c:if>
                                     </td>
-                                    <td><button class="update-btn" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" ><i class="fas fa-pen"></i></button></td>
+                                    <td><button class="update-btn" title="Update Account" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" ><i class="fas fa-pen"></i></button></td>
                                     <td>
                                         <c:if test="${loto.statusaccount == 'Actived'}">
-                                            <button class="ban-btn" name="btAction" value="banning" onclick="banButton('form${counter.count}')" ><i class="fas fa-user-slash"></i></button>
+                                            <button class="ban-btn" title="Ban Account" name="btAction" value="banning" onclick="banButton('form${counter.count}')" ><i class="fas fa-user-slash"></i></button>
                                             </c:if>
                                             <c:if test="${loto.statusaccount == 'Banned'}">
-                                            <button class="unban-btn" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" ><i class="fas fa-user-check"></i></button>
+                                            <button class="unban-btn" title="Unban Account" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" ><i class="fas fa-user-check"></i></button>
                                             </c:if>
                                     </td>    
                                     </tr>

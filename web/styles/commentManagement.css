@@ -592,7 +592,7 @@ footer .text_footer_strong {
 }
 
 .avt-td {
-    text-align: center;
+  text-align: center;
 }
 
 .avt-td img {
@@ -600,7 +600,6 @@ footer .text_footer_strong {
   height: 32px;
   object-fit: cover;
   border-radius: 50%;
-  
 }
 
 .comment-list {
@@ -612,7 +611,7 @@ footer .text_footer_strong {
 }
 
 table {
-/*  border-collapse: collapse;
+  /*  border-collapse: collapse;
   text-align: center;
   border: 1px solid #e3e3e3;
   width: 100%;*/
@@ -622,13 +621,13 @@ table {
 }
 
 table th {
-    padding: 1rem 0.75rem;
-  background-color: #3b49df;
+  padding: 1rem 0.75rem;
+  /* background-color: #3b49df; */
   color: #fff;
 }
 
 table thead {
-  background-color: #3b49df;
+  background-color: #000;
   color: #fff;
 }
 
@@ -654,22 +653,22 @@ table tbody .del-btn {
   font-weight: 500;
   line-height: 1.5rem;
   transition: cubic(0.17, 0.67, 0.5, 0.71) 100ms;
-     background-color: rgba(255, 0, 0, 0.2);
+  background-color: rgba(255, 0, 0, 0.2);
   color: red;
 }
 .username {
-    width: 150px;
-    text-decoration: underline;
-    cursor: pointer;
+  width: 150px;
+  text-decoration: underline;
+  cursor: pointer;
 }
-.username p{
-    font-weight: 500;
-      font-size: 14px;
+.username p {
+  font-weight: 500;
+  font-size: 14px;
 }
 .postTitle {
-    width: 150px;
+  width: 150px;
 }
-.postTitle p{
+.postTitle p {
   border-radius: 16px;
   font-size: 14px;
   font-weight: bold;
@@ -677,7 +676,7 @@ table tbody .del-btn {
   cursor: pointer;
 }
 .userMail {
-    padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   display: inline-block;
   background: rgba(20, 0, 255, 0.2);
   border-radius: 16px;
@@ -687,26 +686,26 @@ table tbody .del-btn {
   cursor: pointer;
 }
 .postDate {
-    width: 150px;
+  width: 150px;
 }
-.postDate p{
+.postDate p {
   display: inline-block;
   border-radius: 16px;
   font-size: 14px;
   font-weight: bold;
   color: black;
   cursor: pointer;
-  text-align: center 
+  text-align: center;
 }
 
 .userCmt {
-/*    width: 50%;*/
+  /*    width: 50%;*/
 }
-.userCmt p{
+.userCmt p {
   display: inline-block;
   color: black;
   cursor: pointer;
-  text-align: left; 
+  text-align: left;
   padding: 0.5rem 1rem;
   background: #e4e6eb;
   border-radius: 16px;
