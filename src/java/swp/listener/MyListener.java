@@ -61,8 +61,9 @@ Map<String, String> roadmap= new HashMap<>();
         try
         {
             start.loadAwardTrigger();
-            int row = start.getNumberOfRowForRickRoll();
-            context.log("Listener have updated " + row + " row(s) in tblAwardDetails.");
+            int rowAward = start.getNumberOfRowForRickRoll();
+            int rowAccount = start.getNumberOfSystemBanning() + start.getNumberOfSystemUnbanning();
+            context.log("Listener have updated " + rowAward + " row(s) in tblAwardDetails and " + rowAccount + " row(s) in tblAccount");
         } 
         catch (NamingException ex)
         {

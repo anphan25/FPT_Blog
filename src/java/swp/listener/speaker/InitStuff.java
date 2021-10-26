@@ -43,6 +43,11 @@ public class InitStuff implements Serializable
           + "LEFT JOIN tblAwardDetails ad ON po.EmailPost = ad.EmailStudent "
           + "GROUP BY po.EmailPost, ad.AwardID "
           + "HAVING ad.AwardID IS NULL AND COUNT(li.PostID) >= 5";
+    private final String GET_ALL_EMAIL_BANNED_THAT_NOT_MAKE_SENSE =
+            "SELECT Email FROM tblAccounts WHERE StatusAccountID = 'B' AND Note IS NULL";
+    private final String GET_ALL_EMAIL_ACTIVE_THAT_NOT_MAKE_SENSE =
+            "SELECT Email FROM tblAccounts WHERE StatusAccountID = 'A' AND Note IS NOT NULL";
+    
     public void loadAwardTrigger() throws NamingException, SQLException
     {
         Connection con = null;
@@ -87,13 +92,89 @@ public class InitStuff implements Serializable
         {
             con = DBHelper.makeConnection();
             ArrayList<AwardDTO> Dishonor_List = getDishonorList();
+            String sql = "INSERT INTO tblAwardDetails(AwardDetailID, AwardID, EmailStudent, Date) " +
+                            "VALUES(NEWID(), 2, ?, GETDATE())";
             for(AwardDTO dto : Dishonor_List)
             {
-                String sql = "INSERT INTO tblAwardDetails(AwardDetailID, AwardID, EmailStudent, Date) " +
-                            "VALUES(NEWID(), 2, ?, GETDATE())";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getEmail());
                 //stm.executeUpdate();
+                numbereffect += 1;
+            }
+        }
+        finally 
+        {
+            if (rs != null) 
+            {
+                rs.close();
+            }
+            if (stm != null) 
+            {
+                stm.close();
+            }
+            if (con != null) 
+            {
+                con.close();
+            }
+        }
+        return numbereffect;
+    }
+    
+    public int getNumberOfSystemBanning() throws NamingException, SQLException
+    {
+        int numbereffect = 0;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            ArrayList<String> EMAIL_LIST = getEmailBannedNoReason();
+            String sql = "UPDATE tblAccounts SET Note = 'Banned by the system (or by Phan Dinh Thien An because he want you to be banned)' " +
+                            "WHERE Email = ?";
+            for(String email : EMAIL_LIST)
+            {
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.executeUpdate();
+                numbereffect += 1;
+            }
+        }
+        finally 
+        {
+            if (rs != null) 
+            {
+                rs.close();
+            }
+            if (stm != null) 
+            {
+                stm.close();
+            }
+            if (con != null) 
+            {
+                con.close();
+            }
+        }
+        return numbereffect;
+    }
+    
+    public int getNumberOfSystemUnbanning() throws NamingException, SQLException
+    {
+        int numbereffect = 0;
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            ArrayList<String> EMAIL_LIST = getEmailActiveWithReason();
+            String sql = "UPDATE tblAccounts SET Note = NULL " +
+                            "WHERE Email = ?";
+            for(String email : EMAIL_LIST)
+            {
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                stm.executeUpdate();
                 numbereffect += 1;
             }
         }
@@ -152,6 +233,76 @@ public class InitStuff implements Serializable
             }
         }
         //return null;
+    }
+    
+    private ArrayList<String> getEmailBannedNoReason() throws NamingException, SQLException
+    {
+        ArrayList<String> email_list = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            String sql = GET_ALL_EMAIL_BANNED_THAT_NOT_MAKE_SENSE;
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while(rs.next())
+            {
+                email_list.add(rs.getString(1));
+            }
+            return email_list;
+        }
+        finally 
+        {
+            if (rs != null) 
+            {
+                rs.close();
+            }
+            if (stm != null) 
+            {
+                stm.close();
+            }
+            if (con != null) 
+            {
+                con.close();
+            }
+        }
+    }
+    
+    private ArrayList<String> getEmailActiveWithReason() throws NamingException, SQLException
+    {
+        ArrayList<String> email_list = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try 
+        {
+            con = DBHelper.makeConnection();
+            String sql = GET_ALL_EMAIL_ACTIVE_THAT_NOT_MAKE_SENSE;
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+            while(rs.next())
+            {
+                email_list.add(rs.getString(1));
+            }
+            return email_list;
+        }
+        finally 
+        {
+            if (rs != null) 
+            {
+                rs.close();
+            }
+            if (stm != null) 
+            {
+                stm.close();
+            }
+            if (con != null) 
+            {
+                con.close();
+            }
+        }
     }
     
 }

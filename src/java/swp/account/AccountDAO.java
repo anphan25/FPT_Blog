@@ -66,7 +66,7 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
-
+    
     private AccountDTO currentUser;
 
     public AccountDTO getCurrentUser() {
