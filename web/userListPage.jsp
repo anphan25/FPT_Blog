@@ -184,10 +184,10 @@
                                 <p>Create Category</p>
                             </div>
                         </a>
-                        <a href="">
-                            <div class="container_item">
-                                <img src="./images/list_icon.svg" />
-                                <p>Check Log(under maintain)</p>
+                        <a href="loadUserList">
+                            <div class="container_item create-post">
+                                <img src="./images/user-list.svg" />
+                                <p>User List</p>
                             </div>
                         </a>
                         <a href="loadAllComments">
@@ -202,139 +202,139 @@
             <div class="container-item">
                 <h1>List of users</h1>
                 <c:if test="${empty select}">
-                <div class="Filtering">
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>Select Gender</span>
+                    <div class="Filtering">
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>Select Gender</span>
+                            </div>
+                            <input type="hidden" id="selectedgender">
+                            <ul class="dropdown-menu">
+                                <li id="Male">Male</li>
+                                <li id="Female">Female</li>
+                                <li id="all">View all</li>
+                                <!-- show all when it choose the third one -->
+                            </ul>
                         </div>
-                        <input type="hidden" id="selectedgender">
-                        <ul class="dropdown-menu">
-                            <li id="Male">Male</li>
-                            <li id="Female">Female</li>
-                            <li id="all">View all</li>
-                            <!-- show all when it choose the third one -->
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>Select Status</span>
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>Select Status</span>
+                            </div>
+                            <input type="hidden" id="selectedstatus">
+                            <ul class="dropdown-menu">
+                                <li id="Actived">Active</li>
+                                <li id="Banned">Banned</li>
+                                <li id="all">View all</li>
+                            </ul>
                         </div>
-                        <input type="hidden" id="selectedstatus">
-                        <ul class="dropdown-menu">
-                            <li id="Actived">Active</li>
-                            <li id="Banned">Banned</li>
-                            <li id="all">View all</li>
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>Select Role</span>
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>Select Role</span>
+                            </div>
+                            <input type="hidden" id="selectedrole">
+                            <ul class="dropdown-menu" onclick="ShowMajor()">
+                                <li id="S">Student</li>
+                                <li id="M">Mentor</li>
+                                <li id="A">Admin</li>
+                                <li id="all">View all</li>
+                                <!-- show all when it choose the third one -->
+                            </ul>
                         </div>
-                        <input type="hidden" id="selectedrole">
-                        <ul class="dropdown-menu" onclick="ShowMajor()">
-                            <li id="S">Student</li>
-                            <li id="M">Mentor</li>
-                            <li id="A">Admin</li>
-                            <li id="all">View all</li>
-                            <!-- show all when it choose the third one -->
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt" id="hiddenmajor">
-                        <div class="select_filt">
-                            <span>Select Major</span>
+                        <div class="dropdown_filt" id="hiddenmajor">
+                            <div class="select_filt">
+                                <span>Select Major</span>
+                            </div>
+                            <input type="hidden" id="selectedmajor">
+                            <ul class="dropdown-menu">
+                                <c:forEach var = "categories" items = "${major}">
+                                    <li id="${categories.name}">${categories.name}</li>
+                                    </c:forEach>
+                                <!-- show all when it choose the third one -->
+                            </ul>
                         </div>
-                        <input type="hidden" id="selectedmajor">
-                        <ul class="dropdown-menu">
-                            <c:forEach var = "categories" items = "${major}">
-                                <li id="${categories.name}">${categories.name}</li>
-                                </c:forEach>
-                            <!-- show all when it choose the third one -->
-                        </ul>
+                        <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                     </div>
-                    <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
-                </div>
                 </c:if>
                 <c:if test="${not empty select}">
-                <div class="Filtering">
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>
-                                <c:if test="${select[0] == 'all'}">
-                                    View all
-                                </c:if>
-                                <c:if test="${select[0] != 'all'}">
-                                    ${select[0]}
-                                </c:if>
-                            </span>
-                        </div>
-                        <input type="hidden" id="selectedgender" value="${select[0]}">
-                        <ul class="dropdown-menu">
-                            <li id="Male">Male</li>
-                            <li id="Female">Female</li>
-                            <li id="all">View all</li>
-                            <!-- show all when it choose the third one -->
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>
-                                <c:if test="${select[1] == 'all'}">
-                                    View all
-                                </c:if>
-                                <c:if test="${select[1] != 'all'}">
-                                    ${select[1]}
-                                </c:if>
-                            </span>
-                        </div>
-                        <input type="hidden" id="selectedstatus" value="${select[1]}">
-                        <ul class="dropdown-menu">
-                            <li id="Actived">Active</li>
-                            <li id="Banned">Banned</li>
-                            <li id="all">View all</li>
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt">
-                        <div class="select_filt">
-                            <span>
-                                <c:if test="${select[2] == 'all'}">
-                                    View all
-                                </c:if>
-                                <c:if test="${select[2] != 'all'}">
-                                    ${select[2]}
-                                </c:if>
-                            </span>
-                        </div>
-                        <input type="hidden" id="selectedrole" value="${select[2]}">
-                        <ul class="dropdown-menu" onclick="ShowMajor()">
-                            <li id="S">Student</li>
-                            <li id="M">Mentor</li>
-                            <li id="A">Admin</li>
-                            <li id="all">View all</li>
-                            <!-- show all when it choose the third one -->
-                        </ul>
-                    </div>
-                    <div class="dropdown_filt" id="hiddenmajor">
-                        <div class="select_filt">
-                            <span>
-                                <c:if test="${select[3] == 'all'}">
-                                    View all
-                                </c:if>
-                                <c:if test="${select[3] != 'all'}">
-                                    ${select[3]}
-                                </c:if>
-                            </span>
-                        </div>
-                        <input type="hidden" id="selectedmajor" value="${select[3]}">
-                        <ul class="dropdown-menu">
-                            <c:forEach var = "categories" items = "${major}">
-                                <li id="${categories.name}">${categories.name}</li>
-                            </c:forEach>
+                    <div class="Filtering">
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>
+                                    <c:if test="${select[0] == 'all'}">
+                                        View all
+                                    </c:if>
+                                    <c:if test="${select[0] != 'all'}">
+                                        ${select[0]}
+                                    </c:if>
+                                </span>
+                            </div>
+                            <input type="hidden" id="selectedgender" value="${select[0]}">
+                            <ul class="dropdown-menu">
+                                <li id="Male">Male</li>
+                                <li id="Female">Female</li>
                                 <li id="all">View all</li>
-                            <!-- show all when it choose the third one -->
-                        </ul>
+                                <!-- show all when it choose the third one -->
+                            </ul>
+                        </div>
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>
+                                    <c:if test="${select[1] == 'all'}">
+                                        View all
+                                    </c:if>
+                                    <c:if test="${select[1] != 'all'}">
+                                        ${select[1]}
+                                    </c:if>
+                                </span>
+                            </div>
+                            <input type="hidden" id="selectedstatus" value="${select[1]}">
+                            <ul class="dropdown-menu">
+                                <li id="Actived">Active</li>
+                                <li id="Banned">Banned</li>
+                                <li id="all">View all</li>
+                            </ul>
+                        </div>
+                        <div class="dropdown_filt">
+                            <div class="select_filt">
+                                <span>
+                                    <c:if test="${select[2] == 'all'}">
+                                        View all
+                                    </c:if>
+                                    <c:if test="${select[2] != 'all'}">
+                                        ${select[2]}
+                                    </c:if>
+                                </span>
+                            </div>
+                            <input type="hidden" id="selectedrole" value="${select[2]}">
+                            <ul class="dropdown-menu" onclick="ShowMajor()">
+                                <li id="S">Student</li>
+                                <li id="M">Mentor</li>
+                                <li id="A">Admin</li>
+                                <li id="all">View all</li>
+                                <!-- show all when it choose the third one -->
+                            </ul>
+                        </div>
+                        <div class="dropdown_filt" id="hiddenmajor">
+                            <div class="select_filt">
+                                <span>
+                                    <c:if test="${select[3] == 'all'}">
+                                        View all
+                                    </c:if>
+                                    <c:if test="${select[3] != 'all'}">
+                                        ${select[3]}
+                                    </c:if>
+                                </span>
+                            </div>
+                            <input type="hidden" id="selectedmajor" value="${select[3]}">
+                            <ul class="dropdown-menu">
+                                <c:forEach var = "categories" items = "${major}">
+                                    <li id="${categories.name}">${categories.name}</li>
+                                    </c:forEach>
+                                <li id="all">View all</li>
+                                <!-- show all when it choose the third one -->
+                            </ul>
+                        </div>
+                        <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
                     </div>
-                    <button id="zawarudo" class="button_filt" onclick="applyButton()" >Apply</button>
-                </div>
                 </c:if>
                 <form onsubmit="SendData();return false">
                     <div class="user-list-searchbar">
@@ -368,8 +368,8 @@
                                     <input type="hidden" id="victimEmail" value="${loto.email}" />
                                     <td class="td-name">${loto.name}</td>
                                     <td>
-                                           <c:if test="${loto.gender == 'Male'}">
-                                             <i class="fas fa-mars"></i>
+                                        <c:if test="${loto.gender == 'Male'}">
+                                            <i class="fas fa-mars"></i>
                                         </c:if>
                                         <c:if test="${loto.gender == 'Female'}">
                                             <i class="fas fa-venus"></i>
@@ -396,11 +396,11 @@
                                         </select>
                                     </td>
                                     <td class="banAcStatus">
-                                         <c:if test="${loto.statusaccount == 'Actived'}">
-                                             <p class="activeStatus">Active</p>
+                                        <c:if test="${loto.statusaccount == 'Actived'}">
+                                            <p class="activeStatus">Active</p>
                                         </c:if>
                                         <c:if test="${loto.statusaccount == 'Banned'}">
-                                             <p class="bannedStatus">Banned</p>
+                                            <p class="bannedStatus">Banned</p>
 
                                         </c:if>
                                     </td>
@@ -408,10 +408,10 @@
                                     <td>
                                         <c:if test="${loto.statusaccount == 'Actived'}">
                                             <button class="ban-btn" name="btAction" value="banning" onclick="banButton('form${counter.count}')" ><i class="fas fa-user-slash"></i></button>
-                                        </c:if>
-                                        <c:if test="${loto.statusaccount == 'Banned'}">
+                                            </c:if>
+                                            <c:if test="${loto.statusaccount == 'Banned'}">
                                             <button class="unban-btn" name="btAction" value="unbaning" onclick="unbanButton('form${counter.count}')" ><i class="fas fa-user-check"></i></button>
-                                        </c:if>
+                                            </c:if>
                                     </td>    
                                     </tr>
                                 </form>
@@ -460,7 +460,7 @@
         <div class="update-successfully-modal hidden" id="updatesuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Updating Successfully !!!</h1> 
-                <button class="OKbtn-update-successfully">Ok</button>
+            <button class="OKbtn-update-successfully">Ok</button>
         </div>
         <div class="update-successfully-overlay hidden" id="updatesuccessfully"></div>
 
@@ -470,7 +470,7 @@
         <div class="ban-successfully-modal hidden" id="bansuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Banning Successfully !!!</h1> 
-                <button class="OKbtn-ban-successfully">Ok</button>
+            <button class="OKbtn-ban-successfully">Ok</button>
         </div>
         <div class="ban-successfully-overlay hidden" id="bansuccessfully"></div>
 
@@ -480,7 +480,7 @@
         <div class="unban-successfully-modal hidden" id="unbansuccess">
             <img src="./images/success-icon.jpg" alt="">
             <h1>Unbanning Successfully !!!</h1>
-                <button class="OKbtn-unban-successfully">Ok</button>
+            <button class="OKbtn-unban-successfully">Ok</button>
         </div>
         <div class="unban-successfully-overlay hidden" id="unbansuccessfully" ></div>
 
@@ -517,31 +517,31 @@
         <!-- script   -->
         <script src="./js/userListPage.js"></script>
         <script>
-            function toggleSidebarPhone() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "block";
-            }
-            function handleClickOutside() {
-                const toggle_sidebar = document.getElementById("sidebar_phone");
-                toggle_sidebar.style.display = "none";
-            }
-            function submit_form()
-            {
-                var form = document.getElementById("searchit");
-                form.submit();
-            }
-            document.getElementById("hiddenmajor").style.display = "none";
-            function ShowMajor()
-            {
-                if (document.getElementById("selectedrole").value === "M")
-                    document.getElementById("hiddenmajor").style.display = "inline-block";
-                else
+                    function toggleSidebarPhone() {
+                        const toggle_sidebar = document.getElementById("sidebar_phone");
+                        toggle_sidebar.style.display = "block";
+                    }
+                    function handleClickOutside() {
+                        const toggle_sidebar = document.getElementById("sidebar_phone");
+                        toggle_sidebar.style.display = "none";
+                    }
+                    function submit_form()
+                    {
+                        var form = document.getElementById("searchit");
+                        form.submit();
+                    }
                     document.getElementById("hiddenmajor").style.display = "none";
-            }
-            if ( window.history.replaceState )
-            {
-                window.history.replaceState( null, null, window.location.href );
-            }
+                    function ShowMajor()
+                    {
+                        if (document.getElementById("selectedrole").value === "M")
+                            document.getElementById("hiddenmajor").style.display = "inline-block";
+                        else
+                            document.getElementById("hiddenmajor").style.display = "none";
+                    }
+                    if (window.history.replaceState)
+                    {
+                        window.history.replaceState(null, null, window.location.href);
+                    }
             <c:if test="${not empty select}">
                 <c:if test="${select[2] == 'Mentor'}">
                     document.getElementById("hiddenmajor").style.display = "inline-block";
@@ -550,20 +550,20 @@
             <c:if test="${not empty success}">
                 <c:choose>
                     <c:when test = "${success == 'Updating'}">
-                        $("#updatesuccess").removeClass("hidden");
-                        $("#updatesuccessfully").removeClass("hidden");
+                    $("#updatesuccess").removeClass("hidden");
+                    $("#updatesuccessfully").removeClass("hidden");
                     </c:when>
                     <c:when test = "${success == 'Banning'}">
-                        $("#bansuccess").removeClass("hidden");
-                        $("#bansuccessfully").removeClass("hidden");
+                    $("#bansuccess").removeClass("hidden");
+                    $("#bansuccessfully").removeClass("hidden");
                     </c:when>
                     <c:when test = "${success == 'Unbanning'}">
-                        $("#unbansuccess").removeClass("hidden");
-                        $("#unbansuccessfully").removeClass("hidden");
+                    $("#unbansuccess").removeClass("hidden");
+                    $("#unbansuccessfully").removeClass("hidden");
                     </c:when>
                 </c:choose>
             </c:if>
-                
+
         </script>
     </body>
 </html>
