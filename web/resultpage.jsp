@@ -14,7 +14,10 @@ contentType="text/html" pageEncoding="UTF-8"%>
   </script>
   <%-- sau lày có lỗi thì đổi lại page 404. --%>
 </c:if>
-
+<script
+            src="https://kit.fontawesome.com/1b1fb57155.js"
+            crossorigin="anonymous"
+        ></script>
 <c:if test="${not empty userlist}">
   <c:if test="${requestScope.IS_IT_MENTOR != 'Mentor'}">
     <div id="freshair">
@@ -73,7 +76,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                   value="updating"
                   onclick="kingcrimson('u${counter.count}')"
                 >
-                  Update
+                  <i class="fas fa-pen"></i>
                 </button>
               </td>
               <td>
@@ -84,7 +87,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                     value="banning"
                     onclick="kingcrimson('b${counter.count}')"
                   >
-                    Ban
+                    <i class="fas fa-user-slash"></i>
                   </button>
                 </c:if>
                 <c:if test="${loto.statusaccount == 'Banned'}">
@@ -94,7 +97,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                     value="unbaning"
                     onclick="kingcrimson('a${counter.count}')"
                   >
-                    Unban
+                    <i class="fas fa-user-check"></i>
                   </button>
                 </c:if>
               </td>
@@ -163,7 +166,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                   value="updating"
                   onclick="kingcrimson('u${counter.count}')"
                 >
-                  Update
+                  <i class="fas fa-pen"></i>
                 </button>
               </td>
               <td>
@@ -174,7 +177,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                     value="banning"
                     onclick="kingcrimson('b${counter.count}')"
                   >
-                    Ban
+                    <i class="fas fa-user-slash"></i>
                   </button>
                 </c:if>
                 <c:if test="${loto.statusaccount == 'Banned'}">
@@ -184,7 +187,7 @@ contentType="text/html" pageEncoding="UTF-8"%>
                     value="unbaning"
                     onclick="kingcrimson('a${counter.count}')"
                   >
-                    Unban
+                    <i class="fas fa-user-check"></i>
                   </button>
                 </c:if>
               </td>
