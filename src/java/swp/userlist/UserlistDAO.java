@@ -175,7 +175,7 @@ public class UserlistDAO implements Serializable
                             + "WHERE Email = ?";
                         
                 stm = con.prepareStatement(sql);
-                stm.setString(1, reason);
+                stm.setNString(1, reason);
                 stm.setString(2, email);
                 int row = stm.executeUpdate();
                 if(row == 1)
@@ -211,7 +211,6 @@ public class UserlistDAO implements Serializable
                 String sql = "UPDATE tblAccounts "
                             + "SET StatusAccountID = 'A', Note = NULL "
                             + "WHERE Email = ?";
-                        
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 int row = stm.executeUpdate();
