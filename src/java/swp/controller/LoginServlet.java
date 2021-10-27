@@ -63,7 +63,9 @@ public class LoginServlet extends HttpServlet {
             boolean checkBan = dao.checkBan(email);
                 if(checkBan){
                     url = roadmap.get(LOGIN_INVALID_PAGE);
+                    String reasonBan = dao.getBanReason(email);
                     request.setAttribute("BAN", "banned");
+                    request.setAttribute("REASON_BAN", reasonBan);
                     return;
                 }
             // boolean result = dao.test(email, password);

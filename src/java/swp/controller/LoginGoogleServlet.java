@@ -73,7 +73,9 @@ public class LoginGoogleServlet extends HttpServlet
                         {
                             if(dao.checkBan(email))
                             {
+                                String reasonBan = dao.getBanReason(email);
                                 request.setAttribute("BAN", "banned");
+                                request.setAttribute("REASON_BAN", reasonBan);
                                 url = roadmap.get(LOGIN_PAGE);
                             }
                             else

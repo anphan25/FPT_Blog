@@ -457,32 +457,32 @@
         <!-- update successfully -->
         <!-- update successfully -->
         <!-- update successfully -->
-        <div class="update-successfully-modal hidden" id="updatesuccess" >
+<!--        <div class="update-successfully-modal hidden" id="updatesuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Updating Successfully !!!</h1> 
             <button class="OKbtn-update-successfully">Ok</button>
         </div>
-        <div class="update-successfully-overlay hidden" id="updatesuccessfully"></div>
+        <div class="update-successfully-overlay hidden" id="updatesuccessfully"></div>-->
 
         <!-- ban successfully -->
         <!-- ban successfully -->
         <!-- ban successfully -->
-        <div class="ban-successfully-modal hidden" id="bansuccess" >
+<!--        <div class="ban-successfully-modal hidden" id="bansuccess" >
             <img src="./images/success-icon.jpg" alt="">
             <h1>Banning Successfully !!!</h1> 
             <button class="OKbtn-ban-successfully">Ok</button>
         </div>
-        <div class="ban-successfully-overlay hidden" id="bansuccessfully"></div>
+        <div class="ban-successfully-overlay hidden" id="bansuccessfully"></div>-->
 
         <!-- unban successfully -->
         <!-- unban successfully -->
         <!-- unban successfully -->
-        <div class="unban-successfully-modal hidden" id="unbansuccess">
-            <img src="./images/success-icon.jpg" alt="">
-            <h1>Unbanning Successfully !!!</h1>
-            <button class="OKbtn-unban-successfully">Ok</button>
-        </div>
-        <div class="unban-successfully-overlay hidden" id="unbansuccessfully" ></div>
+        <!--        <div class="unban-successfully-modal hidden" id="unbansuccess">
+                    <img src="./images/success-icon.jpg" alt="">
+                    <h1>Unbanning Successfully !!!</h1>
+                    <button class="OKbtn-unban-successfully">Ok</button>
+                </div>
+                <div class="unban-successfully-overlay hidden" id="unbansuccessfully" ></div>-->
 
         <!-- footer -->
         <!-- footer -->
@@ -550,16 +550,31 @@
             <c:if test="${not empty success}">
                 <c:choose>
                     <c:when test = "${success == 'Updating'}">
-                    $("#updatesuccess").removeClass("hidden");
-                    $("#updatesuccessfully").removeClass("hidden");
+                        swal({
+                        title: "Updating Successfully!",
+                        icon: "success",
+                        button: "Ok!",
+                    });
+//                    $("#updatesuccess").removeClass("hidden");
+//                    $("#updatesuccessfully").removeClass("hidden");
                     </c:when>
                     <c:when test = "${success == 'Banning'}">
-                    $("#bansuccess").removeClass("hidden");
-                    $("#bansuccessfully").removeClass("hidden");
+                    swal({
+                        title: "Banning Successfully!",
+                        icon: "success",
+                        button: "Ok!",
+                    });
+//                    $("#bansuccess").removeClass("hidden");
+//                    $("#bansuccessfully").removeClass("hidden");
                     </c:when>
                     <c:when test = "${success == 'Unbanning'}">
-                    $("#unbansuccess").removeClass("hidden");
-                    $("#unbansuccessfully").removeClass("hidden");
+                        swal({
+                        title: "Unbanning Successfully!",
+                        icon: "success",
+                        button: "Ok!",
+                    });
+//                    $("#unbansuccess").removeClass("hidden");
+//                    $("#unbansuccessfully").removeClass("hidden");
                     </c:when>
                 </c:choose>
             </c:if>
