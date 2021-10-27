@@ -49,7 +49,7 @@ public class LikePostServlet extends HttpServlet {
                     } else {
                         log("Email: " + email + " unliked postID: " + postId + " failed!");
                     }
-                    out.println(dao.getLikeCounting(postId));
+                    out.println(0);
                 } else {//like
                     if (dao.insertLike(postId, email)) {
                         log("Email: " + email + " liked postID: " + postId + " successfully!");
