@@ -93,14 +93,20 @@
                                 >
                             </div>
                         </c:if>
-                        <div class="icon_notification_container">
-                            <img src="./images/notification_icon.svg" />
-                        </div>
                         <a href="messengerPage">
                             <div class="icon_notification_container">
                                 <img src="./images/chat.svg" />
                             </div>
                         </a>
+                        <div class="dropdown">
+                            <div class="dropbtn_noti">
+                                <img src="./images/notification_icon.svg" />
+                                <div id="warning" class="warning warning-hidden">!</div>
+                            </div>
+                            <div class="dropdown-content1">
+                            </div>
+                        </div>
+
                         <div class="dropdown">
                             <div class="dropbtn">
                                 <img src="${currentUser.avatar}" />
@@ -325,6 +331,9 @@
                                     ></textarea>
                                 <input id="postId-input" type="hidden" value="${postDetail.ID}" />
                                 <input id="ownerEmail-input" type="hidden" value="${currentUser.email}" />
+                                <input id="ownerName-input" type="hidden" value="${currentUser.name}" />
+                                <input id="chuBaiVietName-input" type="hidden" value="${postDetail.namePost}" />
+
                                 <button
                                     onclick="loadNewComment()"
                                     class="submit-btn hidden"
@@ -500,6 +509,8 @@
         <!-- script   -->
         <!-- script   -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
         <script>
                                         function handlePopup(idDOM) {
@@ -563,9 +574,18 @@
         </script>
 
         <script>
+            // Initialize Firebase
+            firebase.initializeApp({
+                apiKey: 'AIzaSyAPgZZxNDsNeVB-C6hMGKzsFelsBRIjdBI',
+                authDomain: 'udemy-vue-firebase-si.firebaseapp.com',
+                projectId: 'udemy-vue-firebase-si',
+            });
+            const db = eval('firebase.firestore()');
             const cmtContent = document.querySelector("#textarea-cmt");
             const postId = document.querySelector("#postId-input");
             const ownerCmtEmail = document.querySelector("#ownerEmail-input");
+            const ownerCmtName = document.querySelector("#ownerName-input");
+            const chuBaiVietName = document.querySelector("#chuBaiVietName-input");
             const totalLike = document.querySelector(".totalLike");
             const cmtCount = document.querySelector(".cmtCount");
             const cmtCount2 = document.querySelector(".cmtCount2");
@@ -599,6 +619,29 @@
 
             });
 
+            const addDocument = (action = "thích") => {
+                let ownerID = `${postDetail.emailPost}`;
+                ownerID = ownerID.substr(0, ownerID.indexOf("@"));
+                let currentUsername = `${currentUser.name}`;
+                let userAvatar = `${currentUser.avatar}`;
+                db.collection('notify')
+                        .doc(ownerID)
+                        .collection("incoming")
+                        .add({
+                            postId: postId.value,
+                            ownerId: ownerID,
+                            user: currentUsername,
+                            avatar: userAvatar,
+                            createdAt: new Date(),
+                            action: action,
+                            seen: false
+                        })
+                        .catch((error) => {
+                            console.error('Error adding document: ', error);
+                        });
+            }
+            ;
+
 
 
 
@@ -612,6 +655,7 @@
                     },
                     type: "POST",
                     success: function (response) {
+                        addDocument("bình luận");
                         const newCmt = document.querySelector("#comments-container");
                         newCmt.insertAdjacentHTML('afterbegin', response);
                         cmtCount.textContent = Number(cmtCount.textContent) + 1;
@@ -623,6 +667,7 @@
                 });
             }
             ;
+
             function likePost() {
                 $.ajax({
                     url: "LikePostServlet",
@@ -632,15 +677,18 @@
                     },
                     type: "POST",
                     success: function (response) {
-                        totalLike.textContent = response;
+                        if (parseInt(response) > 0) {
+                            totalLike.textContent = response;
+                            addDocument("thích");
+                        } else {
+                            totalLike.textContent = parseInt(totalLike.textContent - 1);
+                        }
                     },
                     error: function (xhr) {
                         console.log("loi me roi");
                     }
                 });
             }
-
-
             ;
             function toggleSidebarPhone() {
                 const toggle_sidebar = document.getElementById("sidebar_phone");
@@ -661,7 +709,142 @@
                     optionDiv.classList.toggle("hidden");
                 });
             }
+//  
         </script>
         <script src="./js/contentPage.js"></script>
+        <!--     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+                <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>-->
+        <script>
+            // Initialize Firebase
+//            firebase.initializeApp({
+//                apiKey: 'AIzaSyAPgZZxNDsNeVB-C6hMGKzsFelsBRIjdBI',
+//                authDomain: 'udemy-vue-firebase-si.firebaseapp.com',
+//                projectId: 'udemy-vue-firebase-si',
+//            });
+            const notiWrapper = document.querySelector(".dropdown-content1");
+            let lastestNotiCreatedAt = "";
+            let componentRunOnDepend = false;
+            let lol= false;
+            let currentUser = `${currentUser.email}`;
+            currentUser = currentUser.substr(0, currentUser.indexOf("@"));
+            const itemNoti = (avatar, user, action, postID, createdAt) => {
+                return (
+                        ` <a href="loadPostContent?postId=\${postID}">
+                            <div class="noti_item">
+                                <img class="noti_other_user"  src="\${avatar}"/>
+                                  <div>
+                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                    <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
+                                  </div>
+                            </div>
+                        </a>`
+                        )
+            }
+            
+             const itemNotiNew = (avatar, user, action, postID, createdAt) => {
+                return (
+                        ` <a href="loadPostContent?postId=\${postID}">
+                            <div class="noti_item_new">
+                                <img class="noti_other_user"  src="\${avatar}"/>
+                                  <div>
+                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                    <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
+                                  </div>
+                            </div>
+                        </a>`
+                        )
+            }
+
+            $(".dropbtn_noti").hover(function (e) {
+                $("#warning").addClass("warning-hidden");
+            });
+            // Functions
+            const componentDidMount = (function () {
+                let ref = false;
+                return function () {
+                    if (!ref) {
+                        ref = true;
+                        componentRunOnDepend = true;
+                        getDocumentOnMount();
+                    }
+                };
+            })();
+
+            // useEffect
+            componentDidMount();
+
+            async function getDocumentOnMount() {
+                let domMessage = '';
+                let notifyRealtime = [];
+                await db
+                        .collection('notify')
+                        .doc(currentUser)
+                        .collection("incoming")
+                        .orderBy('createdAt', 'desc')
+                        .limit(5)
+                        .get()
+                        .then((querySnapshot) => {
+                            querySnapshot.forEach((doc) => {
+                                notifyRealtime.push(doc.data());
+                            });
+                        })
+                        .catch((error) => {
+                            console.log('Error getting documents: ', error);
+                        });
+                if (notifyRealtime.length > 0) {
+                    notifyRealtime.forEach((doc, index) => {
+                        if (doc.createdAt) {
+                            if (index === notifyRealtime.length - 1) {
+                                lastestNotiCreatedAt = doc.createdAt.seconds;
+                            }
+                            var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+                            domMessage += itemNoti(doc.avatar, doc.user, doc.action, doc.postId, date);
+
+                        }
+                    });
+                } else {
+                    domMessage += `<div class="noti_item">
+                                        <p></p>
+                                    </div>
+                                </div>`;
+                }
+                notiWrapper.innerHTML = domMessage;
+            }
+
+            if (componentRunOnDepend) {
+                db.collection('notify')
+                        .doc(currentUser)
+                        .collection("incoming")
+                        .orderBy('createdAt', 'desc')
+                        .limit(1)
+                        .onSnapshot((querySnapshot) => {
+                            let domMessage = '';
+                            let notifyRealtime = [];
+                            querySnapshot.forEach((doc) => {
+                                if (doc.exists) {
+                                    let id = doc.id;
+                                    let data = {...doc.data(), id};
+                                    notifyRealtime.push(data);
+                                }
+                            });
+                            notifyRealtime.forEach((doc, index) => {
+                                if (doc.createdAt) {
+                                    console.log(lastestNotiCreatedAt, doc.createdAt.seconds);
+                                    if (lol) {
+                                        var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+                                        domMessage += itemNotiNew(doc.avatar, doc.user, doc.action, doc.postId, date);
+                                    }
+                                    lol = true;
+                                }
+                            });
+                            if (domMessage !== '') {
+                                notiWrapper.insertAdjacentHTML('afterbegin', domMessage);
+                                $("#warning").removeClass("warning-hidden");
+                            }
+                        });
+                    }
+
+
+        </script>
     </body>
 </html>
