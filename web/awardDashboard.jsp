@@ -26,6 +26,7 @@
                 src="https://kit.fontawesome.com/1b1fb57155.js"
                 crossorigin="anonymous"
             ></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
             <link rel="stylesheet" href="./styles/awardDashboard.css" />
             <title>Dashboard | FPT Blog</title>
         </head>
@@ -262,40 +263,61 @@
             </footer>
 
             <!-- error -->
-            <div class="error-modal hidden">
-                <img src="./images/error_alert.png" alt="">
-                <h1>
-                    <c:if test="${notify == 'error'}">Please select an award !!!</c:if>
-                    <c:if test="${notify == 'error2'}">This user already has this award !!!</c:if>
-                    <c:if test="${notify == 'unqualified-post'}">This user does not have enough post (3 or upper)</c:if>
-                    <c:if test="${notify == 'unqualified-like'}">This user does not have enough like (5 or upper)</c:if>
-                    </h1>
-                    <button class="OKbtn-error-modal">Ok</button>
-                </div>
-                <div class="error-modal-overlay hidden"></div>
+
 
                 <script>
-                    const errorModal = document.querySelector(
-                            ".error-modal"
-                            );
-                    const errorModalOverlay = document.querySelector(
-                            ".error-modal-overlay"
-                            );
-
-                    document
-                            .querySelector(".OKbtn-error-modal")
-                            .addEventListener("click", () => {
-                                errorModal.classList.toggle("hidden");
-                                errorModalOverlay.classList.toggle("hidden");
-                            });
-
-                    errorModalOverlay.addEventListener("click", () => {
-                        errorModal.classList.toggle("hidden");
-                        errorModalOverlay.classList.toggle("hidden");
-                    });
+//                    const errorModal = document.querySelector(
+//                            ".error-modal"
+//                            );
+//                    const errorModalOverlay = document.querySelector(
+//                            ".error-modal-overlay"
+//                            );
+//
+//                    document
+//                            .querySelector(".OKbtn-error-modal")
+//                            .addEventListener("click", () => {
+//                                errorModal.classList.toggle("hidden");
+//                                errorModalOverlay.classList.toggle("hidden");
+//                            });
+//
+//                    errorModalOverlay.addEventListener("click", () => {
+//                        errorModal.classList.toggle("hidden");
+//                        errorModalOverlay.classList.toggle("hidden");
+//                    });
                 <c:if test="${not empty notify}">
-                    errorModal.classList.remove("hidden");
-                    errorModalOverlay.classList.remove("hidden");
+//                    errorModal.classList.remove("hidden");
+//                    errorModalOverlay.classList.remove("hidden");
+                    <c:if test="${notify == 'error'}">
+                    swal({
+                        title: "Please select an award !!!",
+                        icon: "error",
+                        button: "Ok!",
+                    });
+                    </c:if>
+                    <c:if test="${notify == 'error2'}">
+                    swal({
+                        title: "This user already has this award !!!",
+                        icon: "error",
+                        button: "Ok!",
+                    });
+                    </c:if>
+
+                    <c:if test="${notify == 'unqualified-post'}">
+                    swal({
+                        title: "This user does not have enough post (3 or upper)",
+                        icon: "error",
+                        button: "Ok!",
+                    });
+                    </c:if>
+
+                    <c:if test="${notify == 'unqualified-like'}">
+                    swal({
+                        title: "This user does not have enough like (5 or upper)",
+                        icon: "error",
+                        button: "Ok!",
+                    });
+                    </c:if>
+
                 </c:if>
             </script>
         </body>

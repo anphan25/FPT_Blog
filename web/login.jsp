@@ -23,6 +23,7 @@
                 />
             <meta name="google-signin-scope" content="profile email" />
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!-- jquery -->
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
             <link rel="stylesheet" href="./styles/login.css" />
             <title>Login | FPT Blog</title>
         </head>
@@ -207,12 +208,12 @@
                 </div> 
             </footer>
 
-            <div class="ban-reason-modal ">
-                <img src="./images/ban-icon.png" alt="">
-                <h2>reason here</h2>
-                <button class="OKbtn-ban-reason">Ok</button>
-            </div>
-            <div class="ban-reason-overlay " ></div>
+            <!--            <div class="ban-reason-modal ">
+                            <img src="./images/ban-icon.png" alt="">
+                            <h2>reason here</h2>
+                            <button class="OKbtn-ban-reason">Ok</button>
+                        </div>
+                        <div class="ban-reason-overlay " ></div>-->
 
             <script>
                 const passwordInput = document.querySelector("#exampleInputPassword1");
@@ -269,24 +270,34 @@
                     gaObject.signOut().then(function () {});
                 }
 
-                const banReasonModal = document.querySelector(
-                        ".ban-reason-modal"
-                        );
-                const banReasonOverlay = document.querySelector(
-                        ".ban-reason-overlay"
-                        );
-
-                document
-                        .querySelector(".OKbtn-ban-reason")
-                        .addEventListener("click", () => {
-                            banReasonModal.classList.toggle("hidden");
-                            banReasonOverlay.classList.toggle("hidden");
-                        });
-
-                banReasonOverlay.addEventListener("click", () => {
-                    banReasonModal.classList.toggle("hidden");
-                    banReasonOverlay.classList.toggle("hidden");
+//                const banReasonModal = document.querySelector(
+//                        ".ban-reason-modal"
+//                        );
+//                const banReasonOverlay = document.querySelector(
+//                        ".ban-reason-overlay"
+//                        );
+//
+//                document
+//                        .querySelector(".OKbtn-ban-reason")
+//                        .addEventListener("click", () => {
+//                            banReasonModal.classList.toggle("hidden");
+//                            banReasonOverlay.classList.toggle("hidden");
+//                        });
+//
+//                banReasonOverlay.addEventListener("click", () => {
+//                    banReasonModal.classList.toggle("hidden");
+//                    banReasonOverlay.classList.toggle("hidden");
+//                });
+                <c:set var="reasonBan" value="${requestScope.REASON_BAN}"/>
+                    console.log("${reasonBan}");
+                <c:if test="${not empty reasonBan}">
+                swal({
+                    title: "Your account was banned",
+                    text: "Reason: ${reasonBan}",
+                    icon: "warning",
+                    button: "Ok!",
                 });
+                </c:if>
             </script>
         </body>
     </html>

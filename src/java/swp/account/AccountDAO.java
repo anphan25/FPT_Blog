@@ -511,4 +511,35 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
+    
+    public String getBanReason(String email) throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        String reason = null;
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "select Note from tblAccounts where email = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    reason = rs.getString("Note");
+                }
+            }
+            
+        }finally{
+           if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            } 
+        }
+        return reason;
+    }
 }
