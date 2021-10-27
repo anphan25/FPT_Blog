@@ -405,7 +405,7 @@
                             <div class="noti_item">
                                 <img class="noti_other_user"  src="\${avatar}"/>
                                   <div>
-                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                     <p><b>\${user}</b> \${action} your post</p>
                                     <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
                                   </div>
                             </div>
@@ -419,7 +419,7 @@
                             <div class="noti_item_new">
                                 <img class="noti_other_user"  src="\${avatar}"/>
                                   <div>
-                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                    <p><b>\${user}</b> \${action} your post</p>
                                     <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
                                   </div>
                             </div>

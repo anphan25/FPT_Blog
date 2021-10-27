@@ -303,13 +303,13 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
             let lol= false;
             let currentUser = `${currentUser.email}`;
             currentUser = currentUser.substr(0, currentUser.indexOf("@"));
-            const itemNoti = (avatar, user, action, postID, createdAt) => {
+               const itemNoti = (avatar, user, action, postID, createdAt) => {
                 return (
                         ` <a href="loadPostContent?postId=\${postID}">
                             <div class="noti_item">
                                 <img class="noti_other_user"  src="\${avatar}"/>
                                   <div>
-                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                     <p><b>\${user}</b> \${action} your post</p>
                                     <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
                                   </div>
                             </div>
@@ -323,7 +323,7 @@ Author : ASUS --%> <%@taglib uri="http://java.sun.com/jsp/jstl/core"
                             <div class="noti_item_new">
                                 <img class="noti_other_user"  src="\${avatar}"/>
                                   <div>
-                                     <p><b>\${user}</b> đã <b>\${action}</b> bài viết của bạn</p>
+                                    <p><b>\${user}</b> \${action} your post</p>
                                     <p style="font-size: 14px; margin-top: 0.2rem">\${createdAt}</p>
                                   </div>
                             </div>
