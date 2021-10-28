@@ -320,7 +320,7 @@ public class AccountDAO implements Serializable {
             if (con != null) {
                 String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image "
                         + "from (select COUNT(PostID) as Total, EmailPost from tblPosts where StatusPost = 'A' group by EmailPost ) myTable left join tblAccounts a "
-                        + "on myTable.EmailPost = a.Email where a.StatusAccountID = 'A' order by myTable.Total desc";
+                        + "on myTable.EmailPost = a.Email where a.StatusAccountID = 'A' and a.RoleID = 'S' order by myTable.Total desc";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -360,7 +360,7 @@ public class AccountDAO implements Serializable {
                 String sql = "select t.Email, a.Name, a.Image, t.Total "
                         + "from (select a.Email, count(l.ID) as Total "
                         + "from tblAccounts a, tblPosts p, tblLikes l "
-                        + "where a.Email = p.EmailPost and p.PostID = l.PostID and a.StatusAccountID = 'A' "
+                        + "where a.Email = p.EmailPost and p.PostID = l.PostID and a.StatusAccountID = 'A' and a.RoleID = 'S' "
                         + "and p.StatusPost = 'A' group by a.Email) t left join tblAccounts a "
                         + "on t.Email = a.Email order by Total desc";
                 stm = con.prepareStatement(sql);
@@ -542,5 +542,34 @@ public class AccountDAO implements Serializable {
             }
         }
         return reason;
+    }
+    public int getStandardOfAward(int awardId) throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        
+        try{
+            con = DBHelper.makeConnection();
+            if(con != null){
+                String sql = "select Standard from tblAwards where AwardID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setInt(1, awardId);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                    return rs.getInt("Standard");
+                }
+            }
+        }finally{
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        }
+          return 0;
     }
 }
