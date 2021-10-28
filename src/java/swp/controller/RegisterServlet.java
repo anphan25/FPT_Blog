@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import swp.account.AccountDAO;
 import swp.account.AccountDTO;
 import swp.accountError.AccountError;
@@ -39,6 +40,7 @@ public class RegisterServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
         String url = roadmap.get(FAIL);
+        HttpSession session = request.getSession(true); //performance ko sao vì filter chặn trước khi được vào
         
         try {
             String name = request.getParameter("name");
@@ -51,27 +53,38 @@ public class RegisterServlet extends HttpServlet {
             byte[] bytesCampus = campus.getBytes(StandardCharsets.ISO_8859_1);
             name = new String(bytesBane, StandardCharsets.UTF_8);
             campus = new String(bytesCampus, StandardCharsets.UTF_8);
+            if(email != null)
+            {
+                String hash = HashPassword.createHash(password);
+                AccountError accountError = new AccountError();
+                AccountDTO user = new AccountDTO(name, gender, avatarURL, campus, email, hash);
+                AccountDAO dao = new AccountDAO();
+                boolean check = dao.registerUser(user);
+                if (check) {
 
-            String hash = HashPassword.createHash(password);
-            AccountError accountError = new AccountError();
-            AccountDTO user = new AccountDTO(name, gender, avatarURL, campus, email, hash);
-            AccountDAO dao = new AccountDAO();
-            boolean check = dao.registerUser(user);
-            if (check) {
-
-                url = roadmap.get(SUCCESS);
-            } else {
-                boolean checkDuplicate = dao.checkDuplicate(email);
-                if (checkDuplicate) {
-                    accountError.setNameError(name);
-                    accountError.setGenderError(gender);
-                    accountError.setEmailError("Email already exists.");
-                    request.setAttribute("ACCOUNT_ERROR", accountError);
+                    url = roadmap.get(SUCCESS);
+                } else {
+                    boolean checkDuplicate = dao.checkDuplicate(email);
+                    if (checkDuplicate) {
+                        accountError.setNameError(name);
+                        accountError.setGenderError(gender);
+                        accountError.setEmailError("Email already exists.");
+                        request.setAttribute("ACCOUNT_ERROR", accountError);
+                    }
                 }
             }
+            else    //AM USING SESSION TO STORE EMAIL NOT BECAUSE I CANNOT TAKE 
+                //EMAIL PARAMETER BUT BECAUSE I DON'T WANT CLIENT TO CHANGE HIDDEN FIELD INPUT TAG FROM DEVELOPER TOOL
+            {
+                log("WELCUM");
+                AccountDTO user = (AccountDTO) session.getAttribute("GMAIL_REGISTER");
+                log(user.getEmail());
+            }
+            //log(email + " _ " + name);
         } catch (Exception e) {
             log(e.getMessage());
         } finally {
+            session.removeAttribute("GMAIL_REGISTER");
             request.getRequestDispatcher(url).forward(request, response);
         }
     }
