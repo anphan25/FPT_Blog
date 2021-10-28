@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
-import swp.award.AwardDTO;
 
 import swp.utils.DBHelper;
 import swp.utils.HashPassword;
@@ -329,7 +328,7 @@ public class AccountDAO implements Serializable {
                     String name = rs.getNString("Name");
                     String avatar = rs.getString("Image");
                     int totalPosts = rs.getInt("Total");
-                    ArrayList<AwardDTO> awards = getAwardsByEmail(email);
+                    ArrayList<Integer> awards = getAwardsByEmail(email);
                     int likes = getTotalLikesByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, totalPosts);
                     list.add(dto);
@@ -371,7 +370,7 @@ public class AccountDAO implements Serializable {
                     String name = rs.getNString("Name");
                     String avatar = rs.getString("Image");
                     int likes = rs.getInt("Total");
-                    ArrayList<AwardDTO> awards = getAwardsByEmail(email);// sửa thành object ko để int idaward nữa
+                    ArrayList<Integer> awards = getAwardsByEmail(email);// sửa thành object ko để int idaward nữa
                     int posts = getTotalPostsByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, posts);
                     list.add(dto);
@@ -422,25 +421,21 @@ public class AccountDAO implements Serializable {
         return posts;
     }
 
-    public ArrayList<AwardDTO> getAwardsByEmail(String email) throws NamingException, SQLException {
+    public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        ArrayList<AwardDTO> list = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<>();
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID, AwardName, Image from tblAwards where AwardID in "
-                        + "(select AwardID from tblAwardDetails where EmailStudent = ?)";
+                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     int id = rs.getInt("AwardID");
-                    String awardName = rs.getNString("AwardName");
-                    String image = rs.getString("Image");
-                    AwardDTO a = new AwardDTO(id, awardName, image);
-                    list.add(a);
+                    list.add(id);
                 }
             }
         } finally {
