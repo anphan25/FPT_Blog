@@ -25,13 +25,19 @@ import swp.utils.ProcessingGoogle;
 {
     "/LoginGoogleServlet"
 })
+
+/*********** CODE NÀY CỦA BẠN NAM có gì lỗi thì kêu tui ***************/
+//Nhật ký ngày 1: Tôi làm cái chức năng này giống với coursera hay github hay bát cứ forum nào cần password nếu là 1 gmail mới đến FPT blog, Nhưng client say NO PASSWORD
+//Nhật ký ngày 2: Tôi làm cái chức năng này giống những chúa hề DEV vì INSERT mẹ nó và để những thông tin account rất chi là normie
+//Nhật ký ngày 3: Tôi làm cái chức năng này quay lại ngày 1 những không cho nhập password
+
 public class LoginGoogleServlet extends HttpServlet
 {
     private final String ERROR_PAGE = "notFoundPage";
     //private final String HOME_PAGE = "homePage";
     private final String LOGIN_PAGE = "loginPage";
     private final String LOAD_BLOG = "loadBlogs";
-    //private final String REGISTER_PAGE = "registerPage";
+    private final String REGISTER_PAGE = "registerPage";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -88,19 +94,27 @@ public class LoginGoogleServlet extends HttpServlet
                         }
                         else //email chưa có ở database
                         {
+                            AccountDTO cachingInfo = new AccountDTO(email, name, picurl);
+                            session.setAttribute("GMAIL_REGISTER", cachingInfo);
+                            // rule number one never trust client input so we will use this little SHIT
+                            request.setAttribute("IS_IT_GMAIL_LOGIN", true); //well i would use byte type but my program skill still lacked
+                            url = roadmap.get(REGISTER_PAGE);
+                            /*
                             boolean checkregister = dao.createAccountForFirstTimeGmail(email, name, picurl);
                             if(checkregister)
                             {
                                 AccountDTO information_login = dao.getInformationUserFromEmail(email);// thêm CM
+                                request.setAttribute("", dao);
                                 session.setAttribute("LOGIN", "logined");
                                 session.setAttribute("CURRENT_USER", information_login);
                                 url = roadmap.get(LOAD_BLOG);
                             }
                             else
                             {
-                                //set attribute cho request show lỗi bên error page in the fucking future
+                                //set attribute cho request show lỗi bên error page in the fucking future or maybe never
                                 url = roadmap.get(ERROR_PAGE);
                             }
+                            */
                         }
                     }
                     else

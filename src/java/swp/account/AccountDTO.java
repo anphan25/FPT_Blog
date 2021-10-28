@@ -31,8 +31,6 @@ public class AccountDTO implements Serializable {
         this.CategoryManagement = CategoryManagement;
     }
 
-  
-
     public int getTotalPosts() {
         return totalPosts;
     }
@@ -57,6 +55,8 @@ public class AccountDTO implements Serializable {
         this.awards = awards;
     }
 
+
+
     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar) {
         this.email = email;
         this.name = name;
@@ -67,8 +67,8 @@ public class AccountDTO implements Serializable {
         this.joinDate = joinDate;
         this.avatar = avatar;
     }
-    
-     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar, int cm) {//hàm getUser đã thêm Catetory management để phân biệt mentor quản lí loại nào
+
+    public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar, int cm) {//hàm getUser đã thêm Catetory management để phân biệt mentor quản lí loại nào
         this.email = email;
         this.name = name;
         this.gender = gender;
@@ -179,8 +179,6 @@ public class AccountDTO implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
-    
 
     @Override
     public String toString() {

@@ -42,19 +42,19 @@ public class LoadAwardDashboardServlet extends HttpServlet {
         String url = roadmap.get("awardDashboardPage");
         String tab = request.getParameter("tab");
         try {
-            if(tab == null){
+            if (tab == null) {
                 tab = "post";
             }
             AccountDAO accountDAO = new AccountDAO();
-            ArrayList<AccountDTO> list= null;
-            if(tab.equals("post") ){
+            ArrayList<AccountDTO> list = null;
+            if (tab.equals("post")) {
                 list = accountDAO.getOutStandingUsers();
-            }else if(tab.equals("like")){
+            } else if (tab.equals("like")) {
                 list = accountDAO.getOutStandingUsersByLikes();
             }
             request.setAttribute("TAB_TYPE", tab);
             request.setAttribute("USER_LIST", list);
-            
+
         } catch (Exception e) {
             log("Error at LoadAwardDashboardServlet: " + e.getMessage());
         } finally {
