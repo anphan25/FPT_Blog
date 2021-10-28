@@ -225,17 +225,17 @@
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/eKTyEU1mkTU.png"/>
                         </div>
                         <div class="nameVsLastMessage">
-                            <p class="nameGroup">Mọi người đang online</p>
+                            <p class="nameGroup">Community Chat</p>
                         </div>
                     </div>
-                    <div class="groupItem">
+<!--                    <div class="groupItem">
                         <div class="containerCover">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIXIrqiW3R5OstWAjkuFvNwvjYHRaTmwEQWg&usqp=CAU"/>
                         </div>
                         <div class="nameVsLastMessage">
                             <p class="nameGroup">Hỗ trợ</p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div class="right_main">
@@ -245,7 +245,7 @@
                             <img src="https://static.xx.fbcdn.net/rsrc.php/v3/yx/r/eKTyEU1mkTU.png"/>
                         </div>
                         <div class="nameVsLastMessage">
-                            <p class="nameGroupNav">Nơi trò chuyện vui vẻ</p>
+                            <p class="nameGroupNav">Community Chat</p>
                         </div>
                     </div>
                 </div>
