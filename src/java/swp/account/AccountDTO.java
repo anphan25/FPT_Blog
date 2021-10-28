@@ -2,6 +2,7 @@ package swp.account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import swp.award.AwardDTO;
 
 /**
  *
@@ -20,7 +21,7 @@ public class AccountDTO implements Serializable {
     private String avatar;
     private int totalPosts;
     private int totalLikes;
-    private ArrayList<Integer> awards;
+    private ArrayList<AwardDTO> awards;
     private int CategoryManagement; //chỉ dành cho mentor
 
     public int getCategoryManagement() {
@@ -30,8 +31,6 @@ public class AccountDTO implements Serializable {
     public void setCategoryManagement(int CategoryManagement) {
         this.CategoryManagement = CategoryManagement;
     }
-
-  
 
     public int getTotalPosts() {
         return totalPosts;
@@ -49,11 +48,11 @@ public class AccountDTO implements Serializable {
         this.totalLikes = totalLikes;
     }
 
-    public ArrayList<Integer> getAwards() {
+    public ArrayList<AwardDTO> getAwards() {
         return awards;
     }
 
-    public void setAwards(ArrayList<Integer> awards) {
+    public void setAwards(ArrayList<AwardDTO> awards) {
         this.awards = awards;
     }
 
@@ -67,8 +66,8 @@ public class AccountDTO implements Serializable {
         this.joinDate = joinDate;
         this.avatar = avatar;
     }
-    
-     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar, int cm) {//hàm getUser đã thêm Catetory management để phân biệt mentor quản lí loại nào
+
+    public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar, int cm) {//hàm getUser đã thêm Catetory management để phân biệt mentor quản lí loại nào
         this.email = email;
         this.name = name;
         this.gender = gender;
@@ -96,7 +95,7 @@ public class AccountDTO implements Serializable {
         this.avatar = avatar;
     }
 
-    public AccountDTO(String email, String name, String avatar, int likes, ArrayList<Integer> awards, int posts) {
+    public AccountDTO(String email, String name, String avatar, int likes, ArrayList<AwardDTO> awards, int posts) {
         this.email = email;
         this.name = name;
         this.avatar = avatar;
@@ -179,8 +178,6 @@ public class AccountDTO implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
-    
 
     @Override
     public String toString() {
