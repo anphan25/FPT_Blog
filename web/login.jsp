@@ -289,7 +289,6 @@
 //                    banReasonOverlay.classList.toggle("hidden");
 //                });
                 <c:set var="reasonBan" value="${requestScope.REASON_BAN}"/>
-                    console.log("${reasonBan}");
                 <c:if test="${not empty reasonBan}">
                 swal({
                     title: "Your account was banned",
