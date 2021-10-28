@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.naming.NamingException;
+import swp.award.AwardDTO;
 
 import swp.utils.DBHelper;
 import swp.utils.HashPassword;
@@ -66,7 +67,7 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
-    
+
     private AccountDTO currentUser;
 
     public AccountDTO getCurrentUser() {
@@ -251,8 +252,7 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
-    
-    /*
+
     public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -260,7 +260,7 @@ public class AccountDAO implements Serializable {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
-                                            + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?,null)";
+                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?,null)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, name);
@@ -282,7 +282,6 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
-    */
 
     public boolean giveAward(String email, int awardID) throws NamingException, SQLException {
         Connection con = null;
@@ -330,7 +329,7 @@ public class AccountDAO implements Serializable {
                     String name = rs.getNString("Name");
                     String avatar = rs.getString("Image");
                     int totalPosts = rs.getInt("Total");
-                    ArrayList<Integer> awards = getAwardsByEmail(email);
+                    ArrayList<AwardDTO> awards = getAwardsByEmail(email);
                     int likes = getTotalLikesByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, totalPosts);
                     list.add(dto);
@@ -372,7 +371,7 @@ public class AccountDAO implements Serializable {
                     String name = rs.getNString("Name");
                     String avatar = rs.getString("Image");
                     int likes = rs.getInt("Total");
-                    ArrayList<Integer> awards = getAwardsByEmail(email);
+                    ArrayList<AwardDTO> awards = getAwardsByEmail(email);// sửa thành object ko để int idaward nữa
                     int posts = getTotalPostsByEmail(email);
                     AccountDTO dto = new AccountDTO(email, name, avatar, likes, awards, posts);
                     list.add(dto);
@@ -392,7 +391,7 @@ public class AccountDAO implements Serializable {
         }
         return list;
     }
-    
+
     public int getTotalPostsByEmail(String email) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -423,20 +422,25 @@ public class AccountDAO implements Serializable {
         return posts;
     }
 
-    public ArrayList<Integer> getAwardsByEmail(String email) throws NamingException, SQLException {
+    public ArrayList<AwardDTO> getAwardsByEmail(String email) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<AwardDTO> list = new ArrayList<>();
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                String sql = "select AwardID, AwardName, Image from tblAwards where AwardID in "
+                        + "(select AwardID from tblAwardDetails where EmailStudent = ?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
                 while (rs.next()) {
-                    list.add(rs.getInt("AwardID"));
+                    int id = rs.getInt("AwardID");
+                    String awardName = rs.getNString("AwardName");
+                    String image = rs.getString("Image");
+                    AwardDTO a = new AwardDTO(id, awardName, image);
+                    list.add(a);
                 }
             }
         } finally {
@@ -513,26 +517,26 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
-    
-    public String getBanReason(String email) throws NamingException, SQLException{
+
+    public String getBanReason(String email) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
         String reason = null;
-        try{
+        try {
             con = DBHelper.makeConnection();
-            if(con != null){
+            if (con != null) {
                 String sql = "select Note from tblAccounts where email = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     reason = rs.getString("Note");
                 }
             }
-            
-        }finally{
-           if (con != null) {
+
+        } finally {
+            if (con != null) {
                 con.close();
             }
             if (stm != null) {
@@ -540,7 +544,7 @@ public class AccountDAO implements Serializable {
             }
             if (rs != null) {
                 rs.close();
-            } 
+            }
         }
         return reason;
     }
