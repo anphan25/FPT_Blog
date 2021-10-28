@@ -2,6 +2,8 @@
 <%@page import="swp.accountError.AccountError"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<c:set var="gmail" value="${sessionScope.GMAIL_REGISTER}" />
+<c:set var="checker" value="${requestScope.IS_IT_GMAIL_LOGIN}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -136,7 +138,12 @@
                   class="form-control"
                   id="name"
                   minlength="1"
+                  <c:if test="${empty gmail}">
                   value="<%= accountError.getNameError()%>"
+                  </c:if>
+                  <c:if test="${not empty gmail}">
+                  value="${gmail.name}"
+                  </c:if>
                   aria-describedby="nameHelp"
                 />
               </div>
@@ -157,10 +164,20 @@
                       id="avatarURL"
                       type="hidden"
                       name="avatarURL"
+                      <c:if test="${empty gmail}">
                       value="https://firebasestorage.googleapis.com/v0/b/udemy-vue-firebase-si.appspot.com/o/avatar-user%2F9f18e161-72c6-462b-9d66-6746360b38fa%2Favatar-default-icon.png?alt=media&token=959eb459-e9a8-4733-b8fa-c86c95d3950d"
-                    />
+                      </c:if>
+                      <c:if test="${not empty gmail}">
+                      value="${gmail.avatar}"
+                      </c:if>
+                      />
                     <img
+                      <c:if test="${empty gmail}">
                       src="https://firebasestorage.googleapis.com/v0/b/udemy-vue-firebase-si.appspot.com/o/avatar-user%2F9f18e161-72c6-462b-9d66-6746360b38fa%2Favatar-default-icon.png?alt=media&token=959eb459-e9a8-4733-b8fa-c86c95d3950d"
+                      </c:if>
+                      <c:if test="${not empty gmail}">
+                      src="${gmail.avatar}"
+                      </c:if>
                       id="img-preview"
                     />
                   </div>
@@ -192,6 +209,7 @@
             </div>
             <div class="field_input">
               <p>Email</p>
+              <c:if test="${empty gmail}">
               <input
                 name="email"
                 type="email"
@@ -199,8 +217,21 @@
                 id="email"
                 aria-describedby="emailHelp"
               />
+              </c:if>
+              <c:if test="${not empty gmail}">
+              <input
+                name="email"
+                type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="emailHelp"
+                value="${gmail.email}"
+                disabled
+              />
+              </c:if>
               <p style="font-weight: 500; color: red"><%= accountError.getEmailError()%></p>
             </div>
+            
             <div class="field_input">
               <p>Password</p>
               <input
@@ -221,6 +252,9 @@
                 minlength="6"
               />
             </div>
+            <c:if test="${not empty checker}">
+                <!-- không dùng password -->
+            </c:if>
 
             <button type="submit" class="btn btn-primary">
               Create Account

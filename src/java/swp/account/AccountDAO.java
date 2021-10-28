@@ -251,7 +251,8 @@ public class AccountDAO implements Serializable {
         }
         return null;
     }
-
+    
+    /*
     public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
         Connection con = null;
         PreparedStatement stm = null;
@@ -281,6 +282,7 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
+    */
 
     public boolean giveAward(String email, int awardID) throws NamingException, SQLException {
         Connection con = null;
