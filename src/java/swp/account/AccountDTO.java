@@ -2,7 +2,6 @@ package swp.account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import swp.award.AwardDTO;
 
 /**
  *
@@ -21,7 +20,7 @@ public class AccountDTO implements Serializable {
     private String avatar;
     private int totalPosts;
     private int totalLikes;
-    private ArrayList<AwardDTO> awards;
+    private ArrayList<Integer> awards;
     private int CategoryManagement; //chỉ dành cho mentor
 
     public int getCategoryManagement() {
@@ -48,13 +47,15 @@ public class AccountDTO implements Serializable {
         this.totalLikes = totalLikes;
     }
 
-    public ArrayList<AwardDTO> getAwards() {
+    public ArrayList<Integer> getAwards() {
         return awards;
     }
 
-    public void setAwards(ArrayList<AwardDTO> awards) {
+    public void setAwards(ArrayList<Integer> awards) {
         this.awards = awards;
     }
+
+
 
     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar) {
         this.email = email;
@@ -95,7 +96,7 @@ public class AccountDTO implements Serializable {
         this.avatar = avatar;
     }
 
-    public AccountDTO(String email, String name, String avatar, int likes, ArrayList<AwardDTO> awards, int posts) {
+    public AccountDTO(String email, String name, String avatar, int likes, ArrayList<Integer> awards, int posts) {
         this.email = email;
         this.name = name;
         this.avatar = avatar;

@@ -49,24 +49,8 @@ public class LoadAwardDashboardServlet extends HttpServlet {
             ArrayList<AccountDTO> list = null;
             if (tab.equals("post")) {
                 list = accountDAO.getOutStandingUsers();
-                for (AccountDTO u : list) {
-                    log("Email: " + u.getEmail());
-                    if (u.getAwards().isEmpty()) {
-                        log("award: " + u.getAwards().size());
-                    } else {
-                        log("award: Nothing");
-                    }
-                }
             } else if (tab.equals("like")) {
                 list = accountDAO.getOutStandingUsersByLikes();
-                for (AccountDTO u : list) {
-                    log("Email: " + u.getEmail());
-                    if (u.getAwards().isEmpty()) {
-                        log("award: " + u.getAwards().size());
-                    } else {
-                        log("award: Nothing");
-                    }
-                }
             }
             request.setAttribute("TAB_TYPE", tab);
             request.setAttribute("USER_LIST", list);
