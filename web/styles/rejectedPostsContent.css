@@ -643,6 +643,16 @@ header .container_right .container_button_register .num-post span {
   border-bottom-right-radius: 5px;
 }
 
+.post-content p img {
+  width: 100%;
+  margin: 25px 0;
+  height: auto;
+}
+
+.post-content {
+  word-break: break-all;
+}
+
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */

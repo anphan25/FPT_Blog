@@ -51,17 +51,19 @@ public class GiveAwardServlet extends HttpServlet {
                     AccountDAO dao = new AccountDAO();
                     if (!dao.checkAward(email, awardID)) { //kiểm tra coi có award này chưa, có rùi thì báo lỗi
                         if(awardID == 1){
-                            if(dao.getTotalPostsByEmail(email) >= 3){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
+                            if(dao.getTotalPostsByEmail(email) >= dao.getStandardOfAward(awardID)){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
                                 dao.giveAward(email, awardID);
                             }else{
                                 request.setAttribute("NOTIFY", "unqualified-post");
+                                request.setAttribute("STANDARD_POST", dao.getStandardOfAward(awardID));
                             }
                         }
                         if(awardID == 2){
-                            if(dao.getTotalLikesByEmail(email) >= 5){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
+                            if(dao.getTotalLikesByEmail(email) >= dao.getStandardOfAward(awardID)){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
                                 dao.giveAward(email, awardID);
                             }else{
                                 request.setAttribute("NOTIFY", "unqualified-like");
+                                request.setAttribute("STANDARD_LIKE", dao.getStandardOfAward(awardID));
                             }
                         }
                         if(awardID == 3){
