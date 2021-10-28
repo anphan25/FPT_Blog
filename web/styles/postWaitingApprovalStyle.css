@@ -725,6 +725,10 @@ footer .text_footer_strong {
   text-align: center;
   padding-top: 30px;
 }
+
+.content-img-text {
+  word-break: break-all;
+}
 .content-img-text p img {
   width: 100%;
   margin: 25px 0;
