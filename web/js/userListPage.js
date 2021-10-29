@@ -521,32 +521,7 @@ const updateOverlay = document.querySelector(".updateRole-overlay");
 //ban-modal(nếu là update thì chỗ này là updateRoleModal).classList.toggle("hidden");
 //banOverlay(nếu là update thì chỗ này là updateOverlay).classList.toggle("hidden");
 
-//nhấn nút cancel thì tắt popup
-document
-  .querySelector(".cancel-btn-ban-modal")
-  .addEventListener("click", () => {
-    banModal.classList.toggle("hidden");
-    banOverlay.classList.toggle("hidden");
-  });
 
-//nhấn nút cancel thì tắt popup
-document
-  .querySelector(".cancel-btn-updateRole-modal")
-  .addEventListener("click", () => {
-    updateRoleModal.classList.toggle("hidden");
-    updateOverlay.classList.toggle("hidden");
-  });
-
-//nhấn ra ngoài cái popu thì tắt cái popup
-updateOverlay.addEventListener("click", () => {
-  updateRoleModal.classList.toggle("hidden");
-  updateOverlay.classList.toggle("hidden");
-});
-
-banOverlay.addEventListener("click", () => {
-  banModal.classList.toggle("hidden");
-  banOverlay.classList.toggle("hidden");
-});
 
 const submitBanBtn = document.querySelector(".ban-btn-modal");
 const banReason = document.querySelector("#ban-area");
@@ -570,29 +545,7 @@ banReason.addEventListener("keyup", () => {
   checkWordCount();
 });
 
-const updateSuccessfullyModal = document.querySelector(
-  ".update-successfully-modal"
-);
-const updateSuccessfullyOverlay = document.querySelector(
-  ".update-successfully-overlay"
-);
 
-document
-  .querySelector(".OKbtn-update-successfully")
-  .addEventListener("click", () => {
-    updateSuccessfullyModal.classList.toggle("hidden");
-    updateSuccessfullyOverlay.classList.toggle("hidden");
-  });
-
-updateSuccessfullyOverlay.addEventListener("click", () => {
-  updateSuccessfullyModal.classList.toggle("hidden");
-  updateSuccessfullyOverlay.classList.toggle("hidden");
-});
-
-const banSuccessfullyModal = document.querySelector(".ban-successfully-modal");
-const banSuccessfullyOverlay = document.querySelector(
-  ".ban-successfully-overlay"
-);
 
 //var cmpdm = (function() {
 //    var executed = false;
@@ -606,35 +559,6 @@ const banSuccessfullyOverlay = document.querySelector(
 //})();
 //cmpdm();
 
-document
-  .querySelector(".OKbtn-ban-successfully")
-  .addEventListener("click", () => {
-    banSuccessfullyModal.classList.toggle("hidden");
-    banSuccessfullyOverlay.classList.toggle("hidden");
-  });
 
-banSuccessfullyOverlay.addEventListener("click", () => {
-  banSuccessfullyModal.classList.toggle("hidden");
-  banSuccessfullyOverlay.classList.toggle("hidden");
-});
 
-// unban
 
-const unbanSuccessfullyModal = document.querySelector(
-  ".unban-successfully-modal"
-);
-const unbanSuccessfullyOverlay = document.querySelector(
-  ".unban-successfully-overlay"
-);
-
-document
-  .querySelector(".OKbtn-unban-successfully")
-  .addEventListener("click", () => {
-    unbanSuccessfullyModal.classList.toggle("hidden");
-    unbanSuccessfullyOverlay.classList.toggle("hidden");
-  });
-
-unbanSuccessfullyOverlay.addEventListener("click", () => {
-  unbanSuccessfullyModal.classList.toggle("hidden");
-  unbanSuccessfullyOverlay.classList.toggle("hidden");
-});

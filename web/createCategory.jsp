@@ -222,6 +222,12 @@
                                 <p>Comments Management</p>
                             </div>
                         </a>
+                        <a href="loadAwardStandard">
+                            <div class="container_item user-list-icon">
+                                <img src="./images/adjust_icon.png" />
+                                <p>Award Adjustment</p>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>

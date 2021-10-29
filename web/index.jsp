@@ -292,6 +292,12 @@
                                         <p>Comments Management</p>
                                     </div>
                                 </a>
+                                <a href="loadAwardStandard">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/adjust_icon.png" />
+                                        <p>Award Adjustment</p>
+                                    </div>
+                                </a>
                             </c:if>
                         </c:if>
                     </div>
@@ -345,13 +351,13 @@
                                                     <c:if test="${not empty blogDTO.awards}">
                                                         <c:forEach var="award" items="${blogDTO.awards}">
                                                             <c:if test="${award == 1}">
-                                                                <img src="./images/contribution-award.svg" alt=""/>
+                                                                <img src="./images/contribution-award.svg" alt="" title="Great Contributor"/>
                                                             </c:if>
                                                             <c:if test="${award == 2}">
-                                                                <img src="./images/heart-award.png" alt=""/>
+                                                                <img src="./images/heart-award.png" alt="" title="Like Collector"/>
                                                             </c:if>
                                                             <c:if test="${award == 3}">
-                                                                <img src="./images/top-author.png" alt=""/>
+                                                                <img src="./images/top-author.png" alt="" title="Excellent Writer"/>
                                                             </c:if>
                                                         </c:forEach>
                                                     </c:if>
