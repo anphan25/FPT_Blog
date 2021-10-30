@@ -1053,7 +1053,7 @@ footer .text_footer_strong {
   box-shadow: 10px 10px;
   z-index: 10;
   text-align: center;
-  padding: 110px 30px 30px;
+  padding: 30px 30px 30px;
 }
 
 .del-btn-gr {
@@ -1266,6 +1266,15 @@ footer .text_footer_strong {
 .delete-update-div .update-div:hover {
   background-color: rgba(231, 231, 231, 0.445);
   color: #3b49df;
+}
+
+.del-reason-text {
+  margin-top: 8px;
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  outline-color: #3b49df;
 }
 
 /* toggle_sidebar */
