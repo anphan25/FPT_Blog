@@ -468,11 +468,15 @@
             </div>
         </div>
         <div class="delete-modal hidden">
-            <h1>Are you sure you want to delete this post ?</h1>
+            <h1>Input the reason why you delete this post</h1>
+            <textarea class="del-reason-text" cols="30" rows="8">         
+            </textarea>
             <div class="del-btn-gr">
-                <a href="deletePost?postId=${postDetail.ID}">
+                <form action="deletePost" id="del-form">
+                    <input type="hidden" name="reasonDelete" class="reason-del-input"/>
+                    <input type="hidden" name="postId" value="${postDetail.ID}" />
                     <button class="del-btn">Delete</button>
-                </a>
+                </form>
                 <button class="cancel-btn">Cancel</button>
             </div>
         </div>
@@ -724,10 +728,10 @@
             const notiWrapper = document.querySelector(".dropdown-content1");
             let lastestNotiCreatedAt = "";
             let componentRunOnDepend = false;
-            let lol= false;
+            let lol = false;
             let currentUser = `${currentUser.email}`;
             currentUser = currentUser.substr(0, currentUser.indexOf("@"));
-              const itemNoti = (avatar, user, action, postID, createdAt) => {
+            const itemNoti = (avatar, user, action, postID, createdAt) => {
                 return (
                         ` <a href="loadPostContent?postId=\${postID}">
                             <div class="noti_item">
@@ -740,8 +744,8 @@
                         </a>`
                         )
             }
-            
-             const itemNotiNew = (avatar, user, action, postID, createdAt) => {
+
+            const itemNotiNew = (avatar, user, action, postID, createdAt) => {
                 return (
                         ` <a href="loadPostContent?postId=\${postID}">
                             <div class="noti_item_new">

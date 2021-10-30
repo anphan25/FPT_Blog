@@ -426,7 +426,7 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "SELECT NewContent , title, tag, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
+                String sql = "SELECT p.Note, NewContent , title, tag, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
                         + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear, PostContent"
                         + ", StatusPost, CategoryID, name, image, email"
                         + " FROM tblPosts p left join tblAccounts a"
@@ -450,7 +450,8 @@ public class PostDAO implements Serializable {
                     String email = rs.getString("Email");
                     String categoryID = rs.getString("CategoryID");
                     String newContent = rs.getString("NewContent");
-                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, newContent);
+                    String note = rs.getString("Note");
+                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, newContent,note);
                     return post;
                 }
             }
@@ -603,17 +604,17 @@ public class PostDAO implements Serializable {
         return check;
     }
 
-    public boolean deletePost(String postId) throws NamingException, SQLException {
+    public boolean deletePost(String postId, String delReason) throws NamingException, SQLException {
         Connection conn = null;
         PreparedStatement stm = null;
         boolean check = false;
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set statuspost = 'WFD' where postid = ? ";
+                String sql = "update tblPosts set statuspost = 'WFD', note = ? where postid = ? ";
                 stm = conn.prepareStatement(sql);
-                stm.setString(1, postId);
-
+                stm.setNString(1, delReason);
+                stm.setString(2, postId);   
                 check = stm.executeUpdate() > 0;
             }
         } finally {
@@ -918,7 +919,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblposts set statuspost = ? where postid = ?";
+                String sql = "update tblposts set statuspost = ? ,note = NULL where postid = ?";
                 //CHỈ CHỈNH LẠI STATUS LÀ A, VÀ GIỮ NGUYÊN EMAIL MENTOR DUYỆT BAN ĐẦU
                 //KHÔNG UPDATE APPROVEDDATE & EMAILMENTOR !!!
                 stm = conn.prepareStatement(sql);

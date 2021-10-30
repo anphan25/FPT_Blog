@@ -224,7 +224,7 @@
                     </a>
                 </div>
             </div>
-            <div class="container-item">
+            <div class="container-item">  
                 <div class="title">
                     <p class="title-text">${pendingPostContent.title}</p>
                     <div class="tag">
@@ -266,6 +266,12 @@
                             <h3>Public Request</h3>
                         </c:if>
                         <c:if test="${pendingPostContent.statusPost == 'WFD'}">
+                            <c:if test="${not empty pendingPostContent.note}">
+                                <div class="del-reason">
+                                    <h2>Reason of deleting:</h2>
+                                    <p>${pendingPostContent.note}<p>
+                                </div>
+                            </c:if>
                             <h3>Delete Request</h3>
                         </c:if>
                         <c:if test="${pendingPostContent.statusPost == 'WFU'}">
@@ -324,8 +330,8 @@
     <div class="reason-modal hidden">
         <h1>Please input the reason why you reject this post</h1>
 
-            <textarea id="reason-textarea" cols="30" rows="10" placeholder="Input your reason here">
-            </textarea>
+        <textarea id="reason-textarea" cols="30" rows="10" placeholder="Input your reason here">
+        </textarea>
 
         <div class="btn-gr">
             <button class="submit-btn">Submit</button>
@@ -375,7 +381,7 @@
         const submitBtn = document.querySelector(".submit-btn");
         const reasonHiddenForm = document.querySelector("#reason-value");
         const reasonForm = document.querySelector("#rejectWFA")
-        
+
 
         // reasonForm.addEventListener("submit",(e)=>{
         //     if(reasonHiddenForm.value === ""){
@@ -390,47 +396,47 @@
         //     }
         // })
 
-        overlay.addEventListener("click",()=>{
+        overlay.addEventListener("click", () => {
             reasonModal.classList.toggle("hidden");
             overlay.classList.toggle("hidden");
         })
 
-        rejectWFABtn.addEventListener("click",()=>{
+        rejectWFABtn.addEventListener("click", () => {
             reasonModal.classList.toggle("hidden");
             overlay.classList.toggle("hidden");
             reasonTextArea.focus();
 
         })
 
-        cancelBtn.addEventListener("click",()=>{
+        cancelBtn.addEventListener("click", () => {
             reasonModal.classList.toggle("hidden");
             overlay.classList.toggle("hidden");
         })
 
-        submitBtn.addEventListener("click",()=>{
+        submitBtn.addEventListener("click", () => {
             console.log(reasonTextArea.value);
-            if(reasonTextArea.value.trim() === ""){
+            if (reasonTextArea.value.trim() === "") {
                 swal({
                     title: "Reason is blank",
                     text: "You have to input the reason",
                     icon: "error",
                     button: "Ok",
-                    });
+                });
                 return;
-            }else{
-            reasonHiddenForm.value = reasonTextArea.value;  
-            reasonForm.submit();
-            }   
-            
-            
+            } else {
+                reasonHiddenForm.value = reasonTextArea.value;
+                reasonForm.submit();
+            }
+
+
         })
         // document.querySelector("#rejectWFA").addEventListener("submit",()=>{
         //     console.log('submit form: '+reasonTextArea.value); 
-            
+
         //     document.querySelector("#rejectWFA").submit();
         // })
 
-        
+
         function toggleSidebarPhone() {
             const toggle_sidebar = document.getElementById("sidebar_phone");
             toggle_sidebar.style.display = "block";

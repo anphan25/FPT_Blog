@@ -39,6 +39,7 @@ public class DeletePostServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String url = "notFoundPage";
 
+        String reasonDel = request.getParameter("reasonDelete");
         String postId = request.getParameter("postId");
         HttpSession session = request.getSession(false);
         try {
@@ -48,7 +49,7 @@ public class DeletePostServlet extends HttpServlet {
                 PostDAO dao = new PostDAO();
                 if (dao.checkOwnerPost(email, postId)) {
                     if (dto.getRole().equals("S")) {//Student delete thì phải qua hàng chờ
-                        if (dao.deletePost(postId)) {
+                        if (dao.deletePost(postId, reasonDel)) {
                             log("Student delete post successfully and waiting for approving!");
                             url = "loadBlogs";
                         }

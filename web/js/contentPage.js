@@ -12,6 +12,9 @@ const userCommentItem = document.querySelector(".user-comment-item");
 const deleteDiv = document.querySelector(".delete-div");
 const deleteModal = document.querySelector(".delete-modal");
 const deleteOverlay = document.querySelector(".delete-overlay");
+const delForm = document.querySelector("#del-form");
+const deltextArea = document.querySelector(".del-reason-text");
+const delReason = document.querySelector(".reason-del-input");
 
 submitBtn.addEventListener("mouseenter", () => {
     submitBtn.style.backgroundColor = "#323ebe";
@@ -108,6 +111,8 @@ if (deleteDiv) {
     deleteDiv.addEventListener("click", () => {
         deleteModal.classList.toggle("hidden");
         deleteOverlay.classList.toggle("hidden");
+        deltextArea.focus();
+        
     });
 
     deleteOverlay.addEventListener("click", () => {
@@ -119,4 +124,13 @@ document.querySelector(".cancel-btn").addEventListener("click", () => {
     deleteModal.classList.toggle("hidden");
     deleteOverlay.classList.toggle("hidden");
 });
+
+
+
+delForm.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    delReason.value = deltextArea.value;
+    delForm.submit();
+})
+
 
