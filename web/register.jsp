@@ -2,8 +2,7 @@
 <%@page import="swp.accountError.AccountError"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<c:set var="gmail" value="${sessionScope.GMAIL_REGISTER}" />
-<c:set var="checker" value="${requestScope.IS_IT_GMAIL_LOGIN}" />
+<c:set var="gmail" value="${requestScope.GMAIL_REGISTER}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -252,7 +251,7 @@
                 minlength="6"
               />
             </div>
-            <c:if test="${not empty checker}">
+            <c:if test="${not empty gmail}">
                 <!-- không dùng password -->
             </c:if>
 
