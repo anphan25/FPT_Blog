@@ -230,8 +230,9 @@
               </c:if>
               <p style="font-weight: 500; color: red"><%= accountError.getEmailError()%></p>
             </div>
-            
-            <div class="field_input">
+          
+            <c:if test="${empty gmail}">
+                  <div class="field_input">
               <p>Password</p>
               <input
                 name="password"
@@ -251,8 +252,6 @@
                 minlength="6"
               />
             </div>
-            <c:if test="${not empty gmail}">
-                <!-- không dùng password -->
             </c:if>
 
             <button type="submit" class="btn btn-primary">
