@@ -624,11 +624,16 @@
             });
 
             const addDocument = (action = "liked") => {
-                let ownerID = `${postDetail.emailPost}`;
+                let ownerID = `${postDetail.emailPost}`;      
                 ownerID = ownerID.substr(0, ownerID.indexOf("@"));
+                let currentUserEmail = `${currentUser.email}`;  
+                currentUserEmail = currentUserEmail.substr(0, currentUserEmail.indexOf("@"));
                 let currentUsername = `${currentUser.name}`;
                 let userAvatar = `${currentUser.avatar}`;
-                db.collection('notify')
+                if(currentUserEmail === ownerID)  {
+                    return;
+                } else  {
+                    db.collection('notify')
                         .doc(ownerID)
                         .collection("incoming")
                         .add({
@@ -643,6 +648,7 @@
                         .catch((error) => {
                             console.error('Error adding document: ', error);
                         });
+                }
             }
             ;
 
