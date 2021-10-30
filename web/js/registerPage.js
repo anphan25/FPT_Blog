@@ -54,7 +54,8 @@ form.addEventListener("submit", (event) => {
   let email = document.getElementById("email");
   let password = document.getElementById("password");
   let passwordRepeat = document.getElementById("passwordRepeat");
-  if (
+  if (password || passwordRepeat) {
+      if (
     name.value.length < 1 ||
     email.value.length < 1 ||
     password.value.length < 1 ||
@@ -87,5 +88,17 @@ form.addEventListener("submit", (event) => {
       });
       return;
     }
+  }
+  } else {
+      if (
+    name.value.length < 1 ||
+    email.value.length < 1
+  ) {
+    swal("Please fill the blank", "", "error", {
+      button: "Ok",
+    });
+  } else {
+        form.submit();
+  }
   }
 });
