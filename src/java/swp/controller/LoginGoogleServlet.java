@@ -95,9 +95,9 @@ public class LoginGoogleServlet extends HttpServlet
                         else //email chưa có ở database
                         {
                             AccountDTO cachingInfo = new AccountDTO(email, name, picurl);
-                            session.setAttribute("GMAIL_REGISTER", cachingInfo);
+                            request.setAttribute("GMAIL_REGISTER", cachingInfo);
+                            session.setAttribute("CACHING_GMAIL", cachingInfo.getEmail());
                             // rule number one never trust client input so we will use this little SHIT
-                            request.setAttribute("IS_IT_GMAIL_LOGIN", true); //well i would use byte type but my program skill still lacked
                             url = roadmap.get(REGISTER_PAGE);
                             /*
                             boolean checkregister = dao.createAccountForFirstTimeGmail(email, name, picurl);
