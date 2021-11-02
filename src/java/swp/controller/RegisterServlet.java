@@ -33,6 +33,8 @@ public class RegisterServlet extends HttpServlet {
 
     private static final String SUCCESS = "firstLoginPage";
     private static final String FAIL = "registerPage";
+    private static final String ERROR = "notFoundPage";
+    private static final String LOGIN = "loadBlogs";
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NoSuchAlgorithmException, InvalidKeySpecException {
@@ -53,7 +55,7 @@ public class RegisterServlet extends HttpServlet {
             byte[] bytesCampus = campus.getBytes(StandardCharsets.ISO_8859_1);
             name = new String(bytesBane, StandardCharsets.UTF_8);
             campus = new String(bytesCampus, StandardCharsets.UTF_8);
-            if(email != null)
+            if(password != null)
             {
                 String hash = HashPassword.createHash(password);
                 AccountError accountError = new AccountError();
@@ -76,14 +78,31 @@ public class RegisterServlet extends HttpServlet {
             else    //AM USING SESSION TO STORE EMAIL NOT BECAUSE I CANNOT TAKE 
                 //EMAIL PARAMETER BUT BECAUSE I DON'T WANT CLIENT TO CHANGE HIDDEN FIELD INPUT TAG FROM DEVELOPER TOOL
             {
-                log("WELCUM");
-                AccountDTO user = (AccountDTO) session.getAttribute("GMAIL_REGISTER");
-                log(user.getEmail());
+                String CACHED_GMAIL = (String) session.getAttribute("CACHING_GMAIL");
+                AccountDTO dto = new AccountDTO(name, gender, avatarURL, campus, CACHED_GMAIL, null);
+                AccountDAO dao = new AccountDAO();
+                boolean IsItSuccess = dao.registerForGmail(dto);
+                if(IsItSuccess)
+                {
+                    AccountDTO information_login = dao.getInformationUserFromEmail(email);
+                    session.setAttribute("LOGIN", "logined");
+                    session.setAttribute("CURRENT_USER", information_login);
+                    url = roadmap.get(LOGIN);
+                }
+                else
+                {
+                    url = roadmap.get(ERROR);
+                    //setting attrbute in a future for error annoucement
+                }
             }
-            //log(email + " _ " + name);
-        } catch (Exception e) {
+        } /*catch (Exception e) {
             log(e.getMessage());
-        } finally {
+        }*/
+        catch(NoSuchAlgorithmException | SQLException | InvalidKeySpecException | NamingException ex) // tôi ko debug dc nếu là dòng trên
+        {
+            log(ex.getMessage());
+        }
+        finally {
             session.removeAttribute("GMAIL_REGISTER");
             request.getRequestDispatcher(url).forward(request, response);
         }

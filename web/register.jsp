@@ -225,7 +225,7 @@
                 id="email"
                 aria-describedby="emailHelp"
                 value="${gmail.email}"
-                disabled
+                readonly
               />
               </c:if>
               <p style="font-weight: 500; color: red"><%= accountError.getEmailError()%></p>
