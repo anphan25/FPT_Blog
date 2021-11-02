@@ -182,6 +182,37 @@ public class AccountDAO implements Serializable {
         return check;
 
     }
+    
+    public boolean registerForGmail(AccountDTO user) throws NamingException, SQLException
+    {
+        Connection con = null;
+        PreparedStatement stm = null;
+        try {
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
+                                            + "VALUES(?, null, ?, ?, ?, 'S', 'A', GETDATE(), ?, 0,null)";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, user.getEmail());
+                stm.setNString(2, user.getName());
+                stm.setBoolean(3, user.isGender());
+                stm.setNString(4, user.getCampus());
+                stm.setString(5, user.getAvatar());
+                int row = stm.executeUpdate();
+                if (row > 0) {
+                    return true;
+                }
+            }
+        } finally {
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return false;
+    }
 
     public boolean checkBan(String email) throws SQLException, NamingException {
         PreparedStatement stm = null;
@@ -250,36 +281,6 @@ public class AccountDAO implements Serializable {
 
         }
         return null;
-    }
-
-    public boolean createAccountForFirstTimeGmail(String email, String name, String url) throws NamingException, SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-        Connection con = null;
-        PreparedStatement stm = null;
-        try {
-            con = DBHelper.makeConnection();
-            if (con != null) {
-                String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
-                        + "VALUES(?, null, ?, 1, '', 'S', 'A', GETDATE(), ?, ?,null)";
-                stm = con.prepareStatement(sql);
-                stm.setString(1, email);
-                stm.setString(2, name);
-                stm.setString(3, url);
-                stm.setInt(4, 0);//tạo nick là auto student
-
-                int row = stm.executeUpdate();
-                if (row > 0) {
-                    return true;
-                }
-            }
-        } finally {
-            if (con != null) {
-                con.close();
-            }
-            if (stm != null) {
-                stm.close();
-            }
-        }
-        return false;
     }
 
     public boolean giveAward(String email, int awardID) throws NamingException, SQLException {

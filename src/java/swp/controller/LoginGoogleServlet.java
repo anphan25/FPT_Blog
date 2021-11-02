@@ -46,6 +46,9 @@ public class LoginGoogleServlet extends HttpServlet
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws GeneralSecurityException
+     * @throws SQLException
+     * @throws NamingException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, GeneralSecurityException, SQLException, NamingException
