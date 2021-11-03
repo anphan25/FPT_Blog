@@ -32,7 +32,7 @@ public class CategoryDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con != null){
-                String sql = "select CategoryID, CategoryName from tblCategories";
+                String sql = "SELECT CategoryID, CategoryName FROM tblCategories";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while(rs.next()){
@@ -66,10 +66,9 @@ public class CategoryDAO implements Serializable{
         try{
             con = DBHelper.makeConnection();
             if(con!= null){
-                String sql = "insert into tblCategories(CategoryName) values(?)";
+                String sql = "INSERT INTO tblCategories(CategoryName) VALUES(?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, categoryName);
-                int row = stm.executeUpdate();
             }
         }finally{
            if (con != null) {

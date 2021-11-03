@@ -27,7 +27,7 @@ public class AccountDAO implements Serializable {
         return listAccounts;
     }
 
-    // ***test connection***
+    // *** test connection ***
     public boolean test(String email, String pass) {
         if (email.equalsIgnoreCase("a@fu.vn") && pass.equalsIgnoreCase("1")) {
             return true;
@@ -42,8 +42,9 @@ public class AccountDAO implements Serializable {
         try {
             if (con == null) {
                 con = DBHelper.makeConnection();
-                String sql = "Select email, name, campus, roleID, statusAccountID, image " + "from tblAccounts "
-                        + "Where email = ? and password = ?";
+                String sql = "SELECT email, name, campus, roleID, statusAccountID, image "
+                        + "FROM tblAccounts "
+                        + "WHERE email = ? AND password = ?";
                 pst = con.prepareStatement(sql);
                 pst.setString(1, email);
                 pst.setString(2, password);
@@ -80,9 +81,9 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "Select Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, Password, CategoryManagement "
-                        + "from tblAccounts "
-                        + "where email = ?";
+                String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, Password, CategoryManagement "
+                        + "FROM tblAccounts "
+                        + "WHERE email = ?";
                 pst = con.prepareCall(sql);
                 pst.setString(1, email);
                 rs = pst.executeQuery();
@@ -124,7 +125,7 @@ public class AccountDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT email from tblAccounts where email=?";
+                String sql = "SELECT email FROM tblAccounts WHERE email = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -132,9 +133,7 @@ public class AccountDAO implements Serializable {
                     check = true;
                 }
             }
-
-            check = stm.executeUpdate() > 0; //wtf ? nó đã false từ đầu rồi mà???
-            //(P): Ủa sao lại có câu này nhỉ, chưa hiểu lắm///
+//            check = stm.executeUpdate() > 0; Phương đã comment dòng này
         } catch (Exception e) {
         } finally {
             if (rs != null) {
@@ -156,8 +155,9 @@ public class AccountDAO implements Serializable {
         Connection conn = null;
         try {
             conn = DBHelper.makeConnection();
-            String sql = "insert into tblAccounts(email, password, name, gender, campus, roleID, "
-                    + "statusAccountID, CreatedDate, Image, CategoryManagement, Note) " + "VALUES(?, ?, ?, ?, ?, ?, ?, getdate(), ?, ?,null)";
+            String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, "
+                    + "statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
+                    + "VALUES(?, ?, ?, ?, ?, ?, ?, GETDATE(), ?, ?, NULL)";
             stm = conn.prepareStatement(sql);
             stm.setString(1, user.getEmail());
             stm.setString(2, user.getPassword());
@@ -182,16 +182,15 @@ public class AccountDAO implements Serializable {
         return check;
 
     }
-    
-    public boolean registerForGmail(AccountDTO user) throws NamingException, SQLException
-    {
+
+    public boolean registerForGmail(AccountDTO user) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
                 String sql = "INSERT INTO tblAccounts(email, password, name, gender, campus, roleID, statusAccountID, CreatedDate, Image, CategoryManagement, Note) "
-                                            + "VALUES(?, null, ?, ?, ?, 'S', 'A', GETDATE(), ?, 0,null)";
+                        + "VALUES(?, null, ?, ?, ?, 'S', 'A', GETDATE(), ?, 0,null)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, user.getEmail());
                 stm.setNString(2, user.getName());
@@ -221,7 +220,7 @@ public class AccountDAO implements Serializable {
         boolean check = false;
         try {
             conn = DBHelper.makeConnection();
-            String sql = "select * from tblAccounts where email = ? AND StatusAccountID = 'B' ";
+            String sql = "SELECT * FROM tblAccounts WHERE email = ? AND StatusAccountID = 'B' ";
             stm = conn.prepareStatement(sql);
             stm.setString(1, email);
             rs = stm.executeQuery();
@@ -251,7 +250,7 @@ public class AccountDAO implements Serializable {
             if (con != null) {
                 String sql = "SELECT Email, Name, Gender, Campus, RoleID, StatusAccountID, CreatedDate, Image, CategoryManagement "
                         + "FROM tblAccounts "
-                        + "where email = ?";
+                        + "WHERE email = ?";
                 pst = con.prepareCall(sql);
                 pst.setString(1, email);
                 rs = pst.executeQuery();
@@ -289,8 +288,8 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "insert into tblAwardDetails(AwardDetailID, AwardID, EmailStudent, Date) "
-                        + "values(NEWID(), ?, ?,GETDATE())";
+                String sql = "INSERT INTO tblAwardDetails(AwardDetailID, AwardID, EmailStudent, Date) "
+                        + "VALUES(NEWID(), ?, ?, GETDATE())";
                 stm = con.prepareStatement(sql);
 
                 stm.setInt(1, awardID);
@@ -319,9 +318,9 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select myTable.EmailPost, myTable.Total, a.Name, a.Image "
-                        + "from (select COUNT(PostID) as Total, EmailPost from tblPosts where StatusPost = 'A' group by EmailPost ) myTable left join tblAccounts a "
-                        + "on myTable.EmailPost = a.Email where a.StatusAccountID = 'A' and a.RoleID = 'S' order by myTable.Total desc";
+                String sql = "SELECT myTable.EmailPost, myTable.Total, a.Name, a.Image "
+                        + "FROM (SELECT COUNT(PostID) as Total, EmailPost FROM tblPosts WHERE StatusPost = 'A' GROUP BY EmailPost ) myTable LEFT JOIN tblAccounts a "
+                        + "ON myTable.EmailPost = a.Email WHERE a.StatusAccountID = 'A' AND a.RoleID = 'S' ORDER BY myTable.Total DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -358,12 +357,12 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select t.Email, a.Name, a.Image, t.Total "
-                        + "from (select a.Email, count(l.ID) as Total "
-                        + "from tblAccounts a, tblPosts p, tblLikes l "
-                        + "where a.Email = p.EmailPost and p.PostID = l.PostID and a.StatusAccountID = 'A' and a.RoleID = 'S' "
-                        + "and p.StatusPost = 'A' group by a.Email) t left join tblAccounts a "
-                        + "on t.Email = a.Email order by Total desc";
+                String sql = "SELECT t.Email, a.Name, a.Image, t.Total "
+                        + "FROM (SELECT a.Email, COUNT(l.ID) as Total "
+                        + "FROM tblAccounts a, tblPosts p, tblLikes l "
+                        + "WHERE a.Email = p.EmailPost AND p.PostID = l.PostID AND a.StatusAccountID = 'A' AND a.RoleID = 'S' "
+                        + "AND p.StatusPost = 'A' GROUP BY a.Email) t LEFT JOIN tblAccounts a "
+                        + "ON t.Email = a.Email ORDER BY Total DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -400,7 +399,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select count(PostID) as Total from tblPosts where EmailPost = ? and StatusPost = 'A'";
+                String sql = "SELECT COUNT(PostID) as Total FROM tblPosts WHERE EmailPost = ? AND StatusPost = 'A'";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -430,7 +429,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                String sql = "SELECT AwardID FROM tblAwardDetails WHERE EmailStudent = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -461,7 +460,8 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select count(ID) as Total from tblLikes where PostID in (select PostID from tblPosts where EmailPost = ? and StatusPost = 'A')";
+                String sql = "SELECT COUNT(ID) as Total FROM tblLikes WHERE PostID in "
+                        + "(SELECT PostID FROM tblPosts WHERE EmailPost = ? AND StatusPost = 'A')";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -491,7 +491,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardDetailID from tblAwardDetails where EmailStudent = ? and AwardID = ? ";
+                String sql = "SELECT AwardDetailID FROM tblAwardDetails WHERE EmailStudent = ? AND AwardID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setInt(2, awardId);
@@ -522,7 +522,7 @@ public class AccountDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select Note from tblAccounts where email = ? ";
+                String sql = "SELECT Note FROM tblAccounts WHERE Email = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -544,23 +544,24 @@ public class AccountDAO implements Serializable {
         }
         return reason;
     }
-    public int getStandardOfAward(int awardId) throws NamingException, SQLException{
+
+    public int getStandardOfAward(int awardId) throws NamingException, SQLException {
         Connection con = null;
         PreparedStatement stm = null;
         ResultSet rs = null;
-        
-        try{
+
+        try {
             con = DBHelper.makeConnection();
-            if(con != null){
-                String sql = "select Standard from tblAwards where AwardID = ? ";
+            if (con != null) {
+                String sql = "SELECT Standard FROM tblAwards WHERE AwardID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, awardId);
                 rs = stm.executeQuery();
-                if(rs.next()){
+                if (rs.next()) {
                     return rs.getInt("Standard");
                 }
             }
-        }finally{
+        } finally {
             if (con != null) {
                 con.close();
             }
@@ -571,6 +572,6 @@ public class AccountDAO implements Serializable {
                 rs.close();
             }
         }
-          return 0;
+        return 0;
     }
 }
