@@ -99,7 +99,7 @@ public class ProfileDAO implements Serializable {
             //cố gắng thông ass DB
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "SELECT tag, title, postid, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
+                String sql = "SELECT [Views], tag, title, postid, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
                         + ", Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear"
                         + " FROM tblPosts WHERE EmailPost = ? AND StatusPost = 'A'"
                         + " ORDER BY ApprovedDate desc";
@@ -118,7 +118,8 @@ public class ProfileDAO implements Serializable {
                             rs.getInt("ApprovedYear"), rs.getInt("ApprovedHour"), rs.getInt("ApprovedMinute"));
                     int likes = dao.getLikeCounting(postid);
                     int comments = dao.getCommentCounting(postid);
-                    PostDTO dto = new PostDTO(postid, Style.convertTagToArrayList(tag), title, approvedDate, likes, comments);
+                    int views = rs.getInt("Views");
+                    PostDTO dto = new PostDTO(postid, Style.convertTagToArrayList(tag), title, approvedDate, likes, comments, views);
                     boolean check = list.add(dto);
                     if (!check) {
                         throw new SQLException("Adding a PostDTO failed!");
