@@ -180,7 +180,7 @@
                             <p>Pending Posts</p>
                         </div>
                     </div>
-                    <div class="sidebar_navigation">
+<!--                    <div class="sidebar_navigation">
                         <h2 class="title_navigation">Common Tags</h2>
                         <div class="container_item">
                             <p>#nodejs</p>
@@ -197,7 +197,7 @@
                         <div class="container_item">
                             <p>#vuejs</p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </div>
             <div
@@ -301,7 +301,7 @@
                             </c:if>
                         </c:if>
                     </div>
-                    <div class="sidebar_navigation">
+<!--                    <div class="sidebar_navigation">
                         <h2 class="title_navigation">Common Tags</h2>
                         <div class="container_item">
                             <p>#nodejs</p>
@@ -318,7 +318,7 @@
                         <div class="container_item">
                             <p>#vuejs</p>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <div class="main_container_middle">
                     <div class="filter_navigation_middle">

@@ -53,6 +53,7 @@ public class GiveAwardServlet extends HttpServlet {
                         if(awardID == 1){
                             if(dao.getTotalPostsByEmail(email) >= dao.getStandardOfAward(awardID)){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
                                 dao.giveAward(email, awardID);
+                                request.setAttribute("NOTIFY", "successfully");
                             }else{
                                 request.setAttribute("NOTIFY", "unqualified-post");
                                 request.setAttribute("STANDARD_POST", dao.getStandardOfAward(awardID));
@@ -61,6 +62,7 @@ public class GiveAwardServlet extends HttpServlet {
                         if(awardID == 2){
                             if(dao.getTotalLikesByEmail(email) >= dao.getStandardOfAward(awardID)){ //kiểm tra xem user này đủ tiêu chuẩn vs cái award này hay ko
                                 dao.giveAward(email, awardID);
+                                request.setAttribute("NOTIFY", "successfully");
                             }else{
                                 request.setAttribute("NOTIFY", "unqualified-like");
                                 request.setAttribute("STANDARD_LIKE", dao.getStandardOfAward(awardID));
@@ -68,6 +70,7 @@ public class GiveAwardServlet extends HttpServlet {
                         }
                         if(awardID == 3){
                             dao.giveAward(email, awardID);
+                            request.setAttribute("NOTIFY", "successfully");
                         }
                     }else{
                         request.setAttribute("NOTIFY", "error2");

@@ -106,10 +106,8 @@ prefix="c"%>
               </div>
 
               <div class="textarea_content_container">
-                <textarea id="content_area" name="content">
-                    <h3>Hi, bạn có thể copy/paste ảnh upload thoải mái nha</h3>
-                                </textarea
-                >
+                <textarea id="content_area" name="content" cols="30" rows="30">
+                </textarea>
               </div>
             </div>
           </form>
