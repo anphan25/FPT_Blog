@@ -45,21 +45,25 @@ public class LoadPostContentServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         try {
             String postId = request.getParameter("postId");
-            PostDAO getPost = new PostDAO();
-            PostDTO post = getPost.getPostById(postId);
+            PostDAO postDAO = new PostDAO();
+            postDAO.increaseViews(postId);
+            PostDTO post = postDAO.getPostById(postId);
+            if (post != null) {
+                log("Views: " + post.getViews());
+            }
             CommentDAO cmt = new CommentDAO();
             ArrayList<CommentDTO> cmtList = cmt.getAllCommentOfPost(postId);
-            ArrayList<PostDTO> commonPosts = getPost.getCommonPosts();
+            ArrayList<PostDTO> commonPosts = postDAO.getCommonPosts();
             if (post != null) {
                 url = roadmap.get(SUCCESS);
                 request.setAttribute("POST_DETAIL", post);
                 request.setAttribute("POST_CMT", cmtList);
                 request.setAttribute("COMMON_POST", commonPosts);
-                
+
                 if (session != null) {
                     AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
-                    String email = acc.getEmail();
-                    if (getPost.checkLike(postId, email)) {
+                    String email = acc.getEmail(); //Chưa login nên chưa lấy được email nên báo NULL chỗ này bthg!!! Không sao
+                    if (postDAO.checkLike(postId, email)) {
                         request.setAttribute("LIKE_STATUS", "yes");
                     }
                 }
