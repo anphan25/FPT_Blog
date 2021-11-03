@@ -28,7 +28,7 @@ public class AwardDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID, AwardName, Standard from tblAwards";
+                String sql = "SELECT AwardID, AwardName, Standard FROM tblAwards";
                 stm = con.prepareCall(sql);
                 rs = stm.executeQuery();
                 while (rs.next()) {
@@ -61,7 +61,7 @@ public class AwardDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "update tblAwards set Standard = ? where AwardID = ? ";
+                String sql = "UPDATE tblAwards SET Standard = ? WHERE AwardID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setInt(1, newStandard);
                 stm.setInt(2, id);

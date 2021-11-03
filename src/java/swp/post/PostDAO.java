@@ -21,10 +21,10 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select tag, title, postid, emailpost, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
-                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
-                        + ", a.name, a.image"
-                        + " from tblPosts p left join tblAccounts a on emailpost = email where StatusPost = ? order by ApprovedDate desc";
+                String sql = "SELECT Tag, Title, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute"
+                        + ", Day(ApprovedDate) as ApprovedDay, MONTH(ApprovedDate) as ApprovedMonth, YEAR(ApprovedDate) as ApprovedYear"
+                        + ", a.Name, a.Image"
+                        + " FROM tblPosts p LEFT JOIN tblAccounts a ON emailpost = email WHERE StatusPost = ? ORDER BY ApprovedDate DESC";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "A");
 
@@ -68,10 +68,10 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select tag, title, p.note, PostContent, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
-                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
-                        + ", a.name, a.image, a.Email"
-                        + " from tblPosts p left join tblAccounts a on EmailApprover = Email where PostID = ?";
+                String sql = "SELECT Tag, Title, p.Note, PostContent, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute"
+                        + ", Day(ApprovedDate) as ApprovedDay, MONTH(ApprovedDate) as ApprovedMonth, YEAR(ApprovedDate) as ApprovedYear"
+                        + ", Name, Image, Email"
+                        + " FROM tblPosts p LEFT JOIN tblAccounts a ON EmailApprover = Email WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 rs = stm.executeQuery();
@@ -113,7 +113,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(id) as TOTAL from tblComments where postid = ? and StatusComment = 1";
+                String sql = "SELECT COUNT(ID) as TOTAL FROM tblComments WHERE postid = ? AND StatusComment = 1";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 rs = stm.executeQuery();
@@ -145,7 +145,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(id) as TOTAL from tbllikes where postid = ? ";
+                String sql = "SELECT COUNT(ID) as TOTAL FROM tbllikes WHERE postid = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 rs = stm.executeQuery();
@@ -176,8 +176,9 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 if (roleID.equalsIgnoreCase("M")) {// mentor auto approve lên
-                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent, Note) "
-                            + "values(NEWID(), ?, ?, ?, getdate(), ?, ?, getdate(), ?, ?, null, null)";
+                    String sql = "INSERT INTO tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, "
+                            + "PostContent, CategoryID, NewContent, Note) "
+                            + "VALUES(NEWID(), ?, ?, ?, GETDATE(), ?, ?, GETDATE(), ?, ?, NULL, NULL)";
                     stm = conn.prepareStatement(sql);
                     stm.setString(1, email);
                     stm.setString(2, email);
@@ -188,8 +189,8 @@ public class PostDAO implements Serializable {
                     stm.setInt(7, categoryID);
                     check = stm.executeUpdate() > 0;
                 } else if (roleID.equalsIgnoreCase("S")) {//Student đăng bài thì chờ duyệt
-                    String sql = "insert into tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
-                            + "values(NEWID(), ?, null, ?, getdate(), ?, ?, null, ?, ?, null)";
+                    String sql = "INSERT INTO tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, PostContent, CategoryID, NewContent) "
+                            + "VALUES(NEWID(), ?, NULL, ?, GETDATE(), ?, ?, NULL, ?, ?, NULL)";
                     stm = conn.prepareStatement(sql);
                     stm.setString(1, email);
                     stm.setString(2, "WFA");
@@ -222,16 +223,15 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                // String sql = "select p.title, tag, postid, emailpost"
-                // + ", Day(p.ApprovedDate) as ApprovedDay, month(p.ApprovedDate) as
-                // ApprovedMonth, year(p.ApprovedDate) as ApprovedYear"
-                // + ", a.name, a.image"
-                // + " from tblPosts p left join tblAccounts a on p.emailpost = a.email"
-                // + " and title like ? and p.StatusPost = ? order by p.ApprovedDate desc";
-                String sql = "select title, tag, postid, emailpost, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
-                        + ", Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear"
-                        + ", name, image from tblPosts p, tblAccounts a where emailpost = email"
-                        + " and title like ? and StatusPost = ? order by ApprovedDate desc";
+//                String sql = "SELECT Title, Tag, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute"
+//                        + ", Day(ApprovedDate) as ApprovedDay, MONTH(ApprovedDate) as ApprovedMonth, YEAR(ApprovedDate) as ApprovedYear"
+//                        + ", Name, Image FROM tblPosts p, tblAccounts a WHERE EmailPost = Email"
+//                        + " AND Title like ? AND StatusPost = ? ORDER BY ApprovedDate DESC";
+//              CHỖ NÀY XÀI LEFT JOIN ĐỂ TĂNG HIỆU SUẤT
+                String sql = "SELECT Title, Tag, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute"
+                        + ", Day(ApprovedDate) as ApprovedDay, MONTH(ApprovedDate) as ApprovedMonth, YEAR(ApprovedDate) as ApprovedYear"
+                        + ", Name, Image FROM tblPosts p LEFT JOIN tblAccounts a ON EmailPost = Email"
+                        + " WHERE Title like ? AND StatusPost = ? ORDER BY ApprovedDate DESC";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + title + "%");
                 stm.setString(2, "A");
@@ -276,11 +276,11 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT postID, title, tag, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute,"
-                        + " Day(ApprovedDate) as ApprovedDay, month(ApprovedDate) as ApprovedMonth, year(ApprovedDate) as ApprovedYear, PostContent,"
-                        + " a.name, a.image, a.email"
-                        + " FROM tblPosts p, tblAccounts a"
-                        + " WHERE postID like ? AND a.email = EmailPost";
+                String sql = "SELECT PostID, Title, Tag, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute,"
+                        + " Day(ApprovedDate) as ApprovedDay, MONTH(ApprovedDate) as ApprovedMonth, YEAR(ApprovedDate) as ApprovedYear, PostContent,"
+                        + " Name, Image, EmailPost"
+                        + " FROM tblPosts p LEFT JOIN tblAccounts a"
+                        + " ON Email = EmailPost WHERE PostID = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
                 rs = stm.executeQuery();
@@ -291,10 +291,10 @@ public class PostDAO implements Serializable {
                     String approvedDate = Style.convertToDateFormat(rs.getInt("ApprovedDay"), rs.getInt("ApprovedMonth"),
                             rs.getInt("ApprovedYear"), rs.getInt("ApprovedHour"), rs.getInt("ApprovedMinute"));
                     String tags = rs.getString("tag");
-                    String avatar = rs.getString("image");
-                    String name = rs.getString("name");
+                    String avatar = rs.getString("Image"); // bên common ko lấy được image, name, email
+                    String name = rs.getNString("Name");
                     String content = rs.getString("PostContent");
-                    String email = rs.getString("email");
+                    String email = rs.getString("EmailPost");
                     int like = getLikeCounting(id);
                     int comments = getCommentCounting(id);
                     ArrayList<Integer> awards = getAwardsByEmail(email);
@@ -325,18 +325,17 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
                 int cateID = Integer.parseInt(category); // database chỉ nhận int
-                String sql = "SELECT title, tag, postid, emailpost, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute,"
-                        + " Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear,"
-                        + " name, image FROM tblPosts p, tblAccounts a"
-                        + " WHERE emailpost = email AND CategoryID = ? AND StatusPost = 'A'"
-                        + " ORDER BY ApprovedDate desc"; // sắp xếp ngày gần đây nhất
+                String sql = "SELECT Title, Tag, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute,"
+                        + " Day(ApprovedDate) AS ApprovedDay, MONTH(ApprovedDate) AS ApprovedMonth, YEAR(ApprovedDate) AS ApprovedYear,"
+                        + " Name, Image FROM tblPosts p LEFT JOIN tblAccounts a"
+                        + " ON EmailPost = Email WHERE CategoryID = ? AND StatusPost = 'A'"
+                        + " ORDER BY ApprovedDate DESC";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, cateID);
                 rs = stm.executeQuery();
                 while (rs.next()) {
                     String postID = rs.getString("PostID");
                     String emailPost = rs.getString("EmailPost");
-                    //day:monnth:year  hour:minute
                     String approvedDate = Style.convertToDateFormat(rs.getInt("ApprovedDay"), rs.getInt("ApprovedMonth"),
                             rs.getInt("ApprovedYear"), rs.getInt("ApprovedHour"), rs.getInt("ApprovedMinute"));
                     String tag = rs.getString("Tag");
@@ -349,9 +348,9 @@ public class PostDAO implements Serializable {
                             approvedDate, namePoster, avatar, like, comments);
                     boolean check = list.add(p);
                     if (!check) {
-                        throw new SQLException("getPostCategory bi ngu lz");
+                        throw new SQLException("Error: We have something wrong at getPostByCategory (PostDAO)!");
                     }
-                } // sau khi add vô hết rồi thì return
+                } 
                 return list;
             }
         } finally {
@@ -365,7 +364,7 @@ public class PostDAO implements Serializable {
                 conn.close();
             }
         }
-        return null; // nếu bị lỗi dòng nào đó thì nó sẽ xuống đâys
+        return null;
     }
 
     public ArrayList<PostDTO> getPostByTags(String tag)
@@ -377,11 +376,11 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT title, tag, postid, emailpost, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute,"
-                        + " Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear,"
-                        + " a.name, image " + "FROM tblPosts p, tblAccounts a"
-                        + " WHERE emailpost = email AND Tag like ? AND StatusPost = 'A'"
-                        + " ORDER BY ApprovedDate desc"; // sắp xếp ngày gần đây nhất
+                String sql = "SELECT Title, Tag, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute,"
+                        + " Day(ApprovedDate) AS ApprovedDay, MONTH(ApprovedDate) AS ApprovedMonth, YEAR(ApprovedDate) AS ApprovedYear,"
+                        + " Name, Image FROM tblPosts p LEFT JOIN tblAccounts a"
+                        + " ON EmailPost = Email WHERE Tag LIKE ? AND StatusPost = 'A'"
+                        + " ORDER BY ApprovedDate DESC";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, "%" + tag + "%");
                 rs = stm.executeQuery();
@@ -426,11 +425,11 @@ public class PostDAO implements Serializable {
             conn = DBHelper.makeConnection();
             if (conn != null) {
 
-                String sql = "SELECT p.Note, NewContent , title, tag, DATEPART(hour, p.createdDate) as CreatedHour, DATEPART(minute, p.createdDate) as CreatedMinute"
-                        + ", Day(p.createdDate) as createdDay, month(p.createdDate) as createdMonth, year(p.createdDate) as createdYear, PostContent"
-                        + ", StatusPost, CategoryID, name, image, email"
-                        + " FROM tblPosts p left join tblAccounts a"
-                        + " on Email = EmailPost Where postID = ?";
+                String sql = "SELECT p.Note, NewContent , Title, Tag, DATEPART(HOUR, p.createdDate) as CreatedHour, DATEPART(MINUTE, p.createdDate) as CreatedMinute"
+                        + ", Day(p.createdDate) as createdDay, MONTH(p.createdDate) as createdMonth, YEAR(p.createdDate) as createdYear, PostContent"
+                        + ", StatusPost, CategoryID, Name, Image, Email"
+                        + " FROM tblPosts p LEFT JOIN tblAccounts a"
+                        + " ON Email = EmailPost WHERE PostID = ?";
 
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, id);
@@ -451,7 +450,7 @@ public class PostDAO implements Serializable {
                     String categoryID = rs.getString("CategoryID");
                     String newContent = rs.getString("NewContent");
                     String note = rs.getString("Note");
-                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, newContent,note);
+                    PostDTO post = new PostDTO(id, email, statusPost, createdAt, Style.convertTagToArrayList(tags), title, content, categoryID, name, avatar, newContent, note);
                     return post;
                 }
             }
@@ -477,12 +476,11 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "SELECT title, tag, postid, emailpost, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute"
-                        + ", Day(ApprovedDate) AS ApprovedDay"
-                        + ", month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear"
-                        + ", name, image FROM tblPosts p, tblAccounts a"
-                        + " WHERE emailpost = email AND StatusPost = 'A'"
-                        + " ORDER BY ApprovedDate desc OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
+                String sql = "SELECT Title, Tag, PostID, EmailPost, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute"
+                        + ", Day(ApprovedDate) AS ApprovedDay, MONTH(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear"
+                        + ", Name, Image FROM tblPosts p LEFT JOIN tblAccounts a"
+                        + " ON emailpost = email WHERE StatusPost = 'A'"
+                        + " ORDER BY ApprovedDate DESC OFFSET ? ROWS FETCH NEXT 10 ROWS ONLY";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, (index - 1) * 10);
                 rs = stm.executeQuery();
@@ -527,7 +525,7 @@ public class PostDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                String sql = "SELECT AwardID FROM tblAwardDetails WHERE EmailStudent = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -556,7 +554,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(PostID) as Total from tblPosts where StatusPost = 'A'";
+                String sql = "SELECT COUNT(PostID) as Total FROM tblPosts WHERE StatusPost = 'A'";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 if (rs.next()) {
@@ -584,8 +582,8 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblposts set statuspost = ?, emailapprover = ?, ApprovedDate = getdate()"
-                        + " where postid = ?";
+                String sql = "UPDATE tblposts SET StatusPost = ?, EmailApprover = ?, ApprovedDate = GETDATE()"
+                        + " WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, newStatus);
                 stm.setString(2, emailMentor);
@@ -611,10 +609,10 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set statuspost = 'WFD', note = ? where postid = ? ";
+                String sql = "UPDATE tblPosts SET StatusPost = 'WFD', Note = ? WHERE PostID = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, delReason);
-                stm.setString(2, postId);   
+                stm.setString(2, postId);
                 check = stm.executeUpdate() > 0;
             }
         } finally {
@@ -635,7 +633,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set statuspost = 'D' where postid = ? ";
+                String sql = "UPDATE tblPosts SET StatusPost = 'D' WHERE PostID = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
 
@@ -660,7 +658,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select PostId from tblPosts where PostID = ? and EmailPost = ? ";
+                String sql = "SELECT PostID FROM tblPosts WHERE PostID = ? AND EmailPost = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -692,7 +690,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select Title, PostContent from tblPosts where PostID = ? and EmailPost = ? ";
+                String sql = "SELECT Title, PostContent FROM tblPosts WHERE PostID = ? AND EmailPost = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -725,7 +723,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select * from tblLikes where PostID = ? and EmailLike = ? ";
+                String sql = "SELECT * FROM tblLikes WHERE PostID = ? AND EmailLike = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -755,7 +753,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "delete from tblLikes where PostID = ? and EmailLike = ? ";
+                String sql = "DELETE FROM tblLikes WHERE PostID = ? AND EmailLike = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -780,8 +778,8 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblLikes(ID, PostID, EmailLike, Date) "
-                        + "values(NEWID(), ?, ?, getdate())";
+                String sql = "INSERT INTO tblLikes(ID, PostID, EmailLike, Date) "
+                        + "VALUES(NEWID(), ?, ?, GETDATE())";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -807,7 +805,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set NewContent = ?, StatusPost = 'WFU' where PostID = ?";
+                String sql = "UPDATE tblPosts SET NewContent = ?, StatusPost = 'WFU' WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, newContent);
                 stm.setString(2, postID);
@@ -836,7 +834,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set PostContent = ? where PostID = ?";
+                String sql = "UPDATE tblPosts SET PostContent = ? WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, newContent);
                 stm.setString(2, postID);
@@ -865,7 +863,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set PostContent = NewContent, StatusPost = 'A', NewContent = NULL where PostID = ?";
+                String sql = "UPDATE tblPosts SET PostContent = NewContent, StatusPost = 'A', NewContent = NULL WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 check = stm.executeUpdate() > 0;
@@ -893,7 +891,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblPosts set StatusPost = 'A', NewContent = NULL where PostID = ?";
+                String sql = "UPDATE tblPosts SET StatusPost = 'A', NewContent = NULL WHERE PostID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postID);
                 check = stm.executeUpdate() > 0;
@@ -919,7 +917,7 @@ public class PostDAO implements Serializable {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblposts set statuspost = ? ,note = NULL where postid = ?";
+                String sql = "UPDATE tblposts SET StatusPost = ? ,Note = NULL WHERE PostID = ?";
                 //CHỈ CHỈNH LẠI STATUS LÀ A, VÀ GIỮ NGUYÊN EMAIL MENTOR DUYỆT BAN ĐẦU
                 //KHÔNG UPDATE APPROVEDDATE & EMAILMENTOR !!!
                 stm = conn.prepareStatement(sql);
@@ -947,12 +945,12 @@ public class PostDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select p.PostID, myTable.Total, p.Title, p.Tag, p.ApprovedDate "
-                        + "from (select postid, count(distinct EmailLike) as Total from tblLikes group by PostID) myTable "
-                        + "left join tblPosts p "
-                        + "on myTable.PostID = p.PostID "
-                        + "where p.StatusPost = 'A' "
-                        + "order by myTable.Total desc";
+                String sql = "SELECT p.PostID, myTable.Total, p.Title, p.Tag, p.ApprovedDate "
+                        + "FROM (SELECT PostID, COUNT(DISTINCT EmailLike) as Total FROM tblLikes GROUP BY PostID) myTable "
+                        + "LEFT JOIN tblPosts p "
+                        + "ON myTable.PostID = p.PostID "
+                        + "WHERE p.StatusPost = 'A' "
+                        + "ORDER BY myTable.Total DESC";
                 stm = con.prepareStatement(sql);
                 rs = stm.executeQuery();
                 int count = 0;
@@ -987,7 +985,7 @@ public class PostDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "update tblPosts set Note = ? where PostID = ? ";
+                String sql = "UPDATE tblPosts SET Note = ? WHERE PostID = ? ";
                 stm = con.prepareStatement(sql);
                 stm.setNString(1, reason);
                 stm.setString(2, postId);
@@ -1012,10 +1010,10 @@ public class PostDAO implements Serializable {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select PostID, Title, Tag, EmailApprover, DATEPART(hour, ApprovedDate) as ApprovedHour, DATEPART(minute, ApprovedDate) as ApprovedMinute,"
-                        + " Day(ApprovedDate) AS ApprovedDay, month(ApprovedDate) AS ApprovedMonth, year(ApprovedDate) AS ApprovedYear"
-                        + " from tblPosts"
-                        + " where EmailPost = ? and StatusPost = 'R' ";
+                String sql = "SELECT PostID, Title, Tag, EmailApprover, DATEPART(HOUR, ApprovedDate) as ApprovedHour, DATEPART(MINUTE, ApprovedDate) as ApprovedMinute,"
+                        + " Day(ApprovedDate) AS ApprovedDay, MONTH(ApprovedDate) AS ApprovedMonth, YEAR(ApprovedDate) AS ApprovedYear"
+                        + " FROM tblPosts"
+                        + " WHERE EmailPost = ? AND StatusPost = 'R' ";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();

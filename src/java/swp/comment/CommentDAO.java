@@ -28,10 +28,10 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select c.ID, c.EmailComment, c.PostID, DATEPART(hour, c.Date) as commentHour, DATEPART(minute, c.Date) as commentMinute, "
+                String sql = "SELECT c.ID, c.EmailComment, c.PostID, DATEPART(hour, c.Date) as commentHour, DATEPART(minute, c.Date) as commentMinute, "
                         + "Day(c.Date) as commentDay, month(c.Date) as commentMonth, year(c.Date) as commentYear, "
-                        + "c.Comment, a.Image, a.Name from tblComments c left join tblAccounts a on EmailComment = Email "
-                        + "where postId = ? AND c.StatusComment = 1 order by c.Date desc";
+                        + "c.Comment, a.Image, a.Name FROM tblComments c LEFT JOIN tblAccounts a on EmailComment = Email "
+                        + "WHERE postId = ? AND c.StatusComment = 1 ORDER BY c.Date desc";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 rs = stm.executeQuery();
@@ -71,7 +71,7 @@ public class CommentDAO {
         try {
             con = DBHelper.makeConnection();
             if (con != null) {
-                String sql = "select AwardID from tblAwardDetails where EmailStudent = ?";
+                String sql = "SELECT AwardID FROM tblAwardDetails WHERE EmailStudent = ?";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, email);
                 rs = stm.executeQuery();
@@ -101,8 +101,8 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "insert into tblComments(ID, EmailComment, PostID, Date, Comment, StatusComment) "
-                        + "values(NEWID(), ?, ?, getdate(), ?, 1)";
+                String sql = "INSERT INTO tblComments(ID, EmailComment, PostID, Date, Comment, StatusComment) "
+                        + "VALUES(NEWID(), ?, ?, GETDATE(), ?, 1)";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, email);
                 stm.setString(2, postId);
@@ -128,8 +128,8 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblComments "
-                        + "set Comment = ? where ID = ?";
+                String sql = "UPDATE tblComments "
+                        + "SET Comment = ? WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setNString(1, content);
                 stm.setString(2, commentID);
@@ -154,10 +154,11 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select c.ID, c.EmailComment, c.PostID, DATEPART(hour, c.Date) as commentHour, DATEPART(minute, c.Date) as commentMinute, "
-                        + "Day(c.Date) as commentDay, month(c.Date) as commentMonth, year(c.Date) as commentYear, "
+                String sql = "SELECT c.ID, c.EmailComment, c.PostID, DATEPART(HOUR, c.Date) as commentHour, DATEPART(MINUTE, c.Date) as commentMinute, "
+                        + "Day(c.Date) as commentDay, MONTH(c.Date) as commentMonth, YEAR(c.Date) as commentYear, "
                         + "c.Comment, a.Image, a.Email, a.Name "
-                        + "from tblComments c left join tblAccounts a on EmailComment = Email where Date = (select max(date) from tblComments) and PostID = ? and EmailComment = ? ";
+                        + "FROM tblComments c LEFT JOIN tblAccounts a ON EmailComment = Email WHERE Date = "
+                        + "(SELECT MAX(date) FROM tblComments) AND PostID = ? AND EmailComment = ? ";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, postId);
                 stm.setString(2, email);
@@ -199,8 +200,9 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "update tblComments " + "set StatusComment = 0 "
-                        + "where ID = ?";
+                String sql = "UPDATE tblComments "
+                        + "SET StatusComment = 0 "
+                        + "WHERE ID = ?";
                 stm = conn.prepareStatement(sql);
                 stm.setString(1, commentID);
                 check = stm.executeUpdate() > 0;
@@ -216,7 +218,6 @@ public class CommentDAO {
         return check;
     }
 
-    
     public ArrayList<CommentDTO> getAllComments(int index) throws SQLException, NamingException {
         Connection conn = null;
         PreparedStatement stm = null;
@@ -225,15 +226,15 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select my.Image, my.Name, my.EmailComment, my.Comment, my.ID, my.PostID, p.Title, "
+                String sql = "SELECT my.Image, my.Name, my.EmailComment, my.Comment, my.ID, my.PostID, p.Title, "
                         + "DATEPART(DAY, my.Date) as DayComment, DATEPART(MONTH, my.Date) as MonthComment, "
                         + "DATEPART(YEAR, my.Date) as YearComment, DATEPART(HOUR, my.Date) as HourComment, "
                         + "DATEPART(MINUTE, my.Date) as MinuteComment "
-                        + "from (select a.Image, a.Name, c.EmailComment, c.Comment, c.ID, c.PostID, c.Date "
-                        + "from tblComments c left join tblAccounts a "
-                        + "on c.EmailComment = a.Email where c.StatusComment = 1) my "
-                        + "left join tblPosts p on my.PostID = p.PostID where p.StatusPost = 'a' "
-                        + "ORDER BY my.Date desc OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
+                        + "FROM (SELECT a.Image, a.Name, c.EmailComment, c.Comment, c.ID, c.PostID, c.Date "
+                        + "FROM tblComments c LEFT JOIN tblAccounts a "
+                        + "ON c.EmailComment = a.Email WHERE c.StatusComment = 1) my "
+                        + "LEFT JOIN tblPosts p on my.PostID = p.PostID WHERE p.StatusPost = 'A' "
+                        + "ORDER BY my.Date DESC OFFSET ? ROWS FETCH NEXT 20 ROWS ONLY";
                 stm = conn.prepareStatement(sql);
                 stm.setInt(1, (index - 1) * 20);
                 rs = stm.executeQuery();
@@ -274,10 +275,10 @@ public class CommentDAO {
         try {
             conn = DBHelper.makeConnection();
             if (conn != null) {
-                String sql = "select count(c.ID) as Total "
-                        + "from tblComments c "
-                        + "left join tblPosts p on c.PostID = p.PostID "
-                        + "where p.StatusPost = 'a' and c.StatusComment = 1";
+                String sql = "SELECT COUNT(c.ID) as Total "
+                        + "FROM tblComments c "
+                        + "LEFT JOIN tblPosts p ON c.PostID = p.PostID "
+                        + "WHERE p.StatusPost = 'a' AND c.StatusComment = 1";
                 stm = conn.prepareStatement(sql);
                 rs = stm.executeQuery();
                 if (rs.next()) {
