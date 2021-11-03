@@ -327,6 +327,14 @@
                     button: "Ok!",
                 });
                     </c:if>
+                        
+                    <c:if test="${notify == 'successfully'}">
+                swal({
+                    title: "Give award successfully",
+                    icon: "success",
+                    button: "Ok!",
+                });
+                    </c:if>
 
                 </c:if>
                 //standard
