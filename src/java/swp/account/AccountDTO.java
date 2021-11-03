@@ -23,6 +23,9 @@ public class AccountDTO implements Serializable {
     private ArrayList<Integer> awards;
     private int CategoryManagement; //chỉ dành cho mentor
 
+    public AccountDTO() {
+    }
+
     public int getCategoryManagement() {
         return CategoryManagement;
     }
@@ -54,8 +57,6 @@ public class AccountDTO implements Serializable {
     public void setAwards(ArrayList<Integer> awards) {
         this.awards = awards;
     }
-
-
 
     public AccountDTO(String email, String name, boolean gender, String campus, String role, String status, String joinDate, String avatar) {
         this.email = email;
@@ -103,9 +104,6 @@ public class AccountDTO implements Serializable {
         this.totalPosts = posts;
         this.totalLikes = likes;
         this.awards = awards;
-    }
-
-    public AccountDTO() {
     }
 
     public String getEmail() {
