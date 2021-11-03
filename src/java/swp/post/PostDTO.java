@@ -142,13 +142,14 @@ public class PostDTO implements Serializable {
     }
 
     // this contstructor for profileDAO
-    public PostDTO(String ID, List<String> tag, String title, String approvedDate, int likes, int comments) {
+    public PostDTO(String ID, List<String> tag, String title, String approvedDate, int likes, int comments, int views) {
         this.ID = ID;
         this.tag = tag;
         this.title = title;
         this.approvedDate = approvedDate;
         this.likes = likes;
         this.comments = comments;
+        this.views = views;
     }
 
     public PostDTO(String ID, String createdDate, List<String> tag, String title, String postContent, String namePost, String avatar) {
