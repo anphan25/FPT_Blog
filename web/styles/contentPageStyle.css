@@ -731,6 +731,14 @@ footer .text_footer_strong {
     brightness(95%) contrast(84%);
 }
 
+.interact .view-icon:hover {
+  border-radius: 50%;
+  background-color: rgba(47, 27, 233, 0.1);
+  border: 2px solid #3b49df;
+  filter: invert(94%) sepia(29%) saturate(5689%) hue-rotate(318deg)
+    brightness(99%) contrast(99%);
+}
+
 .interact .award-icon:hover {
   border-radius: 50%;
   background-color: rgba(47, 27, 233, 0.1);
