@@ -374,12 +374,15 @@
                                                                 <span class="text_comments_votes">Comments</span>
                                                             </p>
                                                         </div>
-
+                                                        <div>
+                                                            <img src="./images/view-icon.png" />
+                                                            <p>
+                                                                ${blogDTO.views}
+                                                                <span class="text_comments_votes">Views</span>
+                                                            </p>
+                                                        </div>        
                                                     </div>
                                                     <div class="time_and_save">
-                                                        <div>
-                                                            <button>Save</button>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -606,22 +609,22 @@
             <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
             <script>
-                    // Initialize Firebase
-                    firebase.initializeApp({
-                        apiKey: 'AIzaSyAPgZZxNDsNeVB-C6hMGKzsFelsBRIjdBI',
-                        authDomain: 'udemy-vue-firebase-si.firebaseapp.com',
-                        projectId: 'udemy-vue-firebase-si',
-                    });
-                    const db = eval('firebase.firestore()');
-                    const notiWrapper = document.querySelector(".dropdown-content1");
-                    let lastestNotiCreatedAt = "";
-                    let componentRunOnDepend = false;
-                    let lol = false;
-                    let currentUser = `${currentUser.email}`;
-                    currentUser = currentUser.substr(0, currentUser.indexOf("@"));
-                    const itemNoti = (avatar, user, action, postID, createdAt) => {
-                        return (
-                                ` <a href="loadPostContent?postId=\${postID}">
+                // Initialize Firebase
+                firebase.initializeApp({
+                    apiKey: 'AIzaSyAPgZZxNDsNeVB-C6hMGKzsFelsBRIjdBI',
+                    authDomain: 'udemy-vue-firebase-si.firebaseapp.com',
+                    projectId: 'udemy-vue-firebase-si',
+                });
+                const db = eval('firebase.firestore()');
+                const notiWrapper = document.querySelector(".dropdown-content1");
+                let lastestNotiCreatedAt = "";
+                let componentRunOnDepend = false;
+                let lol = false;
+                let currentUser = `${currentUser.email}`;
+                currentUser = currentUser.substr(0, currentUser.indexOf("@"));
+                const itemNoti = (avatar, user, action, postID, createdAt) => {
+                    return (
+                            ` <a href="loadPostContent?postId=\${postID}">
                                 <div class="noti_item">
                                     <img class="noti_other_user"  src="\${avatar}"/>
                                       <div>
@@ -630,12 +633,12 @@
                                       </div>
                                 </div>
                             </a>`
-                                )
-                    }
+                            )
+                }
 
-                    const itemNotiNew = (avatar, user, action, postID, createdAt) => {
-                        return (
-                                ` <a href="loadPostContent?postId=\${postID}">
+                const itemNotiNew = (avatar, user, action, postID, createdAt) => {
+                    return (
+                            ` <a href="loadPostContent?postId=\${postID}">
                                 <div class="noti_item_new">
                                     <img class="noti_other_user"  src="\${avatar}"/>
                                       <div>
@@ -644,97 +647,97 @@
                                       </div>
                                 </div>
                             </a>`
-                                )
-                    }
+                            )
+                }
 
-                    $(".dropbtn_noti").hover(function (e) {
-                        $("#warning").addClass("warning-hidden");
-                    });
-                    // Functions
-                    const componentDidMount = (function () {
-                        let ref = false;
-                        return function () {
-                            if (!ref) {
-                                ref = true;
-                                componentRunOnDepend = true;
-                                getDocumentOnMount();
-                            }
-                        };
-                    })();
+                $(".dropbtn_noti").hover(function (e) {
+                    $("#warning").addClass("warning-hidden");
+                });
+                // Functions
+                const componentDidMount = (function () {
+                    let ref = false;
+                    return function () {
+                        if (!ref) {
+                            ref = true;
+                            componentRunOnDepend = true;
+                            getDocumentOnMount();
+                        }
+                    };
+                })();
 
-                    // useEffect
-                    componentDidMount();
+                // useEffect
+                componentDidMount();
 
-                    async function getDocumentOnMount() {
-                        let domMessage = '';
-                        let notifyRealtime = [];
-                        await db
-                                .collection('notify')
-                                .doc(currentUser)
-                                .collection("incoming")
-                                .orderBy('createdAt', 'desc')
-                                .limit(5)
-                                .get()
-                                .then((querySnapshot) => {
-                                    querySnapshot.forEach((doc) => {
-                                        notifyRealtime.push(doc.data());
-                                    });
-                                })
-                                .catch((error) => {
-                                    console.log('Error getting documents: ', error);
+                async function getDocumentOnMount() {
+                    let domMessage = '';
+                    let notifyRealtime = [];
+                    await db
+                            .collection('notify')
+                            .doc(currentUser)
+                            .collection("incoming")
+                            .orderBy('createdAt', 'desc')
+                            .limit(5)
+                            .get()
+                            .then((querySnapshot) => {
+                                querySnapshot.forEach((doc) => {
+                                    notifyRealtime.push(doc.data());
                                 });
-                        if (notifyRealtime.length > 0) {
-                            notifyRealtime.forEach((doc, index) => {
-                                if (doc.createdAt) {
-                                    if (index === notifyRealtime.length - 1) {
-                                        lastestNotiCreatedAt = doc.createdAt.seconds;
-                                    }
-                                    var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-                                    domMessage += itemNoti(doc.avatar, doc.user, doc.action, doc.postId, date);
-
-                                }
+                            })
+                            .catch((error) => {
+                                console.log('Error getting documents: ', error);
                             });
-                        } else {
-                            domMessage += `<div class="noti_item">
+                    if (notifyRealtime.length > 0) {
+                        notifyRealtime.forEach((doc, index) => {
+                            if (doc.createdAt) {
+                                if (index === notifyRealtime.length - 1) {
+                                    lastestNotiCreatedAt = doc.createdAt.seconds;
+                                }
+                                var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+                                domMessage += itemNoti(doc.avatar, doc.user, doc.action, doc.postId, date);
+
+                            }
+                        });
+                    } else {
+                        domMessage += `<div class="noti_item">
                                             <p></p>
                                         </div>
                                     </div>`;
-                        }
-                        notiWrapper.innerHTML = domMessage;
                     }
+                    notiWrapper.innerHTML = domMessage;
+                }
 
-                    if (componentRunOnDepend) {
-                        db.collection('notify')
-                                .doc(currentUser)
-                                .collection("incoming")
-                                .orderBy('createdAt', 'desc')
-                                .limit(1)
-                                .onSnapshot((querySnapshot) => {
-                                    let domMessage = '';
-                                    let notifyRealtime = [];
-                                    querySnapshot.forEach((doc) => {
-                                        if (doc.exists) {
-                                            let id = doc.id;
-                                            let data = {...doc.data(), id};
-                                            notifyRealtime.push(data);
-                                        }
-                                    });
-                                    notifyRealtime.forEach((doc, index) => {
-                                        if (doc.createdAt) {
-                                            console.log(lastestNotiCreatedAt, doc.createdAt.seconds);
-                                            if (lol) {
-                                                var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
-                                                domMessage += itemNotiNew(doc.avatar, doc.user, doc.action, doc.postId, date);
-                                            }
-                                            lol = true;
-                                        }
-                                    });
-                                    if (domMessage !== '') {
-                                        notiWrapper.insertAdjacentHTML('afterbegin', domMessage);
-                                        $("#warning").removeClass("warning-hidden");
+                if (componentRunOnDepend) {
+                    db.collection('notify')
+                            .doc(currentUser)
+                            .collection("incoming")
+                            .orderBy('createdAt', 'desc')
+                            .limit(1)
+                            .onSnapshot((querySnapshot) => {
+                                let domMessage = '';
+                                let notifyRealtime = [];
+                                querySnapshot.forEach((doc) => {
+                                    if (doc.exists) {
+                                        let id = doc.id;
+                                        let data = {...doc.data(), id};
+                                        notifyRealtime.push(data);
                                     }
                                 });
-                            }
+                                notifyRealtime.forEach((doc, index) => {
+                                    if (doc.createdAt) {
+                                        console.log(lastestNotiCreatedAt, doc.createdAt.seconds);
+                                        if (lol) {
+                                            var date = new Date(doc.createdAt.toDate()).toLocaleString("en-GB", {year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit'});
+                                            domMessage += itemNotiNew(doc.avatar, doc.user, doc.action, doc.postId, date);
+                                        }
+                                        lol = true;
+                                    }
+                                });
+                                if (domMessage !== '') {
+                                    notiWrapper.insertAdjacentHTML('afterbegin', domMessage);
+                                    $("#warning").removeClass("warning-hidden");
+                                }
+                            });
+                        }
             </script>
         </body>
     </html>

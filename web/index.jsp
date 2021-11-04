@@ -180,24 +180,24 @@
                             <p>Pending Posts</p>
                         </div>
                     </div>
-<!--                    <div class="sidebar_navigation">
-                        <h2 class="title_navigation">Common Tags</h2>
-                        <div class="container_item">
-                            <p>#nodejs</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#python</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#devops</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#angular</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#vuejs</p>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="sidebar_navigation">
+                                            <h2 class="title_navigation">Common Tags</h2>
+                                            <div class="container_item">
+                                                <p>#nodejs</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#python</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#devops</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#angular</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#vuejs</p>
+                                            </div>
+                                        </div>-->
                 </div>
             </div>
             <div
@@ -301,24 +301,24 @@
                             </c:if>
                         </c:if>
                     </div>
-<!--                    <div class="sidebar_navigation">
-                        <h2 class="title_navigation">Common Tags</h2>
-                        <div class="container_item">
-                            <p>#nodejs</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#python</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#devops</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#angular</p>
-                        </div>
-                        <div class="container_item">
-                            <p>#vuejs</p>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="sidebar_navigation">
+                                            <h2 class="title_navigation">Common Tags</h2>
+                                            <div class="container_item">
+                                                <p>#nodejs</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#python</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#devops</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#angular</p>
+                                            </div>
+                                            <div class="container_item">
+                                                <p>#vuejs</p>
+                                            </div>
+                                        </div>-->
                 </div>
                 <div class="main_container_middle">
                     <div class="filter_navigation_middle">
@@ -396,6 +396,14 @@
                                                         <span class="text_comments_votes">Comments</span>
                                                     </p>
                                                 </div>
+                                                <div>
+                                                    <img src="./images/view-icon.png" />
+                                                    <p>
+                                                        ${blogDTO.views}
+                                                        <span class="text_comments_votes">Views</span>
+                                                    </p>
+                                                </div>
+                                                
                                             </div>
                                             <div class="time_and_save">
                                             </div>
@@ -488,9 +496,9 @@
                 window.history.replaceState(null, null, window.location.href);
             }
         </script>
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-                <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
         <script>
             // Initialize Firebase
             firebase.initializeApp({
@@ -502,7 +510,7 @@
             const notiWrapper = document.querySelector(".dropdown-content1");
             let lastestNotiCreatedAt = "";
             let componentRunOnDepend = false;
-            let lol= false;
+            let lol = false;
             let currentUser = `${currentUser.email}`;
             currentUser = currentUser.substr(0, currentUser.indexOf("@"));
             const itemNoti = (avatar, user, action, postID, createdAt) => {
@@ -518,8 +526,8 @@
                         </a>`
                         )
             }
-            
-             const itemNotiNew = (avatar, user, action, postID, createdAt) => {
+
+            const itemNotiNew = (avatar, user, action, postID, createdAt) => {
                 return (
                         ` <a href="loadPostContent?postId=\${postID}">
                             <div class="noti_item_new">

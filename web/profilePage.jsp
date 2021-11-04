@@ -325,6 +325,13 @@
                                                             <span class="text_comments_votes">Comments</span>
                                                         </p>
                                                     </div>
+                                                    <div>
+                                                        <img src="./images/view-icon.png" />
+                                                        <p>
+                                                            ${blog.views}
+                                                            <span class="text_comments_votes">Views</span>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

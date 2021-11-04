@@ -236,6 +236,13 @@
                             </div>
                             <p class="cmtCount">${postDetail.comments}<p>
                         </div>
+                        
+                        <div class="interact-item">
+                            <div class="icon view-icon">
+                                <img src="./images/view-icon.png" alt="" />
+                            </div>
+                            <p class="cmtCount">${postDetail.views}<p>
+                        </div>
                     </c:if>
                     <c:if test="${loginStatus != 'logined'}">
                         <div class="interact-item">
@@ -250,6 +257,13 @@
                                 <img src="./images/comment_icon.svg" alt="" />
                             </div>
                             <p>${postDetail.comments}<p>
+                        </div>
+                        
+                        <div class="interact-item">
+                            <div class="icon view-icon">
+                                <img src="./images/view-icon.png" alt="" />
+                            </div>
+                            <p class="cmtCount">${postDetail.views}<p>
                         </div>
                     </c:if>
 

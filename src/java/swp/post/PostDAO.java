@@ -180,7 +180,7 @@ public class PostDAO implements Serializable {
                 if (roleID.equalsIgnoreCase("M")) {// mentor auto approve lên
                     String sql = "INSERT INTO tblPosts(PostID, EmailPost, EmailApprover, StatusPost, createdDate, Tag, Title, ApprovedDate, "
                             + "PostContent, CategoryID, NewContent, Note, [Views]) "
-                            + "VALUES(NEWID(), ?, ?, ?, GETDATE(), ?, ?, GETDATE(), ?, ?, NULL, NULL, 1)";
+                            + "VALUES(NEWID(), ?, ?, ?, GETDATE(), ?, ?, GETDATE(), ?, ?, NULL, NULL, 0)";
                     stm = conn.prepareStatement(sql);
                     stm.setString(1, email);
                     stm.setString(2, email);

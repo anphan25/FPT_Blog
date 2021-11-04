@@ -885,7 +885,6 @@ header .container_right .container_button_register button:hover {
   display: block;
 }
 
-
 .dropdown:hover .dropdown-content1 {
   display: block;
 }
@@ -902,7 +901,7 @@ header .container_right .container_button_register button:hover {
 }
 
 .dropbtn_noti {
-    position: relative;
+  position: relative;
   padding: 1rem;
   margin-right: 8px;
   width: 40px;
@@ -939,7 +938,7 @@ header .container_right .container_button_register button:hover {
   padding: 1rem;
   cursor: pointer;
   background-color: rgb(240, 240, 240);
-  border-bottom: 1px solid #3B49DF;
+  border-bottom: 1px solid #3b49df;
 }
 
 .noti_item_new:hover {
@@ -962,25 +961,24 @@ header .container_right .container_button_register button:hover {
 }
 
 .warning-hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .warning {
-    position: absolute;
-    top: 0;
-    right: 3px;
-    padding: 0.5rem;
-    background-color: red;
-    height: 14px;
-    width: 14px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 500;
-    
+  position: absolute;
+  top: 0;
+  right: 3px;
+  padding: 0.5rem;
+  background-color: red;
+  height: 14px;
+  width: 14px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* END OF HEADER END OF HEADER END OF HEADER END OF HEADER END OF HEADER  */
@@ -1160,6 +1158,11 @@ footer .text_footer_strong {
   color: #3b49df;
 }
 
+.view-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+}
 /*  template responsive*/
 @media screen and (max-width: 992px) {
   /* Main  Home */
