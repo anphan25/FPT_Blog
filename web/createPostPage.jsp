@@ -212,7 +212,19 @@ prefix="c"%>
             });
             var myContent = tinymce.get("content_area").getContent();
             $("#tags").val(tags);
-            form.submit();
+            console.log(myContent);
+            if (myContent.length > 0) {
+                            form.submit();
+            } else {
+                swal(
+                "You miss your content!",
+                "Please add content to your post!",
+                "error",
+                {
+                  button: "Ok",
+                }
+              );
+            }
           }
         } else {
           swal("You miss your title", "", "error", { button: "Ok" });
@@ -262,8 +274,7 @@ prefix="c"%>
           const stringHtml = `<div style="position: sticky; top: ${event.clientY}px" class="pseudo_info"><h3>Writing a Great Post Title</h3><li>Think of your post title as a super short (but compelling!) description — like an overview of the actual post in one short sentence.</li><li>Use keywords where appropriate to help ensure people can find your post by search.</li></div>`;
           ref.innerHTML = stringHtml;
         } else {
-          const stringHtml = `<div style="position: sticky; top: ${event.clientY}px" class="pseudo_info"><h3>Tagging Guidelines</h3><li>Tags help people find your post.</li><li>Think of tags as the topics or categories that best describe your post.</li><li>Add up to four comma-separated tags per post. Combine tags to reach the appropriate subcommunities.</li><li>Use existing tags whenever possible.
-            Some tags, such as “help” or “healthydebate”, have special posting guidelines.</li></div>`;
+          const stringHtml = `<div style="position: sticky; top: ${event.clientY}px" class="pseudo_info"><h3>Tagging Guidelines</h3><li>Tags help people find your post.</li><li>Think of tags as the topics or categories that best describe your post.</li><li>Add up to four <b>comma-separated</b> tags per post. Combine tags to reach the appropriate subcommunities.</li><li><b>Remember: Add comma after every word or using space button!</b></li></div>`;
           ref.innerHTML = stringHtml;
         }
       }
