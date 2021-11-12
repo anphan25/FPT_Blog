@@ -27,8 +27,8 @@ import swp.post.PostDTO;
  *
  * @author ASUS
  */
-@WebServlet(name = "LoadContentPostManagement", urlPatterns = {"/LoadContentPostManagement"})
-public class LoadContentPostManagement extends HttpServlet {
+@WebServlet(name = "LoadPostManagement", urlPatterns = {"/LoadPostManagement"})
+public class LoadPostManagement extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,25 +45,24 @@ public class LoadContentPostManagement extends HttpServlet {
         
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("contentPostManagementPage");
+        String url =  roadmap.get("postsManagementPage");
         HttpSession session = request.getSession(false);
-        try {
-           if(session != null){
-               String postId = request.getParameter("postId");          
-               PostDAO dao = new PostDAO();
-               PostDTO dto = dao.getContentPostManagement(postId);
-     
-                request.setAttribute("POST", dto);         
-
-           }
-        }
+        try{
+            if(session != null){
+                AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");
+                String email = acc.getEmail();
+                PostDAO dao = new PostDAO();
+                ArrayList<PostDTO> list = dao.loadPostManagement(email);
+                request.setAttribute("POST_MANAGEMENT_LIST", list);
+            }
+        } 
         catch(NamingException ex)
         {
-            log("LoadContentPostManagement Naming: " + ex.getMessage());
+            log("LoadPostManagement Naming: " + ex.getMessage());
         }
         catch(SQLException ex)
         {
-            log("LoadContentPostManagement SQL: " + ex.getMessage());
+            log("LoadPostManagement SQL: " + ex.getMessage());
         }
         finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);

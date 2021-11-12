@@ -162,7 +162,6 @@ header .container_right .container_button_register .num-post span {
 /* dropdown-category */
 /* dropdown-category */
 
-
 .dropdown_category {
   position: relative;
   display: inline-block;
@@ -333,7 +332,6 @@ header .container_right .container_button_register .num-post span {
   display: block;
 }
 
-
 .dropdown:hover .dropdown-content1 {
   display: block;
 }
@@ -350,7 +348,7 @@ header .container_right .container_button_register .num-post span {
 }
 
 .dropbtn_noti {
-    position: relative;
+  position: relative;
   padding: 1rem;
   margin-right: 8px;
   width: 40px;
@@ -387,7 +385,7 @@ header .container_right .container_button_register .num-post span {
   padding: 1rem;
   cursor: pointer;
   background-color: rgb(240, 240, 240);
-  border-bottom: 1px solid #3B49DF;
+  border-bottom: 1px solid #3b49df;
 }
 
 .noti_item_new:hover {
@@ -410,25 +408,24 @@ header .container_right .container_button_register .num-post span {
 }
 
 .warning-hidden {
-    display: none !important;
+  display: none !important;
 }
 
 .warning {
-    position: absolute;
-    top: 0;
-    right: 3px;
-    padding: 0.5rem;
-    background-color: red;
-    height: 14px;
-    width: 14px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: 12px;
-    font-weight: 500;
-    
+  position: absolute;
+  top: 0;
+  right: 3px;
+  padding: 0.5rem;
+  background-color: red;
+  height: 14px;
+  width: 14px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* END OF HEADER END OF HEADER END OF HEADER END OF HEADER END OF HEADER  */
@@ -817,4 +814,24 @@ footer .text_footer_strong {
 
 .posts {
   min-height: 500px;
+}
+
+.approved-status {
+  color: #28dc18;
+}
+
+.pending-status {
+  color: #d39716;
+}
+
+.rejected-status {
+  color: #dc1818;
+}
+
+.status-posts {
+  margin-bottom: 8px;
+}
+
+.status-posts h4 {
+  font-weight: 400;
 }

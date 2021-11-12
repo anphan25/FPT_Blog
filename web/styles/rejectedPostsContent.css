@@ -569,7 +569,7 @@ header .container_right .container_button_register .num-post span {
 .content-item {
   background-color: white;
   border-radius: 5px;
-  padding: 1rem;
+  padding: 50px;
 }
 .title-text {
   font-weight: 700;
@@ -651,6 +651,10 @@ header .container_right .container_button_register .num-post span {
 
 .post-content {
   word-break: break-all;
+}
+
+.container {
+  min-height: 500px;
 }
 
 /* FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER FOOTER */

@@ -233,7 +233,34 @@ public class PostDTO implements Serializable {
         this.emailApprover = emailApprover;
         this.views = views;
     }
+    //load post management
 
+    public PostDTO(String ID, String statusPost, String createdDate, List<String> tag, String title) {
+        this.ID = ID;
+        this.statusPost = statusPost;
+        this.createdDate = createdDate;
+        this.tag = tag;
+        this.title = title;
+    }
+    //load content post management
+
+    public PostDTO(String ID, String emailApprover, String statusPost, String createdDate, List<String> tag, String title, String postContent, String newContent, String nameMentor, String note, String avatar) {
+        this.ID = ID;
+        this.emailApprover = emailApprover;
+        this.statusPost = statusPost;
+        this.createdDate = createdDate;
+        this.tag = tag;
+        this.title = title;
+        this.postContent = postContent;
+        this.newContent = newContent;
+        this.nameMentor = nameMentor;
+        this.note = note;
+        this.avatar = avatar;
+    }
+    
+    
+    
+    
     public String getID() {
         return ID;
     }
