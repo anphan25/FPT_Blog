@@ -27,8 +27,8 @@ import swp.post.PostDTO;
  *
  * @author ASUS
  */
-@WebServlet(name = "LoadRejectedPosts", urlPatterns = {"/LoadRejectedPosts"})
-public class LoadRejectedPosts extends HttpServlet {
+@WebServlet(name = "LoadContentPostManagement", urlPatterns = {"/LoadContentPostManagement"})
+public class LoadContentPostManagement extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,28 +45,25 @@ public class LoadRejectedPosts extends HttpServlet {
         
         ServletContext context = request.getServletContext();
         Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
-        String url = roadmap.get("rejectedPostsPage");
+        String url = roadmap.get("contentPostManagementPage");
         HttpSession session = request.getSession(false);
         try {
            if(session != null){
-
-               AccountDTO acc = (AccountDTO) session.getAttribute("CURRENT_USER");    
-               String email = acc.getEmail();           
+               String postId = request.getParameter("postId");          
                PostDAO dao = new PostDAO();
-               ArrayList<PostDTO> postLists = dao.LoadRejectdPosts(email);
-                            
-               if(postLists != null){
-                   request.setAttribute("POST_LIST", postLists);         
-               }
+               PostDTO dto = dao.getContentPostManagement(postId);
+     
+                request.setAttribute("POST", dto);         
+
            }
         }
         catch(NamingException ex)
         {
-            log("LoadPostManagement Naming: " + ex.getMessage());
+            log("LoadContentPostManagement Naming: " + ex.getMessage());
         }
         catch(SQLException ex)
         {
-            log("LoadPostManagement SQL: " + ex.getMessage());
+            log("LoadContentPostManagement SQL: " + ex.getMessage());
         }
         finally{
             RequestDispatcher rd = request.getRequestDispatcher(url);

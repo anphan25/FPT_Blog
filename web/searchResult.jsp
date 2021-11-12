@@ -238,10 +238,10 @@
                                             <p>Create Post</p>
                                         </div>
                                     </a>
-                                    <a href="loadRejectedPosts">
+                                    <a href="loadPostManagement">
                                         <div class="container_item create-post">
                                             <img src="./images/post-management.png" />
-                                            <p>Rejected Posts</p>
+                                            <p>Post Management</p>
                                         </div>
                                     </a>
                                 </c:if>

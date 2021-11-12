@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.naming.NamingException;
 import swp.library.Style;
 import swp.utils.DBHelper;
@@ -1073,5 +1074,96 @@ public class PostDAO implements Serializable {
                 con.close();
             }
         }
+    }
+    
+    public ArrayList<PostDTO> loadPostManagement(String email) throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        ArrayList<PostDTO> list = new ArrayList<>();
+        
+        try{
+            con = DBHelper.makeConnection();
+            if (con != null) {
+                String sql = "select title, tag, StatusPost, postId, DATEPART(HOUR, CreatedDate) as CreatedHour, DATEPART(MINUTE, CreatedDate) as CreatedMinute, "
+                        +"Day(CreatedDate) AS CreatedDay, MONTH(CreatedDate) AS CreatedMonth, YEAR(CreatedDate) AS CreatedYear "
+                        +"from tblPosts where EmailPost = ? and StatusPost in ('WFA','WFU','WFD','R','A') order by CreatedDate desc";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                while(rs.next()){
+                   String postid = rs.getString("postId");
+                   String title = rs.getString("title");
+                   String tags = rs.getString("tag");
+                   String statusPost = rs.getString("StatusPost");
+                   String createdDate = Style.convertToDateFormat(rs.getInt("CreatedDay"), rs.getInt("CreatedMonth"),
+                            rs.getInt("CreatedYear"), rs.getInt("CreatedHour"), rs.getInt("CreatedMinute"));
+                   
+                   PostDTO dto = new PostDTO(postid, statusPost, createdDate, Style.convertTagToArrayList(tags), title);
+                   list.add(dto);
+                }
+            }
+        }finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return list;
+    }
+    
+    public PostDTO getContentPostManagement(String postId) throws NamingException, SQLException{
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        PostDTO dto = null;
+        try{
+            con = DBHelper.makeConnection();
+            if (con != null) {
+//                String sql = "select EmailApprover, Note, content, NewContent, title, tag, StatusPost, postId, DATEPART(HOUR, CreatedDate) as CreatedHour, DATEPART(MINUTE, CreatedDate) as CreatedMinute, "
+//                        +"Day(CreatedDate) AS CreatedDay, MONTH(CreatedDate) AS CreatedMonth, YEAR(CreatedDate) AS CreatedYear "
+//                        +"from tblPosts where PostId = ?";
+                String sql = "SELECT p.StatusPost, p.PostID, Tag, Title, p.Note, PostContent, NewContent, DATEPART(HOUR, p.CreatedDate) as CreatedHour, DATEPART(MINUTE, p.CreatedDate) as CreatedMinute"
+                        + ", Day(p.CreatedDate) as CreatedDay, MONTH(p.CreatedDate) as CreatedMonth, YEAR(p.CreatedDate) as CreatedYear"
+                        + ", Name, Image, Email"
+                        + " FROM tblPosts p LEFT JOIN tblAccounts a ON EmailApprover = Email WHERE PostID = ? ";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, postId);
+                rs = stm.executeQuery();
+                if(rs.next()){
+                   String postid = rs.getString("postId");
+                   String emailMentor = rs.getString("Email");
+                    //day:monnth:year  hour:minute
+                    String createdDate = Style.convertToDateFormat(rs.getInt("CreatedDay"), rs.getInt("CreatedMonth"),
+                            rs.getInt("CreatedYear"), rs.getInt("CreatedHour"), rs.getInt("CreatedMinute"));
+                    String tags = rs.getString("Tag");
+                    String title = rs.getString("Title");
+                    String nameMentor = rs.getString("Name");
+                    String avatarMentor = rs.getString("Image");
+                    String note = rs.getNString("Note");
+                    String postContent = rs.getNString("PostContent");
+                    String newContent = rs.getNString("NewContent");
+                    String statusPost = rs.getString("StatusPost");
+                   
+                   dto = new PostDTO(postid, emailMentor, statusPost, createdDate, Style.convertTagToArrayList(tags), title, postContent, newContent, nameMentor, note, avatarMentor);
+                }
+            }
+        }finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+            if (stm != null) {
+                stm.close();
+            }
+        }
+        return dto;
     }
 }

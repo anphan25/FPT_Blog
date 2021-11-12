@@ -27,7 +27,7 @@
         <!-- header  -->
         <!-- header  -->
         <!-- header  -->
-        <c:set var="post" value="${requestScope.REJECTED_POST}"/>
+        <c:set var="post" value="${requestScope.POST}"/>
         <header <c:if test="${loginStatus == 'logined'}">login-kind="logined"</c:if><c:if test="${loginStatus != 'logined'}">login-kind="no-login"</c:if>>
                 <div class="container_header">
                     <div class="container_left">
@@ -151,10 +151,10 @@
                             <p>Create Post</p>
                         </div>
                     </a>
-                    <a href="loadRejectedPosts">
+                    <a href="loadPostManagement">
                         <div class="container_item create-post">
                             <img src="./images/post-management.png" />
-                            <p>Rejected Posts</p>
+                            <p>Post Management</p>
                         </div>
                     </a>
                 </div>
@@ -162,6 +162,7 @@
 
             <div class="container-item">
                 <div class="rejected-posts">
+                <c:if test="${post.statusPost == 'R'}">
                     <div class="rejected-reason">
                         <div class="reason-label">
                             <h1>Reason of rejecting</h1>
@@ -180,14 +181,11 @@
                             </div>
                         </div>
                     </div>
-
+                </c:if>                
                     <div>
-                        <div class="reason-label">
-                            <h1>Your post</h1>
-                        </div>
                         <div class="content-item">
                             <div class="title">
-                                <div class="time">${post.approvedDate}</div>
+                                <div class="time">${post.createdDate}</div>
                                 <p class="title-text">${post.title}</p>
                                 <div class="tag">
                                     <c:forEach var="tag" items="${post.tag}">
@@ -200,9 +198,16 @@
                                     </c:forEach>
                                 </div>
                             </div>
-                            <div class="post-content">
-                                ${post.postContent}
-                            </div>
+                            <c:if test="${post.statusPost != 'WFU'}">
+                                <div class="post-content">
+                                    ${post.postContent}
+                                </div>
+                            </c:if>
+                            <c:if test="${post.statusPost == 'WFU'}">
+                                <div class="post-content">
+                                    ${post.newContent}
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
