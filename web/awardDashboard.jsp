@@ -166,8 +166,14 @@
                     </div>
                     <div class="dashborad-tab">
                         <c:set var="tab" value="${requestScope.TAB_TYPE}"/>
-                        <a class="tab_item ${tab == 'post' ? "tab-active" : ""}" href="loadDashboard?tab=post">Sort by posts</a>
-                        <a class="tab_item ${tab == 'like' ? "tab-active" : ""}" href="loadDashboard?tab=like">Sort by likes</a>
+                        <div class="tab-left">
+                            <p>Standard of Great Contributor: ${requestScope.STANDARD_POST_TAB}</p>
+                            <p>Standard of Like Collector: ${requestScope.STANDARD_LIKE_TAB}</p>    
+                        </div>
+                        <div class="tab-right">
+                            <a class="tab_item ${tab == 'post' ? "tab-active" : ""}" href="loadDashboard?tab=post">Sort by posts</a>
+                            <a class="tab_item ${tab == 'like' ? "tab-active" : ""}" href="loadDashboard?tab=like">Sort by likes</a>
+                        </div>
                     </div>
                     <div class="award-dashboard-list">
                         <table>
@@ -314,7 +320,8 @@
 
                     <c:if test="${notify == 'unqualified-post'}">
                 swal({
-                    title: "This user does not have enough post (3 or upper)",
+                    title: "This user does not have enough post",
+                    text: "${postStandard} or upper",
                     icon: "error",
                     button: "Ok!",
                 });
@@ -322,12 +329,13 @@
 
                     <c:if test="${notify == 'unqualified-like'}">
                 swal({
-                    title: "This user does not have enough like (5 or upper)",
+                    title: "This user does not have enough like",
+                    text: "${likeStandard} or upper",
                     icon: "error",
                     button: "Ok!",
                 });
                     </c:if>
-                        
+
                     <c:if test="${notify == 'successfully'}">
                 swal({
                     title: "Give award successfully",
@@ -338,22 +346,7 @@
 
                 </c:if>
                 //standard
-                <c:if test="${not empty postStandard}">
-                swal({
-                    title: "This user does not have enough post",
-                    text:"${postStandard} or upper",
-                    icon: "error",
-                    button: "Ok!",
-                });
-                </c:if>
-                <c:if test="${not empty likeStandard}">
-                swal({
-                    title: "This user does not have enough like",
-                    text:"${likeStandard} or upper",
-                    icon: "error",
-                    button: "Ok!",
-                });
-                </c:if>
+           
             </script>
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
             <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
