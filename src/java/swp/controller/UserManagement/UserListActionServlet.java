@@ -74,7 +74,7 @@ public class UserListActionServlet extends HttpServlet
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {
-                    if(actionline != null) //tôi tính làm thêm hàm tránh lặp lại mà dcm thậm chí C# còn dùng delegate để khai báo bừa bãi việc gì phải làm thế (:
+                    if(actionline != null)
                     {
                         String[] araara = actionline.split("%"); //true parameter is here
                         String action = araara[0];

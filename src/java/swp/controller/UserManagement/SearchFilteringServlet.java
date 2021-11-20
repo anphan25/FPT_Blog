@@ -23,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import swp.account.AccountDTO;
 import swp.userlist.Userlist;
-import swp.userlist.UserlistDAO;
 import swp.userlist.UserlistDTO;
 
 /**
@@ -75,42 +74,58 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                 String checkRole = currentadmin.getRole();
                 if(checkRole.equals("A")) //check tài khoản là admin và thành công
                 {//first thing first is apply button
-                    Userlist filter = (Userlist)session.getAttribute("CACHING_USER_LIST");
-                    if(search != null) // One servlet do all the thing 
-                    {//all code in this block is using database
-                        if(search.contains("@"))
+                    //wow now you dont have a chance to get into my servlet again hehe
+                    Userlist cachetool = (Userlist)session.getAttribute("CACHING_USER_LIST");
+                    if(cachetool != null) //check if the user has pressed userlist button and prevent the none logic flow
+                    {
+                        if(search != null) // One servlet do all the thing 
                         {
-                            String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
-                            UserlistDAO dao = new UserlistDAO();
-                            ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
-                            newlist = filter.filteredList(gender, status, role, major, newlist);
-                            url = roadmap.get(SEARCH_RESULT_PAGE);
-                            //url = "resultpage.jsp";
-                            request.setAttribute("USER_LIST", newlist);
+                            if(search.contains("@"))
+                            {
+                                if(search.matches(".*@$")) //tìm kiếm tất cả domain
+                                {
+                                    ArrayList<UserlistDTO> newlist = cachetool.searchSpecificEmail(search.substring(0, search.length() - 1));
+                                    newlist = cachetool.filteredList(gender, status, role, major, newlist);
+                                    url = roadmap.get(SEARCH_RESULT_PAGE);
+                                    request.setAttribute("USER_LIST", newlist);
+                                    //log("true condition");
+                                }
+                                else
+                                {
+                                    String[] emailSpliter = search.split("@"); //limitation you can't read the email with 2 @ symbols
+                                    //ArrayList<UserlistDTO> newlist = dao.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
+                                    ArrayList<UserlistDTO> newlist = cachetool.searchSpecificEmail(emailSpliter[0], emailSpliter[1]);
+                                    newlist = cachetool.filteredList(gender, status, role, major, newlist);
+                                    url = roadmap.get(SEARCH_RESULT_PAGE);
+                                    //url = "resultpage.jsp";
+                                    request.setAttribute("USER_LIST", newlist);
+                                    //log("false condition");
+                                }
+                            }
+                            else
+                            {
+                                 ArrayList<UserlistDTO> newlist = cachetool.searchAll(search);
+                                newlist = cachetool.filteredList(gender, status, role, major, newlist);
+                                url = roadmap.get(SEARCH_RESULT_PAGE);
+                                //url = "resultpage.jsp";
+                                request.setAttribute("USER_LIST", newlist);
+                            }
                         }
-                        else //if the search doesn't find any @ symbol
-                        {
-                            UserlistDAO dao = new UserlistDAO();
-                            ArrayList<UserlistDTO> newlist = dao.searchAll(search);
-                            newlist = filter.filteredList(gender, status, role, major, newlist);
-                            url = roadmap.get(SEARCH_RESULT_PAGE);
-                            //url = "resultpage.jsp";
-                            request.setAttribute("USER_LIST", newlist);
-                        }
+                        else //this else block will execute the apply button AND search with filtered
+                        {//as well as Search icon
+                            ArrayList<UserlistDTO> newlist = cachetool.filteredList(gender, status, role, major);
+                            if(newlist != null)
+                            {
+                                request.setAttribute("USER_LIST", newlist);
+                                request.setAttribute("IS_IT_MENTOR", role);
+                                url = roadmap.get(SEARCH_RESULT_PAGE);
+                            }
+                        }//the end of filtering the list leaving the result
                     }
-                    else //this else block will execute the apply button AND search with filtered
-                    {//as well as Search icon
-                        ArrayList<UserlistDTO> newlist = filter.filteredList(gender, status, role, major);
-                        if(newlist != null)
-                        {
-                            request.setAttribute("USER_LIST", newlist);
-                            request.setAttribute("IS_IT_MENTOR", role);
-                            url = roadmap.get(SEARCH_RESULT_PAGE);
-                        }
-                    }//the end of filtering the list leaving the result
-                }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
-            }
+                }
+            }// kết thúc tất cả việc muốn làm ở servlet này (nếu có thêm action chuyển qua switch case)
         }
+        /*
         catch(SQLException ex)
         {
             log("SQL _ " + ex.getMessage());
@@ -118,6 +133,11 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
         catch(NamingException ex)
         {
             log("Naming _ " + ex.getMessage());
+        }
+        */
+        catch(Exception ex)
+        {
+            log("Shit happend: " + ex.toString());
         }
         finally
         {

@@ -1,6 +1,6 @@
 /************* my name is jeff ☺ and my full name is THN ***********/
 
-var htmldoc; //phòng trường hợp lz DOM lại quăng thêm lỗi dit me may DOM ạ html của m vô duyên như chó rách
+var htmldoc; //in case DOM bị nunglz
 //Well i just learned jquery for like 3 days that's why the code may look stupid
 function SendData() {
   var searchtext = document.getElementById("searchtext").value;

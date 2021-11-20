@@ -14,7 +14,7 @@ public class Userlist implements Serializable
         this.fulllist = fulllist;
     }
     
-    public ArrayList<UserlistDTO> napLanCuoi() { return this.fulllist; }
+    public ArrayList<UserlistDTO> getFullList() { return this.fulllist; }
     
     public ArrayList<UserlistDTO> filteredList(String gender, String status, String role, String major)
     {
@@ -229,6 +229,36 @@ public class Userlist implements Serializable
             return result;
         }
         return null;
+    }
+    
+    public ArrayList<UserlistDTO> searchAll(String searchtext)
+    {//dont have time for revewing this one.
+        //this gonna be cồng kềnh but who care
+        ArrayList<UserlistDTO> name = new ArrayList<>(fulllist);
+        ArrayList<UserlistDTO> email = new ArrayList<>(fulllist);
+        name.removeIf(othername -> !othername.getName().contains(searchtext));
+        ArrayList<UserlistDTO> result = new ArrayList<>(name);
+        email.removeIf(otheremail -> !otheremail.getEmail().contains(searchtext));
+        result.addAll(email);
+        return result;
+    }
+    
+    public ArrayList<UserlistDTO> searchSpecificEmail(String email, String domain)
+    {
+        ArrayList<UserlistDTO> result = new ArrayList<>(fulllist);
+        if(domain.contains("fpt"))
+            result.removeIf(nomentor -> nomentor.getEmail().contains("@fu.edu.vn"));
+        else if(domain.contains("fu"))
+            result.removeIf(other -> other.getEmail().contains("@fpt.edu.vn"));
+        result.removeIf(otheremail -> !otheremail.getEmail().contains(email));
+        return result;
+    }
+    
+    public ArrayList<UserlistDTO> searchSpecificEmail(String email)
+    {
+        ArrayList<UserlistDTO> result = new ArrayList<>(fulllist);
+        result.removeIf(otheremail -> !otheremail.getEmail().contains(email));
+        return result;
     }
 /*    remarkable code in memory of old code
 if(gender.equals("all") && !status.equals("all")) //filt with status
