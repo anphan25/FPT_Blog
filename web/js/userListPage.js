@@ -243,7 +243,6 @@ function kingcrimson(kytu) {
     if (action === "u") {
       var email = document.getElementById("e" + so).value; //lấy i meo
       var select = document.getElementById(so).value; //lấy value của txtList
-      //ditcon me đến cả việc append cái form rồi submit cũng tự đóng tag THẰNG LZ DOMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
       $(
         '<form action="' +
           'userAction">' +
@@ -516,15 +515,34 @@ const banModal = document.querySelector(".ban-modal");
 const updateRoleModal = document.querySelector(".updateRole-modal");
 const banOverlay = document.querySelector(".ban-overlay");
 const updateOverlay = document.querySelector(".updateRole-overlay");
-
+const cancelUpdateBtn = document.querySelector(".cancel-btn-updateRole-modal"); 
+const cancelBanBtn = document.querySelector(".cancel-btn-ban-modal"); 
 //muốn hiện cái popup khi nhấn nút thì addEventListener rồi thêm 2 dòng code ở dưới
 //ban-modal(nếu là update thì chỗ này là updateRoleModal).classList.toggle("hidden");
 //banOverlay(nếu là update thì chỗ này là updateOverlay).classList.toggle("hidden");
 
-
-
 const submitBanBtn = document.querySelector(".ban-btn-modal");
 const banReason = document.querySelector("#ban-area");
+
+cancelUpdateBtn.addEventListener("click",()=>{
+    updateOverlay.classList.toggle("hidden");
+    updateRoleModal.classList.toggle("hidden");
+});
+
+cancelBanBtn.addEventListener("click",()=>{
+    banOverlay.classList.toggle("hidden");
+    banModal.classList.toggle("hidden");
+});
+
+banOverlay.addEventListener("click",()=>{
+    banOverlay.classList.toggle("hidden");
+    banModal.classList.toggle("hidden");
+});
+
+updateOverlay.addEventListener("click",()=>{
+    updateOverlay.classList.toggle("hidden");
+    updateRoleModal.classList.toggle("hidden");
+});
 
 function checkWordCount() {
   if (banReason.value == "") {

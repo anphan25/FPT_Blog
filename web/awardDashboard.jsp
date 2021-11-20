@@ -167,8 +167,8 @@
                     <div class="dashborad-tab">
                         <c:set var="tab" value="${requestScope.TAB_TYPE}"/>
                         <div class="tab-left">
-                            <p>Standard of Great Contributor: ${requestScope.STANDARD_POST_TAB}</p>
-                            <p>Standard of Like Collector: ${requestScope.STANDARD_LIKE_TAB}</p>    
+                            <p>Standard of Great Contributor: Posts >= ${requestScope.STANDARD_POST_TAB}</p>
+                            <p>Standard of Like Collector: Likes >= ${requestScope.STANDARD_LIKE_TAB}</p>    
                         </div>
                         <div class="tab-right">
                             <a class="tab_item ${tab == 'post' ? "tab-active" : ""}" href="loadDashboard?tab=post">Sort by posts</a>
