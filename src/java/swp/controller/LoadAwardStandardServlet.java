@@ -46,7 +46,7 @@ public class LoadAwardStandardServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         try {
             if (session != null) {
-                AwardDAO dao = new AwardDAO();
+                AwardDAO dao = new AwardDAO();               
                 ArrayList<AwardDTO> awardList = dao.getAwardStandard();
                 request.setAttribute("STANDARD_AWARD", awardList);
             }

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import swp.account.AccountDAO;
 import swp.account.AccountDTO;
+import swp.award.AwardDAO;
 
 /**
  *
@@ -52,8 +53,12 @@ public class LoadAwardDashboardServlet extends HttpServlet {
             } else if (tab.equals("like")) {
                 list = accountDAO.getOutStandingUsersByLikes();
             }
+            AwardDAO awarDAO = new AwardDAO();
+            AccountDAO accDAO = new AccountDAO();
             request.setAttribute("TAB_TYPE", tab);
             request.setAttribute("USER_LIST", list);
+            request.setAttribute("STANDARD_LIKE_TAB", accDAO.getStandardOfAward(2));
+            request.setAttribute("STANDARD_POST_TAB", accDAO.getStandardOfAward(1));
 
         } catch (Exception e) {
             log("Error at LoadAwardDashboardServlet: " + e.getMessage());
