@@ -88,6 +88,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                                     newlist = cachetool.filteredList(gender, status, role, major, newlist);
                                     url = roadmap.get(SEARCH_RESULT_PAGE);
                                     request.setAttribute("USER_LIST", newlist);
+                                    request.setAttribute("IS_IT_MENTOR", role);
                                     //log("true condition");
                                 }
                                 else
@@ -99,6 +100,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                                     url = roadmap.get(SEARCH_RESULT_PAGE);
                                     //url = "resultpage.jsp";
                                     request.setAttribute("USER_LIST", newlist);
+                                    request.setAttribute("IS_IT_MENTOR", role);
                                     //log("false condition");
                                 }
                             }
@@ -109,6 +111,7 @@ public class SearchFilteringServlet extends HttpServlet //servlet này chỉ red
                                 url = roadmap.get(SEARCH_RESULT_PAGE);
                                 //url = "resultpage.jsp";
                                 request.setAttribute("USER_LIST", newlist);
+                                request.setAttribute("IS_IT_MENTOR", role);
                             }
                         }
                         else //this else block will execute the apply button AND search with filtered
