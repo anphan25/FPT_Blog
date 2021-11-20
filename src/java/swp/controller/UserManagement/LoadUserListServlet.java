@@ -68,16 +68,26 @@ public class LoadUserListServlet extends HttpServlet
                     String role = currentlogin.getRole();
                     if(role.equals("A"))
                     {
-                        UserlistDAO dao = new UserlistDAO();
-                        ArrayList<UserlistDTO> dto = dao.getUserList();
-                        //url = "resultpage.jsp";
-                        //chưa check account đã đăng nhập và chưa check role
-                        if(dto != null) //CAUTION nếu tblAccounts trong database không có gì sẽ bị lỗi stackoverflow
-                        {
-                            request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
-                            Userlist naplandau = new Userlist(dto);
-                            session.setAttribute("CACHING_USER_LIST", naplandau);
+                        Userlist cached = (Userlist) session.getAttribute("CACHING_USER_LIST"); //UX improvement by Saphareong
+                        if(cached != null)
+                        {//already there why do i have to call DAO performance +15 social credits
+                            ArrayList<UserlistDTO> dto = cached.getFullList();
+                            request.setAttribute("USER_LIST", dto);
                             url = roadmap.get(USER_CONTROL_PANEL);
+                        }
+                        else //first time click on userlist button
+                        {
+                            UserlistDAO dao = new UserlistDAO();
+                            ArrayList<UserlistDTO> dto = dao.getUserList();
+                            //url = "resultpage.jsp";
+                            //chưa check account đã đăng nhập và chưa check role
+                            if(dto != null) //CAUTION nếu tblAccounts trong database không có gì sẽ bị lỗi stackoverflow
+                            {
+                                request.setAttribute("USER_LIST", dto); //lấy hết 500 anh em vứt vào USER_LIST attwibu
+                                Userlist naplandau = new Userlist(dto);
+                                session.setAttribute("CACHING_USER_LIST", naplandau);
+                                url = roadmap.get(USER_CONTROL_PANEL);
+                            }
                         }
                     }
                     
