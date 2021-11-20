@@ -412,7 +412,6 @@
                                         </c:if>
                                         <c:if test="${loto.statusaccount == 'Banned'}">
                                             <p class="bannedStatus">Banned</p>
-
                                         </c:if>
                                     </td>
                                     <td><button class="update-btn" title="Update Account" name="btAction" value="updating" onclick="updateButton('form${counter.count}')" ><i class="fas fa-pen"></i></button></td>
