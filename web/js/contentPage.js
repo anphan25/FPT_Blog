@@ -134,9 +134,13 @@ delForm.addEventListener("submit", (e) => {
     delForm.submit();
 });
 
+const disableDelBtn = () => {
+    delBtn.style.backgroundColor = "#f78282";
+    delBtn.disabled = true;
+};
 
-function checkWordCount() {
-    if (deltextArea.value === "") {
+const checkWordCountDel= ()=> {
+    if (deltextArea.value == "") {
         disableDelBtn();
     } else {
         delBtn.disabled = false;
@@ -144,12 +148,7 @@ function checkWordCount() {
     }
 }
 
-const disableDelBtn = () => {
-    delBtn.style.backgroundColor = "#f78282";
-    delBtn.disabled = true;
-};
-
 disableDelBtn();
 deltextArea.addEventListener("keyup", () => {
-    checkWordCount();
+    checkWordCountDel();
 });
