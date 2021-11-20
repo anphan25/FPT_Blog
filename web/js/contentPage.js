@@ -15,6 +15,7 @@ const deleteOverlay = document.querySelector(".delete-overlay");
 const delForm = document.querySelector("#del-form");
 const deltextArea = document.querySelector(".del-reason-text");
 const delReason = document.querySelector(".reason-del-input");
+const delBtn = document.querySelector(".del-btn");
 
 submitBtn.addEventListener("mouseenter", () => {
     submitBtn.style.backgroundColor = "#323ebe";
@@ -112,7 +113,7 @@ if (deleteDiv) {
         deleteModal.classList.toggle("hidden");
         deleteOverlay.classList.toggle("hidden");
         deltextArea.focus();
-        
+
     });
 
     deleteOverlay.addEventListener("click", () => {
@@ -127,10 +128,28 @@ document.querySelector(".cancel-btn").addEventListener("click", () => {
 
 
 
-delForm.addEventListener("submit",(e)=>{
+delForm.addEventListener("submit", (e) => {
     e.preventDefault();
     delReason.value = deltextArea.value;
     delForm.submit();
-})
+});
 
 
+function checkWordCount() {
+    if (deltextArea.value === "") {
+        disableDelBtn();
+    } else {
+        delBtn.disabled = false;
+        delBtn.style.backgroundColor = "#dc1818";
+    }
+}
+
+const disableDelBtn = () => {
+    delBtn.style.backgroundColor = "#f78282";
+    delBtn.disabled = true;
+};
+
+disableDelBtn();
+deltextArea.addEventListener("keyup", () => {
+    checkWordCount();
+});

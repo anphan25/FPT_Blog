@@ -236,7 +236,7 @@
                             </div>
                             <p class="cmtCount">${postDetail.comments}<p>
                         </div>
-                        
+
                         <div class="interact-item">
                             <div class="icon view-icon">
                                 <img src="./images/view-icon.png" alt="" />
@@ -258,7 +258,7 @@
                             </div>
                             <p>${postDetail.comments}<p>
                         </div>
-                        
+
                         <div class="interact-item">
                             <div class="icon view-icon">
                                 <img src="./images/view-icon.png" alt="" />
@@ -638,31 +638,31 @@
             });
 
             const addDocument = (action = "liked") => {
-                let ownerID = `${postDetail.emailPost}`;      
+                let ownerID = `${postDetail.emailPost}`;
                 ownerID = ownerID.substr(0, ownerID.indexOf("@"));
-                let currentUserEmail = `${currentUser.email}`;  
+                let currentUserEmail = `${currentUser.email}`;
                 currentUserEmail = currentUserEmail.substr(0, currentUserEmail.indexOf("@"));
                 let currentUsername = `${currentUser.name}`;
                 let userAvatar = `${currentUser.avatar}`;
-                if(currentUserEmail === ownerID)  {
+                if (currentUserEmail === ownerID) {
                     return;
-                } else  {
+                } else {
                     db.collection('notify')
-                        .doc(ownerID)
-                        .collection("incoming")
-                        .add({
-                            postId: postId.value,
-                            ownerId: ownerID,
-                            user: currentUsername,
-                            avatar: userAvatar,
-                            createdAt: new Date(),
-                            action: action,
-                            seen: false
-                        })
-                        .catch((error) => {
-                            console.error('Error adding document: ', error);
-                        });
-                }
+                            .doc(ownerID)
+                            .collection("incoming")
+                            .add({
+                                postId: postId.value,
+                                ownerId: ownerID,
+                                user: currentUsername,
+                                avatar: userAvatar,
+                                createdAt: new Date(),
+                                action: action,
+                                seen: false
+                            })
+                            .catch((error) => {
+                                console.error('Error adding document: ', error);
+                            });
+            }
             }
             ;
 
