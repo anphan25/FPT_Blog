@@ -1,7 +1,12 @@
 package swp.userlist;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import javax.naming.NamingException;
+import swp.category.CategoryDAO;
+import swp.category.CategoryDTO;
 //import java.util.function.Predicate;
 
 /*** DON'T PUT ME IN HORNY JAIL FOR THIS CODING SHIT ***/
@@ -259,6 +264,71 @@ public class Userlist implements Serializable
         ArrayList<UserlistDTO> result = new ArrayList<>(fulllist);
         result.removeIf(otheremail -> !otheremail.getEmail().contains(email));
         return result;
+    }
+    
+    private int GetIndexByEmail(String email)
+    {
+        int i = 0;
+        for(UserlistDTO user : fulllist)
+        {
+            if(user.getEmail().equals(email)) return i;
+            i++;
+        }
+        return -1;
+    }
+    
+    private String RoleConverter(String role)
+    {
+        switch(role)
+        {
+            case "A": return "Admin";
+            case "S": return "Student";
+            default: return "Mentor";
+        }
+    }
+    
+    private String MajorConverter(int cateid) throws SQLException, NamingException
+    {
+        CategoryDAO dao = new CategoryDAO();
+        dao.loadCategoryList();
+        ArrayList<CategoryDTO> ThoiThiKhongConvertSangHashMapDcm = dao.getCategoryList();
+        return ThoiThiKhongConvertSangHashMapDcm.get(cateid - 1).getName();
+    }
+    
+    public void UpdateFullList(String email, String role)
+    {
+        int index = GetIndexByEmail(email);
+        role = RoleConverter(role);
+        UserlistDTO user = fulllist.get(index);
+        user.setRole(role);
+        fulllist.set(index, user);
+    }
+    
+    public void UpdateFullList(String email, String role, int categoryID) throws SQLException, NamingException
+    {
+        int index = GetIndexByEmail(email);
+        role = RoleConverter(role);
+        UserlistDTO user = fulllist.get(index);
+        user.setRole(role);
+        String major = MajorConverter(categoryID);
+        user.setMajor(major);
+        fulllist.set(index, user);
+    }
+    
+    public void BanFullList(String email)
+    {
+        int index = GetIndexByEmail(email);
+        UserlistDTO user = fulllist.get(index);
+        user.setStatusaccount("Banned");
+        fulllist.set(index, user);
+    }
+    
+    public void UnbanFullList(String email)
+    {
+        int index = GetIndexByEmail(email);
+        UserlistDTO user = fulllist.get(index);
+        user.setStatusaccount("Actived");
+        fulllist.set(index, user);
     }
 /*    remarkable code in memory of old code
 if(gender.equals("all") && !status.equals("all")) //filt with status

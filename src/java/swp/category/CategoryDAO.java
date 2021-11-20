@@ -18,7 +18,8 @@ import swp.utils.DBHelper;
  *
  * @author ASUS
  */
-public class CategoryDAO implements Serializable{
+public class CategoryDAO implements Serializable
+{
     private ArrayList<CategoryDTO> categoryList;
     public ArrayList<CategoryDTO> getCategoryList(){
         return categoryList;
