@@ -98,7 +98,7 @@ public class InitStuff implements Serializable
             {
                 stm = con.prepareStatement(sql);
                 stm.setString(1, dto.getEmail());
-                //stm.executeUpdate();
+                stm.executeUpdate(); //xóa comment lên live 21/11/2021
                 numbereffect += 1;
             }
         }

@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,6 +26,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import swp.account.AccountDAO;
+import swp.account.AccountDTO;
 
 /**
  *
@@ -117,7 +123,23 @@ public class FilterServlet implements Filter {
             res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
             res.setHeader("Pragma", "no-cache");
             res.setDateHeader("Expires", -1);
-        }// điều này sẽ cải thiện UX lên lv max ditme UI
+        }
+        else //not realtime mechanic
+        {
+            AccountDTO currentUser = (AccountDTO) session.getAttribute("CURRENT_USER");
+            try
+            {
+                if(AccountDAO.IsItBanned(currentUser.getEmail())) session.invalidate();
+            } 
+            catch (NamingException ex)
+            {
+                log("Naming: " + ex.getMessage());
+            } 
+            catch (SQLException ex)
+            {
+                log("SQL: " + ex.getMessage());
+            }
+        }
         try{
             ServletContext context = request.getServletContext();
             Map<String, String> roadmap = (Map<String, String>) context.getAttribute("ROADMAP");
