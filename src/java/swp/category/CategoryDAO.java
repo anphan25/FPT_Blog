@@ -70,6 +70,7 @@ public class CategoryDAO implements Serializable
                 String sql = "INSERT INTO tblCategories(CategoryName) VALUES(?)";
                 stm = con.prepareStatement(sql);
                 stm.setString(1, categoryName);
+                rs = stm.executeQuery();
             }
         }finally{
            if (con != null) {
