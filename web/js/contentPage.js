@@ -125,6 +125,7 @@ const disableSubmitBtn = () => {
 
 checkLoginKind();
 disableSubmitBtn();
+disableDelBtn();
 
 if (deleteDiv) {
     deleteDiv.addEventListener("click", () => {
@@ -151,5 +152,5 @@ delForm.addEventListener("submit", (e) => {
 
 
 
-disableDelBtn();
+
 
