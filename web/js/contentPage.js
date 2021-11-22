@@ -47,6 +47,20 @@ function checkWordCount() {
     }
 }
 
+const disableDelBtn = () => {
+    delBtn.style.backgroundColor = "#f78282";
+    delBtn.disabled = true;
+};
+
+const checkWordCountDel = () => {
+    if (deltextArea.value == "") {
+        disableDelBtn();
+    } else {
+        delBtn.disabled = false;
+        delBtn.style.backgroundColor = "#dc1818";
+    }
+};
+
 const checkLoginKind = () => {
     if (header.getAttribute("login-kind") === "no-login") {
         likeIcon.addEventListener("click", () => {
@@ -97,6 +111,10 @@ const checkLoginKind = () => {
             likeIcon.classList.toggle("clicked-like-icon");
             likeIcon.nextElementSibling.classList.toggle("clicked-like-text");
         });
+
+        deltextArea.addEventListener("keyup", () => {
+            checkWordCountDel();
+        });
     }
 };
 
@@ -113,7 +131,6 @@ if (deleteDiv) {
         deleteModal.classList.toggle("hidden");
         deleteOverlay.classList.toggle("hidden");
         deltextArea.focus();
-
     });
 
     deleteOverlay.addEventListener("click", () => {
@@ -126,29 +143,13 @@ document.querySelector(".cancel-btn").addEventListener("click", () => {
     deleteOverlay.classList.toggle("hidden");
 });
 
-
-
 delForm.addEventListener("submit", (e) => {
     e.preventDefault();
     delReason.value = deltextArea.value;
     delForm.submit();
 });
 
-const disableDelBtn = () => {
-    delBtn.style.backgroundColor = "#f78282";
-    delBtn.disabled = true;
-};
 
-const checkWordCountDel= ()=> {
-    if (deltextArea.value == "") {
-        disableDelBtn();
-    } else {
-        delBtn.disabled = false;
-        delBtn.style.backgroundColor = "#dc1818";
-    }
-}
 
 disableDelBtn();
-deltextArea.addEventListener("keyup", () => {
-    checkWordCountDel();
-});
+
