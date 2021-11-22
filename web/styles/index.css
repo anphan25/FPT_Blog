@@ -107,6 +107,11 @@ a {
   color: #3b49df;
 }
 
+.introduce_community .brand_text_sponsors {
+  color: #3b49df;
+  font-size: 20px
+}
+
 .introduce_community .introduce_title {
   font-size: 19px;
   color: #242424;
