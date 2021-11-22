@@ -49,11 +49,13 @@ public class CreateCategoryServlet extends HttpServlet {
                 if (user != null) {
                     String role = user.getRole();
                     if (role.equals("A")) {
+                        if(!categoryName.trim().isEmpty()){
                         CategoryDAO dao = new CategoryDAO();
                         dao.createCategory(categoryName);
                         dao.loadCategoryList();
                         ArrayList<CategoryDTO> categoryList = dao.getCategoryList();
                         session.setAttribute("CATEGORY_LIST", categoryList);
+                        }
                     }
                 }
             
