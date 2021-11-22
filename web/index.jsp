@@ -319,7 +319,8 @@
                                                 <p>#vuejs</p>
                                             </div>
                                         </div>-->
-                    <div style="margin-top: 3rem">
+                    <a href="https://daihoc.fpt.edu.vn" target="_blank">
+                        <div style="margin-top: 3rem">
                         <div class="introduce_community">
                             <h2 class="introduce_title">
                                 <img src="https://firebasestorage.googleapis.com/v0/b/udemy-vue-firebase-si.appspot.com/o/spnsors.jpg?alt=media&token=6743a747-baca-40f6-9f3a-dbe40e1c0a99" width="100%" style="border-radius: 4px; margin-bottom: 0.5rem"/>
@@ -327,6 +328,7 @@
                             </h2>
                         </div>
                     </div>
+                    </a>
                 </div>
                 <div class="main_container_middle">
                     <div class="filter_navigation_middle">
