@@ -21,7 +21,7 @@ import swp.userlist.Userlist;
 import swp.userlist.UserlistDAO;
 import swp.userlist.UserlistDTO;
 
-/*** DON'T PUT ME INTO HORNY JAIL FOR THIS CODING SHIT ***/
+/*** Created By Saphareong ***/
 @WebServlet(name="BanUserServlet", urlPatterns={"/BanUserServlet"})
 public class BanUserServlet extends HttpServlet 
 {

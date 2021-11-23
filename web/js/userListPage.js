@@ -77,7 +77,7 @@ function applyButton() {
   let selr = document.getElementById("selectedrole").value;
   let selm = document.getElementById("selectedmajor").value;
   //checking condition before send to server
-  if (selgen === "" && selstt === "" && selr === "" && selm === "") return; //bám search ko bấm bấm apply làm cc gì
+  if (selgen === "" && selstt === "" && selr === "" && selm === "") return; //check if there are no selection we skip
   //convert to full rolename
   switch (selr) {
     case "S":
@@ -133,7 +133,7 @@ function applyButton() {
   });
 }
 
-//this one will carry the duty after the user try to violent data after search. God damn i hate them so much.
+//this one will carry the duty after the user try to violent data after search.
 //GLOBAL WARMING GLOBAL VARIABLE GLOBAL SILENT
 var WhichForm; //to query the button for the first time and forever
 var DidYouDoIt = false; //check first or second after || DOES NOT RELATED TO after filt
@@ -550,7 +550,7 @@ function updateButton(formid)
               // now i know what to do
               $("#reloading").empty();
               $("#reloading").html("<h1>lỗi òi ko lấy dc gửi được dữ liệu</h1>");
-              console.log("oi dit me cuoc doi");
+              console.log("Debugging log");
             },
         });
     }
