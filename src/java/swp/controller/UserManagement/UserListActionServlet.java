@@ -28,7 +28,7 @@ import swp.userlist.UserlistDTO;
 /**
  *
  * @author sà phê rôn
- * THIS SERVLET IS FOR BACKUP ONLY AM GONNA MAKE A BETTERONE AFTER THIS DATE 20/11/2021
+ * THIS SERVLET IS FOR BACKUP ONLY AM GONNA MAKE A BETTER ONE AFTER THIS DATE 20/11/2021
  */
 @WebServlet(name = "UserListActionServlet", urlPatterns =
 {

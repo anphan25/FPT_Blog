@@ -28,7 +28,7 @@ import swp.userlist.UserlistDTO;
 
 /**
  *
- * @author ADMIN
+ * @author Saphareong
  */
 @WebServlet(name = "LoadUserListServlet", urlPatterns =
 {
