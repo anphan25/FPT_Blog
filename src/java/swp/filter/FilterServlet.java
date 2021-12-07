@@ -129,7 +129,13 @@ public class FilterServlet implements Filter {
             AccountDTO currentUser = (AccountDTO) session.getAttribute("CURRENT_USER");
             try
             {
+                String currentRole = AccountDAO.TakingCurrentRole(currentUser.getEmail(), currentUser.getRole());
                 if(AccountDAO.IsItBanned(currentUser.getEmail())) session.invalidate();
+                else if(currentRole != null)
+                {
+                    currentUser.setRole(currentRole);
+                    session.setAttribute("CURRENT_USER", currentUser);
+                }
             } 
             catch (NamingException ex)
             {
