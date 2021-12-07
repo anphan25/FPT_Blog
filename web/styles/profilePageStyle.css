@@ -329,6 +329,11 @@ header .container_right .container_button_register button:hover {
   color: #f9f9f9;
 }
 
+.user-list-icon{
+    width: 24px;
+    height: 24px;
+}
+
 /* dropdown-category */
 /* dropdown-category */
 /* dropdown-category */
