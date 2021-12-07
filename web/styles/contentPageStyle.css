@@ -1375,6 +1375,7 @@ footer .text_footer_strong {
     justify-content: center;
     gap: 0 20px;
     border-top: 1px solid #e3e3e3;
+    z-index: 999;
   }
 
   .row .interact .icon {
