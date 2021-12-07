@@ -109,6 +109,48 @@ public class AccountDAO implements Serializable {
         }
         return false;
     }
+    
+    public static String TakingCurrentRole(String email, String role) throws NamingException, SQLException //hàm này chạy rất thường xuyên cùng filter và ko dính liếu hàm khác
+    {//vì lí do đó ta ko dùng như bình thường và cũng 1 phần là do không dùng design pattern singleton... sign 07/12/2021 Saphareong
+        Connection con = null;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        try
+        {
+            //cố gắng thông ass DB
+            con = DBHelper.makeConnection();
+            if(con != null)
+            {
+                String sql = "SELECT RoleID FROM tblAccounts WHERE Email = ?";
+                stm = con.prepareStatement(sql);
+                stm.setString(1, email);
+                rs = stm.executeQuery();
+                //trỏ tới dòng sql đầu tiên
+                if(rs.next())
+                {
+                    String TheTakenRole = rs.getString(1);
+                    if(TheTakenRole.equals(role)) return null;
+                    else return TheTakenRole;
+                }
+            }
+        }
+        finally
+        {
+            if(rs != null)
+            {
+                rs.close();
+            }     
+            if(con != null)
+            {
+                con.close();
+            }
+            if(stm != null)
+            {
+                stm.close();
+            }
+        }
+        return null;
+    }
 
     private AccountDTO currentUser;
 
