@@ -145,72 +145,124 @@
             <!-- sidebar_phone  -->
             <!-- sidebar_phone  -->
             <section class="sidebar_phone" id="sidebar_phone">
-                <div class="container_sidebar_phone" id="container_sidebar_phone">
-                    <div class="container_toggle">
-                        <h2 class="title">FPT Blog</h2>
-                        <img
-                            src="./images/close_button_icon.svg"
-                            onclick="handleClickOutside()"
-                            />
+            <div class="container_sidebar_phone" id="container_sidebar_phone">
+                <div class="container_toggle">
+                    <h2 class="title">FPT Blog</h2>
+                    <img src="/images/close_button_icon.svg" onclick="handleClickOutside()" />
+                </div>
+                <div style="padding: 0.5rem">
+                    <div class="introduce_community">
+                        <h2 class="introduce_title">
+                            <span class="brand_text">FPT Community</span> is a place where students can share
+                            knowledge and learn from each other
+                        </h2>
+                        <p class="introduce_content">
+                            We're a place where students share, stay up-to-date and grow their
+                            careers.
+                        </p>
+                        
                     </div>
-                    <div style="padding: 0.5rem">
-                        <div class="introduce_community">
-                            <h2 class="introduce_title">
-                                <span class="brand_text">DEV Community</span> is a community of
-                                690,628 amazing developers
-                            </h2>
-                            <p class="introduce_content">
-                                We're a place where coders share, stay up-to-date and grow their
-                                careers.
-                            </p>
-                            <div class="container_button">
-                                <div class="container_button_register">
-                                    <button>
-                                        <a href="/login.html">TÃ¡ÂºÂ¡o tÃÂ i khoÃ¡ÂºÂ£n</a>
-                                    </button>
-                                </div>
-                                <div class="container_button_login">
-                                    <button><a href="/login.html">ÃÂÃÆng nhÃ¡ÂºÂ­p</a></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sidebar_navigation">
-                            <h2 class="title_navigation">Menu</h2>
+                    <div class="sidebar_navigation">
+                        <h2 class="title_navigation">Menu</h2>
+                        <a href="loadBlogs">
                             <div class="container_item">
                                 <img src="./images/house_icon.svg" />
-                                <p>Trang chÃ¡Â»Â§</p>
+                                <p>Home</p>
                             </div>
+                        </a>
+                        <c:if test="${loginStatus != 'logined'}">
+                        <a href="firstLoginPage">
                             <div class="container_item">
                                 <img src="./images/hand_shake_icon.svg" />
-                                <p>ÃÂÃÆng nhÃ¡ÂºÂ­p</p>
+                                <p>Login</p>
                             </div>
-                        </div>
-                        <div class="sidebar_navigation">
-                            <h2 class="title_navigation">Tags phÃ¡Â»â¢ biÃ¡ÂºÂ¿n</h2>
-                            <div class="container_item">
-                                <p>#nodejs</p>
-                            </div>
-                            <div class="container_item">
-                                <p>#python</p>
-                            </div>
-                            <div class="container_item">
-                                <p>#devops</p>
-                            </div>
-                            <div class="container_item">
-                                <p>#angular</p>
-                            </div>
-                            <div class="container_item">
-                                <p>#vuejs</p>
-                            </div>
-                        </div>
+                        </a>
+                        </c:if>
+                        <c:if test="${loginStatus == 'logined'}">
+                            <c:if test="${currentUser.role == 'S'}">
+                                <a href="createPostPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                                <a href="loadPostManagement">
+                                    <div class="container_item create-post">
+                                        <img src="./images/post-management.png" />
+                                        <p>Post Management</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'M'}">
+                                <a href="loadPendingPosts?postStatus=WFA">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Pending Posts</p>
+                                    </div>
+                                </a>
+                                <a href="createPostPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                                <a href="loadDashboard?tab=post">
+                                    <div class="container_item create-post">
+                                        <img src="./images/dashborad.svg" />
+                                        <p>Give Award</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'A'}">
+                                <a href="createCategoryPage">
+                                    <div class="container_item">
+                                        <img src="./images/category_icon.svg" />
+                                        <p>Create Category</p>
+                                    </div>
+                                </a>
+                                <a href="loadUserList">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/user-list.svg" />
+                                        <p>User List</p>
+                                    </div>
+                                </a>
+                                <a href="loadAllComments">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/comment.png" />
+                                        <p>Comments Management</p>
+                                    </div>
+                                </a>
+                                <a href="loadAwardStandard">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/adjust_icon.png" />
+                                        <p>Award Adjustment</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                        </c:if>
                     </div>
+                    <!--                    <div class="sidebar_navigation">
+                                        <h2 class="title_navigation">Common Tags</h2>
+                                        <div class="container_item">
+                                            <p>#nodejs</p>
+                                        </div>
+                                        <div class="container_item">
+                                            <p>#python</p>
+                                        </div>
+                                        <div class="container_item">
+                                            <p>#devops</p>
+                                        </div>
+                                        <div class="container_item">
+                                            <p>#angular</p>
+                                        </div>
+                                        <div class="container_item">
+                                            <p>#vuejs</p>
+                                        </div>
+                                    </div>-->
                 </div>
-                <div
-                    class="outside_sidebar_phone"
-                    id="outside_sidebar_phone"
-                    onclick="handleClickOutside()"
-                    ></div>
-            </section>
+            </div>
+            <div class="outside_sidebar_phone" id="outside_sidebar_phone" onclick="handleClickOutside()"></div>
+        </section>
 
             <!-- cover -->
             <!-- cover -->

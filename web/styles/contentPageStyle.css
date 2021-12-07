@@ -693,7 +693,7 @@ footer .text_footer_strong {
   margin-top: 50px;
   position: fixed;
   /* top: "" */
-  margin-right: 79rem;
+  margin-right: 73.25rem;
 }
 
 .interact .icon {
@@ -792,13 +792,17 @@ footer .text_footer_strong {
   background-color: #fff;
   border-radius: 5px;
   padding: 40px 52px 52px;
-  width: 75%;
+  width: 70%;
   border: 1px solid #e3e3e3;
   position: relative;
 }
 
 .main-content-up {
   margin-bottom: 30px;
+}
+
+.iteract-visible{
+    width: 5%;
 }
 
 .main-content .title-text {
@@ -1283,6 +1287,11 @@ footer .text_footer_strong {
   border: 1px solid #000;
   border-radius: 5px;
   outline-color: #3b49df;
+}
+
+.user-list-icon{
+    width: 24px;
+    height: 24px;
 }
 
 /* toggle_sidebar */

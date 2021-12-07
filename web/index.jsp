@@ -146,33 +146,86 @@
                             We're a place where students share, stay up-to-date and grow their
                             careers.
                         </p>
-                        <div class="container_button">
-                            <a href="firstloginpage">
-                                <div class="container_button_register">
-                                    <button>Create account</button>
-                                </div>
-                            </a>
-                            <a href="firstloginpage">
-                                <div class="container_button_login">
-                                    <button>Log in</button>
-                                </div>
-                            </a>
-                        </div>
+                        
                     </div>
                     <div class="sidebar_navigation">
                         <h2 class="title_navigation">Menu</h2>
-                        <div class="container_item">
-                            <img src="./images/house_icon.svg" />
-                            <p>Home</p>
-                        </div>
-                        <div class="container_item">
-                            <img src="./images/hand_shake_icon.svg" />
-                            <p>Log in</p>
-                        </div>
-                        <div class="container_item">
-                            <img src="./images/list_icon.svg" />
-                            <p>Pending Posts</p>
-                        </div>
+                        <a href="loadBlogs">
+                            <div class="container_item">
+                                <img src="./images/house_icon.svg" />
+                                <p>Home</p>
+                            </div>
+                        </a>
+                        <c:if test="${loginStatus != 'logined'}">
+                        <a href="firstLoginPage">
+                            <div class="container_item">
+                                <img src="./images/hand_shake_icon.svg" />
+                                <p>Login</p>
+                            </div>
+                        </a>
+                        </c:if>
+                        <c:if test="${loginStatus == 'logined'}">
+                            <c:if test="${currentUser.role == 'S'}">
+                                <a href="createPostPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                                <a href="loadPostManagement">
+                                    <div class="container_item create-post">
+                                        <img src="./images/post-management.png" />
+                                        <p>Post Management</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'M'}">
+                                <a href="loadPendingPosts?postStatus=WFA">
+                                    <div class="container_item">
+                                        <img src="./images/list_icon.svg" />
+                                        <p>Pending Posts</p>
+                                    </div>
+                                </a>
+                                <a href="createPostPage">
+                                    <div class="container_item create-post">
+                                        <img src="./images/create-blog.svg" />
+                                        <p>Create Post</p>
+                                    </div>
+                                </a>
+                                <a href="loadDashboard?tab=post">
+                                    <div class="container_item create-post">
+                                        <img src="./images/dashborad.svg" />
+                                        <p>Give Award</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${currentUser.role == 'A'}">
+                                <a href="createCategoryPage">
+                                    <div class="container_item">
+                                        <img src="./images/category_icon.svg" />
+                                        <p>Create Category</p>
+                                    </div>
+                                </a>
+                                <a href="loadUserList">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/user-list.svg" />
+                                        <p>User List</p>
+                                    </div>
+                                </a>
+                                <a href="loadAllComments">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/comment.png" />
+                                        <p>Comments Management</p>
+                                    </div>
+                                </a>
+                                <a href="loadAwardStandard">
+                                    <div class="container_item user-list-icon">
+                                        <img src="./images/adjust_icon.png" />
+                                        <p>Award Adjustment</p>
+                                    </div>
+                                </a>
+                            </c:if>
+                        </c:if>
                     </div>
                     <!--                    <div class="sidebar_navigation">
                                         <h2 class="title_navigation">Common Tags</h2>

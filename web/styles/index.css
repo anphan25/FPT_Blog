@@ -451,9 +451,9 @@ a {
   border-radius: 5px;
 }
 
-.main .container_info_post .post_info .reaction_and_comments div:hover {
+/*.main .container_info_post .post_info .reaction_and_comments div:hover {
   background-color: rgba(0, 0, 0, 0.035);
-}
+}*/
 .main .container_info_post .post_info .reaction_and_comments div p {
   font-size: 14px;
   color: #3d3d3d;
